@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Tomato
   m_EditorClassIdentifier: 
   fruitType: 6
-  weaponSlot: 0
   zoomType: 0
+  bulletEffectComponent: 0
+  weaponSlot: 0
   name: Tomato
+  maxCount: 0
   ammoAllowedInMagazine: 35
   damageHead: 70
   damageBody: 50
@@ -27,13 +29,13 @@ MonoBehaviour:
   amplitudeGainImpulse: 4
   fireRate: 3
   runSpeed: 0
-  reloadSpeed: 3
+  reloadSpeed: 2.4
   multiplierRecoilOnAim: 0
   multiplierForAmmo: 1
   recoildPattern:
   - {x: 0, y: 0}
   artwork: {fileID: 0}
-  bulletTracer: {fileID: 0}
+  trailTracer: {fileID: 0}
   bulletObject: {fileID: 0}
   hitEffectPrefab: {fileID: 0}
   shootingHandleType: 0

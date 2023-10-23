@@ -26,7 +26,7 @@ public class ActiveWeapon : MonoBehaviour
 
     public MovementController movementController;
 
-    public static WeaponPickup[] equippedWeapon = new WeaponPickup[4];
+    public static WeaponPickup[] equippedWeapon = new WeaponPickup[3];
 
     public UnityEngine.Animations.Rigging.Rig handIk;
     public Cinemachine.CinemachineVirtualCamera playerCamera;
@@ -91,7 +91,7 @@ public class ActiveWeapon : MonoBehaviour
 
         AttachWeapon(defaultWeapon1, weaponActivateSlots[1], 1);
         AttachWeapon(defaultWeapon2, weaponActivateSlots[2], 2);
-        AttachWeapon(defaultWeapon3, weaponActivateSlots[3], 3);
+        //AttachWeapon(defaultWeapon3, weaponActivateSlots[3], 3);
 
         gunCameraController.SetHasScope(shootController.currentWeaponStatsController.GetDefaultAmmoOnStart().ammoStats.zoomType == AmmoStats.ZoomType.HasScope);
     }
@@ -160,10 +160,10 @@ public class ActiveWeapon : MonoBehaviour
             SwitchWeapon(equippedWeapon[2]);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SwitchWeapon(equippedWeapon[3]);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    SwitchWeapon(equippedWeapon[3]);
+        //}
     }
 
     public WeaponPickup GetWeaponPickupByIndex(int index)

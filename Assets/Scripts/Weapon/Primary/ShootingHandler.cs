@@ -51,6 +51,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
         if (shootingInputData.ammoStatsController.bulletCount == 1)
         {
             WallBehaviour wall;
+            shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
             if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, shootingInputData.ammoStatsController.range, shootingInputData.layerMask))
             {
                 //hitEffectPrefab.transform.position = hit.point;
@@ -59,7 +60,6 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
                 PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                 shootingInputData.hitEvent.Notify(hit);
-                shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
                 //currentHitObject = hit.collider.name;
                 wall = hit.transform.GetComponent<WallBehaviour>();
                 if (wall != null)
@@ -93,12 +93,12 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 Vector3 localDirection = Vector3.forward + pattern;
                 Vector3 direction = shootingInputData.fpsCameraTransform.TransformDirection(localDirection).normalized;
 
+                shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
                 if (Physics.Raycast(shootingInputData.raycastOrigin.position, direction, out hit, shootingInputData.ammoStatsController.range, shootingInputData.layerMask))
                 {
                     raycastHits.Add(hit);
                     PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                     shootingInputData.hitEvent.Notify(hit);
-                    shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
                     wall = hit.transform.GetComponent<WallBehaviour>();
                     if (!destroyedObstacle && wall != null)
                     {

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Plant : MonoBehaviour, ISuckable
 {
+    public ActiveWeapon.WeaponSlot weaponSlot;
+
     // Start is called before the first frame update
     void Start()
     {

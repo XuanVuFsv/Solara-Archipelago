@@ -10,10 +10,9 @@ public class ActiveWeapon : MonoBehaviour
     public enum WeaponSlot
     {
         None = -1,
-        Primary = 0,
-        Sidearm = 1,
-        Melee = 2,
-        Grenade = 3,
+        AttackGun = 0,
+        HandGun = 1,
+        AxieCollector = 2,
     }
 
     public enum WeaponAction

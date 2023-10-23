@@ -7,16 +7,19 @@ public class AmmoStatsController : MonoBehaviour
 {
     public AmmoStats ammoStats;
 
+    public bool canAttack;
+
     public AmmoStats.ZoomType zoomType;
 
-    public int dropOffDsitance;
+    //public int dropOffDsitance;
 
-    public int decreseDamageRate;
-    public int damageHead;
-    public int damageBody;
-    public int damageArmsLegs;
+    //public int decreseDamageRate;
+    //public int damageHead;
+    //public int damageBody;
+    //public int damageArmsLegs;
+    public int damage;
+    public int damageDealToSpecificEnemy;
     public int range;
-    public int bulletCount;
     public int force;
     public int amplitudeGainImpulse;
 
@@ -32,6 +35,8 @@ public class AmmoStatsController : MonoBehaviour
     public ParticleSystem hitEffectPrefab;
     public GameObject trailTracer;
     public GameObject bulletObject;
+
+    public int bulletCount;
 
     public WaitForSeconds reloadTimer;
 
@@ -65,17 +70,19 @@ public class AmmoStatsController : MonoBehaviour
     {
         //if (hasAssignAmmoData) return;
         //GetComponent<RaycastWeapon>().currentShootingMechanic = ammoStats.shootingMechanic;
+        canAttack = ammoStats.canAttack;
 
         zoomType = ammoStats.zoomType;
 
-        dropOffDsitance = ammoStats.dropOffDsitance;
-        decreseDamageRate = ammoStats.decreseDamageRate;
+        //dropOffDsitance = ammoStats.dropOffDsitance;
+        //decreseDamageRate = ammoStats.decreseDamageRate;
 
-        damageHead = ammoStats.damageHead;
-        damageBody = ammoStats.damageBody;
-        damageArmsLegs = ammoStats.damageArmsLegs;
+        //damageHead = ammoStats.damageHead;
+        //damageBody = ammoStats.damageBody;
+        //damageArmsLegs = ammoStats.damageArmsLegs;
+        damage = ammoStats.damage;
+        damageDealToSpecificEnemy = ammoStats.damageDealToSpecificEnemy;
         range = ammoStats.range;
-        bulletCount = ammoStats.bulletCount;
         force = ammoStats.force;
         amplitudeGainImpulse = ammoStats.amplitudeGainImpulse;
         multiplierRecoilOnAim = ammoStats.multiplierRecoilOnAim;
@@ -83,6 +90,9 @@ public class AmmoStatsController : MonoBehaviour
 
         fireRate = ammoStats.fireRate;
         reloadSpeed = ammoStats.reloadSpeed;
+
+        bulletCount = ammoStats.bulletCount;
+
         reloadTimer = new WaitForSeconds(reloadSpeed);
 
         hitEffectPrefab = ammoStats.hitEffectPrefab;

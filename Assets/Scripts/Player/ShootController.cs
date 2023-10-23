@@ -186,7 +186,7 @@ public class ShootController : MonoBehaviour
     {
         if (((inputController.isReload && !currentWeaponStatsController.IsFullMagazine())
             || (currentWeaponStatsController.autoReload && currentWeaponStatsController.IsOutOfAmmo()))
-            && currentWeaponStatsController.weaponSlot != ActiveWeapon.WeaponSlot.Melee
+            && currentWeaponStatsController.weaponSlot != ActiveWeapon.WeaponSlot.AxieCollector
             && !isReloading
             && currentWeaponStatsController.IsContainAmmo())
         {
@@ -198,7 +198,7 @@ public class ShootController : MonoBehaviour
     //Reload handling
     IEnumerator Reload()
     {
-        if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.Primary)
+        if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.AttackGun)
         {
             MyDebug.Instance.Log("Reload");
 
@@ -227,7 +227,7 @@ public class ShootController : MonoBehaviour
         {
             currentWeaponStatsController.UpdateAmmoUI();
 
-            if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.Primary)
+            if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.AttackGun)
             {
                 MyDebug.Instance.Log("Reload");
                 rigController.SetTrigger("ReloadAK");
@@ -240,7 +240,7 @@ public class ShootController : MonoBehaviour
     public void ApplyAttackAnimation()
     {
         //MyDebug.Instance.Log("Checking inAttack");
-        if (activeWeapon.GetActiveWeaponPickup().weaponSlot == ActiveWeapon.WeaponSlot.Sidearm) rigController.SetBool("inAttack", inputController.isSingleFire);
+        if (activeWeapon.GetActiveWeaponPickup().weaponSlot == ActiveWeapon.WeaponSlot.HandGun) rigController.SetBool("inAttack", inputController.isSingleFire);
         else rigController.SetBool("inAttack", true);
     }
 

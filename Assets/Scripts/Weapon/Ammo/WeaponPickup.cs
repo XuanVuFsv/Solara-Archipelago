@@ -31,7 +31,7 @@ public class WeaponPickup : MonoBehaviour
     {
         if (inWeaponViewport && weaponUI)
         {
-            if (weaponSlot == ActiveWeapon.WeaponSlot.Primary)
+            if (weaponSlot == ActiveWeapon.WeaponSlot.AttackGun)
             {
                 weaponUI.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, -transform.parent.localEulerAngles.z);
             }

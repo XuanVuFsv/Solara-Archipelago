@@ -12,31 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Null
   m_EditorClassIdentifier: 
-  fruitType: -1
-  zoomType: 0
-  bulletEffectComponent: -1
-  weaponSlot: -1
+  weaponSlot: 1
   name: Null
-  maxCount: 0
+  maxCount: 2000
   ammoAllowedInMagazine: 0
-  damageHead: 0
-  damageBody: 0
-  damageArmsLegs: 0
-  dropOffDsitance: 0
-  decreseDamageRate: 0
-  range: 0
-  force: 0
   amplitudeGainImpulse: 0
+  force: 0
   fireRate: 0
-  runSpeed: 0
+  artwork: {fileID: 21300064, guid: 34ecf51bcd3f4424eafda7dafd885bd0, type: 3}
+  fruitPrefab: {fileID: 0}
+  shootingHandleType: -1
+  bulletEffectComponent: -1
+  trailTracer: {fileID: 0}
+  bulletObject: {fileID: 0}
+  hitEffectPrefab: {fileID: 0}
+  damage: 0
+  damageDealToSpecificEnemy: 0
+  zoomType: 0
+  range: 0
   reloadSpeed: 0
   multiplierRecoilOnAim: 0
   multiplierForAmmo: 0
   recoildPattern: []
-  artwork: {fileID: 21300064, guid: 34ecf51bcd3f4424eafda7dafd885bd0, type: 3}
-  trailTracer: {fileID: 0}
-  bulletObject: {fileID: 0}
-  hitEffectPrefab: {fileID: 0}
-  shootingHandleType: -1
   bulletCount: 0
   bulletDirectionPattern: []
+  totalGrowingTime: 0
+  numberOfFruitPerSeed: 0
+  bodyType: 0
+  wateringTime: 0
+  requiredLevel: 0
+  growingBody: {fileID: 0}

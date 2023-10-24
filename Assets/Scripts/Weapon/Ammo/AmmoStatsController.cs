@@ -7,7 +7,7 @@ public class AmmoStatsController : MonoBehaviour
 {
     public AmmoStats ammoStats;
 
-    public bool canAttack;
+    //public bool canAttack;
 
     public AmmoStats.ZoomType zoomType;
 
@@ -70,7 +70,7 @@ public class AmmoStatsController : MonoBehaviour
     {
         //if (hasAssignAmmoData) return;
         //GetComponent<RaycastWeapon>().currentShootingMechanic = ammoStats.shootingMechanic;
-        canAttack = ammoStats.canAttack;
+        //canAttack = ammoStats.canAttack;
 
         zoomType = ammoStats.zoomType;
 

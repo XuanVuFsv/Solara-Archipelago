@@ -114,7 +114,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
     {
         Vector3 direction = shootingInputData.fpsCameraTransform.forward;
 
-        if (shootingInputData.ammoStatsController.ammoStats.fruitType == AmmoStats.FruitType.Star)
+        if (shootingInputData.ammoStatsController.ammoStats.zoomType == AmmoStats.ZoomType.HasScope)
         {
             MyDebug.Instance.Log("Shoot");
             Vector3 localDirection = Vector3.forward + shootingInputData.cameraShake.GetCurrentPatternVector();

@@ -12,33 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Tomato
   m_EditorClassIdentifier: 
-  fruitType: 6
-  zoomType: 0
-  bulletEffectComponent: 0
   weaponSlot: 0
   name: Tomato
-  maxCount: 0
+  maxCount: 2000
   ammoAllowedInMagazine: 35
-  damageHead: 70
-  damageBody: 50
-  damageArmsLegs: 30
-  dropOffDsitance: 0
-  decreseDamageRate: 0
-  range: 100
-  force: 0
   amplitudeGainImpulse: 4
+  force: 0
   fireRate: 3
-  runSpeed: 0
+  artwork: {fileID: 0}
+  fruitPrefab: {fileID: 0}
+  shootingHandleType: 0
+  bulletEffectComponent: 0
+  trailTracer: {fileID: 0}
+  bulletObject: {fileID: 0}
+  hitEffectPrefab: {fileID: 0}
+  damage: 0
+  damageDealToSpecificEnemy: 0
+  zoomType: 0
+  range: 100
   reloadSpeed: 2.4
   multiplierRecoilOnAim: 0
   multiplierForAmmo: 1
   recoildPattern:
   - {x: 0, y: 0}
-  artwork: {fileID: 0}
-  trailTracer: {fileID: 0}
-  bulletObject: {fileID: 0}
-  hitEffectPrefab: {fileID: 0}
-  shootingHandleType: 0
   bulletCount: 5
   bulletDirectionPattern:
   - {x: 0, y: 0, z: 0}
@@ -46,3 +42,9 @@ MonoBehaviour:
   - {x: -0.05, y: 0, z: 0}
   - {x: 0, y: 0.05, z: 0}
   - {x: 0, y: -0.05, z: 0}
+  totalGrowingTime: 0
+  numberOfFruitPerSeed: 0
+  bodyType: 0
+  wateringTime: 0
+  requiredLevel: 0
+  growingBody: {fileID: 0}

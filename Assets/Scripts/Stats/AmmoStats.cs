@@ -5,20 +5,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Ammo", menuName = "Ammo")]
 public class AmmoStats : ScriptableObject
 {
-    [Header("Type of fruit")]
-    [Tooltip("Fruit can attack or not")]
-    public bool canAttack;
+    [Header("Type of Plant")]
+    //[Tooltip("Fruit can attack or not")]
+    //public bool canAttack;
 
-    [Tooltip("Slot for fruit. Example slot 1 is attack fruit, while slot 3 is normal fruit")]
+    [Tooltip("Slot for Plant. Example slot 1 is attack Plant, while slot 3 is normal Plant")]
     public ActiveWeapon.WeaponSlot weaponSlot;
 
     public new string name;
     public int maxCount;
     public int ammoAllowedInMagazine;
     public int amplitudeGainImpulse;
+    [Tooltip("Speed for plant when plant is Attack Plant and InstantiateBullet or Normal Plant")]
+    public int force;
     public float fireRate;
 
-    [Tooltip("Type of fruit. Now, it's can be same as fruit name")]
+    [Tooltip("Type of Plant. Now, it's can be same as Plant name")]
     public enum FruitType
     {
         Null = -1,
@@ -30,9 +32,10 @@ public class AmmoStats : ScriptableObject
         Tomato = 6,
         Waternelon = 7
     }
-    public FruitType fruitType;
+    //public FruitType fruitType;
 
     public Sprite artwork;
+    public Plant fruitPrefab;
 
     public enum ShootingHandleType
     {
@@ -42,6 +45,15 @@ public class AmmoStats : ScriptableObject
     }
     public ShootingHandleType shootingHandleType;
 
+    [Tooltip("What effect will be ins when shooting Plant")]
+    public enum BulletEffectComponent
+    {
+        None = -1,
+        PlaceHole = 0,
+        InstantiateTrail = 1,
+        Both = 2
+    }
+    public BulletEffectComponent bulletEffectComponent;
     public GameObject trailTracer;
     public GameObject bulletObject;
     public ParticleSystem hitEffectPrefab;
@@ -51,15 +63,15 @@ public class AmmoStats : ScriptableObject
         return trailTracer;
     }
 
-    [Header("Attacking Fruit")]
+    [Header("Attacking Plant")]
     //public int damageHead, damageBody, damageArmsLegs;
     //public int dropOffDsitance;
     //public int decreseDamageRate;
     public int damage;
-    [Tooltip("Only for attacking fruit. With Specific Enemy. This fruit will deal more damage")]
+    [Tooltip("Only for attacking Plant. With Specific Enemy. This fruit will deal more damage")]
     public int damageDealToSpecificEnemy;
 
-    [Tooltip("Only for attack fruit. Scope mode of fruit")]
+    [Tooltip("Only for attack Plant. Scope mode of Plant")]
     public enum ZoomType
     {
         NoZoom = 0,
@@ -67,20 +79,9 @@ public class AmmoStats : ScriptableObject
         HasScope = 2
     }
     public ZoomType zoomType;
-    [Tooltip("Only for attacking fruit. What effect will be ins when shooting fruit")]
-    public enum BulletEffectComponent
-    {
-        None = -1,
-        PlaceHole = 0,
-        InstantiateTrail = 1,
-        Both = 2
-    }
-    public BulletEffectComponent bulletEffectComponent;
 
-    [Tooltip("Only for attacking fruit. Range for raycast checking")]
+    [Tooltip("Only for attacking Plant. Range for raycast checking")]
     public int range;
-    [Tooltip("Only for attacking fruit and InstantiateBullet")]
-    public int force;
 
     //public float runSpeed;
     public float reloadSpeed;
@@ -92,8 +93,8 @@ public class AmmoStats : ScriptableObject
     public int bulletCount = 1;
     public List<Vector3> bulletDirectionPattern;
 
-    [Header("Normal Fruit")]
-    public int growingTime;
+    [Header("Normal Plant")]
+    public int totalGrowingTime;
     public int numberOfFruitPerSeed;
 
     public enum BodyType
@@ -106,5 +107,4 @@ public class AmmoStats : ScriptableObject
     public int wateringTime;
     public int requiredLevel;
     public GameObject growingBody;
-    public GameObject prefab;
 }

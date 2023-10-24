@@ -124,7 +124,7 @@ public class RaycastWeapon : MonoBehaviour
 
     /// <summary>
     /// Run this method to aim. An ammo type can aim or not and how a gun aim with different ammo will depend on their ammo type. Check this:
-    /// <see cref="AmmoStats.FruitType"></see>
+    /// <see cref="AmmoStats.ZoomType"></see>
     /// </summary>
     public void HandleRightMouseClick()
     {
@@ -201,7 +201,7 @@ public class RaycastWeapon : MonoBehaviour
     {
         Vector3 direction = fpsCameraTransform.forward;
 
-        if (ammoStatsController.ammoStats.fruitType == AmmoStats.FruitType.Star)
+        if (ammoStatsController.ammoStats.zoomType == AmmoStats.ZoomType.HasScope)
         {
             //MyDebug.Instance.Log("Shoot");
             Vector3 localDirection = Vector3.forward + cameraShake.GetCurrentPatternVector();
@@ -228,7 +228,7 @@ public class RaycastWeapon : MonoBehaviour
         Gizmos.color = Color.green;
         Vector3 direction = fpsCameraTransform.forward;
 
-        if (ammoStatsController.ammoStats.fruitType == AmmoStats.FruitType.Star)
+        if (ammoStatsController.ammoStats.zoomType == AmmoStats.ZoomType.HasScope)
         {
             Vector3 localDirection = Vector3.forward + cameraShake.GetCurrentPatternVector();
             direction = fpsCameraTransform.TransformDirection(localDirection).normalized;

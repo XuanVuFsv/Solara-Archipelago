@@ -86,7 +86,7 @@ public class ActiveWeapon : MonoBehaviour
         movementController = GetComponent<MovementController>();
 
         EquipWeapon(WeaponAction.Pickup, defaultWeapon0, true);
-        SetupNewWeapon(defaultWeapon0.weaponStats);
+        SetupNewWeapon(defaultWeapon0.weaponStats, true);
 
         AttachWeapon(defaultWeapon1, weaponActivateSlots[1], 1);
         AttachWeapon(defaultWeapon2, weaponActivateSlots[2], 2);
@@ -159,6 +159,11 @@ public class ActiveWeapon : MonoBehaviour
             SwitchWeapon(equippedWeapon[2]);
         }
 
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SwitchAmmo(-1);
+        }
+
         //if (Input.GetKeyDown(KeyCode.Alpha4))
         //{
         //    SwitchWeapon(equippedWeapon[3]);
@@ -206,12 +211,12 @@ public class ActiveWeapon : MonoBehaviour
         bool isExistWeaponSlot = GetWeapon(pickedWeaponSlot);
         DropWeapon(WeaponAction.Pickup, pickedWeaponSlot);
         EquipWeapon(WeaponAction.Pickup, pickedWeapon, false, isExistWeaponSlot);
-        SetupNewWeapon(pickedWeapon.weaponStats);
+        SetupNewWeapon(pickedWeapon.weaponStats, false);
     }
 
     void PickAmmo()
     {
-        if (triggerAmmoList.Count == 0 || activeWeaponIndex == 4) return; // Only primary weapon can change ammo type
+        if (triggerAmmoList.Count == 0) return; // Only primary weapon can change ammo type
 
         AmmoPickup pickedAmmo = GetNearestAmmo();
 
@@ -234,7 +239,7 @@ public class ActiveWeapon : MonoBehaviour
         equippedWeapon[weaponIndex].GetComponent<WeaponStatsController>().SetupAmmoStats(pickedAmmo);
         triggerAmmoList.RemoveAt(nearestAmmoIndex);
         gunCameraController.SetHasScope(pickedAmmo.ammoStats.zoomType == AmmoStats.ZoomType.HasScope);
-        InventoryController.Instance.AddNewAmmoToInventory(pickedAmmo.ammoStats, pickedAmmo.ammoContain);
+        //InventoryController.Instance.AddNewAmmoToInventory(pickedAmmo.ammoStats, pickedAmmo.ammoContain, false);
     }
 
     void SwitchWeapon(WeaponPickup activateWeapon)
@@ -260,7 +265,7 @@ public class ActiveWeapon : MonoBehaviour
         if (isHoldWeapon) DropWeapon(ActiveWeapon.WeaponAction.Switch, (int)equippedWeapon[activeWeaponIndex].weaponSlot);
 
         EquipWeapon(WeaponAction.Switch, activateWeapon, true);
-        SetupNewWeapon(activateWeapon.weaponStats);
+        SetupNewWeapon(activateWeapon.weaponStats, true);
 
         rigController.SetInteger("weaponIndex", activeWeaponIndex);
         gunCameraController.SetHasScope(activateWeapon.GetComponent<AmmoStatsController>().ammoStats.zoomType == AmmoStats.ZoomType.HasScope);
@@ -398,9 +403,9 @@ public class ActiveWeapon : MonoBehaviour
         attachedWeapon.GetComponent<WeaponStatsController>().OnStart();
     }
 
-    public void SetupNewWeapon(WeaponStats weaponStats)
+    public void SetupNewWeapon(WeaponStats weaponStats, bool isActiveWeapon)
     {
-        equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStats);
+        equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStats, isActiveWeapon);
 
         shootController.magazineObject = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().magazineObject;
         shootController.raycastWeapon = equippedWeapon[activeWeaponIndex].GetComponent<RaycastWeapon>();

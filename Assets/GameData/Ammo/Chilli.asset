@@ -12,31 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Chilli
   m_EditorClassIdentifier: 
-  fruitType: 1
   weaponSlot: 3
-  zoomType: 0
   name: Chilli
+  maxCount: 2000
   ammoAllowedInMagazine: 999
-  damageHead: 150
-  damageBody: 150
-  damageArmsLegs: 150
-  dropOffDsitance: 0
-  decreseDamageRate: 0
-  range: 0
-  force: 0
   amplitudeGainImpulse: 0
+  force: 0
   fireRate: 2
-  runSpeed: 1
+  artwork: {fileID: 0}
+  fruitPrefab: {fileID: 0}
+  shootingHandleType: 0
+  bulletEffectComponent: 0
+  trailTracer: {fileID: 0}
+  bulletObject: {fileID: 0}
+  hitEffectPrefab: {fileID: 0}
+  damage: 0
+  damageDealToSpecificEnemy: 0
+  zoomType: 0
+  range: 0
   reloadSpeed: 1
   multiplierRecoilOnAim: 1
   multiplierForAmmo: 1
   recoildPattern:
   - {x: 0, y: 0}
-  artwork: {fileID: 0}
-  bulletTracer: {fileID: 0}
-  bulletObject: {fileID: 0}
-  hitEffectPrefab: {fileID: 0}
-  shootingHandleType: 0
   bulletCount: 1
   bulletDirectionPattern:
   - {x: 0, y: 0, z: 0}
+  totalGrowingTime: 0
+  numberOfFruitPerSeed: 0
+  bodyType: 0
+  wateringTime: 0
+  requiredLevel: 0
+  growingBody: {fileID: 0}

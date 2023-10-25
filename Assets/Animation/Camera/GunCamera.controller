@@ -307,6 +307,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isHoldWeapon
     m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: weaponIndex
+    m_EventTreshold: 2
+  - m_ConditionMode: 4
+    m_ConditionEvent: weaponIndex
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6529372722905595509}
   m_Solo: 0
@@ -488,9 +494,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isHoldWeapon
     m_EventTreshold: 0
-  - m_ConditionMode: 6
+  - m_ConditionMode: 7
     m_ConditionEvent: weaponIndex
-    m_EventTreshold: 0
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8233860847353779144}
   m_Solo: 0
@@ -690,9 +696,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isHoldWeapon
     m_EventTreshold: 0
-  - m_ConditionMode: 6
+  - m_ConditionMode: 7
     m_ConditionEvent: weaponIndex
-    m_EventTreshold: 0
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8233860847353779144}
   m_Solo: 0

@@ -59,7 +59,7 @@ public class WeaponStatsController: MonoBehaviour
 
         cameraShake = gameObject.GetComponent<CameraShake>();
         if (!currentAmmoStatsController) currentAmmoStatsController = GetComponent<AmmoStatsController>();
-        Invoke(nameof(OnStart), 5f);
+        Invoke(nameof(OnStart), 0.5f);
     }
 
     // Update is called once per frame

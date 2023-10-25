@@ -320,7 +320,7 @@ public class ActiveWeapon : MonoBehaviour
             //UI, Layer, Physic
             if (newWeapon.weaponUI) newWeapon.weaponUI.gameObject.SetActive(false);
             SetupUtilities.SetLayers(equippedWeaponParent[weaponSlotIndex], "Local Player", "Local Player", "Effect");
-            if (weaponSlotIndex != 2) equippedWeaponParent[weaponSlotIndex].gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            //equippedWeaponParent[weaponSlotIndex].gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
             //Set parent for weapon, change noParent value and run animation
             newWeapon.noParent = false;
@@ -329,6 +329,7 @@ public class ActiveWeapon : MonoBehaviour
         equippedWeaponParent[weaponSlotIndex].parent = weaponActivateSlots[weaponSlotIndex];
         equippedWeaponParent[weaponSlotIndex].localPosition = new Vector3(0, -0.5f, 0.5f);
         isHoldWeapon = true;
+        Debug.Log(isHoldWeapon);
 
         //if (activeWeaponIndex == 2) holdWeapon.Notify(false);
         //else holdWeapon.Notify(true);
@@ -368,10 +369,11 @@ public class ActiveWeapon : MonoBehaviour
 
             SetupUtilities.SetLayers(equippedWeaponParent[weaponSlotIndex], "Ignore Player", "Only Player", null);
 
-            if (weaponSlotIndex != 2)  equippedWeaponParent[weaponSlotIndex].GetComponent<Rigidbody>().isKinematic = false;
-            if (weaponSlotIndex != 2) equippedWeaponParent[weaponSlotIndex].GetComponent<Rigidbody>().AddForce(transform.forward * 5, ForceMode.Impulse);
+            //equippedWeaponParent[weaponSlotIndex].GetComponent<Rigidbody>().isKinematic = false;
+            //equippedWeaponParent[weaponSlotIndex].GetComponent<Rigidbody>().AddForce(transform.forward * 5, ForceMode.Impulse);
 
             isHoldWeapon = false;
+            Debug.Log(isHoldWeapon);
 
             if (!equippedWeapon[weaponSlotIndex].weaponUI)
             {
@@ -410,8 +412,9 @@ public class ActiveWeapon : MonoBehaviour
         shootController.magazineObject = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().magazineObject;
         shootController.raycastWeapon = equippedWeapon[activeWeaponIndex].GetComponent<RaycastWeapon>();
 
-        if (activeWeaponIndex == 2 || activeWeaponIndex == 3) gunCameraController.SetHoldWeaponAnimation(false, (int)weaponStats.weaponSlot);
-        else gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStats.weaponSlot);
+        //if (activeWeaponIndex == 2 || activeWeaponIndex == 3) gunCameraController.SetHoldWeaponAnimation(false, (int)weaponStats.weaponSlot);
+        //else gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStats.weaponSlot);
+        gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStats.weaponSlot);
     }
 
     void SetWeaponAnimation()
@@ -430,7 +433,13 @@ public class ActiveWeapon : MonoBehaviour
 
     IEnumerator SetWeaponParent(WeaponPickup weapon, Transform weaponParent)
     {
-        yield return new WaitForSeconds(defaultWeapon2.GetComponent<RaycastWeapon>().weaponAnimation.length);
+        float timeToSetupWeaponParent = 1;
+
+        if (defaultWeapon2.GetComponent<WeaponPickup>().weaponStats.weaponAnimation)
+        {
+            timeToSetupWeaponParent = defaultWeapon2.GetComponent<WeaponPickup>().weaponStats.weaponAnimation.length;
+        }
+        yield return new WaitForSeconds(timeToSetupWeaponParent);
         weapon.transform.parent.parent = weaponParent;
     }
 

@@ -25,7 +25,7 @@ public class RaycastWeapon : MonoBehaviour
     public ParticleSystem hitEffectPrefab;
     public ParticleSystem muzzleFlash;
 
-    public AnimationClip weaponAnimation;
+    //public AnimationClip weaponAnimation;
 
     WeaponStats weaponStats;
     RaycastHit hit;

@@ -4,14 +4,20 @@ public interface IWeaponStragety
     public void HandleLeftMouseClick();
     public void HandleRightMouseClick();
     public void SetInputData(object _inputData);
+    ShootingInputData GetShootingInputData();
 }
 
 public interface IPrimaryWeaponStragety : IWeaponStragety
 {
-    ShootingInputData GetShootingInputData();
+
 }
 
 public interface IHandGunWeaponStragety : IWeaponStragety
 {
     
+}
+
+public interface IAxieCollectorWeaponStragety : IWeaponStragety
+{
+
 }

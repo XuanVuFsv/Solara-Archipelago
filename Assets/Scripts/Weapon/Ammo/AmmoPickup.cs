@@ -86,7 +86,7 @@ public class AmmoPickup : Suckable
         ammoUI.GetChild(0).GetComponent<WeaponUI>().weaponName.text = GetAmmoStats().name;
     }
 
-    public void AttachAmmoToObject(Transform parent, bool isVisible)
+    public override void AttachAmmoToObject(Transform parent, bool isVisible)
     {
         hasParent = true;
 
@@ -97,6 +97,7 @@ public class AmmoPickup : Suckable
         if (!parent.GetComponent<WeaponStatsController>().ofActiveAmmo) return;
 
         PoolingManager.Instance.AddGameEvent("Pool" + GetAmmoStats().name + "Setup");
+        Debug.Log("Add Game Event Pool" + GetAmmoStats().name + "Setup");
 
         //if (ammoStats.name == "Berry")
         //{

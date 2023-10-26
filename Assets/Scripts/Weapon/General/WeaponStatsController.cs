@@ -22,7 +22,7 @@ public class WeaponStatsController: MonoBehaviour
     public string weaponName;
     public int currentAmmo, remainingAmmo, ammoInMagazine;
     public bool autoReload = true;
-    public bool ofActiveAmmo = false;
+    public bool ofActiveAmmo;
     
     bool outOfAmmo; //out of ammo in magazine
     bool hasRun = false;
@@ -107,6 +107,7 @@ public class WeaponStatsController: MonoBehaviour
             //Debug.Log("Add to null " + transform.parent.name);
             currentAmmoStatsController.ammoStats = ammoPickup.GetAmmoStats();
             currentAmmoStatsController.AssignAmmotData();
+            //ofActiveAmmo = weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot;
 
             if (ofActiveAmmo)
             {
@@ -114,7 +115,7 @@ public class WeaponStatsController: MonoBehaviour
                 gunCamera.SetMultiplier(currentAmmoStatsController.multiplierForAmmo);
             }
 
-            if (ammoPickup is AmmoPickup) (ammoPickup as AmmoPickup).AttachAmmoToObject(transform, false);
+            ammoPickup.AttachAmmoToObject(transform, false);
 
             pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
             pickAmmoEvent.Notify(currentAmmoStatsController.multiplierRecoilOnAim);
@@ -130,7 +131,7 @@ public class WeaponStatsController: MonoBehaviour
 
             if (!ammunitionChestPicked)
             {
-                if (ammoPickup is AmmoPickup) (ammoPickup as AmmoPickup).AttachAmmoToObject(transform, false);
+                ammoPickup.AttachAmmoToObject(transform, false);
                 ammunitionChestPicked = ammoPickup;
             }
             else Destroy(ammoPickup.gameObject);
@@ -148,7 +149,7 @@ public class WeaponStatsController: MonoBehaviour
             //ammunitionChestPicked.ammoContain = InventoryController.Instance.GetItem(ammunitionChestPicked.ammoStats).count;
 
             //currentAmmoStatsController.ammoStats = ammoPickup.ammoStats;
-            if (ammoPickup is AmmoPickup) (ammoPickup as AmmoPickup).AttachAmmoToObject(transform, false);
+            ammoPickup.AttachAmmoToObject(transform, false);
             //currentAmmoStatsController.AssignAmmotData();
 
             //pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);

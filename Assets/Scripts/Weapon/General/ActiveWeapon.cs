@@ -86,7 +86,7 @@ public class ActiveWeapon : MonoBehaviour
         movementController = GetComponent<MovementController>();
 
         EquipWeapon(WeaponAction.Pickup, defaultWeapon0, true);
-        SetupNewWeapon(defaultWeapon0.weaponStats, ActiveWeapon.WeaponSlot.AttackGun == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot);
+        SetupNewWeapon(defaultWeapon0.weaponStats, true);
 
         AttachWeapon(defaultWeapon1, weaponActivateSlots[1], 1);
         AttachWeapon(defaultWeapon2, weaponActivateSlots[2], 2);
@@ -211,7 +211,7 @@ public class ActiveWeapon : MonoBehaviour
         bool isExistWeaponSlot = GetWeapon(pickedWeaponSlot);
         DropWeapon(WeaponAction.Pickup, pickedWeaponSlot);
         EquipWeapon(WeaponAction.Pickup, pickedWeapon, false, isExistWeaponSlot);
-        SetupNewWeapon(pickedWeapon.weaponStats, false);
+        SetupNewWeapon(pickedWeapon.weaponStats, pickedWeapon.weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot);
     }
 
     void PickAmmo()
@@ -415,6 +415,7 @@ public class ActiveWeapon : MonoBehaviour
         //if (activeWeaponIndex == 2 || activeWeaponIndex == 3) gunCameraController.SetHoldWeaponAnimation(false, (int)weaponStats.weaponSlot);
         //else gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStats.weaponSlot);
         gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStats.weaponSlot);
+        //equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().ofActiveAmmo = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot;
     }
 
     void SetWeaponAnimation()

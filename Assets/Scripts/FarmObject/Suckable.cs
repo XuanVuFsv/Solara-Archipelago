@@ -37,4 +37,11 @@ public class Suckable : MonoBehaviour, ISuckable
     {
         ammoContain = count;
     }
+
+    public virtual void AttachAmmoToObject(Transform parent, bool isVisible)
+    {
+        if (!parent.GetComponent<WeaponStatsController>().ofActiveAmmo) return;
+        PoolingManager.Instance.AddGameEvent("Pool" + GetAmmoStats().name + "Setup");
+        Debug.Log("Add Game Event Pool" + GetAmmoStats().name + "Setup");
+    }
 }

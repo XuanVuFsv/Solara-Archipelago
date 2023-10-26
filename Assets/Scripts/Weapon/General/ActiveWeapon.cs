@@ -30,7 +30,7 @@ public class ActiveWeapon : MonoBehaviour
     public UnityEngine.Animations.Rigging.Rig handIk;
     public Cinemachine.CinemachineVirtualCamera playerCamera;
 
-    public WeaponPickup defaultWeapon0, defaultWeapon1, defaultWeapon2, defaultWeapon3;
+    public WeaponPickup defaultWeapon0, defaultWeapon1, defaultWeapon2;
     public Transform[] weaponActivateSlots;
     public Transform weaponPivot;
     public Transform rightHandHolder, leftHandHolder;
@@ -86,13 +86,13 @@ public class ActiveWeapon : MonoBehaviour
         movementController = GetComponent<MovementController>();
 
         EquipWeapon(WeaponAction.Pickup, defaultWeapon0, true);
-        SetupNewWeapon(defaultWeapon0.weaponStats, true);
+        SetupNewWeapon(defaultWeapon0.weaponStats, ActiveWeapon.WeaponSlot.AttackGun == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot);
 
         AttachWeapon(defaultWeapon1, weaponActivateSlots[1], 1);
         AttachWeapon(defaultWeapon2, weaponActivateSlots[2], 2);
         //AttachWeapon(defaultWeapon3, weaponActivateSlots[3], 3);
 
-        gunCameraController.SetHasScope(shootController.currentWeaponStatsController.GetDefaultAmmoOnStart().ammoStats.zoomType == AmmoStats.ZoomType.HasScope);
+        gunCameraController.SetHasScope(shootController.currentWeaponStatsController.GetDefaultAmmoOnStart().GetAmmoStats().zoomType == AmmoStats.ZoomType.HasScope);
     }
 
     // Update is called once per frame
@@ -234,11 +234,11 @@ public class ActiveWeapon : MonoBehaviour
         //}
 
         if (!pickedAmmo.canPickup) return;
-        int weaponIndex = (int)pickedAmmo.ammoStats.weaponSlot;
+        int weaponIndex = (int)pickedAmmo.GetAmmoStats().weaponSlot;
 
         equippedWeapon[weaponIndex].GetComponent<WeaponStatsController>().SetupAmmoStats(pickedAmmo);
         triggerAmmoList.RemoveAt(nearestAmmoIndex);
-        gunCameraController.SetHasScope(pickedAmmo.ammoStats.zoomType == AmmoStats.ZoomType.HasScope);
+        gunCameraController.SetHasScope(pickedAmmo.GetAmmoStats().zoomType == AmmoStats.ZoomType.HasScope);
         //InventoryController.Instance.AddNewAmmoToInventory(pickedAmmo.ammoStats, pickedAmmo.ammoContain, false);
     }
 
@@ -265,7 +265,7 @@ public class ActiveWeapon : MonoBehaviour
         if (isHoldWeapon) DropWeapon(ActiveWeapon.WeaponAction.Switch, (int)equippedWeapon[activeWeaponIndex].weaponSlot);
 
         EquipWeapon(WeaponAction.Switch, activateWeapon, true);
-        SetupNewWeapon(activateWeapon.weaponStats, true);
+        SetupNewWeapon(activateWeapon.weaponStats, activateWeapon.weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot);
 
         rigController.SetInteger("weaponIndex", activeWeaponIndex);
         gunCameraController.SetHasScope(activateWeapon.GetComponent<AmmoStatsController>().ammoStats.zoomType == AmmoStats.ZoomType.HasScope);
@@ -329,7 +329,7 @@ public class ActiveWeapon : MonoBehaviour
         equippedWeaponParent[weaponSlotIndex].parent = weaponActivateSlots[weaponSlotIndex];
         equippedWeaponParent[weaponSlotIndex].localPosition = new Vector3(0, -0.5f, 0.5f);
         isHoldWeapon = true;
-        Debug.Log(isHoldWeapon);
+        //Debug.Log(isHoldWeapon);
 
         //if (activeWeaponIndex == 2) holdWeapon.Notify(false);
         //else holdWeapon.Notify(true);
@@ -348,7 +348,7 @@ public class ActiveWeapon : MonoBehaviour
         {
             //equippedWeapon[weaponSlotIndex].GetComponent<CameraShake>().UnSubscribe();
             //shootController.currentWeaponStatsController.currentAmmoStatsController = null;
-            shootController.currentWeaponStatsController.ofActiveWeapon = false;
+            //shootController.currentWeaponStatsController.ofActiveAmmo = false;
             shootController.currentWeaponStatsController = null;
 
             //Switch
@@ -401,13 +401,13 @@ public class ActiveWeapon : MonoBehaviour
         equippedWeaponParent[attachedWeaponSlotIndex] = attachedWeapon.transform.parent;
 
         StartCoroutine(SetWeaponParent(attachedWeapon, attachedWeaponParent));
-        Debug.Log("OnStart " + attachedWeapon.transform.parent.name);
+        //Debug.Log("OnStart " + attachedWeapon.transform.parent.name);
         attachedWeapon.GetComponent<WeaponStatsController>().OnStart();
     }
 
-    public void SetupNewWeapon(WeaponStats weaponStats, bool isActiveWeapon)
+    public void SetupNewWeapon(WeaponStats weaponStats, bool sameWeaponSlotWithCurrentAmmo)
     {
-        equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStats, isActiveWeapon);
+        equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStats, sameWeaponSlotWithCurrentAmmo);
 
         shootController.magazineObject = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().magazineObject;
         shootController.raycastWeapon = equippedWeapon[activeWeaponIndex].GetComponent<RaycastWeapon>();
@@ -440,6 +440,10 @@ public class ActiveWeapon : MonoBehaviour
             timeToSetupWeaponParent = defaultWeapon2.GetComponent<WeaponPickup>().weaponStats.weaponAnimation.length;
         }
         yield return new WaitForSeconds(timeToSetupWeaponParent);
+        //Debug.Log(weapon);
+        //Debug.Log(weapon.transform.parent);
+        //Debug.Log(weapon.transform.parent.parent);
+
         weapon.transform.parent.parent = weaponParent;
     }
 

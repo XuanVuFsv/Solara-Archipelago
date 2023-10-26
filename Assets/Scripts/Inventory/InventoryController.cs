@@ -40,11 +40,11 @@ public class InventoryController : Singleton<InventoryController>
         currentAmmoList[activeSlotIndex].isActive = true;
     }
 
-    public void AddNewAmmoToInventory(AmmoStats ammoStats, int count, bool ofActiveWeapon, out Item item)
+    public Item AddNewAmmoToInventory(AmmoStats ammoStats, int count)
     {
         int firstSlot = GetSlotByName(ammoStats.name);
         int emptySlot = GetSlotByName("Null");
-        item = currentAmmoList[activeSlotIndex];
+        Item item = null;
 
         MyDebug.Instance.Log(firstSlot + " " + emptySlot);
 
@@ -57,9 +57,11 @@ public class InventoryController : Singleton<InventoryController>
         else if (emptySlot != -1)
         {
             //Add new iteam which not existed in inventory
-            currentAmmoList[emptySlot] = new Item(ammoStats, count, ofActiveWeapon && !IsExistedAmmoForWeaponSlot(ammoStats.weaponSlot));
+            //currentAmmoList[emptySlot] = new Item(ammoStats, count, ofActiveAmmo && !IsExistedAmmoForWeaponSlot(ammoStats.weaponSlot));
+            if (emptySlot == activeSlotIndex) currentAmmoList[emptySlot] = new Item(ammoStats, count, true);
+            else currentAmmoList[emptySlot] = new Item(ammoStats, count, false);
             item = currentAmmoList[emptySlot];
-            if (ofActiveWeapon) activeSlotIndex = emptySlot;
+            //if (ofActiveAmmo) activeSlotIndex = emptySlot;
             MyDebug.Instance.Log("Add NEW" + count + ammoStats.name);
         }
         else
@@ -67,8 +69,8 @@ public class InventoryController : Singleton<InventoryController>
             MyDebug.Instance.Log("No more slot");
             hasEmptySlot = true;
             //New item but don't enough slot
-            return;
         }
+        return item;
     }
 
     public int GetSlotByName(string name)

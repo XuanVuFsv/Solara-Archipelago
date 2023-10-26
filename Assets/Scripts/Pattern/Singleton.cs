@@ -27,10 +27,15 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     protected virtual void Awake()
     {
         if (IsValidInstance() && !ReferenceEquals(_reference, this))
+        {
             Destroy(gameObject);
+        }
         else
         {
-            _reference = (T)(MonoBehaviour)this;
+            if (typeof(T) == typeof(Singleton<T>))
+            {
+                _reference = (T)(MonoBehaviour)this;
+            }
         }
     }
 }

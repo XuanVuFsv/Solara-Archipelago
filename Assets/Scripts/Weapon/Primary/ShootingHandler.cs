@@ -38,6 +38,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
         shootingInputData.shootController.ApplyAttackAnimation();
         if (shootingInputData.shootingHandleType == AmmoStats.ShootingHandleType.Raycast)
         {
+            //Debug.Log("Shoot");
             RaycastHandle();
         }
         else if (shootingInputData.shootingHandleType == AmmoStats.ShootingHandleType.InstantiateBullet)
@@ -52,8 +53,10 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
         {
             WallBehaviour wall;
             shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
+            Debug.Log("Shoot");
             if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, shootingInputData.ammoStatsController.range, shootingInputData.layerMask))
             {
+                Debug.Log(hit.transform);
                 //hitEffectPrefab.transform.position = hit.point;
                 //hitEffectPrefab.transform.forward = hit.normal;
                 //hitEffectPrefab.Emit(5);
@@ -83,6 +86,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
         }
         else
         {
+            //Debug.Log("Shoot");
             List<RaycastHit> raycastHits = new List<RaycastHit>();
 
             //int i = 0;
@@ -97,6 +101,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 if (Physics.Raycast(shootingInputData.raycastOrigin.position, direction, out hit, shootingInputData.ammoStatsController.range, shootingInputData.layerMask))
                 {
                     raycastHits.Add(hit);
+                    Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                     PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                     shootingInputData.hitEvent.Notify(hit);
                     wall = hit.transform.GetComponent<WallBehaviour>();

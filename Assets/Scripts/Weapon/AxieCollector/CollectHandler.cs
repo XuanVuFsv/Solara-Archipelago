@@ -2,15 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectHandler : MonoBehaviour, IAxieCollectorWeaponStragety
+public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStragety
 {
     public ShootingInputData shootingInputData;
+    public AnimationCurve velocityCurve;
+    public WeaponStatsController weaponStatsController;
+
     RaycastHit hit;
+    [SerializeField]
+    private float maxDistance = 3;
+
+    public int minSuckUpSpeed, maxSuckUpSpeed;
+    public float acceleratonSuckUpSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        weaponStatsController = GetComponent<WeaponStatsController>();
     }
 
     // Update is called once per frame
@@ -46,7 +54,20 @@ public class CollectHandler : MonoBehaviour, IAxieCollectorWeaponStragety
 
     public void CollectingHandle()
     {
+        if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, maxDistance, shootingInputData.layerMask))
+        {
+            //Debug.Log(hit.transform.name);
+            Suckable suckedObject = hit.transform.GetComponent<Suckable>();
+            suckedObject?.GoToAxieCollector();
 
+            if (Vector3.Distance(shootingInputData.bulletSpawnPoint.position, hit.transform.position) <= 0.5f)
+            {
+                AmmoStats ammoStats = suckedObject.GetAmmoStats();
+                weaponStatsController.SetupAmmoStats(suckedObject);
+                Destroy(hit.transform.gameObject);
+                //InventoryController.Instance.AddNewAmmoToInventory(ammoStats, suckedObject.GetAmmoContain());
+            }
+        }
     }
 
     public void ShootOutHandle()

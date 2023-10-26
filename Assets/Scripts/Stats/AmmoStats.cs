@@ -41,7 +41,8 @@ public class AmmoStats : ScriptableObject
     {
         None = -1,
         Raycast = 0,
-        InstantiateBullet = 1
+        InstantiateBullet = 1,
+        Both = 2
     }
     public ShootingHandleType shootingHandleType;
 
@@ -99,6 +100,7 @@ public class AmmoStats : ScriptableObject
 
     public enum BodyType
     {
+        None = -1,
         Tree = 0,
         Vegetable = 1,
         Climbing = 2

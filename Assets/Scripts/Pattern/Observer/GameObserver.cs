@@ -102,7 +102,7 @@ public abstract class GameObserver : MonoBehaviour, IGameObserver
 
     public virtual void Execute(IGameEvent gEvent, RaycastHit hit)
     {
-        //MyDebug.Instance.Log($"Execute by {this} in base class with value: {hit}");
+        Debug.Log($"Execute by {this} in base class with value: {hit}");
     }
 
     public virtual void Execute(IGameEvent gEvent, Vector3 point, Vector3 normal)

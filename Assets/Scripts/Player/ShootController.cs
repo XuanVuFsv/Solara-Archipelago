@@ -132,13 +132,13 @@ public class ShootController : MonoBehaviour
             || (inputController.isSingleFire && activeWeapon.activeWeaponIndex != 0))
             && !currentWeaponStatsController.IsOutOfAmmo() && !isReloading)
             {
-                //MyDebug.Instance.Log("Shoot");
+                //Debug.Log("Shoot");
                 //Shoot automatic
                 if (Time.time - lastFired > 1 / currentWeaponStatsController.currentAmmoStatsController.fireRate)
                 {
                     readyToFire = true;
    
-                    //MyDebug.Instance.Log("Shoot");
+                    //Debug.Log("Shoot");
                     lastFired = Time.time;
 
                     //Remove 1 bullet from ammo
@@ -172,6 +172,10 @@ public class ShootController : MonoBehaviour
         else if (raycastWeapon.weaponHandler is IHandGunWeaponStragety)
         {
             if (inputController.isFire && activeWeapon.activeWeaponIndex == 1) raycastWeapon.HandleLeftMouseClick();
+        }
+        else if (raycastWeapon.weaponHandler is IAxieCollectorWeaponStragety)
+        {
+            if (inputController.isFire && activeWeapon.activeWeaponIndex == 2) raycastWeapon.HandleLeftMouseClick();
         }
         #endregion
     }

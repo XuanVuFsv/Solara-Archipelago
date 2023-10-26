@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmoPickup : MonoBehaviour
+public class AmmoPickup : Suckable
 {
     public RectTransform ammoUIPrefab, ammoUI;
-    public AmmoStats ammoStats;
-    public int ammoContain;
     public bool canPickup = false;
     public bool hasParent = false;
 
@@ -85,7 +83,7 @@ public class AmmoPickup : MonoBehaviour
     public void ShowAmmoStats()
     {
         ammoUI.gameObject.SetActive(true);
-        ammoUI.GetChild(0).GetComponent<WeaponUI>().weaponName.text = ammoStats.name;
+        ammoUI.GetChild(0).GetComponent<WeaponUI>().weaponName.text = GetAmmoStats().name;
     }
 
     public void AttachAmmoToObject(Transform parent, bool isVisible)
@@ -96,9 +94,9 @@ public class AmmoPickup : MonoBehaviour
         transform.localPosition = Vector3.zero;
         gameObject.SetActive(isVisible);
 
-        if (!parent.GetComponent<WeaponStatsController>().ofActiveWeapon) return;
+        if (!parent.GetComponent<WeaponStatsController>().ofActiveAmmo) return;
 
-        PoolingManager.Instance.AddGameEvent("Pool" + ammoStats.name + "Setup");
+        PoolingManager.Instance.AddGameEvent("Pool" + GetAmmoStats().name + "Setup");
 
         //if (ammoStats.name == "Berry")
         //{
@@ -127,7 +125,7 @@ public class AmmoPickup : MonoBehaviour
         //transform.eulerAngles = Vector3.zero;
         //gameObject.SetActive(isVisible);
 
-        PoolingManager.Instance.RemoveGameEvent("Pool" + ammoStats.name + "Setup");
+        PoolingManager.Instance.RemoveGameEvent("Pool" + GetAmmoStats().name + "Setup");
         Destroy(gameObject);
 
         //if (ammoStats.name == "Berry")

@@ -4,5 +4,8 @@ using UnityEngine;
 
 public interface ISuckable
 {
-
+    public void GoToAxieCollector();
+    public AmmoStats GetAmmoStats();
+    public int GetAmmoContain();
+    public void SetAmmoContain(int count);
 }

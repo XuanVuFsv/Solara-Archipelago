@@ -62,14 +62,14 @@ public class RaycastWeapon : MonoBehaviour
         #endregion
     }
 
-    public async UniTaskVoid SetAsInputData()
+    public async UniTaskVoid SetAsInputData(LayerMask _layerMask)
     {
         //MyDebug.Instance.Log(gameObject.name);
         //MyDebug.Instance.Log("Wait ammoStatController instance created");
         await UniTask.WaitUntil(() => ammoStatsController.ammoStats != null);
         //if (ammoStatsController == null) await UniTask.Yield();
         //MyDebug.Instance.Log(ammoStatsController);
-        ShootingInputData shootingInputData = new ShootingInputData(shootController, ammoStatsController.ammoStats.shootingHandleType, ammoStatsController, raycastOrigin, fpsCameraTransform, hitEvent, cameraShake, bulletSpawnPoint, layerMask);
+        ShootingInputData shootingInputData = new ShootingInputData(shootController, ammoStatsController.ammoStats.shootingHandleType, ammoStatsController, raycastOrigin, fpsCameraTransform, hitEvent, cameraShake, bulletSpawnPoint, _layerMask);
         weaponHandler.SetInputData(shootingInputData);
     }
 
@@ -81,16 +81,17 @@ public class RaycastWeapon : MonoBehaviour
         {
             weaponHandler = GetComponent<ShootingHandler>();
             //MyDebug.Instance.Log(ammoStatsController);
-            var _setInput = SetAsInputData();
+            var _setInput = SetAsInputData(layerMask);
         }
         else if (GetComponent<ActionHandler>())
         {
             weaponHandler = GetComponent<ActionHandler>();
-            var setInput = SetAsInputData();
+            var setInput = SetAsInputData(layerMask);
         }
         else
         {
-            weaponHandler = gameObject.AddComponent<ActionHandler>();
+            weaponHandler = gameObject.GetComponent<CollectHandler>();
+            var setInput = SetAsInputData(layerMask = (1 << LayerMask.NameToLayer("Suckable")));
         }
     }
 
@@ -128,6 +129,7 @@ public class RaycastWeapon : MonoBehaviour
     /// </summary>
     public void HandleRightMouseClick()
     {
+        //Debug.Log("Shoot");
         weaponHandler.HandleRightMouseClick();
     }
 

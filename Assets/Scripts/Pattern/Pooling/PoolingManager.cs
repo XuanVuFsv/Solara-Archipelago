@@ -53,6 +53,7 @@ public class PoolingManager : MonoBehaviour
 
     public void Get(string objectPooledManagerName)
     {
+        Debug.Log("Access " + objectPooledManagerName);
         pooledList[objectPooledManagerName].Get();;
     }
 

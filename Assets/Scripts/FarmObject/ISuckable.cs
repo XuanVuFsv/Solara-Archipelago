@@ -5,6 +5,7 @@ using UnityEngine;
 public interface ISuckable
 {
     public void GoToAxieCollector();
+    public void ChangeToStored();
     public AmmoStats GetAmmoStats();
     public int GetAmmoContain();
     public void SetAmmoContain(int count);

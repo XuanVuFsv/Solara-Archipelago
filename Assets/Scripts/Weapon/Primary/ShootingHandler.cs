@@ -30,6 +30,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
     public void HandleRightMouseClick()
     {
+        if (shootingInputData.ammoStatsController.zoomType == AmmoStats.ZoomType.NoZoom) return;
         PlayAimAnimation();
     }
 

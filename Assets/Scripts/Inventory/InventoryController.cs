@@ -40,7 +40,7 @@ public class InventoryController : Singleton<InventoryController>
         currentAmmoList[activeSlotIndex].isActive = true;
     }
 
-    public Item AddNewAmmoToInventory(AmmoStats ammoStats, int count)
+    public Item AddNewAmmoToInventory(AmmoStats ammoStats, int count, GameObject ammoObject)
     {
         int firstSlot = GetSlotByName(ammoStats.name);
         int emptySlot = GetSlotByName("Null");
@@ -51,15 +51,15 @@ public class InventoryController : Singleton<InventoryController>
         if (firstSlot >= 0)
         {
             //Check stack item here with existed item
-            int leftOverAmmo = currentAmmoList[firstSlot].AddAmmo(count);
+            int leftOverAmmo = currentAmmoList[firstSlot].AddAmmo(count, ammoObject);
             MyDebug.Instance.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
         }
         else if (emptySlot != -1)
         {
             //Add new iteam which not existed in inventory
             //currentAmmoList[emptySlot] = new Item(ammoStats, count, ofActiveAmmo && !IsExistedAmmoForWeaponSlot(ammoStats.weaponSlot));
-            if (emptySlot == activeSlotIndex) currentAmmoList[emptySlot] = new Item(ammoStats, count, true);
-            else currentAmmoList[emptySlot] = new Item(ammoStats, count, false);
+            if (emptySlot == activeSlotIndex) currentAmmoList[emptySlot] = new Item(ammoStats, count, true, ammoObject);
+            else currentAmmoList[emptySlot] = new Item(ammoStats, count, false, ammoObject);
             item = currentAmmoList[emptySlot];
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
             MyDebug.Instance.Log("Add NEW" + count + ammoStats.name);

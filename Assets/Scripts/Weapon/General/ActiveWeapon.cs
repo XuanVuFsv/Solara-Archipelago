@@ -92,7 +92,7 @@ public class ActiveWeapon : MonoBehaviour
         AttachWeapon(defaultWeapon2, weaponActivateSlots[2], 2);
         //AttachWeapon(defaultWeapon3, weaponActivateSlots[3], 3);
 
-        gunCameraController.SetHasScope(shootController.currentWeaponStatsController.GetDefaultAmmoOnStart().GetAmmoStats().zoomType == AmmoStats.ZoomType.HasScope);
+        gunCameraController.SetHasScope(false);
     }
 
     // Update is called once per frame
@@ -236,7 +236,7 @@ public class ActiveWeapon : MonoBehaviour
         if (!pickedAmmo.canPickup) return;
         int weaponIndex = (int)pickedAmmo.GetAmmoStats().weaponSlot;
 
-        equippedWeapon[weaponIndex].GetComponent<WeaponStatsController>().SetupAmmoStats(pickedAmmo);
+        equippedWeapon[weaponIndex].GetComponent<WeaponStatsController>().SetupAmmoStats();
         triggerAmmoList.RemoveAt(nearestAmmoIndex);
         gunCameraController.SetHasScope(pickedAmmo.GetAmmoStats().zoomType == AmmoStats.ZoomType.HasScope);
         //InventoryController.Instance.AddNewAmmoToInventory(pickedAmmo.ammoStats, pickedAmmo.ammoContain, false);

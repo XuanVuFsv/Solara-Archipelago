@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public class SeedProperties
+public class PlanProperties
 {
     [Header("Effect")]
     public GameObject trailTracer;
@@ -13,7 +13,6 @@ public class SeedProperties
 
     [Header("Plant stage")]
     public List<GameObject> growingBodyList;
-    public List<Plant> growingPlantList;
 
     public List<Plant> plantList;
     public int wateringTime;
@@ -21,19 +20,26 @@ public class SeedProperties
 
 public class Plant : Suckable
 {
-    public SeedProperties seedData;
+    public enum PlantState
+    {
+        Seed = 0,
+        Stored = 1,
+        GrowingBody = 2,
+        Ripe = 3
+    }    
+
+    public PlanProperties plantData;
+    public PlantState plantState;
 
     public int elapsedTime = 0;
     public DateTime startGrowingTime;
     public DateTime endGrowingTime;
-    public bool isSeed = true;
     public GameObject seedOuterEffect, ripeOuterEffect;
 
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-        Invoke("GrowPlant", 5);
     }
 
     // Update is called once per frame
@@ -41,6 +47,12 @@ public class Plant : Suckable
     {
 
     }
+
+    public override void ChangeToStored()
+    {
+        plantState = PlantState.Stored;
+        gameObject.SetActive(false);
+    }    
 
     public void GrowPlant()
     {
@@ -55,9 +67,9 @@ public class Plant : Suckable
     IEnumerator StartGrowingProcess()
     {
         yield return new WaitForSeconds(GetAmmoStats().totalGrowingTime);
-        isSeed = false;
+        plantState = PlantState.Ripe;
         seedOuterEffect.SetActive(false);
-        ripeOuterEffect.SetActive(true);
+        //ripeOuterEffect.SetActive(true);
         Debug.Log("Growing Process Done");
     }
 

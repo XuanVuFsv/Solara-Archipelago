@@ -63,8 +63,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
             if (Vector3.Distance(shootingInputData.bulletSpawnPoint.position, hit.transform.position) <= 0.5f)
             {
                 AmmoStats ammoStats = suckedObject.GetAmmoStats();
-                weaponStatsController.SetupAmmoStats(suckedObject);
-                Destroy(hit.transform.gameObject);
+                weaponStatsController.SuckUpAmmo(suckedObject);
                 //InventoryController.Instance.AddNewAmmoToInventory(ammoStats, suckedObject.GetAmmoContain());
             }
         }
@@ -72,6 +71,6 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
 
     public void ShootOutHandle()
     {
-
+        weaponStatsController.UseAmmo(1);
     }
 }

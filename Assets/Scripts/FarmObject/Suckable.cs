@@ -8,6 +8,8 @@ public class Suckable : MonoBehaviour, ISuckable
     private AmmoStats ammoStats;
     [SerializeField]
     private int ammoContain;
+    [SerializeField]
+    private int moveOutForce;
 
     public Rigidbody rigid;
 
@@ -22,6 +24,16 @@ public class Suckable : MonoBehaviour, ISuckable
         varSpeed = Mathf.Lerp(CollectHandler.Instance.minSuckUpSpeed, CollectHandler.Instance.maxSuckUpSpeed, CollectHandler.Instance.velocityCurve.Evaluate(s / 1f));
         rigid.velocity = dir.normalized * varSpeed;
     }
+
+    public virtual void ChangeToStored()
+    {
+
+    }
+
+    public void MoveOut()
+    {
+        rigid.AddForce(CollectHandler.Instance.shootingInputData.bulletSpawnPoint.forward * moveOutForce);
+    }    
 
     public AmmoStats GetAmmoStats()
     {

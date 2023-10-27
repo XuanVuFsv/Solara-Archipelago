@@ -236,7 +236,7 @@ public class ActiveWeapon : MonoBehaviour
         if (!pickedAmmo.canPickup) return;
         int weaponIndex = (int)pickedAmmo.GetAmmoStats().weaponSlot;
 
-        equippedWeapon[weaponIndex].GetComponent<WeaponStatsController>().SetupAmmoStats();
+        //equippedWeapon[weaponIndex].GetComponent<WeaponStatsController>().SetupAmmoStats();
         triggerAmmoList.RemoveAt(nearestAmmoIndex);
         gunCameraController.SetHasScope(pickedAmmo.GetAmmoStats().zoomType == AmmoStats.ZoomType.HasScope);
         //InventoryController.Instance.AddNewAmmoToInventory(pickedAmmo.ammoStats, pickedAmmo.ammoContain, false);

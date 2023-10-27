@@ -79,6 +79,6 @@ public class Plant : Suckable
     private void OnDisable()
     {
         elapsedTime = (int)DateTime.UtcNow.Subtract(startGrowingTime.ToLocalTime()).TotalSeconds;
-        Debug.Log(elapsedTime);
+        //Debug.Log(elapsedTime);
     }
 }

@@ -11,7 +11,7 @@ public class InventoryController : Singleton<InventoryController>
     [SerializeField]
     private bool hasEmptySlot;
     [SerializeField]
-    private Item nullItem;
+    public Item nullItem;
 
     public int activeSlotIndex = 0;
 
@@ -61,7 +61,7 @@ public class InventoryController : Singleton<InventoryController>
             if (emptySlot == activeSlotIndex) currentAmmoList[emptySlot] = new Item(ammoStats, count, true, ammoObject);
             else currentAmmoList[emptySlot] = new Item(ammoStats, count, false, ammoObject);
             item = currentAmmoList[emptySlot];
-            Debug.Log(item);
+            //Debug.Log(item);
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
             MyDebug.Instance.Log("Add NEW" + count + ammoStats.name);
         }
@@ -72,6 +72,11 @@ public class InventoryController : Singleton<InventoryController>
             //New item but don't enough slot
         }
         return item;
+    }
+
+    public void ResetCurrentSlot()
+    {
+        GetCurrentItem().ResetItem(nullItem);
     }
 
     public int GetSlotByName(string name)

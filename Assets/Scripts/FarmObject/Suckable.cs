@@ -74,4 +74,9 @@ public class Suckable : MonoBehaviour, ISuckable
         PoolingManager.Instance.AddGameEvent("Pool" + GetAmmoStats().name + "Setup");
         Debug.Log("Add Game Event Pool" + GetAmmoStats().name + "Setup");
     }
+
+    public virtual void DetachAmmoToObject()
+    {
+        PoolingManager.Instance.RemoveGameEvent("Pool" + GetAmmoStats().name + "Setup");
+    }
 }

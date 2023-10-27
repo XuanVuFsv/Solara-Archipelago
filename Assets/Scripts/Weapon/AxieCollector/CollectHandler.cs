@@ -72,7 +72,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
             //Debug.Log(Vector3.Distance(shootingInputData.raycastOrigin.position, hit.transform.position));
             if (Physics.SphereCast(shootingInputData.raycastOrigin.position, radiusSphereCastToCheckSucked, shootingInputData.fpsCameraTransform.forward, out hit, distanceThresholdToGotAmmo, shootingInputData.layerMask))
             {
-                Debug.Log("xxx");
+                //Debug.Log("xxx");
                 AmmoStats ammoStats = suckedObject.GetAmmoStats();
                 weaponStatsController.SuckUpAmmo(suckedObject);
                 //InventoryController.Instance.AddNewAmmoToInventory(ammoStats, suckedObject.GetAmmoContain());
@@ -82,6 +82,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
 
     public void ShootOutHandle()
     {
-        weaponStatsController.UseAmmo(1);
+        if (weaponStatsController.itemInInventory.ammoStats.name == "Null" || weaponStatsController.itemInInventory == null) return;
+        weaponStatsController.UseAmmo(weaponStatsController.currentAmmoStatsController.bulletCount);
     }
 }

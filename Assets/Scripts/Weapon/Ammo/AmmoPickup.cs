@@ -110,50 +110,5 @@ public class AmmoPickup : Suckable
         PoolingManager.Instance.AddGameEvent("Pool" + GetAmmoStats().name + "Setup");
         Debug.Log("Add Game Event Pool" + GetAmmoStats().name + "Setup");
 
-        //if (ammoStats.name == "Berry")
-        //{
-        //    //Debug.Log("Add " + ammoStats.name);
-        //    //PoolingManager.Instance.SetActiveForPool("BulletHoleManager", true);
-        //    PoolingManager.Instance.AddGameEvent("Pool" + ammoStats.name + "Setup");
-        //}
-        //else if (ammoStats.name == "Tomato")
-        //{
-        //    //Debug.Log("Add " + ammoStats.name);
-        //    //PoolingManager.Instance.SetActiveForPool("BulletHoleManager1", true);
-        //    PoolingManager.Instance.AddGameEvent("PoolSetup1");
-        //}
-        //else if (ammoStats.name == "Star")
-        //{
-        //    //Debug.Log("Add " + ammoStats.name);
-        //    PoolingManager.Instance.AddGameEvent("PoolSetup2");
-        //}
-    }
-
-    public void DetachAmmoToObject(Transform parent, bool isVisible)
-    {
-        //hasParent = false;
-
-        //transform.parent = parent;
-        //transform.eulerAngles = Vector3.zero;
-        //gameObject.SetActive(isVisible);
-
-        PoolingManager.Instance.RemoveGameEvent("Pool" + GetAmmoStats().name + "Setup");
-        Destroy(gameObject);
-
-        //if (ammoStats.name == "Berry")
-        //{
-        //    //PoolingManager.Instance.SetActiveForPool("BulletHoleManager", false);
-        //    PoolingManager.Instance.RemoveGameEvent("PoolSetup");
-        //}
-        //else if (ammoStats.name == "Tomato")
-        //{
-        //    //PoolingManager.Instance.SetActiveForPool("BulletHoleManager1", false);
-        //    PoolingManager.Instance.RemoveGameEvent("PoolSetup1");
-        //}
-        //else if (ammoStats.name == "Star")
-        //{
-        //    //PoolingManager.Instance.SetActiveForPool("BulletHoleManager1", false);
-        //    PoolingManager.Instance.RemoveGameEvent("PoolSetup2");
-        //}
     }
 }

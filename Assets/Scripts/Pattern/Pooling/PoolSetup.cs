@@ -68,8 +68,8 @@ public class PoolSetup : GameObserver, IPoolSetup
 
     public void Get()
     {
-        Debug.Log("Get in PoolSetup");
-        Debug.Log(currentObject);
+        //Debug.Log("Get in PoolSetup");
+        //Debug.Log(currentObject);
         currentObject = pool.Get();
     }
 
@@ -100,7 +100,7 @@ public class PoolSetup : GameObserver, IPoolSetup
         //    RemoveGameEvent();
         //    return;
         //}
-        Debug.Log("Call OnUsed");
+        //Debug.Log("Call OnUsed");
         currentObject?.OnUsed(hit); // fix null in memory
     }
 

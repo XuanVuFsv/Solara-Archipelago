@@ -49,21 +49,27 @@ public class Item
         int currentCount = count - newCount;
         if (currentCount < 0)
         {
+            plantSample.GetComponent<Suckable>().DetachAmmoToObject();
             return;
         }
         else
         {
             count = currentCount;
-            if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
+
+            int lastIndex = totalPlant.Count - 1;
+            if (lastIndex >= 0)
             {
-                int lastIndex = totalPlant.Count - 1;
-                if (lastIndex >= 0)
+                if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
                     totalPlant[lastIndex].ChangeToSeed();
                     totalPlant[lastIndex].MoveOut();
-                    totalPlant.RemoveAt(lastIndex);
                 }
-                else
+
+                totalPlant.RemoveAt(lastIndex);
+            }
+            else
+            {
+                if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
                     Plant newPlant = GameObject.Instantiate(plantSample, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Plant>();
                     newPlant.ChangeToSeed();
@@ -71,5 +77,13 @@ public class Item
                 }
             }
         }
+    }
+
+    public void ResetItem(Item resetItem)
+    {
+        ammoStats = resetItem.ammoStats;
+        totalPlant = null;
+        plantSample = null;
+        count = 0;
     }
 }

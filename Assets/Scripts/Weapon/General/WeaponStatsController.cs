@@ -16,8 +16,7 @@ public class WeaponStatsController: MonoBehaviour
     CameraShake cameraShake;
     [SerializeField]
     GameEvent pickAmmoEvent;
-    [SerializeField]
-    Item itemInInventory;
+    public Item itemInInventory;
 
     public string weaponName;
     public int currentAmmo, remainingAmmo, ammoInMagazine;
@@ -84,9 +83,9 @@ public class WeaponStatsController: MonoBehaviour
 
     public void SetupWeaponStats(WeaponStats weaponStats, bool sameWeaponSlotWithCurrentAmmo)
     {
-        if (weaponStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun && InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun)
+        if (weaponStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun && InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun || weaponStats.weaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
         {
-            SetupAmmoStats();
+            SetupAmmoStats(true);
         }    
         //Debug.Log("SetupWeaponStats");
         UpdateAmmoState();
@@ -99,27 +98,46 @@ public class WeaponStatsController: MonoBehaviour
         ofActiveAmmo = sameWeaponSlotWithCurrentAmmo;
     }
 
-    public void SetupAmmoStats()
+    public void SetupAmmoStats(bool isSameAmmo)
     {
         itemInInventory = InventoryController.Instance.GetCurrentItem();
 
-        currentAmmoStatsController.ammoStats = itemInInventory.ammoStats;
-        currentAmmoStatsController.AssignAmmotData();
+        if(isSameAmmo)
+        {
+            currentAmmoStatsController.ammoStats = itemInInventory.ammoStats;
+            currentAmmoStatsController.AssignAmmotData();
+        }
 
-        gunCamera.SetMultiplier(currentAmmoStatsController.multiplierForAmmo);
-        gunCamera.SetHasScope(currentAmmoStatsController.zoomType == AmmoStats.ZoomType.HasScope);
+        if(weaponStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun)
+        {
+            gunCamera.SetMultiplier(currentAmmoStatsController.multiplierForAmmo);
+            gunCamera.SetHasScope(currentAmmoStatsController.zoomType == AmmoStats.ZoomType.HasScope);
 
-        itemInInventory.totalPlant[0].GetComponent<Suckable>().AttachAmmoToObject(transform, false);
+            itemInInventory.totalPlant[0].GetComponent<Suckable>().AttachAmmoToObject(transform, false);
 
-        pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
-        pickAmmoEvent.Notify(currentAmmoStatsController.multiplierRecoilOnAim);
-
-        currentAmmo = 0;
-        outOfAmmo = true;
-        remainingAmmo = itemInInventory.count;
+            pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
+            pickAmmoEvent.Notify(currentAmmoStatsController.multiplierRecoilOnAim);
+            currentAmmo = 0;
+            outOfAmmo = true;
+            remainingAmmo = itemInInventory.count;
+        }
+        else
+        {
+            currentAmmo = itemInInventory.count;
+            outOfAmmo = false;
+            remainingAmmo = itemInInventory.count - currentAmmo;
+        }
 
         UpdateAmmoUI();
-    }   
+    }
+    
+    public void ResetAmmoStats(AmmoStats resetAmmoStats)
+    {
+        currentAmmoStatsController.ammoStats = resetAmmoStats;
+        currentAmmoStatsController.AssignAmmotData();
+
+        ammoInMagazine = 0;
+    }
     
     public void SuckUpAmmo(Suckable ammoPickup)
     {
@@ -135,34 +153,37 @@ public class WeaponStatsController: MonoBehaviour
             currentAmmoStatsController.AssignAmmotData();
             //ofActiveAmmo = weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot;
 
-            if (ofActiveAmmo)
-            {
-                //Debug.Log("Set" + currentAmmoStatsController.multiplierForAmmo);
-                gunCamera.SetMultiplier(currentAmmoStatsController.multiplierForAmmo);
-            }
+            //if (ofActiveAmmo)
+            //{
+            //    //Debug.Log("Set" + currentAmmoStatsController.multiplierForAmmo);
+            //    gunCamera.SetMultiplier(currentAmmoStatsController.multiplierForAmmo);
+            //}
 
             ammoPickup.AttachAmmoToObject(transform, false);
 
             //pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
             //pickAmmoEvent.Notify(currentAmmoStatsController.multiplierRecoilOnAim);
 
-            SetNewAmmoCount(ammoPickup);
-            ammunitionChestPicked = ammoPickup;
+            //SetNewAmmoCount(ammoPickup);
+            //ammunitionChestPicked = ammoPickup;
         }
         else if (currentAmmoStatsController.ammoStats.name == ammoPickup.GetAmmoStats().name)
         {
             Debug.Log("Add same ammo");
 
             AddAmmo(ammoPickup.GetAmmoContain(), ammoPickup);
+            ammoPickup.AttachAmmoToObject(transform, false);
 
-            if (!ammunitionChestPicked)
-            {
-                ammoPickup.AttachAmmoToObject(transform, false);
-                ammunitionChestPicked = ammoPickup;
-            }
-            else Destroy(ammoPickup.gameObject);
+            SetupAmmoStats(false);
 
-            ammoPickup.SetAmmoContain(0);
+            //if (!ammunitionChestPicked)
+            //{
+            //    ammoPickup.AttachAmmoToObject(transform, false);
+            //    ammunitionChestPicked = ammoPickup;
+            //}
+            //else Destroy(ammoPickup.gameObject);
+
+            //ammoPickup.SetAmmoContain(0);
         }
         else
         {
@@ -183,23 +204,31 @@ public class WeaponStatsController: MonoBehaviour
 
             //SetNewAmmoCount(ammoPickup);
             InventoryController.Instance.AddNewAmmoToInventory(ammoPickup.GetAmmoStats(), ammoPickup.GetAmmoContain(), ammoPickup);
-            itemInInventory = InventoryController.Instance.GetCurrentItem();
+
+            if (itemInInventory != InventoryController.Instance.GetCurrentItem())
+            {
+                itemInInventory = InventoryController.Instance.GetCurrentItem();
+                currentAmmoStatsController.ammoStats = ammoPickup.GetAmmoStats();
+                currentAmmoStatsController.AssignAmmotData();
+            }
+            SetupAmmoStats(true);
+
             //ammunitionChestPicked = ammoPickup;
         }
     }
 
-    void SetNewAmmoCount(Suckable ammoPickup)
-    {
-        currentAmmo = 0;
-        outOfAmmo = true;
+    //void SetNewAmmoCount(Suckable ammoPickup)
+    //{
+    //    currentAmmo = 0;
+    //    outOfAmmo = true;
 
-        itemInInventory = InventoryController.Instance.AddNewAmmoToInventory(ammoPickup.GetAmmoStats(), ammoPickup.GetAmmoContain(), ammoPickup);
-        Debug.Log("XXX" + itemInInventory);
-        remainingAmmo = ammoPickup.GetAmmoContain();
-        ammoInMagazine = ammoPickup.GetAmmoStats().ammoAllowedInMagazine;
+    //    itemInInventory = InventoryController.Instance.AddNewAmmoToInventory(ammoPickup.GetAmmoStats(), ammoPickup.GetAmmoContain(), ammoPickup);
+    //    Debug.Log("XXX" + itemInInventory);
+    //    remainingAmmo = ammoPickup.GetAmmoContain();
+    //    ammoInMagazine = ammoPickup.GetAmmoStats().ammoAllowedInMagazine;
 
-        UpdateAmmoUI();
-    }
+    //    UpdateAmmoUI();
+    //}
 
     public void SwitchAmmo(int step)
     {
@@ -208,14 +237,18 @@ public class WeaponStatsController: MonoBehaviour
 
     public void UseAmmo(int count)
     {
-        currentAmmo -= count;
         //InventoryController.Instance.GetCurrentItem().AddAmmo(ammo);
         itemInInventory.UseAmmo(count, weaponSlot);
         //remainingAmmo = InventoryController.Instance.GetCurrentItem().count - currentAmmo; //ammo in inventory or bag
+        currentAmmo = itemInInventory.count;
+        remainingAmmo = itemInInventory.count - currentAmmo;
 
         if (currentAmmo <= 0)
         {
             outOfAmmo = true;
+            InventoryController.Instance.ResetCurrentSlot();
+            itemInInventory = InventoryController.Instance.GetCurrentItem();
+            ResetAmmoStats(itemInInventory.ammoStats);
         }
 
         UpdateAmmoUI();

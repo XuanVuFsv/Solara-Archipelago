@@ -102,7 +102,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 if (Physics.Raycast(shootingInputData.raycastOrigin.position, direction, out hit, shootingInputData.ammoStatsController.range, shootingInputData.layerMask))
                 {
                     raycastHits.Add(hit);
-                    Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
+                    //Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                     PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                     shootingInputData.hitEvent.Notify(hit);
                     wall = hit.transform.GetComponent<WallBehaviour>();

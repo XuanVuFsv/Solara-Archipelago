@@ -11,8 +11,13 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     RaycastHit hit;
     [SerializeField]
     private float maxDistance = 3;
+    [SerializeField]
+    private float distanceThresholdToGotAmmo = 0.45f;
+    [SerializeField]
+    private float radiusSphereCastToCheckSucked = 0.1f;
 
-    public int minSuckUpSpeed, maxSuckUpSpeed;
+    public float minSuckUpSpeed, maxSuckUpSpeed;
+    public int moveOutForce;
     public float acceleratonSuckUpSpeed;
 
     // Start is called before the first frame update
@@ -49,6 +54,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
 
     public void HandleRightMouseClick()
     {
+        //Debug.Log("Handle Right Click");
         ShootOutHandle();
     }
 
@@ -58,10 +64,15 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
         {
             //Debug.Log(hit.transform.name);
             Suckable suckedObject = hit.transform.GetComponent<Suckable>();
+            //suckedObject.ResetVelocity();
             suckedObject?.GoToAxieCollector();
 
-            if (Vector3.Distance(shootingInputData.bulletSpawnPoint.position, hit.transform.position) <= 0.5f)
+
+
+            //Debug.Log(Vector3.Distance(shootingInputData.raycastOrigin.position, hit.transform.position));
+            if (Physics.SphereCast(shootingInputData.raycastOrigin.position, radiusSphereCastToCheckSucked, shootingInputData.fpsCameraTransform.forward, out hit, distanceThresholdToGotAmmo, shootingInputData.layerMask))
             {
+                Debug.Log("xxx");
                 AmmoStats ammoStats = suckedObject.GetAmmoStats();
                 weaponStatsController.SuckUpAmmo(suckedObject);
                 //InventoryController.Instance.AddNewAmmoToInventory(ammoStats, suckedObject.GetAmmoContain());

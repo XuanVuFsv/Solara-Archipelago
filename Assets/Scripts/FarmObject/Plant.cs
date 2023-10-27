@@ -20,14 +20,6 @@ public class PlanProperties
 
 public class Plant : Suckable
 {
-    public enum PlantState
-    {
-        Seed = 0,
-        Stored = 1,
-        GrowingBody = 2,
-        Ripe = 3
-    }    
-
     public PlanProperties plantData;
     public PlantState plantState;
 
@@ -50,9 +42,20 @@ public class Plant : Suckable
 
     public override void ChangeToStored()
     {
+        gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
+        rigid.velocity = Vector3.zero;
         plantState = PlantState.Stored;
         gameObject.SetActive(false);
-    }    
+    }
+
+    public override void ChangeToSeed()
+    {
+        if (rigid) rigid = GetComponent<Rigidbody>();
+        gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
+        plantState = PlantState.Seed;
+        gameObject.SetActive(true);
+        seedOuterEffect.GetComponent<ParticleSystem>().Play(true);
+    }
 
     public void GrowPlant()
     {

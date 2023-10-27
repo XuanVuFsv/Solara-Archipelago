@@ -6,24 +6,34 @@ using UnityEngine;
 public class Item
 {
     public AmmoStats ammoStats;
-    public List<GameObject> totalPlant = new List<GameObject>();
+    public List<Suckable> totalPlant = new List<Suckable>();
+    public GameObject plantSample;
     public int count;
     public bool isActive = true;
 
-    public Item(AmmoStats ammoStats, int count, bool isActive, GameObject ammoObject)
+    public Item(AmmoStats ammoStats, int count, bool isActive, Suckable ammoObject)
     {
         this.ammoStats = ammoStats;
         AddAmmo(count, ammoObject);
         this.isActive = isActive;
     }
 
-    public int AddAmmo(int newCount, GameObject ammoObject)
+    public int AddAmmo(int newCount, Suckable ammoObject)
     {
+        bool isPlant = ammoObject is Plant;
+        if (count == 0)
+        {
+            if (isPlant) plantSample = ammoObject.gameObject;
+            else plantSample = (ammoObject as AmmoPickup).suckableSample;
+        }
+
+        if (isPlant) totalPlant.Add(ammoObject);
+        else totalPlant.Add((ammoObject as AmmoPickup).suckableSample.GetComponent<Plant>());
+
         int currentCount = count + newCount;
         if (currentCount <= ammoStats.maxCount)
         {
             count = currentCount;
-            totalPlant.Add(ammoObject);
             ammoObject.GetComponent<Suckable>().ChangeToStored();
             return 0;
         }
@@ -34,7 +44,7 @@ public class Item
         }
     }
 
-    public void UseAmmo(int newCount)
+    public void UseAmmo(int newCount, ActiveWeapon.WeaponSlot fromWeaponSlot)
     {
         int currentCount = count - newCount;
         if (currentCount < 0)
@@ -44,7 +54,22 @@ public class Item
         else
         {
             count = currentCount;
-            if (ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AxieCollector) totalPlant[totalPlant.Count - 1].GetComponent<Suckable>().MoveOut();
+            if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
+            {
+                int lastIndex = totalPlant.Count - 1;
+                if (lastIndex >= 0)
+                {
+                    totalPlant[lastIndex].ChangeToSeed();
+                    totalPlant[lastIndex].MoveOut();
+                    totalPlant.RemoveAt(lastIndex);
+                }
+                else
+                {
+                    Plant newPlant = GameObject.Instantiate(plantSample, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Plant>();
+                    newPlant.ChangeToSeed();
+                    newPlant.MoveOut();
+                }
+            }
         }
     }
 }

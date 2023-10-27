@@ -40,11 +40,11 @@ public class InventoryController : Singleton<InventoryController>
         currentAmmoList[activeSlotIndex].isActive = true;
     }
 
-    public Item AddNewAmmoToInventory(AmmoStats ammoStats, int count, GameObject ammoObject)
+    public Item AddNewAmmoToInventory(AmmoStats ammoStats, int count, Suckable ammoObject)
     {
         int firstSlot = GetSlotByName(ammoStats.name);
         int emptySlot = GetSlotByName("Null");
-        Item item = null;
+        Item item = GetCurrentItem();
 
         MyDebug.Instance.Log(firstSlot + " " + emptySlot);
 
@@ -61,6 +61,7 @@ public class InventoryController : Singleton<InventoryController>
             if (emptySlot == activeSlotIndex) currentAmmoList[emptySlot] = new Item(ammoStats, count, true, ammoObject);
             else currentAmmoList[emptySlot] = new Item(ammoStats, count, false, ammoObject);
             item = currentAmmoList[emptySlot];
+            Debug.Log(item);
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
             MyDebug.Instance.Log("Add NEW" + count + ammoStats.name);
         }

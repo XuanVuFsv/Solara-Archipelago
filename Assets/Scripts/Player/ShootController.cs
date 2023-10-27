@@ -112,12 +112,12 @@ public class ShootController : MonoBehaviour
         {
             if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety && !isReloading)
             {
-                //MyDebug.Instance.Log("Handle Right Click");
                 //MyDebug.Instance.Log(frame);
                 raycastWeapon.HandleRightMouseClick();
             }
-            else if (raycastWeapon.weaponHandler is IHandGunWeaponStragety)
+            else
             {
+                //Debug.Log("Handle Right Click");
                 raycastWeapon.HandleRightMouseClick();
             }
         }

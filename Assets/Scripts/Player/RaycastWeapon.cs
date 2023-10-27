@@ -129,7 +129,7 @@ public class RaycastWeapon : MonoBehaviour
     /// </summary>
     public void HandleRightMouseClick()
     {
-        //Debug.Log("Shoot");
+        //Debug.Log("Handle Right Click");
         weaponHandler.HandleRightMouseClick();
     }
 

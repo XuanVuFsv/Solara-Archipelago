@@ -10,6 +10,8 @@ public class ActionHandler : MonoBehaviour, IHandGunWeaponStragety
 
     public LineRenderer  lineRenderer;
 
+    public bool inGrapple = false;
+
     [SerializeField]
     private SpringJoint joint;  
     [SerializeField]
@@ -64,6 +66,7 @@ public class ActionHandler : MonoBehaviour, IHandGunWeaponStragety
 
     void StartGrapple()
     {
+        inGrapple = true;
         if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, maxDistance, shootingInputData.layerMask))
         {
             activeGrapple = true;
@@ -138,6 +141,7 @@ public class ActionHandler : MonoBehaviour, IHandGunWeaponStragety
 
     void StopGrapple()
     {
+        inGrapple = false;
         //lineRenderer.positionCount = 0;
         ResetRestrictions();
         Destroy(joint);

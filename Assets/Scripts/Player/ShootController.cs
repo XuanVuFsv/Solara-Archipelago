@@ -117,8 +117,18 @@ public class ShootController : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Handle Right Click");
-                raycastWeapon.HandleRightMouseClick();
+                if (raycastWeapon.weaponHandler is IAxieCollectorWeaponStragety)
+                {
+                    if (Time.time - lastFired > 1 / 5f)
+                    {
+                        lastFired = Time.time;
+                        raycastWeapon.HandleRightMouseClick();
+                    }
+                }
+                else
+                {
+                    raycastWeapon.HandleRightMouseClick();
+                }
             }
         }
     }
@@ -171,7 +181,7 @@ public class ShootController : MonoBehaviour
         }
         else if (raycastWeapon.weaponHandler is IHandGunWeaponStragety)
         {
-            if (inputController.isFire && activeWeapon.activeWeaponIndex == 1) raycastWeapon.HandleLeftMouseClick();
+            if (inputController.isSingleFire && activeWeapon.activeWeaponIndex == 1 && !(raycastWeapon.weaponHandler as ActionHandler).inGrapple) raycastWeapon.HandleLeftMouseClick();
         }
         else if (raycastWeapon.weaponHandler is IAxieCollectorWeaponStragety)
         {

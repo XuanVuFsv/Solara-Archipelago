@@ -20,7 +20,7 @@ MonoBehaviour:
   force: 10
   fireRate: 10
   artwork: {fileID: 21300000, guid: 50658df5b61b34768aabfb70f4e83a5c, type: 3}
-  fruitPrefab: {fileID: -6466191205683837541, guid: ff788ae173a9662439a6b539d4e49d53, type: 3}
+  fruitPrefab: {fileID: 0}
   shootingHandleType: 0
   bulletEffectComponent: -1
   trailTracer: {fileID: 0}

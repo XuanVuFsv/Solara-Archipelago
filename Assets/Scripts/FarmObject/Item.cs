@@ -21,20 +21,35 @@ public class Item
     public int AddAmmo(int newCount, Suckable ammoObject)
     {
         bool isPlant = ammoObject is Plant;
-        if (count == 0)
+        //if (count == 0)
+        //{
+        //    if (isPlant) plantSample = ammoObject.gameObject;
+        //    else plantSample = (ammoObject as AmmoPickup).suckableSample;
+        //}
+
+        if (totalPlant.Count > 0 && isPlant) totalPlant.Add(ammoObject);
+        else if (totalPlant.Count == 0)
         {
-            if (isPlant) plantSample = ammoObject.gameObject;
-            else plantSample = (ammoObject as AmmoPickup).suckableSample;
+            if (isPlant)
+            {
+                totalPlant.Add(ammoObject);
+                Debug.Log("add");
+            }
+            else plantSample = (ammoObject as AmmoPickup).suckableSample;       
         }
 
-        if (isPlant) totalPlant.Add(ammoObject);
-        else totalPlant.Add((ammoObject as AmmoPickup).suckableSample.GetComponent<Plant>());
-
         int currentCount = count + newCount;
+        Debug.Log(currentCount);
         if (currentCount <= ammoStats.maxCount)
         {
             count = currentCount;
-            ammoObject.GetComponent<Suckable>().ChangeToStored();
+            Debug.Log("Change");
+            Debug.Log(isPlant);
+            if (isPlant)
+            {
+                ammoObject.GetComponent<Plant>().ChangeToStored();
+                plantSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity);
+            }
             return 0;
         }
         else
@@ -61,7 +76,7 @@ public class Item
             {
                 if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
-                    totalPlant[lastIndex].ChangeToSeed();
+                    (totalPlant[lastIndex] as Plant).ChangeToSeed();
                     totalPlant[lastIndex].MoveOut();
                 }
 
@@ -71,7 +86,7 @@ public class Item
             {
                 if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
-                    Plant newPlant = GameObject.Instantiate(plantSample, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Plant>();
+                    Suckable newPlant = GameObject.Instantiate(plantSample, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Plant>();
                     newPlant.ChangeToSeed();
                     newPlant.MoveOut();
                 }

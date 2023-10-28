@@ -12,6 +12,8 @@ TagManager:
   - Wall
   - Bullet
   - Destroyable
+  - Suckable
+  - Ammo
   layers:
   - Default
   - TransparentFX

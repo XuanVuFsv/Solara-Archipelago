@@ -138,9 +138,20 @@ public class ActiveWeapon : MonoBehaviour
         //}
         #endregion
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            PickAmmo();
+            if ((equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AttackGun && InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun || equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AxieCollector))
+            {
+                equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SwitchAmmo(-1);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if ((equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AttackGun && InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun || equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AxieCollector))
+            {
+                equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SwitchAmmo(1);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -157,11 +168,6 @@ public class ActiveWeapon : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SwitchWeapon(equippedWeapon[2]);
-        }
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SwitchAmmo(-1);
         }
 
         //if (Input.GetKeyDown(KeyCode.Alpha4))
@@ -212,34 +218,6 @@ public class ActiveWeapon : MonoBehaviour
         DropWeapon(WeaponAction.Pickup, pickedWeaponSlot);
         EquipWeapon(WeaponAction.Pickup, pickedWeapon, false, isExistWeaponSlot);
         SetupNewWeapon(pickedWeapon.weaponStats, pickedWeapon.weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot);
-    }
-
-    void PickAmmo()
-    {
-        if (triggerAmmoList.Count == 0) return; // Only primary weapon can change ammo type
-
-        AmmoPickup pickedAmmo = GetNearestAmmo();
-
-        //if (triggerAmmoList.Count > 1)
-        //{
-        //    //if (!triggerAmmoList[nearestAmmoIndex])
-        //    //{
-        //    //    triggerAmmoList.RemoveAt(nearestAmmoIndex);
-        //    //}
-        //    pickedAmmo = GetNearestAmmo();
-        //}
-        //else
-        //{
-        //    pickedAmmo = triggerAmmoList[0];
-        //}
-
-        if (!pickedAmmo.canPickup) return;
-        int weaponIndex = (int)pickedAmmo.GetAmmoStats().weaponSlot;
-
-        //equippedWeapon[weaponIndex].GetComponent<WeaponStatsController>().SetupAmmoStats();
-        triggerAmmoList.RemoveAt(nearestAmmoIndex);
-        gunCameraController.SetHasScope(pickedAmmo.GetAmmoStats().zoomType == AmmoStats.ZoomType.HasScope);
-        //InventoryController.Instance.AddNewAmmoToInventory(pickedAmmo.ammoStats, pickedAmmo.ammoContain, false);
     }
 
     void SwitchWeapon(WeaponPickup activateWeapon)

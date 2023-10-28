@@ -32,6 +32,7 @@ public class Plant : Suckable
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
+        collider = GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -44,6 +45,7 @@ public class Plant : Suckable
     {
         gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
         rigid.velocity = Vector3.zero;
+        collider.isTrigger = false;
         plantState = PlantState.Stored;
         gameObject.SetActive(false);
     }
@@ -51,6 +53,10 @@ public class Plant : Suckable
     public override void ChangeToSeed()
     {
         if (rigid) rigid = GetComponent<Rigidbody>();
+        collider.isTrigger = false;
+        rigid.isKinematic = false;
+        rigid.useGravity = true;
+
         gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
         plantState = PlantState.Seed;
         gameObject.SetActive(true);
@@ -60,7 +66,7 @@ public class Plant : Suckable
     public void GrowPlant()
     {
         startGrowingTime = DateTime.UtcNow.ToLocalTime();
-        TimeSpan span = TimeSpan.FromSeconds(GetAmmoStats().totalGrowingTime);
+        TimeSpan span = TimeSpan.FromSeconds(ammoStats.totalGrowingTime);
         endGrowingTime = startGrowingTime.Add(span);
         StartCoroutine(StartGrowingProcess());
         Debug.Log(startGrowingTime);
@@ -69,7 +75,7 @@ public class Plant : Suckable
 
     IEnumerator StartGrowingProcess()
     {
-        yield return new WaitForSeconds(GetAmmoStats().totalGrowingTime);
+        yield return new WaitForSeconds(ammoStats.totalGrowingTime);
         plantState = PlantState.Ripe;
         seedOuterEffect.SetActive(false);
         //ripeOuterEffect.SetActive(true);

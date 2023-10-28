@@ -113,7 +113,7 @@ public class WeaponStatsController: MonoBehaviour
             gunCamera.SetMultiplier(currentAmmoStatsController.multiplierForAmmo);
             gunCamera.SetHasScope(currentAmmoStatsController.zoomType == AmmoStats.ZoomType.HasScope);
 
-            itemInInventory.totalPlant[0].GetComponent<Suckable>().AttachAmmoToObject(transform, false);
+            itemInInventory.plantSample.GetComponent<Suckable>().AttachAmmoToObject(transform, false);
 
             pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
             pickAmmoEvent.Notify(currentAmmoStatsController.multiplierRecoilOnAim);
@@ -149,7 +149,7 @@ public class WeaponStatsController: MonoBehaviour
         {
 
             Debug.Log("Add to null " + transform.parent.name);
-            currentAmmoStatsController.ammoStats = ammoPickup.GetAmmoStats();
+            currentAmmoStatsController.ammoStats = ammoPickup.ammoStats;
             currentAmmoStatsController.AssignAmmotData();
             //ofActiveAmmo = weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot;
 
@@ -167,7 +167,7 @@ public class WeaponStatsController: MonoBehaviour
             //SetNewAmmoCount(ammoPickup);
             //ammunitionChestPicked = ammoPickup;
         }
-        else if (currentAmmoStatsController.ammoStats.name == ammoPickup.GetAmmoStats().name)
+        else if (currentAmmoStatsController.ammoStats.name == ammoPickup.ammoStats.name)
         {
             Debug.Log("Add same ammo");
 
@@ -203,15 +203,15 @@ public class WeaponStatsController: MonoBehaviour
             //pickAmmoEvent.Notify(currentAmmoStatsController.multiplierRecoilOnAim);
 
             //SetNewAmmoCount(ammoPickup);
-            InventoryController.Instance.AddNewAmmoToInventory(ammoPickup.GetAmmoStats(), ammoPickup.GetAmmoContain(), ammoPickup);
+            InventoryController.Instance.AddNewAmmoToInventory(ammoPickup.ammoStats, ammoPickup.GetAmmoContain(), ammoPickup);
 
-            if (itemInInventory != InventoryController.Instance.GetCurrentItem())
+            if (itemInInventory.ammoStats.name == "Null" && itemInInventory != InventoryController.Instance.GetCurrentItem())
             {
                 itemInInventory = InventoryController.Instance.GetCurrentItem();
-                currentAmmoStatsController.ammoStats = ammoPickup.GetAmmoStats();
+                currentAmmoStatsController.ammoStats = ammoPickup.ammoStats;
                 currentAmmoStatsController.AssignAmmotData();
+                SetupAmmoStats(true);
             }
-            SetupAmmoStats(true);
 
             //ammunitionChestPicked = ammoPickup;
         }
@@ -233,6 +233,8 @@ public class WeaponStatsController: MonoBehaviour
     public void SwitchAmmo(int step)
     {
         InventoryController.Instance.SwitchItem(step);
+        itemInInventory = InventoryController.Instance.GetCurrentItem();
+        SetupAmmoStats(true);
     }
 
     public void UseAmmo(int count)

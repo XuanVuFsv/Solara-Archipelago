@@ -16,6 +16,7 @@ public class AmmoPickup : Suckable
     {
         CreateAmmoUI();
         rigid = GetComponent<Rigidbody>();
+        collider = GetComponent<Collider>();
         //Debug.Log("Create a AmmoPickup instance " + ammoStats.name + gameObject.name);
     }
 
@@ -75,8 +76,10 @@ public class AmmoPickup : Suckable
 
     public override void ChangeToStored()
     {
-        suckableSample.GetComponent<Plant>().ChangeToStored();
         suckableSample.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
+        rigid.velocity = Vector3.zero;
+        suckableSample.GetComponent<Plant>().ChangeToStored();
+        collider.isTrigger = false;
 
         gameObject.SetActive(false);
     }
@@ -94,7 +97,7 @@ public class AmmoPickup : Suckable
     public void ShowAmmoStats()
     {
         ammoUI.gameObject.SetActive(true);
-        ammoUI.GetChild(0).GetComponent<WeaponUI>().weaponName.text = GetAmmoStats().name;
+        ammoUI.GetChild(0).GetComponent<WeaponUI>().weaponName.text = ammoStats.name;
     }
 
     public override void AttachAmmoToObject(Transform parent, bool isVisible)
@@ -107,8 +110,8 @@ public class AmmoPickup : Suckable
 
         if (!parent.GetComponent<WeaponStatsController>().ofActiveAmmo) return;
 
-        PoolingManager.Instance.AddGameEvent("Pool" + GetAmmoStats().name + "Setup");
-        Debug.Log("Add Game Event Pool" + GetAmmoStats().name + "Setup");
+        PoolingManager.Instance.AddGameEvent("Pool" + ammoStats.name + "Setup");
+        Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");
 
     }
 }

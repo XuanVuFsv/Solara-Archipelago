@@ -12,12 +12,12 @@ public class Suckable : MonoBehaviour, ISuckable
         Ripe = 3
     }
 
-    [SerializeField]
-    private AmmoStats ammoStats;
+    public AmmoStats ammoStats;
     [SerializeField]
     private int ammoContain;
 
     public Rigidbody rigid;
+    public Collider collider;
 
     float s;
     float varSpeed;
@@ -71,12 +71,12 @@ public class Suckable : MonoBehaviour, ISuckable
     public virtual void AttachAmmoToObject(Transform parent, bool isVisible)
     {
         if (!parent.GetComponent<WeaponStatsController>().ofActiveAmmo) return;
-        PoolingManager.Instance.AddGameEvent("Pool" + GetAmmoStats().name + "Setup");
-        Debug.Log("Add Game Event Pool" + GetAmmoStats().name + "Setup");
+        PoolingManager.Instance.AddGameEvent("Pool" + ammoStats.name + "Setup");
+        Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");
     }
 
     public virtual void DetachAmmoToObject()
     {
-        PoolingManager.Instance.RemoveGameEvent("Pool" + GetAmmoStats().name + "Setup");
+        PoolingManager.Instance.RemoveGameEvent("Pool" + ammoStats.name + "Setup");
     }
 }

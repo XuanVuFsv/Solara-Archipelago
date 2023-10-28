@@ -52,7 +52,7 @@ public class InventoryController : Singleton<InventoryController>
         {
             //Check stack item here with existed item
             int leftOverAmmo = currentAmmoList[firstSlot].AddAmmo(count, ammoObject);
-            MyDebug.Instance.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
+            Debug.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
         }
         else if (emptySlot != -1)
         {
@@ -63,11 +63,11 @@ public class InventoryController : Singleton<InventoryController>
             item = currentAmmoList[emptySlot];
             //Debug.Log(item);
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
-            MyDebug.Instance.Log("Add NEW" + count + ammoStats.name);
+            Debug.Log("Add NEW" + count + ammoStats.name);
         }
         else
         {
-            MyDebug.Instance.Log("No more slot");
+            Debug.Log("No more slot");
             hasEmptySlot = true;
             //New item but don't enough slot
         }

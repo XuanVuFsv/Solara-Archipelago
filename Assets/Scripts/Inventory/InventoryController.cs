@@ -7,7 +7,7 @@ public class InventoryController : Singleton<InventoryController>
     [SerializeField]
     private List<Item> currentAmmoList;
     [SerializeField]
-    private int itemCountInInventory = 8;
+    private int itemCountInInventory = 4;
     [SerializeField]
     private bool hasEmptySlot;
     [SerializeField]
@@ -38,6 +38,7 @@ public class InventoryController : Singleton<InventoryController>
         if (activeSlotIndex < 0) activeSlotIndex = currentAmmoList.Count - 1;
         if (activeSlotIndex == currentAmmoList.Count) activeSlotIndex = 0;
         currentAmmoList[activeSlotIndex].isActive = true;
+        WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().ammoStats.artwork;
     }
 
     public Item AddNewAmmoToInventory(AmmoStats ammoStats, int count, Suckable ammoObject)
@@ -52,22 +53,26 @@ public class InventoryController : Singleton<InventoryController>
         {
             //Check stack item here with existed item
             int leftOverAmmo = currentAmmoList[firstSlot].AddAmmo(count, ammoObject);
-            Debug.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
+            //Debug.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
         }
         else if (emptySlot != -1)
         {
             //Add new iteam which not existed in inventory
             //currentAmmoList[emptySlot] = new Item(ammoStats, count, ofActiveAmmo && !IsExistedAmmoForWeaponSlot(ammoStats.weaponSlot));
-            if (emptySlot == activeSlotIndex) currentAmmoList[emptySlot] = new Item(ammoStats, count, true, ammoObject);
+            if (emptySlot == activeSlotIndex)
+            {
+                currentAmmoList[emptySlot] = new Item(ammoStats, count, true, ammoObject);
+                WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().ammoStats.artwork;
+            }
             else currentAmmoList[emptySlot] = new Item(ammoStats, count, false, ammoObject);
             item = currentAmmoList[emptySlot];
             //Debug.Log(item);
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
-            Debug.Log("Add NEW" + count + ammoStats.name);
+            //Debug.Log("Add NEW" + count + ammoStats.name);
         }
         else
         {
-            Debug.Log("No more slot");
+            //Debug.Log("No more slot");
             hasEmptySlot = true;
             //New item but don't enough slot
         }

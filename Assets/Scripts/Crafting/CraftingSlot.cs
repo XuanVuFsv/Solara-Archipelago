@@ -27,7 +27,7 @@ public class CraftingSlot : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag != "Suckable") return;
-        Debug.Log(other.gameObject.name);
+        //Debug.Log(other.gameObject.name);
 
         Suckable suckableItem = other.transform.GetComponent<Suckable>();
         if (currentSuckableItems.Count > 0)
@@ -50,6 +50,7 @@ public class CraftingSlot : MonoBehaviour
 
         currentSuckableItems.Add(suckableItem);
         count++;
+        (suckableItem as Plant).inCrafting = true;
 
         if (count > 1) currentSuckableItems[currentSuckableItems.Count - 2].gameObject.SetActive(false);
         if (count > 0) currentSuckableItems[currentSuckableItems.Count - 1].gameObject.SetActive(true);
@@ -65,7 +66,7 @@ public class CraftingSlot : MonoBehaviour
 
         if (count > 0)
         {
-            Debug.Log("Craft");
+            //Debug.Log("Craft");
         }
         else return;
 
@@ -94,7 +95,7 @@ public class CraftingSlot : MonoBehaviour
 
         if (count > 0)
         {
-            Debug.Log("Cancel Craft");        
+            //Debug.Log("Cancel Craft");        
         }
         else return;
 
@@ -119,7 +120,7 @@ public class CraftingSlot : MonoBehaviour
 
         if (count > 0)
         {
-            Debug.Log("Complete");
+            //Debug.Log("Complete");
         }
         else return;
 
@@ -150,10 +151,12 @@ public class CraftingSlot : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.name);
+        //Debug.Log(other.name);
+        other.GetComponent<Plant>().rigid.useGravity = true;
         other.GetComponent<Plant>().ChangeToSeed();
         currentSuckableItems.Remove(currentSuckableItems[count - 1]);
         count--;
+
 
         if (count > 0)
         {
@@ -169,6 +172,4 @@ public class CraftingSlot : MonoBehaviour
         yield return new WaitForSeconds(1f);
         currentSuckableItems[count - 1].gameObject.SetActive(true);
     }
-
-
 }

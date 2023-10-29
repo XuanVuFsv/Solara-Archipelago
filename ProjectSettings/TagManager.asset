@@ -14,6 +14,8 @@ TagManager:
   - Destroyable
   - Suckable
   - Ammo
+  - CheckingHarvest
+  - Axie
   layers:
   - Default
   - TransparentFX
@@ -26,7 +28,7 @@ TagManager:
   - Suckable
   - Ignore Player
   - Only Player
-  - 
+  - CollideSuckable
   - 
   - 
   - 

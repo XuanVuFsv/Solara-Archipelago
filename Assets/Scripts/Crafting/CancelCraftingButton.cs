@@ -11,7 +11,7 @@ public class CancelCraftingButton : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Cancel");
+            //Debug.Log("Cancel");
             craftingManager.ResetCraftingState();
         }
     }

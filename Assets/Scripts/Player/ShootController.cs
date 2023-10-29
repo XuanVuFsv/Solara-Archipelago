@@ -46,6 +46,8 @@ public class ShootController : MonoBehaviour
 
     int frame = 0;
 
+    public AudioSource source;
+
     #region Advance Settings for muzzle and flash effect
     //[Header("Muzzleflash Settings")]
     //public ParticleSystem sparkParticles;
@@ -146,6 +148,7 @@ public class ShootController : MonoBehaviour
                 //Shoot automatic
                 if (Time.time - lastFired > 1 / currentWeaponStatsController.currentAmmoStatsController.fireRate)
                 {
+                    source.PlayOneShot(source.clip);
                     readyToFire = true;
    
                     //Debug.Log("Shoot");

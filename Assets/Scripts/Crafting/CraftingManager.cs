@@ -33,7 +33,7 @@ public class CraftingManager : MonoBehaviour
     {
         if (!inCrafting)
         {
-            Debug.Log("notinCrafting");
+            //Debug.Log("notinCrafting");
         }
 
         foreach (CraftingSlot slot in craftingSlots)
@@ -50,19 +50,20 @@ public class CraftingManager : MonoBehaviour
     {
         if (inCrafting)
         {
-            Debug.Log("inCrafting");
+            //Debug.Log("inCrafting");
             return false;
         }
 
+        currentRecipe = "";
         foreach (CraftingSlot slot in craftingSlots)
         {
-            Debug.Log("CreateName");
+            //Debug.Log("CreateName");
             currentRecipe += slot.GetCurrentName();
         }
 
         if (recipes.ContainsKey(currentRecipe))
         {
-            Debug.Log("ContainsKey");
+            //Debug.Log("ContainsKey");
             productPos = recipes[currentRecipe].product.transform;
             foreach (CraftingSlot slot in craftingSlots)
             {

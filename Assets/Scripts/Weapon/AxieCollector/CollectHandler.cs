@@ -64,8 +64,15 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
         {
             //Debug.Log(hit.transform.name);
             Suckable suckedObject = hit.transform.GetComponent<Suckable>();
+            if (suckedObject is Plant && !(suckedObject as Plant).CanSuckUp())
+            {
+                //Debug.Log(suckedObject.transform.parent + suckedObject.name + (suckedObject as Plant).plantState);
+                //Debug.Log(!(suckedObject as Plant).CanSuckUp());
+                return;
+            }
             //suckedObject.ResetVelocity();
             suckedObject?.GoToAxieCollector();
+            if (suckedObject as Plant) (suckedObject as Plant).inCrafting = false;
 
 
 
@@ -76,8 +83,19 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
                 {
                     if(suckedObject.ammoStats != null)
                     {
-                        AmmoStats ammoStats = suckedObject.ammoStats;
-                        weaponStatsController.SuckUpAmmo(suckedObject);
+                        //Debug.Log(suckedObject.ammoStats.name);
+                        if (suckedObject.ammoStats.name == "AXS")
+                        {
+                            //Debug.Log("Earn");
+                            AXSManager.Instance.Add((suckedObject.ammoContain * 1f) / 10f);
+                            suckedObject.ammoContain = 0;
+                            (suckedObject as Plant).DestroyThis();
+                        }
+                        else
+                        {
+                            AmmoStats ammoStats = suckedObject.ammoStats;
+                            weaponStatsController.SuckUpAmmo(suckedObject);
+                        }
                     }
                     //InventoryController.Instance.AddNewAmmoToInventory(ammoStats, suckedObject.GetAmmoContain());
                 }

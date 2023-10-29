@@ -148,7 +148,7 @@ public class WeaponStatsController: MonoBehaviour
         if (!currentAmmoStatsController.ammoStats)
         {
 
-            Debug.Log("Add to null " + transform.parent.name);
+            //Debug.Log("Add to null " + transform.parent.name);
             currentAmmoStatsController.ammoStats = ammoPickup.ammoStats;
             currentAmmoStatsController.AssignAmmotData();
             //ofActiveAmmo = weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot;
@@ -169,7 +169,7 @@ public class WeaponStatsController: MonoBehaviour
         }
         else if (currentAmmoStatsController.ammoStats.name == ammoPickup.ammoStats.name)
         {
-            Debug.Log("Add same ammo");
+            //Debug.Log("Add same ammo");
 
             AddAmmo(ammoPickup.GetAmmoContain(), ammoPickup);
             ammoPickup.AttachAmmoToObject(transform, false);
@@ -187,7 +187,7 @@ public class WeaponStatsController: MonoBehaviour
         }
         else
         {
-            Debug.Log("Add new ammo");
+            //Debug.Log("Add new ammo");
 
             //if (ammunitionChestPicked)
             //{

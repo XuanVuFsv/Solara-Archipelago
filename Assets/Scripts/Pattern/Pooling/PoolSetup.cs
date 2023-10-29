@@ -114,7 +114,7 @@ public class PoolSetup : GameObserver, IPoolSetup
         //}
         //Debug.Log(this);
         //Debug.Log(gameObject.transform.parent);
-        Debug.Log("Call OnUsed");
+        //Debug.Log("Call OnUsed");
         currentObject?.OnUsed(point, normal); // fix null in memory
     }
 

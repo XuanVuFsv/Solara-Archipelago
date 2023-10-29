@@ -231,7 +231,7 @@ public class ActiveWeapon : MonoBehaviour
 
         if (shootController.isReloading)
         {
-            Debug.Log("Switch");
+            //Debug.Log("Switch");
             shootController.AttachMagazine();
             shootController.StopAllCoroutines();
             shootController.StopCoroutine("Reload");
@@ -351,7 +351,7 @@ public class ActiveWeapon : MonoBehaviour
             //equippedWeaponParent[weaponSlotIndex].GetComponent<Rigidbody>().AddForce(transform.forward * 5, ForceMode.Impulse);
 
             isHoldWeapon = false;
-            Debug.Log(isHoldWeapon);
+            //Debug.Log(isHoldWeapon);
 
             if (!equippedWeapon[weaponSlotIndex].weaponUI)
             {
@@ -385,6 +385,8 @@ public class ActiveWeapon : MonoBehaviour
 
     public void SetupNewWeapon(WeaponStats weaponStats, bool sameWeaponSlotWithCurrentAmmo)
     {
+        WeaponSystemUI.Instance.weaponNameText.text = GetCurrentWeaponName();
+
         equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStats, sameWeaponSlotWithCurrentAmmo);
 
         shootController.magazineObject = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().magazineObject;

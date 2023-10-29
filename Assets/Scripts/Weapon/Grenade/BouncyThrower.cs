@@ -98,7 +98,7 @@ public class BouncyThrower : MonoBehaviour
             t = 0f;
             //throwerCamera.m_Offset.z = -5;
             ReleaseGrenade();
-            Debug.Log("Throw");
+            //Debug.Log("Throw");
             //Animator.SetTrigger("Throw Grenade");
         }
     }

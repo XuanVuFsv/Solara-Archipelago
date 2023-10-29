@@ -14,7 +14,7 @@ public class Suckable : MonoBehaviour, ISuckable
 
     public AmmoStats ammoStats;
     [SerializeField]
-    private int ammoContain;
+    public int ammoContain;
 
     public Rigidbody rigid;
     public Collider collider;
@@ -29,7 +29,7 @@ public class Suckable : MonoBehaviour, ISuckable
         s += Time.deltaTime * CollectHandler.Instance.acceleratonSuckUpSpeed;
         varSpeed = Mathf.Lerp(CollectHandler.Instance.minSuckUpSpeed, CollectHandler.Instance.maxSuckUpSpeed, CollectHandler.Instance.velocityCurve.Evaluate(s / 1f));
         //rigid.velocity = dir.normalized * varSpeed;
-
+        
         transform.position = Vector3.Lerp(transform.position, CollectHandler.Instance.shootingInputData.raycastOrigin.position, varSpeed);
     }
 
@@ -72,7 +72,7 @@ public class Suckable : MonoBehaviour, ISuckable
     {
         if (!parent.GetComponent<WeaponStatsController>().ofActiveAmmo) return;
         PoolingManager.Instance.AddGameEvent("Pool" + ammoStats.name + "Setup");
-        Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");
+        //Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");
     }
 
     public virtual void DetachAmmoToObject()

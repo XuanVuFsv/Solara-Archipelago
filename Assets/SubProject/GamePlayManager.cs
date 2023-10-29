@@ -60,12 +60,12 @@ public class GamePlayManager : MonoBehaviour
         {
             time = Time.time;
             state = StateGame.InGame;
-            Debug.Log("Start");
+            //Debug.Log("Start");
         }
 
         if (Time.time - time >= gameTime && state == StateGame.InGame)
         {
-            Debug.Log("End");
+            //Debug.Log("End");
             state = StateGame.EndGame;
         }
     }

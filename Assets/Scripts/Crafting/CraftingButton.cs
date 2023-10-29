@@ -25,7 +25,7 @@ public class CraftingButton : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Crafting");
+            //Debug.Log("Crafting");
             onCrafting = craftingManager.StartCrafting();
         }
     }

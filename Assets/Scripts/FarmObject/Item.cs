@@ -33,18 +33,18 @@ public class Item
             if (isPlant)
             {
                 totalPlant.Add(ammoObject);
-                Debug.Log("add");
+                //Debug.Log("add");
             }
             else plantSample = (ammoObject as AmmoPickup).suckableSample;       
         }
 
         int currentCount = count + newCount;
-        Debug.Log(currentCount);
+        //Debug.Log(currentCount);
         if (currentCount <= ammoStats.maxCount)
         {
             count = currentCount;
-            Debug.Log("Change");
-            Debug.Log(isPlant);
+            //Debug.Log("Change");
+            //Debug.Log(isPlant);
             if (isPlant)
             {
                 ammoObject.GetComponent<Plant>().ChangeToStored();
@@ -77,6 +77,7 @@ public class Item
                 if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
                     (totalPlant[lastIndex] as Plant).ChangeToSeed();
+                    (totalPlant[lastIndex] as Plant).plantData.orginalBody = InventoryController.Instance.gameObject;
                     totalPlant[lastIndex].MoveOut();
                 }
 
@@ -87,6 +88,7 @@ public class Item
                 if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
                     Suckable newPlant = GameObject.Instantiate(plantSample, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Plant>();
+                    (newPlant as Plant).plantData.orginalBody = InventoryController.Instance.gameObject;
                     newPlant.ChangeToSeed();
                     newPlant.MoveOut();
                 }

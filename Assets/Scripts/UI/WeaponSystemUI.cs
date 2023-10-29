@@ -7,12 +7,14 @@ using TMPro;
 public class WeaponSystemUI : MonoBehaviour
 {
     private static WeaponSystemUI instance;
-    [SerializeField]
-    TextMeshProUGUI currentAmmoText;
-    [SerializeField]
-    TextMeshProUGUI weponNameText;
+    public TextMeshProUGUI currentAmmoText;
+    public TextMeshProUGUI weaponNameText;
+    public TextMeshProUGUI ammoNameText;
+    public Image artwork;
     [SerializeField]
     TextMeshProUGUI deltaTime;
+
+    public ActiveWeapon activeWeapon;
 
     private float pollingTime = 1f;
     private float time = 1f;
@@ -61,6 +63,7 @@ public class WeaponSystemUI : MonoBehaviour
             time -= pollingTime;
             frameCount = 0;
         }
+        ammoNameText.text = InventoryController.Instance.GetCurrentItem().ammoStats.name;
     }
 
     //public override void Execute(IGameEvent gEvent, DataGroup dataGroup)

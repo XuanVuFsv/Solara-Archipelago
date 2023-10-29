@@ -15,6 +15,6 @@ public class MyDebug: Singleton<MyDebug>
     public void Log(object message)
     {
         if (!isActive) return;
-        Debug.Log(message);
+        //Debug.Log(message);
     }
 }

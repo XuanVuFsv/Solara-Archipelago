@@ -12,9 +12,11 @@ public class PlanProperties
     public ParticleSystem hitEffectPrefab;
 
     [Header("Plant stage")]
-    public List<GameObject> growingBodyList;
+    public GameObject growingBody;
+    public GameObject orginalBody;
+    public GameObject ripePlantPrefab;
+    public Plant orginalPlant;
 
-    public List<Plant> plantList;
     public int wateringTime;
 }
 
@@ -23,31 +25,58 @@ public class Plant : Suckable
     public PlanProperties plantData;
     public PlantState plantState;
 
+    public int growingTime = 3;
     public int elapsedTime = 0;
+    public bool onTree = false;
+    public bool nonPlanting;
     public DateTime startGrowingTime;
     public DateTime endGrowingTime;
+    public List<Transform> ripePlantPoss = new List<Transform>();
     public GameObject seedOuterEffect, ripeOuterEffect;
+    public List<Plant> ripePlants = new List<Plant>();
+    public int ripePlantCount = 0;
+    public GameObject defaultModelPlant;
+    public bool inCrafting;
 
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (ammoStats.name == "AXS")
+        {
+            int x = UnityEngine.Random.Range(AXSManager.Instance.starRandomRangeValue, AXSManager.Instance.endRandomRangeValue);
+            if (x <= AXSManager.Instance.smallestReward)
+            {
+                ammoContain = 1;
+            }
+            else if(x <= AXSManager.Instance.mediumReward)
+            {
+                ammoContain = 10;
+            }
+            else
+            {
+                ammoContain = 100;
+            }
+        }
     }
 
     public override void ChangeToStored()
     {
+        inCrafting = false;
+
         gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
+
         rigid.velocity = Vector3.zero;
         collider.isTrigger = false;
+        rigid.useGravity = true;
+
         plantState = PlantState.Stored;
+
         gameObject.SetActive(false);
+        seedOuterEffect.SetActive(true);
+        ripeOuterEffect.SetActive(false);
     }
 
     public override void ChangeToSeed()
@@ -58,19 +87,85 @@ public class Plant : Suckable
         rigid.useGravity = true;
 
         gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
+
         plantState = PlantState.Seed;
+
         gameObject.SetActive(true);
+        defaultModelPlant.SetActive(true);
         seedOuterEffect.GetComponent<ParticleSystem>().Play(true);
+    }
+
+    public void ChangeToSeedOnTree()
+    {
+        inCrafting = false;
+        //Debug.Log("OnTree");
+        if (rigid) rigid = GetComponent<Rigidbody>();
+        collider.isTrigger = true;
+        rigid.isKinematic = false;
+        rigid.useGravity = false;
+
+        plantState = PlantState.Seed;
+
+        plantData.growingBody.SetActive(false);
+        gameObject.SetActive(true);
+        defaultModelPlant.SetActive(true);
+    }
+
+    public void ChangeToGrowingBody()
+    {
+        inCrafting = false;
+        if (rigid) rigid = GetComponent<Rigidbody>();
+        ResetVelocity();
+        collider.isTrigger = true;
+        rigid.isKinematic = true;
+        rigid.useGravity = false;
+
+        plantData.orginalBody = null;
+        plantState = PlantState.GrowingBody;
+        defaultModelPlant.SetActive(false);
+        GrowPlant();
+    }
+
+    public void ChangeToRipe()
+    {
+        inCrafting = false;
+        foreach (Transform ripePos in ripePlantPoss)
+        {
+            Plant newRipePlant = GameObject.Instantiate(plantData.ripePlantPrefab, ripePos.position, Quaternion.identity, ripePos).GetComponent<Plant>();
+            //Debug.Log(newRipePlant.name);
+            ripePlants.Add(newRipePlant);
+            newRipePlant.plantData.orginalPlant = this;
+            ripePlantCount++;
+
+            newRipePlant.transform.localScale = new Vector3(1, 1, 1);
+
+            newRipePlant.onTree = true;
+            newRipePlant.plantData.orginalBody = plantData.growingBody;
+
+            newRipePlant.ChangeToSeedOnTree();
+            newRipePlant.SetRipePlantEffect();
+
+            plantState = PlantState.Ripe;
+        }
+    }
+
+    public void SetRipePlantEffect()
+    {
+        //seedOuterEffect.SetActive(false);
+        ripeOuterEffect.SetActive(true);
     }
 
     public void GrowPlant()
     {
+        gameObject.SetActive(true);
+        plantData.growingBody.SetActive(true);
+
         startGrowingTime = DateTime.UtcNow.ToLocalTime();
         TimeSpan span = TimeSpan.FromSeconds(ammoStats.totalGrowingTime);
         endGrowingTime = startGrowingTime.Add(span);
         StartCoroutine(StartGrowingProcess());
-        Debug.Log(startGrowingTime);
-        Debug.Log(endGrowingTime);
+        //Debug.Log(startGrowingTime);
+        //Debug.Log(endGrowingTime);
     }
 
     IEnumerator StartGrowingProcess()
@@ -79,12 +174,58 @@ public class Plant : Suckable
         plantState = PlantState.Ripe;
         seedOuterEffect.SetActive(false);
         //ripeOuterEffect.SetActive(true);
-        Debug.Log("Growing Process Done");
+        ChangeToRipe();
+        //Debug.Log("Growing Process Done");
+        growingTime--;
+    }
+
+    IEnumerator DelayGrowPlant()
+    {
+        yield return new WaitForSeconds(10f);
+        if (growingTime == 0) Destroy(gameObject);
+        ChangeToGrowingBody();        
     }
 
     private void OnDisable()
     {
         elapsedTime = (int)DateTime.UtcNow.Subtract(startGrowingTime.ToLocalTime()).TotalSeconds;
         //Debug.Log(elapsedTime);
+    }
+
+    public void ResetPlantStats()
+    {
+        ripePlants = new List<Plant>(0);
+        StartCoroutine(DelayGrowPlant());
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "CheckingHarvest")
+        {
+            //Debug.Log("Harvest");
+            plantData.orginalBody = null;
+            transform.parent = null;
+
+            collider.isTrigger = false;
+            rigid.isKinematic = false;
+            rigid.useGravity = true;
+
+            plantData.orginalPlant.ripePlantCount--;
+            if (plantData.orginalPlant.ripePlantCount == 0)
+            {
+                plantData.orginalPlant.ResetPlantStats();
+            }
+            onTree = false;
+        }
+    }
+
+    public bool CanSuckUp()
+    {
+        return plantState == PlantState.Seed;
+    }
+
+    public void DestroyThis()
+    {
+        Destroy(gameObject);
     }
 }

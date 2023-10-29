@@ -47,7 +47,7 @@ public class TrajectoryLine : MonoBehaviour
             Vector3 gravityOffset = Vector3.up * -0.5f * Physics.gravity.y * timeOffset * timeOffset;
             Vector3 newPosition = startPoint + progressBeforeFravity - gravityOffset;
 
-            Debug.Log(progressBeforeFravity + " " + gravityOffset + " " + newPosition);
+            //Debug.Log(progressBeforeFravity + " " + gravityOffset + " " + newPosition);
         }
 
         return lineRendererPoints;

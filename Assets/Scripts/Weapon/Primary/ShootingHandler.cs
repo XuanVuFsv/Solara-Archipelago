@@ -52,12 +52,12 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
     {
         if (shootingInputData.ammoStatsController.bulletCount == 1)
         {
-            WallBehaviour wall;
+            Enemy enemy;
             shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
-            Debug.Log("Shoot");
+            //Debug.Log("Shoot");
             if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, shootingInputData.ammoStatsController.range, shootingInputData.layerMask))
             {
-                Debug.Log(hit.transform);
+                //Debug.Log(hit.transform);
                 //hitEffectPrefab.transform.position = hit.point;
                 //hitEffectPrefab.transform.forward = hit.normal;
                 //hitEffectPrefab.Emit(5);
@@ -65,11 +65,11 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                 shootingInputData.hitEvent.Notify(hit);
                 //currentHitObject = hit.collider.name;
-                wall = hit.transform.GetComponent<WallBehaviour>();
-                if (wall != null)
-                {
-                    WallSpawner.Instance.DestroyWall(wall.index);
-                }
+                enemy = hit.transform.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        Destroy(enemy.gameObject);
+                    }
 
                 //Tracer here
                 //Damage Handle here
@@ -92,7 +92,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
             //int i = 0;
             bool destroyedObstacle = false;
-            WallBehaviour wall;
+            Enemy enemy;
             foreach (Vector3 pattern in shootingInputData.ammoStatsController.ammoStats.bulletDirectionPattern)
             {
                 Vector3 localDirection = Vector3.forward + pattern;
@@ -105,10 +105,10 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                     //Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                     PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                     shootingInputData.hitEvent.Notify(hit);
-                    wall = hit.transform.GetComponent<WallBehaviour>();
-                    if (!destroyedObstacle && wall != null)
+                    enemy = hit.transform.GetComponent<Enemy>();
+                    if (!destroyedObstacle && enemy != null)
                     {
-                        WallSpawner.Instance.DestroyWall(wall.index);
+                        Destroy(enemy.gameObject);
                         destroyedObstacle = true;
                     }
                 }

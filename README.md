@@ -1,2 +1,2 @@
-# AxieGameJam2023
-**Title:** Viexa Land
+# GameGeek Mentoring Project 2023
+**Title:** Battle of Vitseh's Farm

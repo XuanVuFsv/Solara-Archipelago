@@ -8,14 +8,17 @@ public class Item
     public AmmoStats ammoStats;
     public List<Suckable> totalPlant = new List<Suckable>();
     public GameObject plantSample;
+    public int index;
     public int count;
+    public int ammountAmmoUsedByAttackWeapon = 0;
     public bool isActive = true;
 
-    public Item(AmmoStats ammoStats, int count, bool isActive, Suckable ammoObject)
+    public Item(AmmoStats ammoStats, int count, bool isActive, Suckable ammoObject, int index)
     {
         this.ammoStats = ammoStats;
         AddAmmo(count, ammoObject);
         this.isActive = isActive;
+        this.index = index;
     }
 
     public int AddAmmo(int newCount, Suckable ammoObject)
@@ -27,34 +30,40 @@ public class Item
         //    else plantSample = (ammoObject as AmmoPickup).suckableSample;
         //}
 
-        if (totalPlant.Count > 0 && isPlant) totalPlant.Add(ammoObject);
-        else if (totalPlant.Count == 0)
+        if (isPlant)
         {
-            if (isPlant)
-            {
-                totalPlant.Add(ammoObject);
-                //Debug.Log("add");
-            }
-            else plantSample = (ammoObject as AmmoPickup).suckableSample;       
+            Debug.Log("add");
+            totalPlant.Add(ammoObject);
+        }
+        else if (totalPlant.Count == 0 && !isPlant)
+        {
+            Debug.Log("Just set plant sample");
+            plantSample = (ammoObject as AmmoPickup).suckableSample;
         }
 
         int currentCount = count + newCount;
-        //Debug.Log(currentCount);
+        Debug.Log(currentCount);
+
         if (currentCount <= ammoStats.maxCount)
         {
             count = currentCount;
-            //Debug.Log("Change");
-            //Debug.Log(isPlant);
+            Debug.Log(isPlant);
+
             if (isPlant)
             {
                 ammoObject.GetComponent<Plant>().ChangeToStored();
                 plantSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity);
+            }
+            else
+            {
+                GameObject.Destroy(ammoObject.gameObject);
             }
             return 0;
         }
         else
         {
             count = ammoStats.maxCount;
+            if (!isPlant) GameObject.Destroy(ammoObject.gameObject);
             return currentCount - ammoStats.maxCount;
         }
     }
@@ -64,7 +73,7 @@ public class Item
         int currentCount = count - newCount;
         if (currentCount < 0)
         {
-            plantSample.GetComponent<Suckable>().DetachAmmoToObject();
+            plantSample.GetComponent<Suckable>().RemoveUseGameEvent();
             return;
         }
         else

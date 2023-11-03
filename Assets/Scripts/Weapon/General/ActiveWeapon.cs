@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR	
+using UnityEditor.Animations;
+#endif
+
 public class ActiveWeapon : MonoBehaviour
 {
     private static ActiveWeapon instance;
@@ -86,7 +90,7 @@ public class ActiveWeapon : MonoBehaviour
         movementController = GetComponent<MovementController>();
 
         EquipWeapon(WeaponAction.Pickup, defaultWeapon0, true);
-        SetupNewWeapon(defaultWeapon0.weaponStats, true);
+        SetupNewWeapon(defaultWeapon0.weaponStats);
 
         AttachWeapon(defaultWeapon1, weaponActivateSlots[1], 1);
         AttachWeapon(defaultWeapon2, weaponActivateSlots[2], 2);
@@ -217,7 +221,7 @@ public class ActiveWeapon : MonoBehaviour
         bool isExistWeaponSlot = GetWeapon(pickedWeaponSlot);
         DropWeapon(WeaponAction.Pickup, pickedWeaponSlot);
         EquipWeapon(WeaponAction.Pickup, pickedWeapon, false, isExistWeaponSlot);
-        SetupNewWeapon(pickedWeapon.weaponStats, pickedWeapon.weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot);
+        SetupNewWeapon(pickedWeapon.weaponStats);
     }
 
     void SwitchWeapon(WeaponPickup activateWeapon)
@@ -243,7 +247,7 @@ public class ActiveWeapon : MonoBehaviour
         if (isHoldWeapon) DropWeapon(ActiveWeapon.WeaponAction.Switch, (int)equippedWeapon[activeWeaponIndex].weaponSlot);
 
         EquipWeapon(WeaponAction.Switch, activateWeapon, true);
-        SetupNewWeapon(activateWeapon.weaponStats, activateWeapon.weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot);
+        SetupNewWeapon(activateWeapon.weaponStats);
 
         rigController.SetInteger("weaponIndex", activeWeaponIndex);
         gunCameraController.SetHasScope(activateWeapon.GetComponent<AmmoStatsController>().ammoStats.zoomType == AmmoStats.ZoomType.HasScope);
@@ -265,7 +269,7 @@ public class ActiveWeapon : MonoBehaviour
             shootController.currentWeaponStatsController = newWeapon.GetComponent<WeaponStatsController>();
             shootController.currentWeaponStatsController.currentAmmoStatsController = newWeapon.GetComponent<AmmoStatsController>();
 
-            shootController.currentWeaponStatsController.UpdateAmmoUI();
+            //shootController.currentWeaponStatsController.UpdateAmmoUI();
             //shootController.currentWeaponStatsController.refferedToShootController = true;
 
             if (action == WeaponAction.Switch || runAnimation)
@@ -383,11 +387,11 @@ public class ActiveWeapon : MonoBehaviour
         attachedWeapon.GetComponent<WeaponStatsController>().OnStart();
     }
 
-    public void SetupNewWeapon(WeaponStats weaponStats, bool sameWeaponSlotWithCurrentAmmo)
+    public void SetupNewWeapon(WeaponStats weaponStats)
     {
         WeaponSystemUI.Instance.weaponNameText.text = GetCurrentWeaponName();
 
-        equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStats, sameWeaponSlotWithCurrentAmmo);
+        equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStats);
 
         shootController.magazineObject = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().magazineObject;
         shootController.raycastWeapon = equippedWeapon[activeWeaponIndex].GetComponent<RaycastWeapon>();
@@ -430,17 +434,17 @@ public class ActiveWeapon : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        WeaponPickup weaponPickup = other.GetComponent<WeaponPickup>();
-        if (weaponPickup)
-        {
-            if(!triggerWeaponList.Contains(weaponPickup)) triggerWeaponList.Add(weaponPickup);
-        }
+        //WeaponPickup weaponPickup = other.GetComponent<WeaponPickup>();
+        //if (weaponPickup)
+        //{
+        //    if(!triggerWeaponList.Contains(weaponPickup)) triggerWeaponList.Add(weaponPickup);
+        //}
 
-        AmmoPickup ammoPickup = other.GetComponent<AmmoPickup>();
-        if (ammoPickup && !ammoPickup.hasParent)
-        {
-            if (!triggerAmmoList.Contains(ammoPickup)) triggerAmmoList.Add(ammoPickup);
-        }
+        //AmmoPickup ammoPickup = other.GetComponent<AmmoPickup>();
+        //if (ammoPickup && !ammoPickup.hasParent)
+        //{
+        //    if (!triggerAmmoList.Contains(ammoPickup)) triggerAmmoList.Add(ammoPickup);
+        //}
     }
 
     void OnTriggerExit(Collider other)
@@ -497,16 +501,18 @@ public class ActiveWeapon : MonoBehaviour
         return equippedWeapon[activeWeaponIndex].weaponStats.name;
     }
 
-    //[ContextMenu("Save Weapon Pose")]
-    //void SaveWeaponPose()
-    //{
-    //    GameObjectRecorder recorder = new GameObjectRecorder(transform.GetChild(0).gameObject);
-    //    recorder.BindComponentsOfType<Transform>(weaponPivot.gameObject, false);
-    //    recorder.BindComponentsOfType<Transform>(equippedWeaponParent[activeWeaponIndex].gameObject, false);
-    //    recorder.BindComponentsOfType<Transform>(gunCamera.gameObject, false);
-    //    recorder.BindComponentsOfType<Transform>(leftHandHolder.gameObject, false);
-    //    recorder.BindComponentsOfType<Transform>(rightHandHolder.gameObject, false);
-    //    recorder.TakeSnapshot(0.0f);
-    //    recorder.SaveToClip(equippedWeapon[activeWeaponIndex].GetComponent<RaycastWeapon>().weaponAnimation);
-    //}
+#if UNITY_EDITOR
+    [ContextMenu("Save Weapon Pose")]
+    void SaveWeaponPose()
+    {
+        GameObjectRecorder recorder = new GameObjectRecorder(transform.GetChild(0).gameObject);
+        recorder.BindComponentsOfType<Transform>(weaponPivot.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(equippedWeaponParent[activeWeaponIndex].gameObject, false);
+        recorder.BindComponentsOfType<Transform>(gunCamera.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(leftHandHolder.gameObject, false);
+        recorder.BindComponentsOfType<Transform>(rightHandHolder.gameObject, false);
+        recorder.TakeSnapshot(0.0f);
+        recorder.SaveToClip(equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().weaponAnimation);
+    }
+#endif
 }

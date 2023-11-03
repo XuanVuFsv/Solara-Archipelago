@@ -6,11 +6,13 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 {
     public ShootingInputData shootingInputData;
     public RaycastWeapon raycastWeapon;
+    public WeaponStatsController weaponStatsController;
     RaycastHit hit;
 
     private void Start()
     {
         raycastWeapon = GetComponent<RaycastWeapon>();
+        weaponStatsController = GetComponent<WeaponStatsController>();
     }
 
     public void SetInputData(object _inputData)
@@ -36,6 +38,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
     public void ShootingHandle()
     {
+        if (shootingInputData.ammoStatsController.ammoStats.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
         shootingInputData.shootController.ApplyAttackAnimation();
         if (shootingInputData.shootingHandleType == AmmoStats.ShootingHandleType.Raycast)
         {
@@ -55,6 +58,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
             Enemy enemy;
             shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
             //Debug.Log("Shoot");
+
             if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, shootingInputData.ammoStatsController.range, shootingInputData.layerMask))
             {
                 //Debug.Log(hit.transform);
@@ -84,6 +88,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 #endregion
             }
             //else tracer.transform.position += _fpsCameraTransform.forward * range;
+            weaponStatsController.UseAmmo(1);
         }
         else
         {
@@ -93,6 +98,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
             //int i = 0;
             bool destroyedObstacle = false;
             Enemy enemy;
+
             foreach (Vector3 pattern in shootingInputData.ammoStatsController.ammoStats.bulletDirectionPattern)
             {
                 Vector3 localDirection = Vector3.forward + pattern;
@@ -113,6 +119,8 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                     }
                 }
             }
+
+            weaponStatsController.UseAmmo(1);
         }
     }
 
@@ -130,6 +138,8 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
         GameObject newBullet = Instantiate(shootingInputData.ammoStatsController.ammoStats.bulletObject, shootingInputData.bulletSpawnPoint.position, Quaternion.identity);
         newBullet.GetComponent<BulletBehaviour>().TriggerBullet(shootingInputData.ammoStatsController.ammoStats.name, shootingInputData.ammoStatsController.force, direction);
         shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
+
+        weaponStatsController.UseAmmo(1);
     }
 
     public void PlayAimAnimation()

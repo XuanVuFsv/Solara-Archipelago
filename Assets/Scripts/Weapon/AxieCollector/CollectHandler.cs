@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStragety
 {
@@ -79,28 +80,39 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
             //Debug.Log(Vector3.Distance(shootingInputData.raycastOrigin.position, hit.transform.position));
             if (Physics.SphereCast(shootingInputData.raycastOrigin.position, radiusSphereCastToCheckSucked, shootingInputData.fpsCameraTransform.forward, out hit, distanceThresholdToGotAmmo, shootingInputData.layerMask))
             {
+                //Debug.Log(suckedObject);
                 try
                 {
-                    if(suckedObject.ammoStats != null)
-                    {
-                        //Debug.Log(suckedObject.ammoStats.name);
-                        if (suckedObject.ammoStats.name == "AXS")
-                        {
-                            //Debug.Log("Earn");
-                            AXSManager.Instance.Add((suckedObject.ammoContain * 1f) / 10f);
-                            suckedObject.ammoContain = 0;
-                            (suckedObject as Plant).DestroyThis();
-                        }
-                        else
-                        {
-                            AmmoStats ammoStats = suckedObject.ammoStats;
-                            weaponStatsController.SuckUpAmmo(suckedObject);
-                        }
-                    }
+                    //Debug.Log(suckedObject);
+                    //Debug.Log(suckedObject.ammoStats.name);
+                    //if (suckedObject.ammoStats != null)
+                    //{
+                    //    //Debug.Log(suckedObject.ammoStats.name);
+                    //    if (suckedObject.ammoStats.name == "AXS")
+                    //    {
+                    //        //Debug.Log("Earn");
+                    //        AXSManager.Instance.Add((suckedObject.ammoContain * 1f) / 10f);
+                    //        suckedObject.ammoContain = 0;
+                    //        (suckedObject as Plant).DestroyThis();
+                    //    }
+                    //    else
+                    //    {
+                    //        Debug.Log(suckedObject);
+                    //        AmmoStats ammoStats = suckedObject.ammoStats;
+                    //        weaponStatsController.SuckUpAmmo(suckedObject);
+                    //    }
+                    //}
                     //InventoryController.Instance.AddNewAmmoToInventory(ammoStats, suckedObject.GetAmmoContain());
+
+                    if (suckedObject.ammoStats != null)
+                    {
+                        AmmoStats ammoStats = suckedObject.ammoStats;
+                        weaponStatsController.SuckUpAmmo(suckedObject);
+                    }
                 }
-                catch
+                catch (Exception e)
                 {
+                    Debug.Log(e.Message);
                 }
             }
         }
@@ -109,6 +121,14 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     public void ShootOutHandle()
     {
         if (weaponStatsController.itemInInventory.ammoStats.name == "Null" || weaponStatsController.itemInInventory == null) return;
-        weaponStatsController.UseAmmo(weaponStatsController.currentAmmoStatsController.bulletCount);
+        //weaponStatsController.UseAmmo(weaponStatsController.currentAmmoStatsController.bulletCount);
+        weaponStatsController.UseAmmo(1);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Debug.DrawLine(shootingInputData.bulletSpawnPoint.position, shootingInputData.fpsCameraTransform.forward * hit.distance);
+        Gizmos.DrawSphere(shootingInputData.bulletSpawnPoint.position + shootingInputData.fpsCameraTransform.forward * hit.distance, radiusSphereCastToCheckSucked);
     }
 }

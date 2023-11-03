@@ -68,15 +68,19 @@ public class Suckable : MonoBehaviour, ISuckable
         ammoContain = count;
     }
 
-    public virtual void AttachAmmoToObject(Transform parent, bool isVisible)
+    public virtual void AddUsedGameEvent(bool addNewPool)
     {
-        if (!parent.GetComponent<WeaponStatsController>().ofActiveAmmo) return;
+        if (!addNewPool) return;
+
+        Debug.Log("Pool" + ammoStats.name + "Setup");
+        Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");
+
         PoolingManager.Instance.AddGameEvent("Pool" + ammoStats.name + "Setup");
-        //Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");
     }
 
-    public virtual void DetachAmmoToObject()
+    public virtual void RemoveUseGameEvent()
     {
         PoolingManager.Instance.RemoveGameEvent("Pool" + ammoStats.name + "Setup");
+        Debug.Log("Remove Game Event Pool" + ammoStats.name + "Setup");
     }
 }

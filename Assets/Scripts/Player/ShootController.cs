@@ -155,12 +155,12 @@ public class ShootController : MonoBehaviour
                     lastFired = Time.time;
 
                     //Remove 1 bullet from ammo
-                    currentWeaponStatsController.UseAmmo(currentWeaponStatsController.currentAmmoStatsController.bulletCount);
+                    //currentWeaponStatsController.UseAmmo(currentWeaponStatsController.currentAmmoStatsController.bulletCount);
+                    raycastWeapon.HandleLeftMouseClick();
                     shootingTime++;
                     //currentWeaponStatsController.UpdateAmmoUI();
 
                     isFire = true;
-                    raycastWeapon.HandleLeftMouseClick();
 
                     if (currentWeaponStatsController.currentAmmoStatsController.ammoStats.zoomType == AmmoStats.ZoomType.HasScope && inAim)
                     {
@@ -242,8 +242,6 @@ public class ShootController : MonoBehaviour
     {
         if (ended)
         {
-            currentWeaponStatsController.UpdateAmmoUI();
-
             if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.AttackGun)
             {
                 MyDebug.Instance.Log("Reload");

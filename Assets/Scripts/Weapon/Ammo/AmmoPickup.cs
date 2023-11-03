@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class AmmoPickup : Suckable
 {
-    public RectTransform ammoUIPrefab, ammoUI;
+    //public RectTransform ammoUIPrefab, ammoUI;
     public PlantState plantState;
     public GameObject suckableSample;
-    public bool canPickup = false;
-    public bool hasParent = false;
-
-    [SerializeField] ActiveWeapon activeWeapon;
+    //public bool canPickup = false;
+    //public bool hasParent = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,50 +26,50 @@ public class AmmoPickup : Suckable
 
     private void OnTriggerStay(Collider other)
     {
-        canPickup = true;
-        if (other.CompareTag("Player"))
-        {
-            if (activeWeapon == null) activeWeapon = other.GetComponent<ActiveWeapon>();
+        //canPickup = true;
+        //if (other.CompareTag("Player"))
+        //{
+        //    if (activeWeapon == null) activeWeapon = other.GetComponent<ActiveWeapon>();
 
-            if (activeWeapon.triggerAmmoList.Count > 0)
-            {
-                if (!ammoUI)
-                {
-                    CreateAmmoUI();
-                }
+        //    if (activeWeapon.triggerAmmoList.Count > 0)
+        //    {
+        //        if (!ammoUI)
+        //        {
+        //            CreateAmmoUI();
+        //        }
 
-                if (activeWeapon.triggerAmmoList.Count == 1)
-                {
-                    ShowAmmoStats();
-                }
-                else
-                {
-                    if (this == activeWeapon.GetNearestAmmo())
-                    {
-                        ShowAmmoStats();
-                    }
-                    else
-                    {
-                        ammoUI.gameObject.SetActive(false);
-                    }
-                }
-            }
-            else
-            {
-                ammoUI.gameObject.SetActive(false);
-            }
-        }
+        //        if (activeWeapon.triggerAmmoList.Count == 1)
+        //        {
+        //            ShowAmmoStats();
+        //        }
+        //        else
+        //        {
+        //            if (this == activeWeapon.GetNearestAmmo())
+        //            {
+        //                ShowAmmoStats();
+        //            }
+        //            else
+        //            {
+        //                ammoUI.gameObject.SetActive(false);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ammoUI.gameObject.SetActive(false);
+        //    }
+        //}
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            activeWeapon = null;
+        //if (other.CompareTag("Player"))
+        //{
+        //    activeWeapon = null;
 
-            ammoUI.gameObject.SetActive(false);
-            canPickup = false;
-        }
+        //    ammoUI.gameObject.SetActive(false);
+        //    canPickup = false;
+        //}
     }
 
     public override void ChangeToStored()
@@ -86,32 +84,17 @@ public class AmmoPickup : Suckable
 
     public void CreateAmmoUI()
     {
-        ammoUI = Instantiate(ammoUIPrefab, transform);
-        //weaponUI.localScale = CalcualteLocalScale(0.19f, 0.19f, 0.19f, transform.parent.localScale);
-        //int multiplier = weaponStats.name.Length - standardLengthWeponName;
-        //if (multiplier > 0) weaponUI.GetChild(0).GetComponent<WeaponUI>().panel.localPosition -= offsetPerOverLetter * multiplier * Vector3.right;
+        //ammoUI = Instantiate(ammoUIPrefab, transform);
+        ////weaponUI.localScale = CalcualteLocalScale(0.19f, 0.19f, 0.19f, transform.parent.localScale);
+        ////int multiplier = weaponStats.name.Length - standardLengthWeponName;
+        ////if (multiplier > 0) weaponUI.GetChild(0).GetComponent<WeaponUI>().panel.localPosition -= offsetPerOverLetter * multiplier * Vector3.right;
 
-        ammoUI.gameObject.SetActive(false);
+        //ammoUI.gameObject.SetActive(false);
     }
 
     public void ShowAmmoStats()
     {
-        ammoUI.gameObject.SetActive(true);
-        ammoUI.GetChild(0).GetComponent<WeaponUI>().weaponName.text = ammoStats.name;
-    }
-
-    public override void AttachAmmoToObject(Transform parent, bool isVisible)
-    {
-        hasParent = true;
-
-        transform.parent = parent;
-        transform.localPosition = Vector3.zero;
-        gameObject.SetActive(isVisible);
-
-        if (!parent.GetComponent<WeaponStatsController>().ofActiveAmmo) return;
-
-        PoolingManager.Instance.AddGameEvent("Pool" + ammoStats.name + "Setup");
-        Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");
-
+        //ammoUI.gameObject.SetActive(true);
+        //ammoUI.GetChild(0).GetComponent<WeaponUI>().weaponName.text = ammoStats.name;
     }
 }

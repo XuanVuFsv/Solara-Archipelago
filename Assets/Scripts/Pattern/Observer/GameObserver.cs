@@ -62,7 +62,7 @@ public abstract class GameObserver : MonoBehaviour, IGameObserver
             gameEvents.Add(gEvent.GameEventName, gEvent);
             gEvent.Subscribe(this);
         }
-        else MyDebug.Instance.Log($"{gEvent} existed");
+        else Debug.Log($"{gEvent} existed");
     }
 
     public void RemoveGameEventFromObserver(GameEvent gEvent)

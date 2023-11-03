@@ -4,13 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[System.Serializable]
+public class DisplayItem
+{
+    //public TextMeshProUGUI currentAmmoText;
+    public TextMeshProUGUI totalAmmoText;
+    //public TextMeshProUGUI ammoNameText;
+    public Image artwork;
+
+    public DisplayItem(/*TextMeshProUGUI currentAmmo, */TextMeshProUGUI totalAmmo/*, TextMeshProUGUI ammoName*/, Image artwork)
+    {
+        //currentAmmoText = currentAmmo;
+        totalAmmoText = totalAmmo;
+        //ammoNameText = ammoName;
+        this.artwork = artwork;
+    }
+}
+
 public class WeaponSystemUI : MonoBehaviour
 {
     private static WeaponSystemUI instance;
-    public TextMeshProUGUI currentAmmoText;
+
+    public Transform backpack;
+    public List<DisplayItem> displayItems = new List<DisplayItem>();
+
     public TextMeshProUGUI weaponNameText;
-    public TextMeshProUGUI ammoNameText;
-    public Image artwork;
+    public TextMeshProUGUI currentAmmoInMagazineText;
+    public int currentIndexSlot;
+
     [SerializeField]
     TextMeshProUGUI deltaTime;
 
@@ -46,7 +67,23 @@ public class WeaponSystemUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //SubscribeAll();
+        if (!backpack)
+        {
+            backpack = transform.Find("Backpack");
+            if (displayItems.Count == 0)
+            {
+                int i = 0;
+                foreach (Transform item in backpack)
+                {
+                    DisplayItem newDisplayItem = new DisplayItem(item.Find("Amount").GetComponent<TextMeshProUGUI>(), item.Find("Icon").GetComponent<Image>());
+                    displayItems.Add(newDisplayItem);
+                    Item itemInInventory = InventoryController.Instance.GetItemByIndex(i);
+                    newDisplayItem.artwork.sprite = itemInInventory.ammoStats.artwork;
+                    newDisplayItem.totalAmmoText.text = itemInInventory.count.ToString();
+                    
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -63,17 +100,32 @@ public class WeaponSystemUI : MonoBehaviour
             time -= pollingTime;
             frameCount = 0;
         }
-        ammoNameText.text = InventoryController.Instance.GetCurrentItem().ammoStats.name;
+        //ammoNameText.text = InventoryController.Instance.GetCurrentItem().ammoStats.name;
     }
 
-    //public override void Execute(IGameEvent gEvent, DataGroup dataGroup)
-    //{
-    //    MyDebug.Instance.Log($"Update {dataGroup} ammo");
-    //    UpdateAmmo(dataGroup.GetDataGroup());
-    //}
-
-    public void UpdateAmmo(int currentAmmo, int remainingAmmo)
+    public void UpdateAmmo(int currentAmmo, int remainingAmmo, int index)
     {
-        currentAmmoText.text = currentAmmo + "/" + remainingAmmo;
+        //currentAmmoText.text = currentAmmo + "/" + remainingAmmo;
     }    
+
+    public void SetIndexItemSlot(int index)
+    {
+        currentIndexSlot = index;
+    }
+
+    public void SetDisplayItemName(string ammoName, int index)
+    {
+        //displayItems[index].ammoNameText.text = ammoName;
+    }
+
+    public void SetDisplayItemAmmoAmount(int totalAmmount, int index)
+    {
+        //displayItems[currentIndexSlot].currentAmmoText.text = currentAmmo.ToString();
+        displayItems[index].totalAmmoText.text = totalAmmount.ToString();
+    }
+
+    public void SetDisplayItemIcon(Sprite icon, int index)
+    {
+        displayItems[index].artwork.sprite = icon;
+    }
 }

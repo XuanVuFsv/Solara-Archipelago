@@ -9,7 +9,7 @@ public class AmmoStats : ScriptableObject
     //[Tooltip("Fruit can attack or not")]
     //public bool canAttack;
 
-    [Tooltip("Slot for Plant. Example slot 1 is attack Plant, while slot 3 is normal Plant")]
+    [Tooltip("Slot for Plant. All of ammo can used by slot 3 (collect/shoot out). Product type can't use slot 1 to attack so it's will be select slot3. While normal Plant can attack and collect/shoot out shoud be select slot 1")]
     public ActiveWeapon.WeaponSlot weaponSlot;
 
     public new string name;
@@ -27,12 +27,12 @@ public class AmmoStats : ScriptableObject
         Berry = 0,
         Chilli = 1,
         Onion = 2,
-        Punch = 4,
+        Apple = 4,
         Star = 5,
         Tomato = 6,
-        Waternelon = 7
+        Waternelon = 7,
+        Strawberry = 8
     }
-    //public FruitType fruitType;
 
     public Sprite artwork;
     public Plant fruitPrefab;
@@ -45,6 +45,14 @@ public class AmmoStats : ScriptableObject
         Both = 2
     }
     public ShootingHandleType shootingHandleType;
+
+    public enum FeaturedType
+    {
+        None = -1,
+        Product = 1,
+        Normal = 2
+    }
+    public FeaturedType featuredType;
 
     [Tooltip("What effect will be ins when shooting Plant")]
     public enum BulletEffectComponent
@@ -65,9 +73,6 @@ public class AmmoStats : ScriptableObject
     }
 
     [Header("Attacking Plant")]
-    //public int damageHead, damageBody, damageArmsLegs;
-    //public int dropOffDsitance;
-    //public int decreseDamageRate;
     public int damage;
     [Tooltip("Only for attacking Plant. With Specific Enemy. This fruit will deal more damage")]
     public int damageDealToSpecificEnemy;

@@ -7,7 +7,7 @@ public class InventoryController : Singleton<InventoryController>
     [SerializeField]
     private List<Item> currentAmmoList;
     [SerializeField]
-    private int itemCountInInventory = 4;
+    private int itemCountInInventory = 5;
     [SerializeField]
     private bool hasEmptySlot;
     [SerializeField]
@@ -38,7 +38,7 @@ public class InventoryController : Singleton<InventoryController>
         if (activeSlotIndex < 0) activeSlotIndex = currentAmmoList.Count - 1;
         if (activeSlotIndex == currentAmmoList.Count) activeSlotIndex = 0;
         currentAmmoList[activeSlotIndex].isActive = true;
-        WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().ammoStats.artwork;
+        //WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().ammoStats.artwork;
     }
 
     public Item AddNewAmmoToInventory(AmmoStats ammoStats, int count, Suckable ammoObject)
@@ -53,7 +53,8 @@ public class InventoryController : Singleton<InventoryController>
         {
             //Check stack item here with existed item
             int leftOverAmmo = currentAmmoList[firstSlot].AddAmmo(count, ammoObject);
-            //Debug.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
+            Debug.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
+            item = currentAmmoList[firstSlot];
         }
         else if (emptySlot != -1)
         {
@@ -61,14 +62,14 @@ public class InventoryController : Singleton<InventoryController>
             //currentAmmoList[emptySlot] = new Item(ammoStats, count, ofActiveAmmo && !IsExistedAmmoForWeaponSlot(ammoStats.weaponSlot));
             if (emptySlot == activeSlotIndex)
             {
-                currentAmmoList[emptySlot] = new Item(ammoStats, count, true, ammoObject);
-                WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().ammoStats.artwork;
+                currentAmmoList[emptySlot] = new Item(ammoStats, count, true, ammoObject, emptySlot);
+                //WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().ammoStats.artwork;
             }
-            else currentAmmoList[emptySlot] = new Item(ammoStats, count, false, ammoObject);
+            else currentAmmoList[emptySlot] = new Item(ammoStats, count, false, ammoObject, emptySlot);
             item = currentAmmoList[emptySlot];
-            //Debug.Log(item);
+            Debug.Log(item);
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
-            //Debug.Log("Add NEW" + count + ammoStats.name);
+            Debug.Log("Add NEW" + count + ammoStats.name);
         }
         else
         {
@@ -91,6 +92,11 @@ public class InventoryController : Singleton<InventoryController>
             if (currentAmmoList[i].ammoStats.name == name) return i;
         }
         return -1;
+    }
+
+    public Item GetItemByIndex(int index)
+    {
+        return currentAmmoList[index];
     }
 
     public Item GetItem(AmmoStats ammoStats)

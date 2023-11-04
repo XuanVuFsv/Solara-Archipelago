@@ -66,9 +66,9 @@ public class ActionHandler : MonoBehaviour, IHandGunWeaponStragety
 
     void StartGrapple()
     {
-        inGrapple = true;
         if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, maxDistance, shootingInputData.layerMask))
         {
+            inGrapple = true;
             activeGrapple = true;
             grapplePoint = hit.point;
             if (joint == null)

@@ -148,7 +148,6 @@ public class ShootController : MonoBehaviour
                 //Shoot automatic
                 if (Time.time - lastFired > 1 / currentWeaponStatsController.currentAmmoStatsController.fireRate)
                 {
-                    source.PlayOneShot(source.clip);
                     readyToFire = true;
    
                     //Debug.Log("Shoot");

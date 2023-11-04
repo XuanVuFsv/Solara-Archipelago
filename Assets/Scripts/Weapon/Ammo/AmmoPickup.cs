@@ -6,7 +6,7 @@ public class AmmoPickup : Suckable
 {
     //public RectTransform ammoUIPrefab, ammoUI;
     public PlantState plantState;
-    public GameObject suckableSample;
+    public Suckable suckableSample;
     //public bool canPickup = false;
     //public bool hasParent = false;
     // Start is called before the first frame update

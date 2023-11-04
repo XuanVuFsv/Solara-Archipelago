@@ -4,33 +4,50 @@ using UnityEngine;
 
 public class Land : MonoBehaviour
 {
-    public Transform seedPos;
-    public bool haveTree;
-    public Plant plant;
+    public GameObject buildingVFX, completeVFX;
+    public GameObject garden;
+
+    public AudioClip completeBuildingSound, startBuildSound;
+
+    public float minDistanceToInteractBuildButton;
+    public float timeToBuildGarden;
+    public bool hasBuilt;
 
     // Update is called once per frame
     void Update()
     {
-        if (plant == null) haveTree = false; 
+
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider other)
     {
-        if (haveTree) return;
+        if (hasBuilt) return;
 
-        if (collision.gameObject.tag == "Suckable")
+        if (other.tag == "Player")
         {
-            //Debug.Log("Detect Land");
-            Plant plant = collision.gameObject.GetComponent<Plant>();
-            if (plant.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun || plant.onTree == true || plant.plantState == Suckable.PlantState.GrowingBody || plant.plantData.orginalBody == null || plant.nonPlanting == true) return;
-
-            haveTree = true;
-
-            this.plant = plant;
-            plant.ChangeToGrowingBody();
-            plant.transform.position = seedPos.transform.position;
-            plant.transform.eulerAngles = Vector3.zero;
-            plant.transform.parent = seedPos;
+            if (Input.GetKeyDown(KeyCode.E) && Vector3.Distance(other.transform.position, transform.position) <= minDistanceToInteractBuildButton)
+            {
+                Debug.Log("Build");
+                AudioBuildingManager.Instance.PlayAudioClip(startBuildSound);
+                hasBuilt = true;
+                buildingVFX.SetActive(true);
+                StartCoroutine(StartBuildGarden());
+            }    
         }
+    }
+
+    public IEnumerator StartBuildGarden()
+    {
+        yield return new WaitForSeconds(timeToBuildGarden);
+        Debug.Log("End Build");
+        Invoke("PlayCompeleteBuilding", 0.25f);
+        AudioBuildingManager.Instance.PlayAudioClip(completeBuildingSound);
+        buildingVFX.SetActive(false);
+        garden.SetActive(true);
+    }
+
+    public void PlayCompeleteBuilding()
+    {
+        completeVFX.GetComponent<ParticleSystem>().Play();
     }
 }

@@ -37,7 +37,7 @@ MonoBehaviour:
   recoildPattern: []
   bulletCount: 1
   bulletDirectionPattern: []
-  totalGrowingTime: 2
+  totalGrowingTime: 5
   numberOfFruitPerSeed: 3
   bodyType: 0
   wateringTime: 1

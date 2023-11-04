@@ -27,7 +27,9 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
     public void HandleLeftMouseClick()
     {
+        if (weaponStatsController.itemInInventory.ammoStats.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
         ShootingHandle();
+        shootingInputData.source.PlayOneShot(shootingInputData.source.clip);
     }
 
     public void HandleRightMouseClick()
@@ -80,11 +82,11 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
                 #region Minigame Test
                 //tracer.transform.position = hit.point;
-                //if (hit.transform.gameObject.tag == "Wall")
-                //{
-                //    GameObject wall = hit.transform.gameObject;
-                //    WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index, hit);
-                //}
+                if (hit.transform.gameObject.tag == "Wall")
+                {
+                    GameObject wall = hit.transform.gameObject;
+                    WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
+                }
                 #endregion
             }
             //else tracer.transform.position += _fpsCameraTransform.forward * range;
@@ -112,11 +114,15 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                     PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                     shootingInputData.hitEvent.Notify(hit);
                     enemy = hit.transform.GetComponent<Enemy>();
-                    if (!destroyedObstacle && enemy != null)
+                    #region Minigame Test
+                    //tracer.transform.position = hit.point;
+                    if (!destroyedObstacle && hit.transform.gameObject.tag == "Wall")
                     {
-                        Destroy(enemy.gameObject);
+                        GameObject wall = hit.transform.gameObject;
+                        WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
                         destroyedObstacle = true;
                     }
+                    #endregion
                 }
             }
 

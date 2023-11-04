@@ -85,5 +85,6 @@ public class CraftingManager : MonoBehaviour
         }
         product = Instantiate(recipes[currentRecipe].product.gameObject, productPos.position, Quaternion.identity).GetComponent<Suckable>();
         product.ResetVelocity();
+        ResetCraftingState();
     }
 }

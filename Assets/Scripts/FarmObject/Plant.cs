@@ -14,10 +14,11 @@ public class PlanProperties
     [Header("Plant stage")]
     public GameObject growingBody;
     public GameObject orginalBody;
-    public GameObject ripePlantPrefab;
     public Plant orginalPlant;
 
-    public int wateringTime;
+    public GameObject ripePlantPrefab;
+
+    public int wateringStack;
 }
 
 public class Plant : Suckable
@@ -38,32 +39,38 @@ public class Plant : Suckable
     public GameObject defaultModelPlant;
     public bool inCrafting;
 
+    public float startTimeDestroy;
+    public float destroyedTime;
+    public bool startDestroyedTimer;
+
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
 
-        if (ammoStats.name == "AXS")
-        {
-            int x = UnityEngine.Random.Range(AXSManager.Instance.starRandomRangeValue, AXSManager.Instance.endRandomRangeValue);
-            if (x <= AXSManager.Instance.smallestReward)
-            {
-                ammoContain = 1;
-            }
-            else if(x <= AXSManager.Instance.mediumReward)
-            {
-                ammoContain = 10;
-            }
-            else
-            {
-                ammoContain = 100;
-            }
-        }
+        //if (ammoStats.name == "AXS")
+        //{
+        //    int x = UnityEngine.Random.Range(AXSManager.Instance.starRandomRangeValue, AXSManager.Instance.endRandomRangeValue);
+        //    if (x <= AXSManager.Instance.smallestReward)
+        //    {
+        //        ammoContain = 1;
+        //    }
+        //    else if(x <= AXSManager.Instance.mediumReward)
+        //    {
+        //        ammoContain = 10;
+        //    }
+        //    else
+        //    {
+        //        ammoContain = 100;
+        //    }
+        //}
     }
 
     public override void ChangeToStored()
     {
+        startDestroyedTimer = false;
+        StopCoroutine("DestroyTimer");
         inCrafting = false;
 
         gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
@@ -93,10 +100,14 @@ public class Plant : Suckable
         gameObject.SetActive(true);
         defaultModelPlant.SetActive(true);
         seedOuterEffect.GetComponent<ParticleSystem>().Play(true);
+
+        StartCoroutine("DestroyTimer");
     }
 
     public void ChangeToSeedOnTree()
     {
+        startDestroyedTimer = false;
+        StopCoroutine("DestroyTimer");
         inCrafting = false;
         //Debug.Log("OnTree");
         if (rigid) rigid = GetComponent<Rigidbody>();
@@ -113,12 +124,14 @@ public class Plant : Suckable
 
     public void ChangeToGrowingBody()
     {
+        startDestroyedTimer = false;
+        StopCoroutine("DestroyTimer");
         inCrafting = false;
         if (rigid) rigid = GetComponent<Rigidbody>();
-        ResetVelocity();
-        collider.isTrigger = true;
         rigid.isKinematic = true;
         rigid.useGravity = false;
+        ResetVelocity();
+        collider.isTrigger = true;
 
         plantData.orginalBody = null;
         plantState = PlantState.GrowingBody;
@@ -128,6 +141,8 @@ public class Plant : Suckable
 
     public void ChangeToRipe()
     {
+        startDestroyedTimer = false;
+        StopCoroutine("DestroyTimer");
         inCrafting = false;
         foreach (Transform ripePos in ripePlantPoss)
         {
@@ -137,7 +152,7 @@ public class Plant : Suckable
             newRipePlant.plantData.orginalPlant = this;
             ripePlantCount++;
 
-            newRipePlant.transform.localScale = new Vector3(1, 1, 1);
+            //newRipePlant.transform.localScale = new Vector3(1, 1, 1);
 
             newRipePlant.onTree = true;
             newRipePlant.plantData.orginalBody = plantData.growingBody;
@@ -165,7 +180,6 @@ public class Plant : Suckable
         endGrowingTime = startGrowingTime.Add(span);
         StartCoroutine(StartGrowingProcess());
         //Debug.Log(startGrowingTime);
-        //Debug.Log(endGrowingTime);
     }
 
     IEnumerator StartGrowingProcess()
@@ -179,12 +193,20 @@ public class Plant : Suckable
         growingTime--;
     }
 
-    IEnumerator DelayGrowPlant()
+    //IEnumerator DelayGrowPlant()
+    //{
+    //    yield return new WaitForSeconds(10f);
+    //    if (growingTime == 0) Destroy(gameObject);
+    //    ChangeToGrowingBody();        
+    //}
+
+    IEnumerator DestroyTimer()
     {
-        yield return new WaitForSeconds(10f);
-        if (growingTime == 0) Destroy(gameObject);
-        ChangeToGrowingBody();        
-    }
+        startDestroyedTimer = true;
+        int t = UnityEngine.Random.Range(20, 40);
+        yield return new WaitForSeconds(t);
+        if (plantState == PlantState.Seed && startDestroyedTimer && !inCrafting) DestroyThis();
+    }    
 
     private void OnDisable()
     {
@@ -195,7 +217,9 @@ public class Plant : Suckable
     public void ResetPlantStats()
     {
         ripePlants = new List<Plant>(0);
-        StartCoroutine(DelayGrowPlant());
+        startDestroyedTimer = false;
+        StopCoroutine("DestroyTimer");
+        //StartCoroutine(DelayGrowPlant());
     }
 
     private void OnTriggerExit(Collider other)
@@ -226,6 +250,8 @@ public class Plant : Suckable
 
     public void DestroyThis()
     {
-        Destroy(gameObject);
+        startDestroyedTimer = false;
+        StopCoroutine("DestroyTimer");
+        if (gameObject) Destroy(gameObject);
     }
 }

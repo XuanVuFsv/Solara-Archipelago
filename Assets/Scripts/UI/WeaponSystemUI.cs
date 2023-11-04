@@ -11,13 +11,15 @@ public class DisplayItem
     public TextMeshProUGUI totalAmmoText;
     //public TextMeshProUGUI ammoNameText;
     public Image artwork;
+    public GameObject selectedIcon;
 
-    public DisplayItem(/*TextMeshProUGUI currentAmmo, */TextMeshProUGUI totalAmmo/*, TextMeshProUGUI ammoName*/, Image artwork)
+    public DisplayItem(/*TextMeshProUGUI currentAmmo, */TextMeshProUGUI totalAmmo/*, TextMeshProUGUI ammoName*/, Image artwork, GameObject selectedIcon)
     {
         //currentAmmoText = currentAmmo;
         totalAmmoText = totalAmmo;
         //ammoNameText = ammoName;
         this.artwork = artwork;
+        this.selectedIcon = selectedIcon;
     }
 }
 
@@ -75,7 +77,7 @@ public class WeaponSystemUI : MonoBehaviour
                 int i = 0;
                 foreach (Transform item in backpack)
                 {
-                    DisplayItem newDisplayItem = new DisplayItem(item.Find("Amount").GetComponent<TextMeshProUGUI>(), item.Find("Icon").GetComponent<Image>());
+                    DisplayItem newDisplayItem = new DisplayItem(item.Find("Amount").GetComponent<TextMeshProUGUI>(), item.Find("Icon").GetComponent<Image>(), item.Find("Rouned").gameObject);
                     displayItems.Add(newDisplayItem);
                     Item itemInInventory = InventoryController.Instance.GetItemByIndex(i);
                     newDisplayItem.artwork.sprite = itemInInventory.ammoStats.artwork;

@@ -68,9 +68,9 @@ public class Suckable : MonoBehaviour, ISuckable
         ammoContain = count;
     }
 
-    public virtual void AddUsedGameEvent(bool addNewPool)
+    public virtual void AddUsedGameEvent(bool isSamePool)
     {
-        if (!addNewPool) return;
+        //if (isSamePool) return;
 
         Debug.Log("Pool" + ammoStats.name + "Setup");
         Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");

@@ -22,7 +22,7 @@ public class InventoryController : Singleton<InventoryController>
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -34,10 +34,12 @@ public class InventoryController : Singleton<InventoryController>
     public void SwitchItem(int step)
     {
         currentAmmoList[activeSlotIndex].isActive = false;
+        WeaponSystemUI.Instance.displayItems[activeSlotIndex].selectedIcon.SetActive(false);
         activeSlotIndex += step;
         if (activeSlotIndex < 0) activeSlotIndex = currentAmmoList.Count - 1;
         if (activeSlotIndex == currentAmmoList.Count) activeSlotIndex = 0;
         currentAmmoList[activeSlotIndex].isActive = true;
+        WeaponSystemUI.Instance.displayItems[activeSlotIndex].selectedIcon.SetActive(true);
         //WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().ammoStats.artwork;
     }
 

@@ -7,7 +7,7 @@ public class Item
 {
     public AmmoStats ammoStats;
     public List<Suckable> totalPlant = new List<Suckable>();
-    public GameObject plantSample;
+    public Suckable plantSample;
     public int index;
     public int count;
     public int ammountAmmoUsedByAttackWeapon = 0;
@@ -52,7 +52,7 @@ public class Item
             if (isPlant)
             {
                 ammoObject.GetComponent<Plant>().ChangeToStored();
-                plantSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity);
+                plantSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Suckable>();
             }
             else
             {
@@ -71,9 +71,10 @@ public class Item
     public void UseAmmo(int newCount, ActiveWeapon.WeaponSlot fromWeaponSlot)
     {
         int currentCount = count - newCount;
+        Debug.Log(currentCount);
         if (currentCount < 0)
         {
-            plantSample.GetComponent<Suckable>().RemoveUseGameEvent();
+            //plantSample.RemoveUseGameEvent();
             return;
         }
         else
@@ -96,7 +97,7 @@ public class Item
             {
                 if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
-                    Suckable newPlant = GameObject.Instantiate(plantSample, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Plant>();
+                    Suckable newPlant = GameObject.Instantiate(plantSample.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Plant>();
                     (newPlant as Plant).plantData.orginalBody = InventoryController.Instance.gameObject;
                     newPlant.ChangeToSeed();
                     newPlant.MoveOut();

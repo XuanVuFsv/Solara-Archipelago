@@ -171,11 +171,11 @@ MonoBehaviour:
     hitEffectPrefab: {fileID: 0}
     growingBody: {fileID: 0}
     orginalBody: {fileID: 0}
-    ripePlantPrefab: {fileID: 6830580894502916184}
     orginalPlant: {fileID: 0}
-    wateringTime: 0
+    ripePlantPrefab: {fileID: 6830580894502916184}
+    wateringStack: 0
   plantState: 0
-  growingTime: 3
+  growingTime: 5
   elapsedTime: 0
   onTree: 0
   nonPlanting: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   seedOuterEffect: {fileID: 6830580895783452595}
   ripeOuterEffect: {fileID: 6830580895622011456}
   ripePlants: []
-  ripePlantCount: 0
+  ripePlantCount: 3
   defaultModelPlant: {fileID: 6830580894455744071}
   inCrafting: 0
 --- !u!1 &6830580895357616296

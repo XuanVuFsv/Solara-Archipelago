@@ -144,7 +144,7 @@ public class ActiveWeapon : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            if ((equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AttackGun && InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun || equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AxieCollector))
+            if ((equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AttackGun || equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AxieCollector))
             {
                 equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SwitchAmmo(-1);
             }
@@ -152,25 +152,28 @@ public class ActiveWeapon : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.V))
         {
-            if ((equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AttackGun && InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun || equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AxieCollector))
+            if ((equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AttackGun || equippedWeapon[activeWeaponIndex].weaponSlot == ActiveWeapon.WeaponSlot.AxieCollector))
             {
                 equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SwitchAmmo(1);
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) || (Input.GetKeyDown(KeyCode.F1)))
         {
+            Debug.Log("1");
             SwitchWeapon(equippedWeapon[0]);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) || (Input.GetKeyDown(KeyCode.F2)))
         {
+            Debug.Log("2");
             SwitchWeapon(equippedWeapon[1]);
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) || (Input.GetKeyDown(KeyCode.F3)))
         {
+            Debug.Log("3");
             SwitchWeapon(equippedWeapon[2]);
         }
 

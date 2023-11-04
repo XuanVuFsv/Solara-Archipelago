@@ -43,7 +43,7 @@ MonoBehaviour:
   - {x: -0.05, y: 0, z: 0}
   - {x: 0, y: 0.05, z: 0}
   - {x: 0, y: -0.05, z: 0}
-  totalGrowingTime: 0
+  totalGrowingTime: 5
   numberOfFruitPerSeed: 0
   bodyType: 0
   wateringTime: 0

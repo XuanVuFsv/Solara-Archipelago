@@ -163,6 +163,7 @@ public class CraftingSlot : MonoBehaviour
             currentSuckableItems[count - 1].transform.position = itemPos.position;
             currentSuckableItems[count - 1].transform.eulerAngles = Vector3.zero;
             StartCoroutine(SetActiveLastItem());
+            TurnNoneCraftingLight();
         }
         else TurnNoneCraftingLight();
     }

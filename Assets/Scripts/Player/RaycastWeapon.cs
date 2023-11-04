@@ -44,7 +44,7 @@ public class RaycastWeapon : MonoBehaviour
     public async UniTaskVoid SetAsInputData(LayerMask _layerMask)
     {
         await UniTask.WaitUntil(() => ammoStatsController.ammoStats != null);
-        ShootingInputData shootingInputData = new ShootingInputData(shootController, ammoStatsController.ammoStats.shootingHandleType, ammoStatsController, raycastOrigin, fpsCameraTransform, hitEvent, cameraShake, bulletSpawnPoint, _layerMask);
+        ShootingInputData shootingInputData = new ShootingInputData(shootController, ammoStatsController.ammoStats.shootingHandleType, ammoStatsController, shootController.source, raycastOrigin, fpsCameraTransform, hitEvent, cameraShake, bulletSpawnPoint, _layerMask);
         weaponHandler.SetInputData(shootingInputData);
     }
 

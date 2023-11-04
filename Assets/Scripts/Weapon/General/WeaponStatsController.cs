@@ -97,7 +97,7 @@ public class WeaponStatsController: MonoBehaviour
                 gunCamera.SetHasScope(currentAmmoStatsController.zoomType == AmmoStats.ZoomType.HasScope);
 
                 //Attach Ammo to this object to 
-                if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.GetComponent<Suckable>().AddUsedGameEvent(true);
+                if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.AddUsedGameEvent(isSameAmmo);
 
                 //Invoke event for pick ammo
                 pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
@@ -198,7 +198,7 @@ public class WeaponStatsController: MonoBehaviour
 
             //SetNewAmmoCount(ammoPickup);
             Item newItem = InventoryController.Instance.AddNewAmmoToInventory(ammoPickup.ammoStats, ammoPickup.GetAmmoContain(), ammoPickup);
-            if (ammoPickup.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && ammoPickup.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) ammoPickup.AddUsedGameEvent(itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun);
+            //if (ammoPickup.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && ammoPickup.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) ammoPickup.AddUsedGameEvent(false);
 
             if (itemInInventory.ammoStats.name == "Null" && itemInInventory != InventoryController.Instance.GetCurrentItem())
             {
@@ -231,10 +231,11 @@ public class WeaponStatsController: MonoBehaviour
 
     public void SwitchAmmo(int step)
     {
-        if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.GetComponent<Suckable>().RemoveUseGameEvent();
+        if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.RemoveUseGameEvent();
 
         InventoryController.Instance.SwitchItem(step);
         itemInInventory = InventoryController.Instance.GetCurrentItem();
+        //if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.AddUsedGameEvent(false);
         SetupAmmoStats(false);
 
         UpdateNewAmmo(itemInInventory, itemInInventory.index);
@@ -253,6 +254,9 @@ public class WeaponStatsController: MonoBehaviour
         {
             Debug.Log("<0");
             outOfAmmo = true;
+
+            if (itemInInventory.ammoStats.zoomType == AmmoStats.ZoomType.HasScope) (GetComponent<RaycastWeapon>().weaponHandler as ShootingHandler).HandleRightMouseClick();
+            if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.RemoveUseGameEvent();
             InventoryController.Instance.ResetCurrentSlot();
             itemInInventory = InventoryController.Instance.GetCurrentItem();
 

@@ -26,7 +26,7 @@ public class CraftingSlot : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag != "Suckable") return;
+        if (other.gameObject.tag != "Suckable" || CraftingManager.Instance.inCrafting) return;
         //Debug.Log(other.gameObject.name);
 
         Suckable suckableItem = other.transform.GetComponent<Suckable>();
@@ -158,14 +158,13 @@ public class CraftingSlot : MonoBehaviour
         count--;
 
 
+        TurnNoneCraftingLight();
         if (count > 0)
         {
             currentSuckableItems[count - 1].transform.position = itemPos.position;
             currentSuckableItems[count - 1].transform.eulerAngles = Vector3.zero;
             StartCoroutine(SetActiveLastItem());
-            TurnNoneCraftingLight();
         }
-        else TurnNoneCraftingLight();
     }
 
     IEnumerator SetActiveLastItem()

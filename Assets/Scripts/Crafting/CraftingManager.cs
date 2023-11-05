@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CraftingManager : MonoBehaviour
+public class CraftingManager : Singleton<CraftingManager>
 {
     public List<RecipeData> recipeList = new List<RecipeData>();
 

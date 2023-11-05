@@ -255,7 +255,7 @@ public class WeaponStatsController: MonoBehaviour
             Debug.Log("<0");
             outOfAmmo = true;
 
-            if (itemInInventory.ammoStats.zoomType == AmmoStats.ZoomType.HasScope) (GetComponent<RaycastWeapon>().weaponHandler as ShootingHandler).HandleRightMouseClick();
+            if (itemInInventory.ammoStats.zoomType != AmmoStats.ZoomType.NoZoom && weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) (GetComponent<RaycastWeapon>().weaponHandler as ShootingHandler).HandleRightMouseClick();
             if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.RemoveUseGameEvent();
             InventoryController.Instance.ResetCurrentSlot();
             itemInInventory = InventoryController.Instance.GetCurrentItem();

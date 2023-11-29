@@ -81,7 +81,7 @@ public class MovementController : GameObserver
 
     public void SetMultiplierSpeed(float value)
     {
-        MyDebug.Instance.Log("Set Multiplier Speed");
+        MyDebug.Log("Set Multiplier Speed");
         multiplierSpeed = value;
     }
 
@@ -193,7 +193,7 @@ public class MovementController : GameObserver
 
     public override void Execute(IGameEvent gEvent, bool val)
     {
-        //MyDebug.Instance.Log($"Execute by {this} in base class with value: {val}");
+        //MyDebug.Log($"Execute by {this} in base class with value: {val}");
 
         if (val)
         {

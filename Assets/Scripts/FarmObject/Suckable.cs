@@ -2,57 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Suckable : MonoBehaviour, ISuckable
+public abstract class Suckable : StateMachine, ISuckable
 {
-    public enum PlantState
-    {
-        Seed = 0,
-        Stored = 1,
-        GrowingBody = 2,
-        Ripe = 3
-    }
-
     public AmmoStats ammoStats;
-    [SerializeField]
     public int ammoContain;
 
     public Rigidbody rigid;
-    public Collider collider;
+    public Collider suckableCollider;
 
     float s;
     float varSpeed;
 
     public void GoToAxieCollector()
     {
-        //Vector3 dir = CollectHandler.Instance.shootingInputData.raycastOrigin.position - transform.position;
-
         s += Time.deltaTime * CollectHandler.Instance.acceleratonSuckUpSpeed;
         varSpeed = Mathf.Lerp(CollectHandler.Instance.minSuckUpSpeed, CollectHandler.Instance.maxSuckUpSpeed, CollectHandler.Instance.velocityCurve.Evaluate(s / 1f));
-        //rigid.velocity = dir.normalized * varSpeed;
         
         transform.position = Vector3.Lerp(transform.position, CollectHandler.Instance.shootingInputData.raycastOrigin.position, varSpeed);
+    }
+
+    public void MoveOut()
+    {
+        rigid.AddForce(CollectHandler.Instance.shootingInputData.bulletSpawnPoint.forward * CollectHandler.Instance.moveOutForce);
     }
 
     public void ResetVelocity()
     {
         rigid.velocity = Vector3.zero;
     }
-
-    public virtual void ChangeToStored()
-    {
-
-    }
-
-    public virtual void ChangeToSeed()
-    {
-
-    }
-
-    public void MoveOut()
-    {
-        rigid.AddForce(CollectHandler.Instance.shootingInputData.bulletSpawnPoint.forward * CollectHandler.Instance.moveOutForce);
-    }    
-
+  
     public AmmoStats GetAmmoStats()
     {
         return ammoStats;
@@ -68,10 +46,18 @@ public class Suckable : MonoBehaviour, ISuckable
         ammoContain = count;
     }
 
-    public virtual void AddUsedGameEvent(bool isSamePool)
+    public virtual void ChangeToStored()
     {
-        //if (isSamePool) return;
 
+    }
+
+    public virtual void ChangeToSeed()
+    {
+
+    }
+
+    public virtual void AddUsedGameEvent()
+    {
         Debug.Log("Pool" + ammoStats.name + "Setup");
         Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");
 

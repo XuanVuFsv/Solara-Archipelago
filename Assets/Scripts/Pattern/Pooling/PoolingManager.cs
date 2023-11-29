@@ -86,7 +86,7 @@ public class PoolingManager : MonoBehaviour
     {
         if (!IsContainsPool(poolName))
         {
-            MyDebug.Instance.Log("Pool not exist");
+            MyDebug.Log("Pool not exist");
             currentPool = "";
             return;
         }
@@ -99,7 +99,7 @@ public class PoolingManager : MonoBehaviour
     {
         if (!IsContainsPool(poolName))
         {
-            MyDebug.Instance.Log("Pool not exist");
+            MyDebug.Log("Pool not exist");
             currentPool = "";
             return;
         }

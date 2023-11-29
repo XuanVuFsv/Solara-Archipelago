@@ -5290,9 +5290,9 @@ MonoBehaviour:
   ammoStats: {fileID: 11400000, guid: 4669f5be9d362e74394c759d8c535100, type: 2}
   ammoContain: 10
   rigid: {fileID: 9210864702402777661}
-  collider: {fileID: 9210864702402777660}
+  suckableCollider: {fileID: 9210864702402777660}
   plantState: 0
-  suckableSample: {fileID: 6830580894502916184, guid: 7816ce9f6be5be64ab75b480a3d090ea, type: 3}
+  suckableSample: {fileID: 6830580894502916190, guid: 7816ce9f6be5be64ab75b480a3d090ea, type: 3}
 --- !u!1 &9210864702597892343
 GameObject:
   m_ObjectHideFlags: 0

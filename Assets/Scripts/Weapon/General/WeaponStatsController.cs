@@ -82,7 +82,7 @@ public class WeaponStatsController: MonoBehaviour
 
         if (!isSameAmmo)
         {
-            Debug.Log("Diff");
+            //Debug.Log("Diff");
             currentAmmoStatsController.ammoStats = itemInInventory.ammoStats;
             currentAmmoStatsController.AssignAmmotData();
 
@@ -97,7 +97,7 @@ public class WeaponStatsController: MonoBehaviour
                 gunCamera.SetHasScope(currentAmmoStatsController.zoomType == AmmoStats.ZoomType.HasScope);
 
                 //Attach Ammo to this object to 
-                if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.AddUsedGameEvent(isSameAmmo);
+                if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.AddUsedGameEvent();
 
                 //Invoke event for pick ammo
                 pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
@@ -106,7 +106,7 @@ public class WeaponStatsController: MonoBehaviour
         }
         else
         {
-            Debug.Log("Same");
+            //Debug.Log("Same");
         }
 
         if (weaponStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun)
@@ -137,7 +137,7 @@ public class WeaponStatsController: MonoBehaviour
     
     public void SuckUpAmmo(Suckable ammoPickup)
     {
-        MyDebug.Instance.Log(ammoPickup);
+        MyDebug.Log(ammoPickup);
         //if (!currentAmmoStatsController) Debug.Log("currentAmmoStatsController null " + transform.parent.name);
         //Debug.Log(ammoPickup.name);
 
@@ -182,7 +182,7 @@ public class WeaponStatsController: MonoBehaviour
         }
         else
         {
-            Debug.Log("Add new ammo");
+            //Debug.Log("Add new ammo");
 
             //if (ammunitionChestPicked)
             //{
@@ -211,7 +211,7 @@ public class WeaponStatsController: MonoBehaviour
             else UpdateNewAmmo(newItem, newItem.index);
 
 
-            Debug.Log(newItem.index);
+            //Debug.Log(newItem.index);
             //ammunitionChestPicked = ammoPickup;
         }
     }
@@ -269,7 +269,7 @@ public class WeaponStatsController: MonoBehaviour
         {
             UpdateAmmoAmmountUI(itemInInventory.count, itemInInventory.index);
         }
-        Debug.Log("Use Ammo");
+        //Debug.Log("Use Ammo");
     }
 
     public void UpdateAmmoAfterReload()
@@ -291,7 +291,7 @@ public class WeaponStatsController: MonoBehaviour
             outOfAmmo = false;
         }
 
-        Debug.Log("Update After Reload");
+        //Debug.Log("Update After Reload");
         UpdateAmmoAmmountUI(itemInInventory.count, itemInInventory.index);
     }
 
@@ -308,7 +308,7 @@ public class WeaponStatsController: MonoBehaviour
 
     public void UpdateNewAmmo(Item item, int index)
     {
-        Debug.Log(item.ammoStats.artwork.name + item.count + index);
+        //Debug.Log(item.ammoStats.artwork.name + item.count + index);
         WeaponSystemUI.Instance.SetDisplayItemIcon(item.ammoStats.artwork, index);
         //WeaponSystemUI.Instance.SetDisplayItemName(itemInInventory.ammoStats.name, index);
         UpdateAmmoAmmountUI(item.count, index);
@@ -321,7 +321,7 @@ public class WeaponStatsController: MonoBehaviour
 
     public void UpdateAmmoAmmountUI(int totalAmount, int index)
     {
-        Debug.Log(totalAmount + " " + index);
+        //Debug.Log(totalAmount + " " + index);
         WeaponSystemUI.Instance.SetDisplayItemAmmoAmount(totalAmount, index);
     }
 
@@ -345,5 +345,4 @@ public class WeaponStatsController: MonoBehaviour
     {
         return currentAmmo == ammoInMagazine;
     }
-
 }

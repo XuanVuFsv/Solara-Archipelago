@@ -75,7 +75,7 @@ public class ShootController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //MyDebug.Instance.Log("Created");
+        //MyDebug.Log("Created");
 
         animationEvents.weaponAnimationEvent.AddListener(OnAnimationEvent);
         inputController = GetComponent<InputController>();
@@ -114,7 +114,7 @@ public class ShootController : MonoBehaviour
         {
             if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety && !isReloading)
             {
-                //MyDebug.Instance.Log(frame);
+                //MyDebug.Log(frame);
                 raycastWeapon.HandleRightMouseClick();
             }
             else
@@ -163,8 +163,8 @@ public class ShootController : MonoBehaviour
 
                     if (currentWeaponStatsController.currentAmmoStatsController.ammoStats.zoomType == AmmoStats.ZoomType.HasScope && inAim)
                     {
-                        //MyDebug.Instance.Log("Handle Right Click");
-                        //MyDebug.Instance.Log(frame);
+                        //MyDebug.Log("Handle Right Click");
+                        //MyDebug.Log(frame);
                         raycastWeapon.HandleRightMouseClick();
                     }
                 }
@@ -206,7 +206,7 @@ public class ShootController : MonoBehaviour
             && !isReloading
             && currentWeaponStatsController.IsContainAmmo())
         {
-            //MyDebug.Instance.Log("Reload " + inputController.isReload + currentWeaponStatsController.IsFullMagazine() + currentWeaponStatsController.IsOutOfAmmo() + isReloading + currentWeaponStatsController.IsContainAmmo());
+            //MyDebug.Log("Reload " + inputController.isReload + currentWeaponStatsController.IsFullMagazine() + currentWeaponStatsController.IsOutOfAmmo() + isReloading + currentWeaponStatsController.IsContainAmmo());
             StartCoroutine(Reload());
         }
     }
@@ -216,7 +216,7 @@ public class ShootController : MonoBehaviour
     {
         if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.AttackGun)
         {
-            MyDebug.Instance.Log("Reload");
+            MyDebug.Log("Reload");
 
             rigController.SetTrigger("ReloadAK");
             rigController.SetBool("reloading", true);
@@ -224,7 +224,7 @@ public class ShootController : MonoBehaviour
         }
 
         isReloading = true;
-        MyDebug.Instance.Log(isReloading);
+        MyDebug.Log(isReloading);
         if (inAim)
         {
             inAim = false; 
@@ -243,7 +243,7 @@ public class ShootController : MonoBehaviour
         {
             if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.AttackGun)
             {
-                MyDebug.Instance.Log("Reload");
+                MyDebug.Log("Reload");
                 rigController.SetTrigger("ReloadAK");
             }
         }
@@ -253,7 +253,7 @@ public class ShootController : MonoBehaviour
 
     public void ApplyAttackAnimation()
     {
-        //MyDebug.Instance.Log("Checking inAttack");
+        //MyDebug.Log("Checking inAttack");
         if (activeWeapon.GetActiveWeaponPickup().weaponSlot == ActiveWeapon.WeaponSlot.HandGun) rigController.SetBool("inAttack", inputController.isSingleFire);
         else rigController.SetBool("inAttack", true);
     }
@@ -266,7 +266,7 @@ public class ShootController : MonoBehaviour
     //Apply aim value to reference class. Affect to other attributes. Ex: recoild pattern, animation, player's movement speed
     public void ApllyAimValue(float val)
     {
-        //MyDebug.Instance.Log($"Apply this value: {val} when aim");
+        //MyDebug.Log($"Apply this value: {val} when aim");
     }
 
     #region Animation Events Handling
@@ -276,22 +276,22 @@ public class ShootController : MonoBehaviour
         {
             case "detach_magazine":
                 DeTachMagazine();
-                MyDebug.Instance.Log("Detach event");
+                MyDebug.Log("Detach event");
                 break;
             case "drop_magazine":
-                MyDebug.Instance.Log("Drop event");
+                MyDebug.Log("Drop event");
                 DropMagazine();
                 break;
             case "refill_magazine":
-                MyDebug.Instance.Log("Refill event");
+                MyDebug.Log("Refill event");
                 //Avoid delay and unexpected behaviour. RefillMagazine will execute in UpdateEndedReloadStats()
                 break;
             case "attach_magazine":
-                MyDebug.Instance.Log("Attach event");
+                MyDebug.Log("Attach event");
                 AttachMagazine();
                 break;
             case "take_new_magazine":
-                MyDebug.Instance.Log("Take new event");
+                MyDebug.Log("Take new event");
                 TakeNewMagazine();
                 break;
         }
@@ -299,7 +299,7 @@ public class ShootController : MonoBehaviour
 
     void DeTachMagazine()
     {
-        MyDebug.Instance.Log("Run Detach funtion");
+        MyDebug.Log("Run Detach funtion");
         if(!magazineHand) magazineHand = Instantiate(magazineObject, leftHand.transform, true);
 
         newMagazineLocalPosition = magazineHand.transform.localPosition;
@@ -310,13 +310,13 @@ public class ShootController : MonoBehaviour
 
     void DropMagazine()
     {
-        MyDebug.Instance.Log("Run Drop funtion");
+        MyDebug.Log("Run Drop funtion");
         magazineHand.GetComponent<Rigidbody>().isKinematic = false;
     }
 
     void TakeNewMagazine()
     {
-        MyDebug.Instance.Log("Run Take New funtion");
+        MyDebug.Log("Run Take New funtion");
         magazineHand.GetComponent<Rigidbody>().isKinematic = true;
         magazineHand.transform.localPosition = newMagazineLocalPosition;
         magazineHand.transform.localEulerAngles = newMagazineLocalEulerAngles;
@@ -324,21 +324,21 @@ public class ShootController : MonoBehaviour
 
     void RefillMagazine()
     {
-        MyDebug.Instance.Log("Run Refill function");
+        MyDebug.Log("Run Refill function");
         isReloading = false;
         currentWeaponStatsController.UpdateAmmoAfterReload();
     }
 
     public void AttachMagazine()
     {
-        MyDebug.Instance.Log("Run AttachMagazine function");
+        MyDebug.Log("Run AttachMagazine function");
         if (magazineObject != null) magazineObject.SetActive(true);
         Destroy(magazineHand);
     }
 
     public void ResetMagazine()
     {
-        MyDebug.Instance.Log("Run ResetMagazine funtion");
+        MyDebug.Log("Run ResetMagazine funtion");
         if (magazineHand) Destroy(magazineHand);
     }
     #endregion

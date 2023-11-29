@@ -36,7 +36,14 @@ public class Garden : MonoBehaviour
             Debug.Log("Detect Land");
             Plant plant = other.gameObject.GetComponent<Plant>();
             if (plant == null) return;
-            if (plant.ammoStats.featuredType != AmmoStats.FeaturedType.Normal || plant.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.None || plant.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.HandGun || plant.onTree == true || plant.plantState == Suckable.PlantState.GrowingBody || plant.plantData.orginalBody == null || plant.nonPlanting == true) return;
+            if (plant.ammoStats.featuredType != AmmoStats.FeaturedType.Normal 
+                || plant.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.None 
+                || plant.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.HandGun 
+                || plant.onTree == true
+                || plant.state is CropGrowing
+                //|| plant.plantState == Plant.PlantState.GrowingBody
+                //|| plant.plantData.orginalBody == null 
+                || plant.nonPlanting == true) return;
 
             inGrowing = true;
 

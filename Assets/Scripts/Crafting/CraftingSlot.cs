@@ -40,7 +40,7 @@ public class CraftingSlot : MonoBehaviour
         }
 
         suckableItem.rigid.constraints = RigidbodyConstraints.FreezePosition;
-        suckableItem.collider.isTrigger = true;
+        suckableItem.suckableCollider.isTrigger = true;
         suckableItem.ResetVelocity();
         suckableItem.rigid.isKinematic = true;
         suckableItem.rigid.useGravity = false;
@@ -152,7 +152,7 @@ public class CraftingSlot : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //Debug.Log(other.name);
-        other.GetComponent<Plant>().rigid.useGravity = true;
+        //other.GetComponent<Plant>().rigid.useGravity = true;
         other.GetComponent<Plant>().ChangeToSeed();
         currentSuckableItems.Remove(currentSuckableItems[count - 1]);
         count--;

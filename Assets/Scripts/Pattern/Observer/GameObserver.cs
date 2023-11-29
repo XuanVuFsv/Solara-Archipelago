@@ -20,7 +20,7 @@
 //    public virtual void Awake()
 //    {
 //        gameEvent?.Subscribe(this);
-//        MyDebug.Instance.Log("Game Observer Awake");
+//        MyDebug.Log("Game Observer Awake");
 //    }
 
 //    public virtual void OnDestroy()
@@ -30,7 +30,7 @@
 
 //    public virtual void Execute(IGameEvent gameEvent)
 //    {
-//        MyDebug.Instance.Log($"Execute {this} in base class");
+//        MyDebug.Log($"Execute {this} in base class");
 //    }
 
 //    public virtual void RaiseUnityEvent()
@@ -72,32 +72,32 @@ public abstract class GameObserver : MonoBehaviour, IGameObserver
             gameEvents.Remove(gEvent.GameEventName);
             gEvent.UnSubscribe(this);
         }
-        //else MyDebug.Instance.Log($"{gEvent} not existed");
+        //else MyDebug.Log($"{gEvent} not existed");
     }
 
     public virtual void Execute(IGameEvent gEvent)
     {
-        //MyDebug.Instance.Log($"Execute {this} in base class");
+        //MyDebug.Log($"Execute {this} in base class");
     }
 
     public virtual void Execute(IGameEvent gEvent, int val)
     {
-        //MyDebug.Instance.Log($"Execute by {this} in base class with value: {val}");
+        //MyDebug.Log($"Execute by {this} in base class with value: {val}");
     }
 
     public virtual void Execute(IGameEvent gEvent, float val)
     {
-        //MyDebug.Instance.Log($"Execute by {this} in base class with value: {val}");
+        //MyDebug.Log($"Execute by {this} in base class with value: {val}");
     }
 
     public virtual void Execute(IGameEvent gEvent, bool val)
     {
-        //MyDebug.Instance.Log($"Execute by {this} in base class with value: {val}");
+        //MyDebug.Log($"Execute by {this} in base class with value: {val}");
     }
 
     public virtual void Execute(IGameEvent gEvent, object obj)
     {
-        //MyDebug.Instance.Log($"Execute by {this} in base class with value: {point} {normal}");
+        //MyDebug.Log($"Execute by {this} in base class with value: {point} {normal}");
     }
 
     public virtual void Execute(IGameEvent gEvent, RaycastHit hit)
@@ -107,7 +107,7 @@ public abstract class GameObserver : MonoBehaviour, IGameObserver
 
     public virtual void Execute(IGameEvent gEvent, Vector3 point, Vector3 normal)
     {
-        //MyDebug.Instance.Log($"Execute by {this} in base class with value: {point} {normal}");
+        //MyDebug.Log($"Execute by {this} in base class with value: {point} {normal}");
     }
 
     public virtual void RaiseUnityEvent()

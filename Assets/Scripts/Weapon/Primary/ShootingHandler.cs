@@ -136,7 +136,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
         if (shootingInputData.ammoStatsController.ammoStats.zoomType == AmmoStats.ZoomType.HasScope)
         {
-            MyDebug.Instance.Log("Shoot");
+            MyDebug.Log("Shoot");
             Vector3 localDirection = Vector3.forward + shootingInputData.cameraShake.GetCurrentPatternVector();
             direction = shootingInputData.fpsCameraTransform.TransformDirection(localDirection).normalized;
         }
@@ -150,7 +150,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
     public void PlayAimAnimation()
     {
-        //MyDebug.Instance.Log("Handle Right Click");
+        //MyDebug.Log("Handle Right Click");
 
         ShootController shootController = shootingInputData.shootController;
         if (!shootController.rigController) return;

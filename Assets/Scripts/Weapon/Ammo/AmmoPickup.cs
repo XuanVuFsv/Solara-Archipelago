@@ -5,7 +5,7 @@ using UnityEngine;
 public class AmmoPickup : Suckable
 {
     //public RectTransform ammoUIPrefab, ammoUI;
-    public PlantState plantState;
+    public Plant.PlantState plantState;
     public Suckable suckableSample;
     //public bool canPickup = false;
     //public bool hasParent = false;
@@ -14,7 +14,7 @@ public class AmmoPickup : Suckable
     {
         CreateAmmoUI();
         rigid = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
+        suckableCollider = GetComponent<Collider>();
         //Debug.Log("Create a AmmoPickup instance " + ammoStats.name + gameObject.name);
     }
 
@@ -74,12 +74,12 @@ public class AmmoPickup : Suckable
 
     public override void ChangeToStored()
     {
-        suckableSample.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
-        rigid.velocity = Vector3.zero;
-        suckableSample.GetComponent<Plant>().ChangeToStored();
-        collider.isTrigger = false;
+        //suckableSample.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
+        //rigid.velocity = Vector3.zero;
+        //suckableSample.GetComponent<Plant>().ChangeToStored();
+        //suckableCollider.isTrigger = false;
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     public void CreateAmmoUI()

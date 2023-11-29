@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyDebug: Singleton<MyDebug>
+public static class MyDebug
 {
-    public bool isActive = true;
+    static bool canLog = false;
 
-    public void Log(object message, Object context)
+    public static void Log(object message, Object context)
     {
-        if (!isActive) return;
+        if (!canLog) return;
         Debug.Log(message, context);
     }
     
-    public void Log(object message)
+    public static void Log(object message)
     {
-        if (!isActive) return;
-        //Debug.Log(message);
+        if (!canLog) return;
+        Debug.Log(message);
     }
 }

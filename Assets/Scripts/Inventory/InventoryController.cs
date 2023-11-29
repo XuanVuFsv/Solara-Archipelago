@@ -49,7 +49,7 @@ public class InventoryController : Singleton<InventoryController>
         int emptySlot = GetSlotByName("Null");
         Item item = GetCurrentItem();
 
-        MyDebug.Instance.Log(firstSlot + " " + emptySlot);
+        MyDebug.Log(firstSlot + " " + emptySlot);
 
         if (firstSlot >= 0)
         {
@@ -69,7 +69,7 @@ public class InventoryController : Singleton<InventoryController>
             }
             else currentAmmoList[emptySlot] = new Item(ammoStats, count, false, ammoObject, emptySlot);
             item = currentAmmoList[emptySlot];
-            Debug.Log(item);
+            //Debug.Log(item);
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
             Debug.Log("Add NEW" + count + ammoStats.name);
         }

@@ -81,29 +81,27 @@ MonoBehaviour:
   ammoStats: {fileID: 11400000, guid: 20c87d4e3a9f0d54a852dee4348e9f40, type: 2}
   ammoContain: 1
   rigid: {fileID: 5068828272616407669}
-  collider: {fileID: 3074634735505302046}
+  suckableCollider: {fileID: 3074634735505302046}
   plantData:
     trailTracer: {fileID: 0}
     bulletObject: {fileID: 0}
     hitEffectPrefab: {fileID: 0}
-    growingBody: {fileID: 3706883631633517173}
-    orginalBody: {fileID: 0}
-    orginalPlant: {fileID: 0}
-    ripePlantPrefab: {fileID: 1128023866606011336}
+    wholePlantPrefab: {fileID: 1128023866606011336}
     wateringStack: 0
-  plantState: 0
+  growingBody: {fileID: 3706883631633517173}
+  orginalPlant: {fileID: 0}
   growingTime: 5
   elapsedTime: 0
   onTree: 0
   nonPlanting: 0
-  ripePlantPoss:
+  wholePlantPoss:
   - {fileID: 6688440647359181100}
   - {fileID: 6267103014207769310}
+  wholePlants: []
   seedOuterEffect: {fileID: 4949976070417208619}
-  ripeOuterEffect: {fileID: 2049123463450820665}
-  ripePlants: []
-  ripePlantCount: 3
+  wholeOuterEffect: {fileID: 2049123463450820665}
   defaultModelPlant: {fileID: 4515540194365212651}
+  wholePlantCount: 0
   inCrafting: 0
   startTimeDestroy: 0
   destroyedTime: 0
@@ -120,7 +118,7 @@ GameObject:
   - component: {fileID: 2422753674564396003}
   - component: {fileID: 3563476661839040212}
   m_Layer: 0
-  m_Name: Ripe_Outer
+  m_Name: Whole_Outer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

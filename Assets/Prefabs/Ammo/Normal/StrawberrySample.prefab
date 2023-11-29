@@ -164,28 +164,29 @@ MonoBehaviour:
   ammoStats: {fileID: 11400000, guid: 4669f5be9d362e74394c759d8c535100, type: 2}
   ammoContain: 1
   rigid: {fileID: 6830580894502916191}
-  collider: {fileID: 6830580894502916188}
+  suckableCollider: {fileID: 6830580894502916188}
   plantData:
     trailTracer: {fileID: 0}
     bulletObject: {fileID: 0}
     hitEffectPrefab: {fileID: 0}
-    growingBody: {fileID: 0}
-    orginalBody: {fileID: 0}
-    orginalPlant: {fileID: 0}
-    ripePlantPrefab: {fileID: 6830580894502916184}
+    wholePlantPrefab: {fileID: 0}
     wateringStack: 0
-  plantState: 0
+  growingBody: {fileID: 0}
+  orginalPlant: {fileID: 0}
   growingTime: 5
   elapsedTime: 0
   onTree: 0
   nonPlanting: 0
-  ripePlantPoss: []
+  wholePlantPoss: []
+  wholePlants: []
   seedOuterEffect: {fileID: 6830580895783452595}
-  ripeOuterEffect: {fileID: 6830580895622011456}
-  ripePlants: []
-  ripePlantCount: 3
+  wholeOuterEffect: {fileID: 0}
   defaultModelPlant: {fileID: 6830580894455744071}
+  wholePlantCount: 0
   inCrafting: 0
+  startTimeDestroy: 0
+  destroyedTime: 0
+  startDestroyedTimer: 0
 --- !u!1 &6830580895357616296
 GameObject:
   m_ObjectHideFlags: 0

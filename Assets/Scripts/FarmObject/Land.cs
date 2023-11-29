@@ -1,53 +1,94 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 
 public class Land : MonoBehaviour
 {
-    public GameObject buildingVFX, completeVFX;
+    public GameObject buildingVFX;
+    public GameObject completeVFX;
     public GameObject garden;
 
-    public AudioClip completeBuildingSound, startBuildSound;
+    public GameObject buildingWall;
+    public float movingWallYPos;
+    
+    public MonitorGardenController monitorScreen;
+    
+    public AudioClip completeBuildingSound;
+    public AudioClip startBuildSound;
 
-    public float minDistanceToInteractBuildButton;
-    public float timeToBuildGarden;
+    public float limitAngleToInteractBuildButton;
+    public float timeForBuildingWallMove;
+    public int timeToBuildGarden;
+
     public bool hasBuilt;
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     private void OnTriggerStay(Collider other)
     {
-        if (hasBuilt) return;
-
-        if (other.tag == "Player")
+        bool isLookAtMonitorScreen = IsLookAtMonitorScreen(Camera.main.transform.forward, monitorScreen.screenViewPoint.transform.position - Camera.main.transform.position, limitAngleToInteractBuildButton);
+        if (Input.GetKey(KeyCode.E) && isLookAtMonitorScreen)
         {
-            if (Input.GetKeyDown(KeyCode.E) && Vector3.Distance(other.transform.position, transform.position) <= minDistanceToInteractBuildButton)
-            {
-                Debug.Log("Build");
-                AudioBuildingManager.Instance.PlayAudioClip(startBuildSound);
-                hasBuilt = true;
-                buildingVFX.SetActive(true);
-                StartCoroutine(StartBuildGarden());
-            }    
+            //buildingWall.transform.DOMoveY(activeYPos + buildingWall.transform.position.y, timeForBuildingWallMove);
+
+            Debug.Log("Interactable");
+
+            if (hasBuilt) return;
+
+            Debug.Log("Build");
+            AudioBuildingManager.Instance.PlayAudioClip(startBuildSound);
+
+            buildingVFX.SetActive(true);
+
+            hasBuilt = true;
+
+            StartBuildingWallEffect(true);
+            monitorScreen.UpdateBuildingStatus(false);
+
+            monitorScreen.SetActiveBuildingCountdown(true);
+            monitorScreen.StartCountdownEffect(timeToBuildGarden);
+
+            StartCoroutine(StartBuildGarden());
         }
     }
 
-    public IEnumerator StartBuildGarden()
+    TweenerCore<Vector3, Vector3, VectorOptions> StartBuildingWallEffect(bool isActive)
     {
-        yield return new WaitForSeconds(timeToBuildGarden);
-        Debug.Log("End Build");
-        Invoke("PlayCompeleteBuilding", 0.25f);
-        AudioBuildingManager.Instance.PlayAudioClip(completeBuildingSound);
-        buildingVFX.SetActive(false);
-        garden.SetActive(true);
+        if (isActive) buildingWall.SetActive(isActive);
+        
+        return buildingWall.transform.DOMoveY(isActive ? buildingWall.transform.position.y + movingWallYPos : buildingWall.transform.position.y - movingWallYPos, timeForBuildingWallMove);
     }
 
-    public void PlayCompeleteBuilding()
+    IEnumerator StartBuildGarden()
     {
+        yield return new WaitForSeconds(timeToBuildGarden);
+
+        Debug.Log("End Build");
+
+        garden.SetActive(true);
+        StartBuildingWallEffect(false).OnComplete(() => {
+            buildingWall.SetActive(false);
+            monitorScreen.SwitchMonitorState(true);
+        });
+
         completeVFX.GetComponent<ParticleSystem>().Play();
+        buildingVFX.SetActive(false);
+
+        AudioBuildingManager.Instance.PlayAudioClip(completeBuildingSound);
+    }
+
+    bool IsLookAtMonitorScreen(Vector3 lookAtVector, Vector3 monitorScreenVector, float limitAngle)
+    {
+        float dotValue = Vector3.Dot(lookAtVector, monitorScreenVector);
+        float angle = Mathf.Acos(dotValue / (lookAtVector.magnitude * monitorScreenVector.magnitude)) * Mathf.Rad2Deg;
+        //Debug.Log(angle);
+
+        if (dotValue > 0)
+        {
+            if (angle <= limitAngle) return true;
+            return false;
+        }
+        return false;
     }
 }

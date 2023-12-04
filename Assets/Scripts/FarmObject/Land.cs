@@ -43,17 +43,17 @@ public class Land : MonoBehaviour
 
             hasBuilt = true;
 
-            StartBuildingWallEffect(true);
+            StartBuildingWallAnimation(true);
             monitorScreen.UpdateBuildingStatus(false);
 
             monitorScreen.SetActiveBuildingCountdown(true);
-            monitorScreen.StartCountdownEffect(timeToBuildGarden);
+            monitorScreen.StartCountdownAnimation(timeToBuildGarden);
 
             StartCoroutine(StartBuildGarden());
         }
     }
 
-    TweenerCore<Vector3, Vector3, VectorOptions> StartBuildingWallEffect(bool isActive)
+    TweenerCore<Vector3, Vector3, VectorOptions> StartBuildingWallAnimation(bool isActive)
     {
         if (isActive) buildingWall.SetActive(isActive);
         
@@ -67,7 +67,7 @@ public class Land : MonoBehaviour
         Debug.Log("End Build");
 
         garden.SetActive(true);
-        StartBuildingWallEffect(false).OnComplete(() => {
+        StartBuildingWallAnimation(false).OnComplete(() => {
             buildingWall.SetActive(false);
             monitorScreen.SwitchMonitorState(true);
         });

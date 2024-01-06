@@ -55,7 +55,7 @@ public class InventoryController : Singleton<InventoryController>
         {
             //Check stack item here with existed item
             int leftOverAmmo = currentAmmoList[firstSlot].AddAmmo(count, ammoObject);
-            Debug.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
+            //Debug.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
             item = currentAmmoList[firstSlot];
         }
         else if (emptySlot != -1)
@@ -71,7 +71,7 @@ public class InventoryController : Singleton<InventoryController>
             item = currentAmmoList[emptySlot];
             //Debug.Log(item);
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
-            Debug.Log("Add NEW" + count + ammoStats.name);
+            //Debug.Log("Add NEW" + count + ammoStats.name);
         }
         else
         {
@@ -117,6 +117,16 @@ public class InventoryController : Singleton<InventoryController>
         {
             if (currentAmmoList[i].ammoStats.weaponSlot == weaponSlot) return true;
         }
+        return false;
+    }
+
+    public bool CheckItemIsFull(Plant plant)
+    {
+        foreach (Item item in currentAmmoList)
+        {
+            if (plant.ammoStats == item.ammoStats && item.count == item.ammoStats.maxCount) return true;
+        }
+
         return false;
     }
 }

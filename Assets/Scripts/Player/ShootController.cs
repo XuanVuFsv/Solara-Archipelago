@@ -247,6 +247,8 @@ public class ShootController : MonoBehaviour
                 rigController.SetTrigger("ReloadAK");
             }
         }
+
+        //if (ActiveWeapon.equippedWeapon[activeWeapon.activeWeaponIndex])
         rigController.SetBool("reloading", false);
         RefillMagazine();
     }

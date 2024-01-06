@@ -45,3 +45,5 @@ MonoBehaviour:
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
+  description: Flamethrowers. Deal 30 damage and 5 damage as scorching effect after
+    stop attack

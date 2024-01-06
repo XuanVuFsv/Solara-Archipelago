@@ -174,7 +174,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4265698561347662435}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: SliderValuePass, Assembly-CSharp
         m_MethodName: UpdateProgress
         m_Mode: 0
         m_Arguments:
@@ -1036,7 +1036,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3279197731755842105}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: SliderValuePass, Assembly-CSharp
         m_MethodName: UpdateProgress
         m_Mode: 0
         m_Arguments:
@@ -2023,7 +2023,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3279197732705540253}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: SliderValuePass, Assembly-CSharp
         m_MethodName: UpdateProgress
         m_Mode: 0
         m_Arguments:
@@ -3135,7 +3135,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3279197733528498550}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: SliderValuePass, Assembly-CSharp
         m_MethodName: UpdateProgress
         m_Mode: 0
         m_Arguments:

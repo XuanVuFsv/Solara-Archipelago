@@ -158,20 +158,20 @@ public class ActiveWeapon : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) || (Input.GetKeyDown(KeyCode.F1)))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             //Debug.Log("1");
             SwitchWeapon(equippedWeapon[0]);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) || (Input.GetKeyDown(KeyCode.F2)))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             //Debug.Log("2");
             SwitchWeapon(equippedWeapon[1]);
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3) || (Input.GetKeyDown(KeyCode.F3)))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             //Debug.Log("3");
             SwitchWeapon(equippedWeapon[2]);
@@ -397,6 +397,7 @@ public class ActiveWeapon : MonoBehaviour
         equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStats);
 
         shootController.magazineObject = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().magazineObject;
+        //shootController.magazineObject = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().magazineObject;
         shootController.raycastWeapon = equippedWeapon[activeWeaponIndex].GetComponent<RaycastWeapon>();
 
         //if (activeWeaponIndex == 2 || activeWeaponIndex == 3) gunCameraController.SetHoldWeaponAnimation(false, (int)weaponStats.weaponSlot);

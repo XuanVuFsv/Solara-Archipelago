@@ -114,4 +114,6 @@ public class AmmoStats : ScriptableObject
     public int wateringTime;
     public int requiredLevel;
     public GameObject growingBody;
+
+    public string description;
 }

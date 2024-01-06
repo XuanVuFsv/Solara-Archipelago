@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GrowingSlotResourceManager : MonoBehaviour
+public class GrowingSlotResourceManager : SlotManager
 {
-    public string resourceName;
-    public int maxStackPerSlot;
-    public Color defaultLockPanelColor, defaultUnlockPanelColor;
-
     public List<GrowingSlotResourceState> growingSlotResourcesManager = new List<GrowingSlotResourceState>();
 
     [SerializeField]
@@ -45,7 +41,7 @@ public class GrowingSlotResourceManager : MonoBehaviour
             //         -- Fill Image
             //         -- Lock Image
 
-            Debug.Log(i);
+            //Debug.Log(i);
             growingSlotResourcesManager.Add(
                 new GrowingSlotResourceState(
                     slotPanel, slotElements[1], slotElements[2], 

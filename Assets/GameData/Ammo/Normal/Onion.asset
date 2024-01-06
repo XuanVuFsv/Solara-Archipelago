@@ -45,3 +45,4 @@ MonoBehaviour:
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
+  description: Grenade. Explode and deal 200 damage at central. Min damage is 50

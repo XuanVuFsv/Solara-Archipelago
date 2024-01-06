@@ -5,18 +5,11 @@ using UnityEngine.UI;
 
 /// <summary> Growing Slot Status store data about growing resource like water or fertilizer. </summary>
 [System.Serializable]
-public class GrowingSlotResourceState
+public class GrowingSlotResourceState : SlotState
 {
     [Header("UI Element")]
-    public Image slotPanel;
     public Image fillImage;
-    public Image lockImage;
 
-    public Color lockPanelColor;
-    public Color unlockPanelColor;
-
-    public bool isUnlock;
-    public int index;
     public int maxStack;
 
     [SerializeField]
@@ -47,7 +40,7 @@ public class GrowingSlotResourceState
         }    
     }
 
-    public void ChangeLockState(bool _isUnlock)
+    public override void ChangeLockState(bool _isUnlock)
     {
         isUnlock = _isUnlock;
         slotPanel.color = isUnlock ? unlockPanelColor : lockPanelColor;

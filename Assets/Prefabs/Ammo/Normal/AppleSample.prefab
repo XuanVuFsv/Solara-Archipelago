@@ -98,8 +98,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.1480823
-  m_Center: {x: 0.00000059604645, y: 1.993936, z: -0.066149294}
+  m_Radius: 1.5860243
+  m_Center: {x: -0.005107999, y: 3.0280628, z: 0.063604355}
 --- !u!54 &4968811767236883661
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10142,6 +10142,8 @@ MonoBehaviour:
   ammoContain: 1
   rigid: {fileID: 9111278382419106463}
   suckableCollider: {fileID: 9111278382419106462}
+  ownerGarden: {fileID: 0}
+  ownerSlot: {fileID: 0}
   plantData:
     trailTracer: {fileID: 0}
     bulletObject: {fileID: 0}
@@ -10150,7 +10152,6 @@ MonoBehaviour:
     wateringStack: 0
   growingBody: {fileID: 9061345503472693623}
   orginalPlant: {fileID: 0}
-  growingTime: 5
   elapsedTime: 0
   onTree: 0
   nonPlanting: 0
@@ -10420,7 +10421,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.9858241, g: 1, b: 0, a: 1}
+      maxColor: {r: 0.9858241, g: 1, b: 0, a: 0.5019608}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSlot: 0
   name: Carambola
-  maxCount: 2000
-  ammoAllowedInMagazine: 100
+  maxCount: 50
+  ammoAllowedInMagazine: 10
   amplitudeGainImpulse: 70
-  force: 300
+  force: 0
   fireRate: 1
   artwork: {fileID: 21300000, guid: 64f8eb4a25fe643169785ba4aef65d43, type: 3}
   fruitPrefab: {fileID: 0}
@@ -45,9 +45,10 @@ MonoBehaviour:
   bulletCount: 1
   bulletDirectionPattern:
   - {x: 0, y: 0, z: 0}
-  totalGrowingTime: 5
+  totalGrowingTime: 15
   numberOfFruitPerSeed: 0
   bodyType: 0
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
+  description: Sniper ammo. Deal 80 damage

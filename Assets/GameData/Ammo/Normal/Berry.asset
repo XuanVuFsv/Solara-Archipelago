@@ -57,3 +57,4 @@ MonoBehaviour:
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
+  description: Asssault Rifle Ammo. Deal 25 damage

@@ -75,7 +75,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
             suckedObject?.GoToAxieCollector();
             if (suckedObject as Plant) (suckedObject as Plant).inCrafting = false;
 
-
+            //if (InventoryController.Instance.CheckItemIsFull((Plant)suckedObject)) return;
 
             //Debug.Log(Vector3.Distance(shootingInputData.raycastOrigin.position, hit.transform.position));
             if (Physics.SphereCast(shootingInputData.raycastOrigin.position, radiusSphereCastToCheckSucked, shootingInputData.fpsCameraTransform.forward, out hit, distanceThresholdToGotAmmo, shootingInputData.layerMask))

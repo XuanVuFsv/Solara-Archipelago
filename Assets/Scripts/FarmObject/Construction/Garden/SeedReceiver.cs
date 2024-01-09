@@ -11,17 +11,17 @@ public class SeedReceiver : MonoBehaviour
     {
         // If garden has not built completely
         if (!ownerGarden.HasBuilt) return;
-        Debug.Log("Check");
+        //Debug.Log("Check");
 
         //Only Suckable game object like crop
         if (other.gameObject.tag == "Suckable")
         {
-            Debug.Log("Check");
+            //Debug.Log("Check");
 
             //Debug.Log("Detect Crop: " + other.name);
             Plant plant = other.gameObject.GetComponent<Plant>();
             if (plant == null) return;
-            Debug.Log("Check");
+            //Debug.Log("Check");
 
             //Debug.Log(plant.state);
 
@@ -56,7 +56,7 @@ public class SeedReceiver : MonoBehaviour
             if (ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].crop == null)
             {
                 ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].crop = plant;
-                ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].countDownUI.StartCountDown(plant.ammoStats.totalGrowingTime);
+                //ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].countDownUI.StartCountDown(plant.ammoStats.totalGrowingTime);
 
                 plant.ownerGarden = ownerGarden;
                 plant.ownerSlot = ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex];
@@ -69,7 +69,7 @@ public class SeedReceiver : MonoBehaviour
             else // Asign to first empty slot found by FindEmptySlotIndex method if slot on monitor not null
             {
                 ownerGarden.gardenSlotProperties[emptySlotIndex].crop = plant;
-                ownerGarden.gardenSlotProperties[emptySlotIndex].countDownUI.StartCountDown(plant.ammoStats.totalGrowingTime);
+                //ownerGarden.gardenSlotProperties[emptySlotIndex].countDownUI.StartCountDown(plant.ammoStats.totalGrowingTime);
 
                 plant.ownerGarden = ownerGarden;
                 plant.ownerSlot = ownerGarden.gardenSlotProperties[emptySlotIndex];

@@ -17,7 +17,7 @@ public class MyQualitySetting : Singleton<MyQualitySetting>
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X))
+        if(Input.GetKeyDown(KeyCode.Z))
         {
             if (QualitySettings.vSyncCount == 3) QualitySettings.vSyncCount = 0;
             else QualitySettings.vSyncCount++;

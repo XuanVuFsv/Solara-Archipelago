@@ -10,6 +10,7 @@ public class GardenSlotProperties : MonoBehaviour
     [Header("Slot properties")]
     public bool isUnLock;
     public int upgradingLevel = 0;
+    public int unlockFee;
     public Plant crop;
 
     [Header("Slot properties relate to growing process")]
@@ -45,13 +46,22 @@ public class GardenSlotProperties : MonoBehaviour
         hasFertilizering = _hasFertilizering;
     }
 
-    public void UnLockSlot()
+    public bool UnLockSlot()
     {
+        bool canUseGem = GemManager.Instance.UseGem(unlockFee);
+        if (!canUseGem)
+        {
+            Debug.Log("Not enough gem");
+            return false;
+        }
+
         isUnLock = true;
         lockedSlotObjects.SetActive(false);
 
         isUnLock = true;
         crop = null;
+
+        return true;
     }
 
     public bool Clear()

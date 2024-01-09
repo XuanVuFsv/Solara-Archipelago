@@ -85,6 +85,8 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 if (hit.transform.gameObject.tag == "Wall")
                 {
                     GameObject wall = hit.transform.gameObject;
+                    GemManager.Instance.AddGem(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
+                    Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
                     WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
                 }
                 #endregion
@@ -119,6 +121,8 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                     if (!destroyedObstacle && hit.transform.gameObject.tag == "Wall")
                     {
                         GameObject wall = hit.transform.gameObject;
+                        GemManager.Instance.AddGem(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
+                        Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
                         WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
                         destroyedObstacle = true;
                     }

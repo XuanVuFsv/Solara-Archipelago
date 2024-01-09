@@ -9,11 +9,13 @@ public class CropStored : CropState
 
     public override void Start()
     {
-        Debug.Log("Start Stored");
+        //Debug.Log("Start Stored");
         if (cropMachine.orginalPlant)
         {
             cropMachine.orginalPlant.wholePlants.Remove(cropMachine);
         }
+
+        GemManager.Instance.AddGem(cropMachine.ammoStats.gemEarnWhenHaverst);
 
         cropMachine.startDestroyedTimer = false;
         //cropMachine.StopCoroutine("DestroyTimer");

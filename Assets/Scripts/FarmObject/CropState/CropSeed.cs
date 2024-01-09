@@ -10,7 +10,7 @@ public class CropSeed : CropState
 
     public override void Start()
     {
-        Debug.Log("Start Seed");
+        //Debug.Log("Start Seed");
         cropMachine.onTree = false;
         //cropMachine.transform.parent = null;
 
@@ -32,7 +32,7 @@ public class CropSeed : CropState
     public override void End()
     {
         if (cropMachine.state == null) return;
-        Debug.Log("End Seed");
+        //Debug.Log("End Seed");
         cropMachine.StopCoroutine(DestroyTimer());
     }
 

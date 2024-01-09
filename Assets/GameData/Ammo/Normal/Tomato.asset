@@ -43,10 +43,12 @@ MonoBehaviour:
   - {x: -0.05, y: 0, z: 0}
   - {x: 0, y: 0.05, z: 0}
   - {x: 0, y: -0.05, z: 0}
-  totalGrowingTime: 10
+  totalGrowingTime: 45
   numberOfFruitPerSeed: 30
   bodyType: 0
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
   description: Shotgun ammo with 5 bullet per fruit. Deal total 100 damage
+  gemEarnWhenKillEnemy: 2
+  gemEarnWhenHaverst: 3

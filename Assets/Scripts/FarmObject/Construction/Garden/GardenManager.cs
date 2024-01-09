@@ -21,6 +21,8 @@ public class GardenManager : MonoBehaviour
 
     public List<GardenSlotProperties> gardenSlotProperties = new List<GardenSlotProperties>();
     public MonitorGardenController monitorGardenController;
+    public WaterResourceManager waterManager;
+    public FertilizerResourceManager fertilizerManager;
     public int activeSlotCount = 1;
     public int currentAvailableSlotIndex = 0;
 
@@ -50,7 +52,13 @@ public class GardenManager : MonoBehaviour
     {
         if (activeSlotCount == MAX_SLOT) return - 1;
 
-        gardenSlotProperties[activeSlotCount].UnLockSlot();
+        bool unlockSuccess = gardenSlotProperties[activeSlotCount].UnLockSlot();
+        if (!unlockSuccess)
+        {
+            //Debug.Log("Not enough gem");
+            return -1;
+        }
+
         activeSlotCount++;
 
         if (activeSlotCount == MAX_SLOT) monitorGardenController.DisableUnlockNewSlotButton();
@@ -67,6 +75,14 @@ public class GardenManager : MonoBehaviour
     {
         return gardenSlotProperties[currentAvailableSlotIndex];
     }
+
+    public void CheckAndGrowPlant()
+    {
+        foreach (GardenSlotProperties slot in gardenSlotProperties)
+        {
+            (slot.crop.state as CropGrowing).GrowPlant();
+        }    
+    }    
 
     public int FindEmptySlotIndex()
     {

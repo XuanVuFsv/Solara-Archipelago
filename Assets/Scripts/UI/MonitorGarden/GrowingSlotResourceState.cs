@@ -10,34 +10,20 @@ public class GrowingSlotResourceState : SlotState
     [Header("UI Element")]
     public Image fillImage;
 
-    public int maxStack;
-
     [SerializeField]
-    int stack;
+    bool hasFill;
 
-    public GrowingSlotResourceState(Image _slotPanel, Image _fillImage, Image _lockImage, Color _unlockPanelColor, Color _lockPanelColor, int _index, int _maxStack)
+    private void Start()
     {
-        slotPanel = _slotPanel;
-        fillImage = _fillImage;
-        lockImage = _lockImage;
-        unlockPanelColor = _unlockPanelColor;
-        lockPanelColor = _lockPanelColor;
-        index = _index;
-        maxStack = _maxStack;
+        Image[] slots = GetComponentsInChildren<Image>(true);
+        slotPanel = slots[0];
+        fillImage = slots[1];
+        lockImage = slots[2];
     }
 
     public bool HasFill
     {
-        get { return stack == maxStack; }
-    }
-
-    public void AddStack()
-    {
-        if (stack < maxStack) stack++;
-        else if (stack == maxStack)
-        {
-            ChangeFillState(true);
-        }    
+        get { return hasFill; }
     }
 
     public override void ChangeLockState(bool _isUnlock)
@@ -52,6 +38,7 @@ public class GrowingSlotResourceState : SlotState
     public void ChangeFillState(bool hasFill)
     {
         if (!isUnlock) return;
+        this.hasFill = hasFill;
         fillImage.gameObject.SetActive(hasFill);
     }
 }

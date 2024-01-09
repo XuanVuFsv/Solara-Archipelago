@@ -37,10 +37,12 @@ MonoBehaviour:
   recoildPattern: []
   bulletCount: 1
   bulletDirectionPattern: []
-  totalGrowingTime: 25
+  totalGrowingTime: 60
   numberOfFruitPerSeed: 3
   bodyType: 0
   wateringTime: 1
   requiredLevel: 1
   growingBody: {fileID: 0}
   description: 'Just fruit for making pies '
+  gemEarnWhenKillEnemy: 0
+  gemEarnWhenHaverst: 5

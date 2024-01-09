@@ -8,7 +8,7 @@ public class WallSpawner : MonoBehaviour
     public int[] activeIndex = new int[3];
     public int destroyedWall = 0;
     private static WallSpawner instance;
-
+    
     void MakeInstance()
     {
         if (instance != null && instance != this)

@@ -16,7 +16,6 @@ public class CropGrowing : CropState
     public override void Start()
     {
         Debug.Log("Start Growing");
-        inGrowing = true;
 
         cropMachine.startDestroyedTimer = false;
         //cropMachine.StopCoroutine("DestroyTimer");
@@ -38,26 +37,39 @@ public class CropGrowing : CropState
         Debug.Log("End Growing");
     }
 
-    void GrowPlant()
+    public async void GrowPlant()
     {
+        if (!cropMachine) return;
         cropMachine.gameObject.SetActive(true);
         cropMachine.growingBody.SetActive(true);
 
+        //Debug.Log(cropMachine);
+        //Debug.Log(cropMachine.ownerGarden);
+        //Debug.Log(cropMachine.ownerGarden.waterManager);
+
+        if (cropMachine.ownerGarden.waterManager.outOfResource) await UniTask.WaitUntil(() => cropMachine.ownerGarden.waterManager.outOfResource == false);
+        inGrowing = true;
+
+        cropMachine.ownerSlot.countDownUI.StartCountDown((int)(cropMachine.ammoStats.totalGrowingTime * cropMachine.ownerGarden.fertilizerManager.reducingTimeValue));
+        if (cropMachine.ownerGarden.monitorGardenController.currentSlotIndex == cropMachine.ownerSlot.index) cropMachine.ownerGarden.monitorGardenController.CheckCropUIState();
+
+        //if (cropMachine.ownerGarden.waterManager.outOfResource == false) return;
+
         cropMachine.startGrowingTime = DateTime.UtcNow.ToLocalTime();
-        TimeSpan span = TimeSpan.FromSeconds(cropMachine.ammoStats.totalGrowingTime);
+        TimeSpan span = TimeSpan.FromSeconds(cropMachine.ammoStats.totalGrowingTime * cropMachine.ownerGarden.fertilizerManager.reducingTimeValue);
         cropMachine.endGrowingTime = cropMachine.startGrowingTime.Add(span);
         cropMachine.StartCoroutine(StartGrowingProcess());
-        //Debug.Log("StartGrowingProcess");
+        Debug.Log("StartGrowingProcess");
     }
 
     IEnumerator StartGrowingProcess()
     {
         //Debug.Log("StartGrowingProcess");
-        yield return new WaitForSeconds(cropMachine.ammoStats.totalGrowingTime);
+        yield return new WaitForSeconds(cropMachine.ammoStats.totalGrowingTime * cropMachine.ownerGarden.fertilizerManager.reducingTimeValue);
         cropMachine.seedOuterEffect.SetActive(false);
         //wholeOuterEffect.SetActive(true);
         CompleteGrowingSession();
-        //Debug.Log("Growing Process Done");
+        Debug.Log("Growing Process Done");
         //cropMachine.growingTime--;
     }
 
@@ -81,11 +93,10 @@ public class CropGrowing : CropState
 
         if (cropMachine.ownerGarden.monitorGardenController.currentSlotIndex == cropMachine.ownerSlot.index) cropMachine.ownerGarden.monitorGardenController.CheckCropUIState();
 
-        await UniTask.Delay(TimeSpan.FromSeconds(5), ignoreTimeScale: false);
         await UniTask.WaitUntil(() => cropMachine.HaveWholeCrop() == false);
-        cropMachine.ownerSlot.countDownUI.StartCountDown(cropMachine.ammoStats.totalGrowingTime);
+        //cropMachine.ownerSlot.countDownUI.StartCountDown((int)(cropMachine.ammoStats.totalGrowingTime * cropMachine.ownerGarden.fertilizerManager.reducingTimeValue));
 
-        if (cropMachine.ownerGarden.monitorGardenController.currentSlotIndex == cropMachine.ownerSlot.index) cropMachine.ownerGarden.monitorGardenController.CheckCropUIState();
+        //if (cropMachine.ownerGarden.monitorGardenController.currentSlotIndex == cropMachine.ownerSlot.index) cropMachine.ownerGarden.monitorGardenController.CheckCropUIState();
 
         GrowPlant();
     }

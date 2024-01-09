@@ -53,6 +53,7 @@ public class GardenBaseBuilder : MonoBehaviour
     public float timeForBuildingWallMove;
 
     public int timeToBuildGarden;
+    public int unlockFee;
     public bool hasBuilt;
 
     private void OnTriggerStay(Collider other)
@@ -64,6 +65,13 @@ public class GardenBaseBuilder : MonoBehaviour
             //Debug.Log("Interactable");
 
             if (hasBuilt) return;
+
+            bool canUseGem = GemManager.Instance.UseGem(unlockFee);
+            if (!canUseGem)
+            {
+                Debug.Log("Not enough gem");
+                return;
+            }
 
             //Debug.Log("Build");
             AudioBuildingManager.Instance.PlayAudioClip(startBuildSound);

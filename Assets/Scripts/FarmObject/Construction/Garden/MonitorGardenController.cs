@@ -207,14 +207,14 @@ public class MonitorGardenController : MonoBehaviour
 
     public void ChangeCropUIToWhole()
     {
-        Debug.Log("ChangeCropUIToWhole");
+        //Debug.Log("ChangeCropUIToWhole");
         StartInOutScaleTextMeshProUGUILoop(currentCropIcon, new Vector3(endScale, endScale, 1), LoopType.Yoyo, -1, 3);
         wholeCircleUI.SetActive(true);
     }
 
     public void ChangeCropUIToOtherState()
     {
-        Debug.Log("ChangeCropUIToOtherState");
+        //Debug.Log("ChangeCropUIToOtherState");
         Debug.Log("Kill");
         currentCropIconTween.Kill();
         wholeCircleUI.SetActive(false);

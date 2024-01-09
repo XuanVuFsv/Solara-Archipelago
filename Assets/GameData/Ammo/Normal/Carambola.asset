@@ -45,10 +45,12 @@ MonoBehaviour:
   bulletCount: 1
   bulletDirectionPattern:
   - {x: 0, y: 0, z: 0}
-  totalGrowingTime: 15
+  totalGrowingTime: 30
   numberOfFruitPerSeed: 0
   bodyType: 0
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
   description: Sniper ammo. Deal 80 damage
+  gemEarnWhenKillEnemy: 4
+  gemEarnWhenHaverst: 2

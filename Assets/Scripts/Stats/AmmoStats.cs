@@ -116,4 +116,6 @@ public class AmmoStats : ScriptableObject
     public GameObject growingBody;
 
     public string description;
+    public int gemEarnWhenKillEnemy;
+    public int gemEarnWhenHaverst;
 }

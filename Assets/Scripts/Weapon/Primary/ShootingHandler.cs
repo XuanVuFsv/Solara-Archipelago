@@ -57,7 +57,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
     {
         if (shootingInputData.ammoStatsController.bulletCount == 1)
         {
-            Enemy enemy;
+            //Enemy enemy;
             shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
             //Debug.Log("Shoot");
 
@@ -69,13 +69,15 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 //hitEffectPrefab.Emit(5);
 
                 PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
+                PoolingManager.Instance.Get("PoolTomatoSetup");
+
                 shootingInputData.hitEvent.Notify(hit);
                 //currentHitObject = hit.collider.name;
-                enemy = hit.transform.GetComponent<Enemy>();
-                    if (enemy != null)
-                    {
-                        Destroy(enemy.gameObject);
-                    }
+                //enemy = hit.transform.GetComponent<Enemy>();
+                //    if (enemy != null)
+                //    {
+                //        Destroy(enemy.gameObject);
+                //    }
 
                 //Tracer here
                 //Damage Handle here
@@ -86,8 +88,16 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 {
                     GameObject wall = hit.transform.gameObject;
                     GemManager.Instance.AddGem(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
-                    Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
+                    //Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
                     WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
+                }
+
+                if (hit.transform.gameObject.tag == "Enemy")
+                {
+                    EnemyController enemy = hit.transform.GetComponent<EnemyController>();
+                    //GemManager.Instance.AddGem(enemy.enemyStats.gemRewardForPlayerWhenKilled);
+                    enemy.TakeDamage(weaponStatsController.currentAmmoStatsController.ammoStats.damage);
+                    //Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
                 }
                 #endregion
             }
@@ -101,7 +111,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
             //int i = 0;
             bool destroyedObstacle = false;
-            Enemy enemy;
+            //Enemy enemy;
 
             foreach (Vector3 pattern in shootingInputData.ammoStatsController.ammoStats.bulletDirectionPattern)
             {
@@ -114,17 +124,27 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                     raycastHits.Add(hit);
                     //Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
                     PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
+                    PoolingManager.Instance.Get("PoolTomatoSetup");
+
                     shootingInputData.hitEvent.Notify(hit);
-                    enemy = hit.transform.GetComponent<Enemy>();
+                    //enemy = hit.transform.GetComponent<Enemy>();
                     #region Minigame Test
                     //tracer.transform.position = hit.point;
                     if (!destroyedObstacle && hit.transform.gameObject.tag == "Wall")
                     {
                         GameObject wall = hit.transform.gameObject;
                         GemManager.Instance.AddGem(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
-                        Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
+                        //Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
                         WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
                         destroyedObstacle = true;
+                    }
+
+                    if (!destroyedObstacle && hit.transform.gameObject.tag == "Enemy")
+                    {
+                        EnemyController enemy = hit.transform.GetComponent<EnemyController>();
+                        //GemManager.Instance.AddGem(enemy.enemyStats.gemRewardForPlayerWhenKilled);
+                        enemy.TakeDamage(weaponStatsController.currentAmmoStatsController.ammoStats.damage);
+                        //Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
                     }
                     #endregion
                 }

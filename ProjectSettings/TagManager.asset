@@ -16,6 +16,7 @@ TagManager:
   - Ammo
   - CheckingHarvest
   - Axie
+  - Enemy
   layers:
   - Default
   - TransparentFX

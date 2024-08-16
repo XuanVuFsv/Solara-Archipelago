@@ -105,6 +105,7 @@ public class Pool<T> : IPool<T> where T : IPool
         {
             T usedObject = pooledObjects.Pop();
             alreadyUsedObjects.Enqueue(usedObject);
+            Debug.Log(usedObject);
             return usedObject;
         }
     }

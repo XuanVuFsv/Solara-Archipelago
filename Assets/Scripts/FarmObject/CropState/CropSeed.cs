@@ -39,7 +39,7 @@ public class CropSeed : CropState
     IEnumerator DestroyTimer()
     {
         cropMachine.startDestroyedTimer = true;
-        int t = Random.Range(20, 40);
+        int t = Random.Range(40, 80);
         yield return new WaitForSeconds(t);
         if (cropMachine.startDestroyedTimer && !cropMachine.inCrafting)
         {

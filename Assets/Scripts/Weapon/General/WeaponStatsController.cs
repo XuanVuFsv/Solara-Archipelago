@@ -97,7 +97,9 @@ public class WeaponStatsController: MonoBehaviour
                 gunCamera.SetHasScope(currentAmmoStatsController.zoomType == AmmoStats.ZoomType.HasScope);
 
                 //Attach Ammo to this object to 
-                if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.AddUsedGameEvent();
+                if (itemInInventory.ammoStats.featuredType == AmmoStats.FeaturedType.Normal && itemInInventory.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.plantSample.AddUsedGameEvent(); 
+                //PoolingManager.Instance.AddGameEvent("PoolTomatoSetup");
+
 
                 //Invoke event for pick ammo
                 pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
@@ -141,26 +143,27 @@ public class WeaponStatsController: MonoBehaviour
         //if (!currentAmmoStatsController) Debug.Log("currentAmmoStatsController null " + transform.parent.name);
         //Debug.Log(ammoPickup.name);
 
-        if (!currentAmmoStatsController.ammoStats)
-        {
+        //if (!currentAmmoStatsController.ammoStats)
+        //{
 
-            Debug.Log("Add to null " + transform.parent.name);
-            //currentAmmoStatsController.ammoStats = ammoPickup.ammoStats;
-            //currentAmmoStatsController.AssignAmmotData();
-            //ofActiveAmmo = weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot;
+        //    Debug.Log("Add to null " + transform.parent.name);
+        //    //currentAmmoStatsController.ammoStats = ammoPickup.ammoStats;
+        //    //currentAmmoStatsController.AssignAmmotData();
+        //    //ofActiveAmmo = weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot;
 
-            //if (ofActiveAmmo)
-            //{
-            //    //Debug.Log("Set" + currentAmmoStatsController.multiplierForAmmo);
-            //    gunCamera.SetMultiplier(currentAmmoStatsController.multiplierForAmmo);
-            //}
-            //pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
-            //pickAmmoEvent.Notify(currentAmmoStatsController.multiplierRecoilOnAim);
+        //    //if (ofActiveAmmo)
+        //    //{
+        //    //    //Debug.Log("Set" + currentAmmoStatsController.multiplierForAmmo);
+        //    //    gunCamera.SetMultiplier(currentAmmoStatsController.multiplierForAmmo);
+        //    //}
+        //    //pickAmmoEvent.Notify(currentAmmoStatsController.amplitudeGainImpulse);
+        //    //pickAmmoEvent.Notify(currentAmmoStatsController.multiplierRecoilOnAim);
 
-            //SetNewAmmoCount(ammoPickup);
-            //ammunitionChestPicked = ammoPickup;
-        }
-        else if (currentAmmoStatsController.ammoStats.name == ammoPickup.ammoStats.name)
+        //    //SetNewAmmoCount(ammoPickup);
+        //    //ammunitionChestPicked = ammoPickup;
+        //}
+        //else
+        if (currentAmmoStatsController.ammoStats.name == ammoPickup.ammoStats.name)
         {
             Debug.Log("Add same ammo");
 
@@ -182,7 +185,7 @@ public class WeaponStatsController: MonoBehaviour
         }
         else
         {
-            //Debug.Log("Add new ammo");
+            Debug.Log("Add new ammo");
 
             //if (ammunitionChestPicked)
             //{

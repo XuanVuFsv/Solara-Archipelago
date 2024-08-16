@@ -87,12 +87,12 @@ public class PoolingManager : MonoBehaviour
         if (!IsContainsPool(poolName))
         {
             MyDebug.Log("Pool not exist");
-            currentPool = "";
+            //currentPool = "";
             return;
         }
 
         pooledList[poolName].AddGameEvent();
-        currentPool = poolName;
+        //currentPool = poolName;
     }
 
     public void RemoveGameEvent(string poolName)
@@ -100,11 +100,11 @@ public class PoolingManager : MonoBehaviour
         if (!IsContainsPool(poolName))
         {
             MyDebug.Log("Pool not exist");
-            currentPool = "";
+            //currentPool = "";
             return;
         }
         pooledList[poolName].RemoveGameEvent();
-        currentPool = "";
+        //currentPool = "";
     }
 
     public bool IsContainsPool(string poolName)

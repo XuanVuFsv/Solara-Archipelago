@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class TimeManager : MonoBehaviour
+public class TimeManager : Singleton<TimeManager>
 {
     [System.Serializable]
     public class TimeLightingSetting
@@ -96,6 +96,10 @@ public class TimeManager : MonoBehaviour
     public event System.Action<int> OnHoursChange;
     public event System.Action<int> OnDaysChange;
 
+    public bool isNight = false;
+
+    public HealthController player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -139,6 +143,8 @@ public class TimeManager : MonoBehaviour
     {
         if (value == sunrise.hoursWhenChangeSkyBox)
         {
+            isNight = false;
+            player.health = 100;
             StartCoroutine(LerpSkyBox(sunrise));
         }
         else if (value == day.hoursWhenChangeSkyBox)
@@ -151,11 +157,17 @@ public class TimeManager : MonoBehaviour
         }
         else if (value == night.hoursWhenChangeSkyBox)
         {
+            isNight = true;
             StartCoroutine(LerpSkyBox(night));
         }
 
         if (hours >= 10) hoursText.text = hours.ToString();
         else hoursText.text = "0" + hours.ToString();
+
+        if (isNight)
+        {
+            EnemySpawner.Instance.Spawn(seconInRealLifeVsIngame);
+        }
     }
 
     private void HandleDaysChange(int value)

@@ -153,7 +153,7 @@ public class CraftingSlot : MonoBehaviour
     {
         //Debug.Log(other.name);
         //other.GetComponent<Plant>().rigid.useGravity = true;
-        other.GetComponent<Plant>().ChangeToSeed();
+        other.GetComponent<Plant>().ChangeToUnStored();
         currentSuckableItems.Remove(currentSuckableItems[count - 1]);
         count--;
 

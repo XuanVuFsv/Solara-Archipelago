@@ -10,13 +10,13 @@ public abstract class Suckable : StateMachine, ISuckable
     public Rigidbody rigid;
     public Collider suckableCollider;
 
-    public GardenManager ownerGarden;
-    public GardenSlotProperties ownerSlot;
+    //public GardenManager ownerGarden;
+    //public GardenSlotProperties ownerSlot;
 
     float s;
     float varSpeed;
 
-    public void GoToAxieCollector()
+    public virtual void GoToAxieCollector()
     {
         s += Time.deltaTime * CollectHandler.Instance.acceleratonSuckUpSpeed;
         varSpeed = Mathf.Lerp(CollectHandler.Instance.minSuckUpSpeed, CollectHandler.Instance.maxSuckUpSpeed, CollectHandler.Instance.velocityCurve.Evaluate(s / 1f));
@@ -24,12 +24,12 @@ public abstract class Suckable : StateMachine, ISuckable
         transform.position = Vector3.Lerp(transform.position, CollectHandler.Instance.shootingInputData.raycastOrigin.position, varSpeed);
     }
 
-    public void MoveOut()
+    public virtual void MoveOut()
     {
         rigid.AddForce(CollectHandler.Instance.shootingInputData.bulletSpawnPoint.forward * CollectHandler.Instance.moveOutForce);
     }
 
-    public void ResetVelocity()
+    public virtual void ResetVelocity()
     {
         rigid.velocity = Vector3.zero;
     }
@@ -54,7 +54,7 @@ public abstract class Suckable : StateMachine, ISuckable
 
     }
 
-    public virtual void ChangeToSeed()
+    public virtual void ChangeToUnStored()
     {
 
     }

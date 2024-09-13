@@ -91,7 +91,7 @@ public class Item
             {
                 if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
-                    (totalPlant[lastIndex] as Plant).ChangeToSeed();
+                    (totalPlant[lastIndex] as Plant).ChangeToUnStored();
                     (totalPlant[lastIndex] as Plant).transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
 
                     //(totalPlant[lastIndex] as Plant).orginalBody = InventoryController.Instance.gameObject;

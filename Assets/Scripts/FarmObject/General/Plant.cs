@@ -29,6 +29,9 @@ public class Plant : Suckable
 
     public PlanProperties plantData;
 
+    public GardenManager ownerGarden;
+    public GardenSlotProperties ownerSlot;
+
     [Header("Plant Components")]
     public GameObject growingBody;
     //public GameObject orginalBody;
@@ -99,7 +102,7 @@ public class Plant : Suckable
         //wholeOuterEffect.SetActive(false);
     }
 
-    public override void ChangeToSeed()
+    public override void ChangeToUnStored()
     {
         EndCurrentState();
         SetState(new CropSeed(this));

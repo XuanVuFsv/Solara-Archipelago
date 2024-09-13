@@ -8,16 +8,18 @@ using DG.Tweening;
 public class SimpleInteractiveUI : MonoBehaviour
 {
     public GrowingResourceManager growingResourceManager;
-    public RectTransform interactiveElement;
-    private Tween interactiveElementTween;
+    public GameObject guildDisplayUI;
 
-    [Range(0, 2)]
-    public float startScale;
-    [Range(0, 2)]
-    public float endScale;
-    [Range(0, 2)]
-    public float endScalePress;
-    public float animationSpeed;
+    public RectTransform interactiveElement;
+    //private Tween interactiveElementTween;
+
+    //[Range(0, 2)]
+    //public float startScale;
+    //[Range(0, 2)]
+    //public float endScale;
+    //[Range(0, 2)]
+    //public float endScalePress;
+    //public float animationSpeed;
 
     private bool enableUI = false;
     private bool canInteract = false;
@@ -30,30 +32,31 @@ public class SimpleInteractiveUI : MonoBehaviour
     {
         if (canInteract && isLookAtUI && Input.GetKeyDown(KeyCode.E))
         {
-            PressElementAnimation(interactiveElement, new Vector3(endScalePress, endScalePress, 1), animationSpeed);
+            //PressElementAnimation(interactiveElement, new Vector3(endScalePress, endScalePress, 1), animationSpeed);
+            guildDisplayUI.SetActive(false);
             growingResourceManager.RefillResource();
         }   
     }
 
     /// <summary> Zoom in and zoom out element animation. </summary>
-    public void PressElementAnimation(RectTransform rect, Vector3 endScale, float cycleTime)
-    {
-        interactiveElementTween = rect.DOScale(endScale, cycleTime).SetLoops(1, LoopType.Restart).SetEase(Ease.OutBack).OnComplete(() => {
-            EndZoomInOutAnimation(interactiveElement, new Vector3(startScale, startScale, 1), LoopType.Yoyo, animationSpeed);
-        });
-    }
+    //public void PressElementAnimation(RectTransform rect, Vector3 endScale, float cycleTime)
+    //{
+    //    interactiveElementTween = rect.DOScale(endScale, cycleTime).SetLoops(1, LoopType.Restart).SetEase(Ease.OutBack).OnComplete(() => {
+    //        EndZoomInOutAnimation(interactiveElement, new Vector3(startScale, startScale, 1), LoopType.Yoyo, animationSpeed);
+    //    });
+    //}
 
     /// <summary> Zoom in and zoom out element animation. </summary>
-    public void StartZoomInOutAnimation(RectTransform rect, Vector3 endScale, LoopType loopType, float cycleTime)
-    {
-        interactiveElementTween = rect.DOScale(endScale, cycleTime).SetLoops(1, loopType).SetEase(Ease.Linear);
-    }
+    //public void StartZoomInOutAnimation(RectTransform rect, Vector3 endScale, LoopType loopType, float cycleTime)
+    //{
+    //    interactiveElementTween = rect.DOScale(endScale, cycleTime).SetLoops(1, loopType).SetEase(Ease.Linear);
+    //}
 
     /// <summary> End Zoom in and zoom out element animation. </summary>
-    public void EndZoomInOutAnimation(RectTransform rect, Vector3 endScale, LoopType loopType, float cycleTime)
-    {
-        interactiveElementTween = rect.DOScale(endScale, cycleTime).SetLoops(1, loopType).SetEase(Ease.Linear);
-    }
+    //public void EndZoomInOutAnimation(RectTransform rect, Vector3 endScale, LoopType loopType, float cycleTime)
+    //{
+    //    interactiveElementTween = rect.DOScale(endScale, cycleTime).SetLoops(1, loopType).SetEase(Ease.Linear);
+    //}
 
     public bool CheckLookAtMonitorScreen(Vector3 lookAtVector, Vector3 monitorScreenVector, float limitAngle)
     {
@@ -74,8 +77,9 @@ public class SimpleInteractiveUI : MonoBehaviour
         isLookAtUI = CheckLookAtMonitorScreen(Camera.main.transform.forward, interactiveElement.transform.position - Camera.main.transform.position, limitAngleToInteractBuildButton);
         if (isLookAtUI && !enableUI)
         {
-            StartZoomInOutAnimation(interactiveElement, new Vector3(endScale, endScale, 1), LoopType.Yoyo, animationSpeed);
+            //StartZoomInOutAnimation(interactiveElement, new Vector3(endScale, endScale, 1), LoopType.Yoyo, animationSpeed);
             enableUI = true;
+            guildDisplayUI.SetActive(true);
         }
     }
 
@@ -84,6 +88,7 @@ public class SimpleInteractiveUI : MonoBehaviour
         canInteract = false;
         isLookAtUI = false;
         enableUI = false;
-        EndZoomInOutAnimation(interactiveElement, new Vector3(startScale, startScale, 1), LoopType.Yoyo, animationSpeed);
+        guildDisplayUI.SetActive(false);
+        //EndZoomInOutAnimation(interactiveElement, new Vector3(startScale, startScale, 1), LoopType.Yoyo, animationSpeed);
     }
 }

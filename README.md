@@ -1,2 +1,2 @@
-# GameGeek Mentoring Project 2023
-**Title:** Battle of Vitseh's Farm
+Avalanche VietNam GameJam 2024
+**Title:** Vitseh Land

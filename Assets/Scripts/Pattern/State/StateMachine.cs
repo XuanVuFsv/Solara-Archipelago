@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
-    public CropState state;
+    public ObjectState state;
 
     public void EndCurrentState()
     {
@@ -12,7 +12,7 @@ public abstract class StateMachine : MonoBehaviour
         state.End();
     }
 
-    public void SetState(CropState state)
+    public void SetState(ObjectState state)
     {
         this.state = state;
         this.state.Start();

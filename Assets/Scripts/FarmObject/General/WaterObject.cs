@@ -23,4 +23,24 @@ public class WaterObject : Suckable
     {
         
     }
+
+    public override void GoToAxieCollector()
+    {
+        base.GoToAxieCollector();
+    }
+
+    public override void MoveOut()
+    {
+        base.MoveOut();
+    }
+
+    public override void ChangeToStored()
+    {
+        base.ChangeToStored();
+    }
+
+    public override void ChangeToUnStored()
+    {
+        base.ChangeToUnStored();
+    }
 }

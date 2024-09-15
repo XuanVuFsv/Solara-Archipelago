@@ -11,21 +11,13 @@ public class SeedReceiver : MonoBehaviour
     {
         // If garden has not built completely
         if (!ownerGarden.HasBuilt) return;
-        //Debug.Log("Check");
 
         //Only Suckable game object like crop
         if (other.gameObject.tag == "Suckable")
         {
-            //Debug.Log("Check");
-
-            //Debug.Log("Detect Crop: " + other.name);
             Plant plant = other.gameObject.GetComponent<Plant>();
             if (plant == null) return;
-            //Debug.Log("Check");
 
-            //Debug.Log(plant.state);
-
-            //Destroy(other.gameObject);
             if (plant.ammoStats.featuredType != AmmoStats.FeaturedType.Normal
                 || plant.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.None
                 || plant.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.HandGun

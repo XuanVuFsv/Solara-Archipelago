@@ -12,14 +12,13 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     RaycastHit hit;
     [SerializeField]
     private float maxDistance = 3;
-    [SerializeField]
-    private float distanceThresholdToGotAmmo = 0.45f;
-    [SerializeField]
-    private float radiusSphereCastToCheckSucked = 0.1f;
 
+    public float distanceThresholdToGotAmmo = 0.45f;
+    public float radiusSphereCastToCheckSucked = 0.1f;
     public float minSuckUpSpeed, maxSuckUpSpeed;
     public int moveOutForce;
     public float acceleratonSuckUpSpeed;
+    public float suckUpSpeedScale = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -71,43 +70,30 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
                 //Debug.Log(!(suckedObject as Plant).CanSuckUp());
                 return;
             }
-            //suckedObject.ResetVelocity();
-            suckedObject?.GoToAxieCollector();
-            if (suckedObject as Plant) (suckedObject as Plant).inCrafting = false;
+            Debug.Log(hit.transform.name);
 
-            //if (InventoryController.Instance.CheckItemIsFull((Plant)suckedObject)) return;
+            //suckedObject.ResetVelocity();
+
+            if (suckedObject as WaterObject) (suckedObject as WaterObject).suckedPosition = hit.transform.position;
+            if (suckedObject as Plant) (suckedObject as Plant).inCrafting = false;
+            suckedObject?.GoToAxieCollector();
 
             //Debug.Log(Vector3.Distance(shootingInputData.raycastOrigin.position, hit.transform.position));
             if (Physics.SphereCast(shootingInputData.raycastOrigin.position, radiusSphereCastToCheckSucked, shootingInputData.fpsCameraTransform.forward, out hit, distanceThresholdToGotAmmo, shootingInputData.layerMask))
             {
-                //Debug.Log(suckedObject);
                 try
                 {
-                    //Debug.Log(suckedObject);
-                    //Debug.Log(suckedObject.ammoStats.name);
-                    //if (suckedObject.ammoStats != null)
-                    //{
-                    //    //Debug.Log(suckedObject.ammoStats.name);
-                    //    if (suckedObject.ammoStats.name == "AXS")
-                    //    {
-                    //        //Debug.Log("Earn");
-                    //        AXSManager.Instance.Add((suckedObject.ammoContain * 1f) / 10f);
-                    //        suckedObject.ammoContain = 0;
-                    //        (suckedObject as Plant).DestroyThis();
-                    //    }
-                    //    else
-                    //    {
-                    //        Debug.Log(suckedObject);
-                    //        AmmoStats ammoStats = suckedObject.ammoStats;
-                    //        weaponStatsController.SuckUpAmmo(suckedObject);
-                    //    }
-                    //}
-                    //InventoryController.Instance.AddNewAmmoToInventory(ammoStats, suckedObject.GetAmmoContain());
-
-                    if (suckedObject.ammoStats != null)
+                    if (suckedObject is Plant)
                     {
-                        AmmoStats ammoStats = suckedObject.ammoStats;
-                        weaponStatsController.SuckUpAmmo(suckedObject);
+                        if (suckedObject.ammoStats != null)
+                        {
+                            AmmoStats ammoStats = suckedObject.ammoStats;
+                            weaponStatsController.SuckUpAmmo(suckedObject);
+                        }
+                    }
+                    else if (suckedObject is WaterObject)
+                    {
+                        Debug.Log("Detect Water");
                     }
                 }
                 catch (Exception e)
@@ -121,7 +107,6 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     public void ShootOutHandle()
     {
         if (weaponStatsController.itemInInventory.ammoStats.name == "Null" || weaponStatsController.itemInInventory == null) return;
-        //weaponStatsController.UseAmmo(weaponStatsController.currentAmmoStatsController.bulletCount);
         weaponStatsController.UseAmmo(1);
     }
 

@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class WaterObject : Suckable
 {
-    public enum PlantState
+    public enum WaterState
     {
         Salt = 0,
         Fresh = 1,
     }
-
-    public GameObject waterFX;
+    [SerializeField]
+    WaterState initWaterState;
+    public Vector3 suckedPosition;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (initWaterState == WaterState.Salt) SetState(new SaltWater(this));
+        else SetState(new FreshWater(this));
     }
 
     // Update is called once per frame
@@ -26,7 +28,7 @@ public class WaterObject : Suckable
 
     public override void GoToAxieCollector()
     {
-        base.GoToAxieCollector();
+        WaterManager.Instance.waterFX.GetComponent<ParticleSystem>().Emit(1);
     }
 
     public override void MoveOut()

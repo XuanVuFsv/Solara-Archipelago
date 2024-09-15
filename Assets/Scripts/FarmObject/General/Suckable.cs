@@ -10,11 +10,10 @@ public abstract class Suckable : StateMachine, ISuckable
     public Rigidbody rigid;
     public Collider suckableCollider;
 
-    //public GardenManager ownerGarden;
-    //public GardenSlotProperties ownerSlot;
-
-    float s;
-    float varSpeed;
+    [SerializeField]
+    protected float s;
+    [SerializeField]
+    protected float varSpeed;
 
     public virtual void GoToAxieCollector()
     {

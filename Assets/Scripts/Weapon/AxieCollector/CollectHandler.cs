@@ -5,6 +5,13 @@ using System;
 
 public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStragety
 {
+    public enum WaterMode
+    {
+        Off = 0,
+        Salt = 1,
+        Fresh = 2,
+    }
+
     public ShootingInputData shootingInputData;
     public AnimationCurve velocityCurve;
     public WeaponStatsController weaponStatsController;
@@ -13,12 +20,14 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     [SerializeField]
     private float maxDistance = 3;
 
+    public int moveOutForce;
     public float distanceThresholdToGotAmmo = 0.45f;
     public float radiusSphereCastToCheckSucked = 0.1f;
     public float minSuckUpSpeed, maxSuckUpSpeed;
-    public int moveOutForce;
     public float acceleratonSuckUpSpeed;
-    public float suckUpSpeedScale = 1f;
+    public float suckSpeed = 1f;
+
+    public WaterMode waterMode;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +38,16 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     // Update is called once per frame
     void Update()
     {
-        
+        SwitchToWaterMode();
+    }
+
+    public void SwitchToWaterMode()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            waterMode += 1;
+            if ((int)waterMode > 2) waterMode = 0;
+        }
     }
 
     public void SetInputData(object _inputData)
@@ -70,13 +88,19 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
                 //Debug.Log(!(suckedObject as Plant).CanSuckUp());
                 return;
             }
-            Debug.Log(hit.transform.name);
+            //Debug.Log(hit.transform.name);
 
             //suckedObject.ResetVelocity();
 
             if (suckedObject as WaterObject) (suckedObject as WaterObject).suckedPosition = hit.transform.position;
             if (suckedObject as Plant) (suckedObject as Plant).inCrafting = false;
             suckedObject?.GoToAxieCollector();
+
+            if (suckedObject is WaterObject)
+            {
+                //Debug.Log("Collect Water Handle");
+                WaterManager.Instance.CollectWater((suckedObject as WaterObject).state, suckSpeed * Time.deltaTime);
+            }
 
             //Debug.Log(Vector3.Distance(shootingInputData.raycastOrigin.position, hit.transform.position));
             if (Physics.SphereCast(shootingInputData.raycastOrigin.position, radiusSphereCastToCheckSucked, shootingInputData.fpsCameraTransform.forward, out hit, distanceThresholdToGotAmmo, shootingInputData.layerMask))
@@ -91,10 +115,6 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
                             weaponStatsController.SuckUpAmmo(suckedObject);
                         }
                     }
-                    else if (suckedObject is WaterObject)
-                    {
-                        Debug.Log("Detect Water");
-                    }
                 }
                 catch (Exception e)
                 {
@@ -106,6 +126,11 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
 
     public void ShootOutHandle()
     {
+        if (waterMode != WaterMode.Off) {
+            WaterManager.Instance.BlowWater(suckSpeed * Time.deltaTime);
+            return;
+        }
+
         if (weaponStatsController.itemInInventory.ammoStats.name == "Null" || weaponStatsController.itemInInventory == null) return;
         weaponStatsController.UseAmmo(1);
     }

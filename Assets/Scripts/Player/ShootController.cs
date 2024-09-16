@@ -110,9 +110,9 @@ public class ShootController : MonoBehaviour
 
     void RightMouseBehaviourHandle()
     {
-        if (inputController.isAim)
+        if (inputController.isAim || inputController.isHoldAim)
         {
-            if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety && !isReloading)
+            if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety && !isReloading && !inputController.isHoldAim)
             {
                 //MyDebug.Log(frame);
                 raycastWeapon.HandleRightMouseClick();
@@ -121,13 +121,17 @@ public class ShootController : MonoBehaviour
             {
                 if (raycastWeapon.weaponHandler is IAxieCollectorWeaponStragety)
                 {
-                    if (Time.time - lastFired > 1 / 5f)
+                    if ((raycastWeapon.weaponHandler as CollectHandler).waterMode != CollectHandler.WaterMode.Off)
+                    {
+                        raycastWeapon.HandleRightMouseClick();
+                    }
+                    else if (Time.time - lastFired > 1 / 5f)
                     {
                         lastFired = Time.time;
                         raycastWeapon.HandleRightMouseClick();
                     }
                 }
-                else
+                else if (!inputController.isHoldAim)
                 {
                     raycastWeapon.HandleRightMouseClick();
                 }

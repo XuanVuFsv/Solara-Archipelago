@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+//Logic in this class need to refactor by using event system and put logic UI, Sound to other class
 public class HealthController : MonoBehaviour
 {
     public TextMeshProUGUI healthText;

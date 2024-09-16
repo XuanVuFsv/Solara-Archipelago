@@ -12,6 +12,7 @@ public class InputController : MonoBehaviour
     public bool isIdle;
     public bool isWalk, isWalkRight, isWalkLeft, isWalkBackward, isWalkForward;
     public bool isAim;
+    public bool isHoldAim;
     public bool isFire, isSingleFire, isStopFire;
     public bool isReload;
     public bool isManipulationFire;
@@ -71,6 +72,7 @@ public class InputController : MonoBehaviour
         isBrake = Input.GetKey(KeyCode.G);
         isReload = Input.GetKeyDown(KeyCode.R);
         isAim = Input.GetMouseButtonDown(1);
+        isHoldAim = Input.GetMouseButton(1);
     }
 
     void UpdateFireValue()

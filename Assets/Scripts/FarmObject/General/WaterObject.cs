@@ -28,21 +28,21 @@ public class WaterObject : Suckable
 
     public override void GoToAxieCollector()
     {
-        WaterManager.Instance.waterFX.GetComponent<ParticleSystem>().Emit(1);
+        WaterManager.Instance.waterFX_In.GetComponent<ParticleSystem>().Emit(1);
     }
 
     public override void MoveOut()
     {
-        base.MoveOut();
+
     }
 
     public override void ChangeToStored()
     {
-        base.ChangeToStored();
+
     }
 
     public override void ChangeToUnStored()
     {
-        base.ChangeToUnStored();
+
     }
 }

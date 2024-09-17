@@ -4,6 +4,15 @@ using UnityEngine;
 
 public abstract class Suckable : StateMachine, ISuckable
 {
+    //public enum SuckableObjectType
+    //{
+    //    Plant = 0,
+    //    PowerContainer = 1,
+    //    NaturalResource = 2,
+    //}
+
+    //protected SuckableObjectType type;
+
     public AmmoStats ammoStats;
     public int ammoContain;
 

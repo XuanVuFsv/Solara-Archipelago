@@ -105,20 +105,30 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
             //Debug.Log(Vector3.Distance(shootingInputData.raycastOrigin.position, hit.transform.position));
             if (Physics.SphereCast(shootingInputData.raycastOrigin.position, radiusSphereCastToCheckSucked, shootingInputData.fpsCameraTransform.forward, out hit, distanceThresholdToGotAmmo, shootingInputData.layerMask))
             {
-                try
+                //Debug.Log(hit.collider.name);
+                //try
+                //{
+                //    if (suckedObject is Plant || suckedObject is PowerContainer)
+                //    {
+                //        if (suckedObject.ammoStats != null)
+                //        {
+                //            AmmoStats ammoStats = suckedObject.ammoStats;
+                //            weaponStatsController.SuckUpAmmo(suckedObject);
+                //        }
+                //    }
+                //}
+                //catch (Exception e)
+                //{
+                //    Debug.Log(e.Message);
+                //}
+
+                if (suckedObject is Plant || suckedObject is PowerContainer)
                 {
-                    if (suckedObject is Plant)
+                    if (suckedObject.ammoStats != null)
                     {
-                        if (suckedObject.ammoStats != null)
-                        {
-                            AmmoStats ammoStats = suckedObject.ammoStats;
-                            weaponStatsController.SuckUpAmmo(suckedObject);
-                        }
+                        AmmoStats ammoStats = suckedObject.ammoStats;
+                        weaponStatsController.SuckUpAmmo(suckedObject);
                     }
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e.Message);
                 }
             }
         }

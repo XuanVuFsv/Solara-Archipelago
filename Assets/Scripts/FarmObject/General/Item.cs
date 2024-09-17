@@ -7,7 +7,7 @@ public class Item
 {
     public AmmoStats ammoStats;
     public List<Suckable> totalPlant = new List<Suckable>();
-    public Suckable plantSample;
+    public Suckable suckableSample;
     public int index;
     public int count;
     public int ammountAmmoUsedByAttackWeapon = 0;
@@ -29,24 +29,26 @@ public class Item
     public int AddAmmo(int newCount, Suckable ammoObject)
     {
         bool isPlant = ammoObject is Plant;
+        bool isPower = ammoObject is PowerContainer;
+
         //if (count == 0)
         //{
-        //    if (isPlant) plantSample = ammoObject.gameObject;
-        //    else plantSample = (ammoObject as AmmoPickup).suckableSample;
+        //    if (isPlant) suckableSample = ammoObject.gameObject;
+        //    else suckableSample = (ammoObject as AmmoPickup).suckableSample;
         //}
 
         int currentCount = count + newCount;
         //Debug.Log(currentCount);
 
-        if (isPlant && currentCount <= ammoStats.maxCount)
+        if ((isPlant || isPower) && currentCount <= ammoStats.maxCount)
         {
             //Debug.Log("add");
             totalPlant.Add(ammoObject);
         }
-        else if (totalPlant.Count == 0 && !isPlant)
+        else if (totalPlant.Count == 0 && !(isPlant || isPower))
         {
             Debug.Log("Just set plant sample");
-            plantSample = (ammoObject as AmmoPickup).suckableSample;
+            suckableSample = (ammoObject as AmmoPickup).suckableSample;
         }
 
         if (currentCount <= ammoStats.maxCount)
@@ -57,7 +59,12 @@ public class Item
             if (isPlant)
             {
                 ammoObject.GetComponent<Plant>().ChangeToStored();
-                plantSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Suckable>();
+                suckableSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Suckable>();
+            }
+            else if (isPower)
+            {
+                ammoObject.GetComponent<PowerContainer>().ChangeToStored();
+                suckableSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Suckable>();
             }
             else
             {
@@ -79,7 +86,7 @@ public class Item
         //Debug.Log(currentCount);
         if (currentCount < 0)
         {
-            //plantSample.RemoveUseGameEvent();
+            //suckableSample.RemoveUseGameEvent();
             return;
         }
         else
@@ -91,8 +98,8 @@ public class Item
             {
                 if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
-                    (totalPlant[lastIndex] as Plant).ChangeToUnStored();
-                    (totalPlant[lastIndex] as Plant).transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
+                    (totalPlant[lastIndex]).ChangeToUnStored();
+                    (totalPlant[lastIndex]).transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
 
                     //(totalPlant[lastIndex] as Plant).orginalBody = InventoryController.Instance.gameObject;
                     totalPlant[lastIndex].MoveOut();
@@ -104,11 +111,18 @@ public class Item
             {
                 if (fromWeaponSlot == ActiveWeapon.WeaponSlot.AxieCollector)
                 {
-                    Suckable newPlant = GameObject.Instantiate(plantSample.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Plant>();
-                    newPlant.gameObject.SetActive(true);
+                    //bool isPlant = suckableSample is Plant;
+                    //bool isPower = suckableSample is PowerContainer;
+
+                    Suckable newSuckableObject;
+
+                    if (suckableSample is Plant) newSuckableObject = GameObject.Instantiate(suckableSample.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Plant>();
+                    else newSuckableObject = GameObject.Instantiate(suckableSample.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<PowerContainer>();
+
+                    newSuckableObject.gameObject.SetActive(true);
                     //(newPlant as Plant).plantData.orginalBody = InventoryController.Instance.gameObject;
                     //newPlant.ChangeToSeed();
-                    newPlant.MoveOut();
+                    newSuckableObject.MoveOut();
                 }
             }
         }
@@ -118,7 +132,7 @@ public class Item
     {
         ammoStats = resetItem.ammoStats;
         totalPlant = null;
-        plantSample = null;
+        suckableSample = null;
         count = 0;
     }
 }

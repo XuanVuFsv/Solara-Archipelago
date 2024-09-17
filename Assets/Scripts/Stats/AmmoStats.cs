@@ -118,4 +118,7 @@ public class AmmoStats : ScriptableObject
     public string description;
     public int gemEarnWhenKillEnemy;
     public int gemEarnWhenHaverst;
+    [Header("Type of Resource")]
+    public float totalProducingTime;
+    public int resourceContain;
 }

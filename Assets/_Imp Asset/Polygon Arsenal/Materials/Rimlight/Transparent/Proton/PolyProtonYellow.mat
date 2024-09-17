@@ -22,8 +22,6 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: PolyProtonYellow
   m_Shader: {fileID: 4800000, guid: f2cb1b80b68b95a489fadaa5754bca06, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -32,7 +30,6 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -58,7 +55,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - FresnelSize: 3
+    - FresnelSize: 5
     - Vector1_CA637FD8: 9
     - _InvFade: 3
     - _QueueControl: 0
@@ -68,7 +65,7 @@ Material:
     - _RimWidth: 2.6
     - _Shininess: 1
     m_Colors:
-    - Albedo: {r: 0.9372549, g: 0.4170138, b: 0, a: 0}
+    - Albedo: {r: 1.3254786, g: 0.58786917, b: 0, a: 0}
     - Color_1A0BCCE7: {r: 7.1843157, g: 6.9162335, b: 0, a: 0}
     - Color_8EE4FC62: {r: 0.16078432, g: 0.11218967, b: 0, a: 0}
     - FresnelColor: {r: 1.4980391, g: 1.0935472, b: 0.4941176, a: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+//Note: Remove as
 public class CropSeed : ObjectState
 {
     public CropSeed(Plant plant) : base(plant)

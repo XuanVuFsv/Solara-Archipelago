@@ -30,6 +30,7 @@ public class Item
     {
         bool isPlant = ammoObject is Plant;
         bool isPower = ammoObject is PowerContainer;
+        bool isNaturalResource = ammoObject is NaturalResource;
 
         //if (count == 0)
         //{
@@ -40,12 +41,12 @@ public class Item
         int currentCount = count + newCount;
         //Debug.Log(currentCount);
 
-        if ((isPlant || isPower) && currentCount <= ammoStats.maxCount)
+        if ((isPlant || isPower || isNaturalResource) && currentCount <= ammoStats.maxCount)
         {
             //Debug.Log("add");
             totalPlant.Add(ammoObject);
         }
-        else if (totalPlant.Count == 0 && !(isPlant || isPower))
+        else if (totalPlant.Count == 0 && !(isPlant || isPower || isNaturalResource))
         {
             Debug.Log("Just set plant sample");
             suckableSample = (ammoObject as AmmoPickup).suckableSample;
@@ -56,16 +57,21 @@ public class Item
             count = currentCount;
             //Debug.Log(isPlant);
 
-            if (isPlant)
+            if (isPlant || isPower || isNaturalResource)
             {
-                ammoObject.GetComponent<Plant>().ChangeToStored();
+                ammoObject.GetComponent<Suckable>().ChangeToStored();
                 suckableSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Suckable>();
             }
-            else if (isPower)
-            {
-                ammoObject.GetComponent<PowerContainer>().ChangeToStored();
-                suckableSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Suckable>();
-            }
+            //else if (isPower)
+            //{
+            //    ammoObject.GetComponent<PowerContainer>().ChangeToStored();
+            //    suckableSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Suckable>();
+            //}
+            //else if (isNaturalResource)
+            //{
+            //    ammoObject.GetComponent<PowerContainer>().ChangeToStored();
+            //    suckableSample = GameObject.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Suckable>();
+            //}
             else
             {
                 GameObject.Destroy(ammoObject.gameObject);

@@ -139,7 +139,7 @@ public class WeaponStatsController: MonoBehaviour
     
     public void SuckUpAmmo(Suckable ammoPickup)
     {
-        MyDebug.Log(ammoPickup);
+        //MyDebug.Log(ammoPickup);
         //if (!currentAmmoStatsController) Debug.Log("currentAmmoStatsController null " + transform.parent.name);
         //Debug.Log(ammoPickup.name);
 
@@ -165,7 +165,7 @@ public class WeaponStatsController: MonoBehaviour
         //else
         if (currentAmmoStatsController.ammoStats.name == ammoPickup.ammoStats.name)
         {
-            Debug.Log("Add same ammo");
+            //Debug.Log("Add same ammo");
 
             AddAmmo(ammoPickup.GetAmmoContain(), ammoPickup);
             //ammoPickup.AddUsedGameEvent(transform);
@@ -185,7 +185,7 @@ public class WeaponStatsController: MonoBehaviour
         }
         else
         {
-            Debug.Log("Add new ammo");
+            //Debug.Log("Add new ammo");
 
             //if (ammunitionChestPicked)
             //{
@@ -255,7 +255,7 @@ public class WeaponStatsController: MonoBehaviour
 
         if (currentAmmo <= 0)
         {
-            Debug.Log("<0");
+            //Debug.Log("<0");
             outOfAmmo = true;
 
             if (itemInInventory.ammoStats.zoomType != AmmoStats.ZoomType.NoZoom && weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) (GetComponent<RaycastWeapon>().weaponHandler as ShootingHandler).HandleRightMouseClick();

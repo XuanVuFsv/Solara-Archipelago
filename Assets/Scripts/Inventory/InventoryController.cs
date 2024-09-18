@@ -71,7 +71,7 @@ public class InventoryController : Singleton<InventoryController>
             item = currentAmmoList[emptySlot];
             //Debug.Log(item);
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
-            Debug.Log("Add NEW" + count + ammoStats.name);
+            //Debug.Log("Add NEW" + count + ammoStats.name);
         }
         else
         {

@@ -15,6 +15,7 @@ public class GardenBaseBuilder : MonoBehaviour
     public GameObject garden;
     public GameObject buildingWall;
     //public GameObject lockedWall;
+    public GameObject screenFrameActivate, screenFrame;
     
     public MonitorGardenController monitorScreen;
 
@@ -92,6 +93,8 @@ public class GardenBaseBuilder : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        screenFrameActivate.SetActive(false);
+        screenFrame.SetActive(true);
         canInteractMonitorScreen = false;
         isLookAtMonitorScreen = false;
     }
@@ -117,6 +120,7 @@ public class GardenBaseBuilder : MonoBehaviour
 
         completeVFX.GetComponent<ParticleSystem>().Play();
         buildingVFX.SetActive(false);
+        screenFrameActivate.SetActive(true);
 
         AudioBuildingManager.Instance.PlayAudioClip(completeBuildingSound);
     }
@@ -128,9 +132,18 @@ public class GardenBaseBuilder : MonoBehaviour
 
         if (dotValue > 0)
         {
-            if (angle <= limitAngle) return true;
+            if (angle <= limitAngle)
+            {
+                screenFrameActivate.SetActive(true);
+                screenFrame.SetActive(false);
+                return true;
+            }
+            screenFrameActivate.SetActive(false);
+            screenFrame.SetActive(true);
             return false;
         }
+        screenFrameActivate.SetActive(false);
+        screenFrame.SetActive(true);
         return false;
     }
 }

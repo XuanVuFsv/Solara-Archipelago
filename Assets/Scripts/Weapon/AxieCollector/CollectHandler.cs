@@ -80,55 +80,44 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     {
         if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, maxDistance, shootingInputData.layerMask))
         {
-            //Debug.Log(hit.transform.name);
+            if (hit.transform.CompareTag("Cluster"))
+            {
+                ClusterResource cluster = hit.transform.GetComponent<ClusterResource>();
+                cluster.StartCollect();
+                return;
+            }
+
             Suckable suckedObject = hit.transform.GetComponent<Suckable>();
             if (suckedObject is Plant && !(suckedObject as Plant).CanSuckUp())
             {
-                //Debug.Log(suckedObject.transform.parent + suckedObject.name + (suckedObject as Plant).plantState);
-                //Debug.Log(!(suckedObject as Plant).CanSuckUp());
                 return;
             }
-            //Debug.Log(hit.transform.name);
-
-            //suckedObject.ResetVelocity();
 
             if (suckedObject as WaterObject) (suckedObject as WaterObject).suckedPosition = hit.transform.position;
-            if (suckedObject as Plant) (suckedObject as Plant).inCrafting = false;
-            suckedObject?.GoToAxieCollector();
+
+            suckedObject.GoToAxieCollector();
 
             if (suckedObject is WaterObject)
             {
-                //Debug.Log("Collect Water Handle");
                 WaterManager.Instance.CollectWater((suckedObject as WaterObject).state, suckSpeed * Time.deltaTime);
             }
 
-            //Debug.Log(Vector3.Distance(shootingInputData.raycastOrigin.position, hit.transform.position));
             if (Physics.SphereCast(shootingInputData.raycastOrigin.position, radiusSphereCastToCheckSucked, shootingInputData.fpsCameraTransform.forward, out hit, distanceThresholdToGotAmmo, shootingInputData.layerMask))
             {
-                //Debug.Log(hit.collider.name);
-                //try
-                //{
-                //    if (suckedObject is Plant || suckedObject is PowerContainer)
-                //    {
-                //        if (suckedObject.ammoStats != null)
-                //        {
-                //            AmmoStats ammoStats = suckedObject.ammoStats;
-                //            weaponStatsController.SuckUpAmmo(suckedObject);
-                //        }
-                //    }
-                //}
-                //catch (Exception e)
-                //{
-                //    Debug.Log(e.Message);
-                //}
-
-                if (suckedObject is Plant || suckedObject is PowerContainer)
+                try
                 {
-                    if (suckedObject.ammoStats != null)
-                    {
-                        AmmoStats ammoStats = suckedObject.ammoStats;
-                        weaponStatsController.SuckUpAmmo(suckedObject);
+                    if (suckedObject is Plant || suckedObject is PowerContainer || suckedObject is NaturalResource)
+                        {
+                        if (suckedObject.ammoStats != null)
+                        {
+                            AmmoStats ammoStats = suckedObject.ammoStats;
+                            weaponStatsController.SuckUpAmmo(suckedObject);
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
                 }
             }
         }

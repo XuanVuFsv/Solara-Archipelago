@@ -6,8 +6,6 @@ using UnityEngine;
 public class AmmoStats : ScriptableObject
 {
     [Header("Type of Plant")]
-    //[Tooltip("Fruit can attack or not")]
-    //public bool canAttack;
 
     [Tooltip("Slot for Plant. All of ammo can used by slot 3 (collect/shoot out). Product type can't use slot 1 to attack so it's will be select slot3. While normal Plant can attack and collect/shoot out shoud be select slot 1")]
     public ActiveWeapon.WeaponSlot weaponSlot;
@@ -120,5 +118,5 @@ public class AmmoStats : ScriptableObject
     public int gemEarnWhenHaverst;
     [Header("Type of Resource")]
     public float totalProducingTime;
-    public int resourceContain;
+    //public int resourceContain;
 }

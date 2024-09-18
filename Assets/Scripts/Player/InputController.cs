@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputController : MonoBehaviour
+public class InputController : Singleton<InputController>
 {
     private static InputController instance;
 
@@ -23,27 +23,27 @@ public class InputController : MonoBehaviour
     public float mouseX, mouseY;
     public float fireValue = 0;
 
-    void MakeInstance()
-    {
-        if (instance != null && instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else instance = this;
-    }
+    //void MakeInstance()
+    //{
+    //    if (instance != null && instance != this)
+    //    {
+    //        Destroy(this.gameObject);
+    //    }
+    //    else instance = this;
+    //}
 
-    public static InputController Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
+    //public static InputController Instance
+    //{
+    //    get
+    //    {
+    //        return instance;
+    //    }
+    //}
 
-    private void Awake()
-    {
-        //MakeInstance();
-    }
+    //private void Awake()
+    //{
+    //    //MakeInstance();
+    //}
 
     // Start is called before the first frame update
     void Start()

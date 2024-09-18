@@ -9,26 +9,31 @@ public class ResourceStored : ObjectState
 
     }
 
+    public ResourceStored(NaturalResource resource) : base(resource)
+    {
+
+    }
+
     public override void Start()
     {
         //Debug.Log("Start Stored");
 
-        GemManager.Instance.AddGem((objectMachine as PowerContainer).ammoStats.gemEarnWhenHaverst);
+        GemManager.Instance.AddGem((objectMachine).ammoStats.gemEarnWhenHaverst);
 
-        (objectMachine as PowerContainer).gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
+        (objectMachine).gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
 
-        (objectMachine as PowerContainer).rigid.velocity = Vector3.zero;
-        (objectMachine as PowerContainer).suckableCollider.isTrigger = false;
-        (objectMachine as PowerContainer).rigid.useGravity = true;
+        (objectMachine).rigid.velocity = Vector3.zero;
+        (objectMachine).suckableCollider.isTrigger = false;
+        (objectMachine).rigid.useGravity = true;
 
-        (objectMachine as PowerContainer).gameObject.SetActive(false);
+        (objectMachine).gameObject.SetActive(false);
 
-        (objectMachine as PowerContainer).transform.parent = null;
+        (objectMachine).transform.parent = null;
     }
 
     public override void End()
     {
-        if ((objectMachine as PowerContainer).state == null) return;
+        if ((objectMachine).state == null) return;
         //Debug.Log("End Stored");
     }
 }

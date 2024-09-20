@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
 public class RecipeData : ScriptableObject
 {
-    public string recipeName;
-    List<AmmoStats> item;
-    List<int> ammountPerSlot;
+    public AmmoStats ammoStats;
+    public string recipeString;
+    public List<AmmoStats> item;
+    public List<int> ammountPerSlot;
     public Suckable product;
-    public int timeToComplete;
 }

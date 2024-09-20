@@ -119,4 +119,14 @@ public class AmmoStats : ScriptableObject
     [Header("Type of Resource")]
     public float totalProducingTime;
     //public int resourceContain;
+    public enum FilteredType
+    {
+        Crop = 0,
+        NaturePlant = 1,
+        Fertilizer = 2,
+        Mining = 3,
+        Power = 4
+    }
+    public FilteredType filteredType;
+    public RecipeData recipe;
 }

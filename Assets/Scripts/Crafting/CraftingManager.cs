@@ -19,14 +19,14 @@ public class CraftingManager : Singleton<CraftingManager>
     {
         foreach (RecipeData recipe in recipeList)
         {
-            recipes.Add(recipe.recipeName, recipe);
+            recipes.Add(recipe.recipeString, recipe);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void ResetCraftingState()
@@ -73,7 +73,7 @@ public class CraftingManager : Singleton<CraftingManager>
         else return false;
 
         inCrafting = true;
-        Invoke("CompleteCrafting", recipes[currentRecipe].timeToComplete);
+        Invoke("CompleteCrafting", recipes[currentRecipe].ammoStats.totalProducingTime);
         return true;
     }
 

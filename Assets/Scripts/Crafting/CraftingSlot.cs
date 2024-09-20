@@ -50,7 +50,9 @@ public class CraftingSlot : MonoBehaviour
 
         currentSuckableItems.Add(suckableItem);
         count++;
-        (suckableItem as Plant).inCrafting = true;
+
+        if (suckableItem is Plant) (suckableItem as Plant).inCrafting = true;
+        if (suckableItem is NaturalResource) (suckableItem as NaturalResource).inCrafting = true;
 
         if (count > 1) currentSuckableItems[currentSuckableItems.Count - 2].gameObject.SetActive(false);
         if (count > 0) currentSuckableItems[currentSuckableItems.Count - 1].gameObject.SetActive(true);
@@ -72,7 +74,7 @@ public class CraftingSlot : MonoBehaviour
 
         currentSuckableItems[count - 1].gameObject.SetActive(false);
 
-        while(count > 0)
+        while (count > 0)
         {
             if (currentSuckableItems[count - 1].gameObject) Destroy(currentSuckableItems[count - 1].gameObject, Random.Range(0, 10));
             currentSuckableItems.Remove(currentSuckableItems[count - 1]);

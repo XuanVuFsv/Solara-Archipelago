@@ -5,6 +5,7 @@ using UnityEngine.Animations.Rigging;
 
 public class NaturalResource : Suckable
 {
+    public bool inCrafting = false;
     // Start is called before the first frame update
     void Start()
     {

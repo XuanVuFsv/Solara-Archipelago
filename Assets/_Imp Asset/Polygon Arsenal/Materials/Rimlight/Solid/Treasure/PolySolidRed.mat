@@ -9,8 +9,6 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: PolySolidRed
   m_Shader: {fileID: 4800000, guid: 937ba73c3fa53a644bec5a0aca92a62f, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _EMISSION
@@ -20,7 +18,6 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -100,8 +97,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - Albedo: {r: 1.8745098, g: 0.78431374, b: 0, a: 0}
-    - FresnelColor: {r: 2.9960785, g: 2.1183212, b: 0.7490196, a: 0}
+    - Albedo: {r: 2.5026176, g: 0.014165555, b: 0.014165555, a: 0}
+    - FresnelColor: {r: 4, g: 0.09065917, b: 0.08301878, a: 0}
     - _Color: {r: 0.61764705, g: 0.8734281, b: 1, a: 0.628}
     - _EmissionColor: {r: 0.2506488, g: 0.42396495, b: 0.44852942, a: 1}
     - _InnerColor: {r: 1, g: 0.59836286, b: 0, a: 1}

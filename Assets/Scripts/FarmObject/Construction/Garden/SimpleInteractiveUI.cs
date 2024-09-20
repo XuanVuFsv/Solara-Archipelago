@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class SimpleInteractiveUI : MonoBehaviour
 {
-    public GrowingResourceManager growingResourceManager;
+    public ActivateBehaviour activateBehaviour;
     public GameObject guildDisplayUI;
 
     public RectTransform interactiveElement;
@@ -28,13 +28,18 @@ public class SimpleInteractiveUI : MonoBehaviour
     [Tooltip("Limit angle when player look at monitor screen. Calculating by two vector: vector from center of monitor to player camera and normal vector of monitor screen")]
     public float limitAngleToInteractBuildButton;
 
+    private void Start()
+    {
+        //growingResourceManager = GetComponent<ActivateBehaviour>();
+    }
+
     private void Update()
     {
         if (canInteract && isLookAtUI && Input.GetKeyDown(KeyCode.E))
         {
             //PressElementAnimation(interactiveElement, new Vector3(endScalePress, endScalePress, 1), animationSpeed);
             guildDisplayUI.SetActive(false);
-            growingResourceManager.RefillResource();
+            activateBehaviour?.ExecuteActivateAction();
         }   
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class GrowingResourceManager : MonoBehaviour
+public class GrowingResourceManager : ActivateBehaviour
 {
     public int fullResourceValue = 100;
     [SerializeField]
@@ -20,12 +20,6 @@ public class GrowingResourceManager : MonoBehaviour
 
     protected float t = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -35,6 +29,11 @@ public class GrowingResourceManager : MonoBehaviour
             currentResourceValue = (int)Mathf.Lerp(fullResourceValue, 0, t / timeToUseAllResource);
             if (currentResourceValue <= 0) StopUseResource();
         }
+    }
+
+    public override void ExecuteActivateAction()
+    {
+        RefillResource();
     }
 
     public virtual void StopUseResource()

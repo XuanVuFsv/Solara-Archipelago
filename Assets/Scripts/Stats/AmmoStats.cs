@@ -129,4 +129,5 @@ public class AmmoStats : ScriptableObject
     }
     public FilteredType filteredType;
     public RecipeData recipe;
+    public int cost;
 }

@@ -14,6 +14,11 @@ public class ResourceStored : ObjectState
 
     }
 
+    public ResourceStored(FarmingEssence essence) : base(essence)
+    {
+
+    }
+
     public override void Start()
     {
         //Debug.Log("Start Stored");

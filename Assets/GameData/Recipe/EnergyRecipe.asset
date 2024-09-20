@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: EnergyRecipe
   m_EditorClassIdentifier: 
   ammoStats: {fileID: 11400000, guid: 8c4846b88385ebf4abb36580b9464533, type: 2}
-  recipeString: 01Red001Gold001Iron0
-  item: []
-  ammountPerSlot: 
+  items:
+  - {fileID: 11400000, guid: 32c78819e706f2149b5364430a9db275, type: 2}
+  - {fileID: 11400000, guid: fc815f76020f3d84e830c978ed3dffc8, type: 2}
+  - {fileID: 11400000, guid: 3f0e1c3d5de364a408a44f31147a5d9d, type: 2}
+  ammountPerSlots: 010000000100000001000000
   product: {fileID: 5912142683543733831, guid: 0b4e8a46b5b76364bae318e55a83244f, type: 3}

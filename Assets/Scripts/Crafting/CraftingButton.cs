@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class CraftingButton : MonoBehaviour
 {
-    public CraftingManager craftingManager;
-    public bool onCrafting = false;
+    //public CraftingManager craftingManager;
+    //public bool onCrafting = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    //// Start is called before the first frame update
+    //void Start()
+    //{
         
-    }
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Update is called once per frame
+    //void Update()
+    //{
         
-    }
+    //}
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (onCrafting || other.tag != "Player") return;
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (onCrafting || other.tag != "Player") return;
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //Debug.Log("Crafting");
-            onCrafting = craftingManager.StartCrafting();
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.E))
+    //    {
+    //        //Debug.Log("Crafting");
+    //        onCrafting = craftingManager.StartCrafting();
+    //    }
+    //}
 }

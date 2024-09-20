@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Crystal_Iron
   m_EditorClassIdentifier: 
   weaponSlot: 2
-  name: Iron
+  name: Iron Crystal
   maxCount: 100
   ammoAllowedInMagazine: 100
   amplitudeGainImpulse: 1
@@ -47,4 +47,6 @@ MonoBehaviour:
   gemEarnWhenKillEnemy: 0
   gemEarnWhenHaverst: 0
   totalProducingTime: 4
-  resourceContain: 1
+  filteredType: 0
+  recipe: {fileID: 0}
+  cost: 0

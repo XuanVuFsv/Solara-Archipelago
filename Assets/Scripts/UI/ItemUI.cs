@@ -12,7 +12,6 @@ public class ItemUI : MonoBehaviour
 
     public Image icon;
     public TextMeshProUGUI nameItem;
-    public RecipeData recipe;
 
     // Start is called before the first frame update
     void Awake()
@@ -44,13 +43,15 @@ public class ItemUI : MonoBehaviour
         GetComponent<Button>().interactable = true;
         icon.sprite = ammoStats.artwork;
         nameItem.text = ammoStats.name;
-        recipe = ammoStats.recipe;
     }   
     
     public void OnClick()
     {
         Debug.Log("Click" + " " + ammoStats.name);
         if (ammoStats == null || ammoStats.name == "Null") return;
+        CraftingManagerUI.Instance.craftingManager.currentRecipeIndex = index;
         CraftingManagerUI.Instance.ShowCurrentItemInformation(ammoStats);
+
+        CraftingManagerUI.Instance.LoadMaterialsRequired(ammoStats.recipe);
     }    
 }

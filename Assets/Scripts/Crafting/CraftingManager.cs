@@ -1,25 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 
-public class CraftingManager : Singleton<CraftingManager>
+[System.Serializable]
+public class CraftingManager : ActivateBehaviour
 {
-    public List<RecipeData> recipeList = new List<RecipeData>();
+    public List<RecipeData> allowedProductList = new List<RecipeData>();
+    public Dictionary<string, RecipeData> productRecipes = new Dictionary<string, RecipeData>();
 
-    public Dictionary<string, RecipeData> recipes = new Dictionary<string, RecipeData>();
-    public List<CraftingSlot> craftingSlots;
+    public List<ItemStorageData> itemStorages = new List<ItemStorageData>();
+    public Dictionary<string, ItemStorageData> itemStorageDict = new Dictionary<string, ItemStorageData>();
+
+    public List<Suckable> products = new List<Suckable>();
 
     public Transform productPos;
-    public Suckable product;
-    public string currentRecipe;
+
+    public int maxQuantity;
+    public int currentQuantity;
+
+    public int queueQuantity;
+    public int curentQueueIndex;
+
+    public int currentRecipeIndex;
     public bool inCrafting = false;
+
+    public int unlockedSlot = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach (RecipeData recipe in recipeList)
+        foreach (RecipeData recipe in allowedProductList)
         {
-            recipes.Add(recipe.recipeString, recipe);
+            productRecipes.Add(recipe.ammoStats.name, recipe);
+        }
+
+        foreach (ItemStorageData item in itemStorages)
+        {
+            itemStorageDict.Add(item.ammoStats.name, item);
         }
     }
 
@@ -29,62 +47,36 @@ public class CraftingManager : Singleton<CraftingManager>
 
     }
 
-    public void ResetCraftingState()
+    public override void ExecuteActivateAction()
     {
-        if (!inCrafting)
-        {
-            //Debug.Log("notinCrafting");
-        }
-
-        foreach (CraftingSlot slot in craftingSlots)
-        {
-            slot.CancelCraftingOnThisItem();
-        }
-        inCrafting = false;
-        product = null;
-        productPos = null;
-        currentRecipe = "";
+        if (CraftingManagerUI.Instance.isActive) return;
+        CraftingManagerUI.Instance.Show(true);
     }
 
-    public bool StartCrafting()
+    public int GetItemStorageQuantityByName(string name)
     {
-        if (inCrafting)
+        if (itemStorages.Count == 0)
         {
-            //Debug.Log("inCrafting");
-            return false;
+            Debug.Log("Empty Storage");
+            return 0;
         }
-
-        currentRecipe = "";
-        foreach (CraftingSlot slot in craftingSlots)
+        if (!itemStorageDict.ContainsKey(name))
         {
-            //Debug.Log("CreateName");
-            currentRecipe += slot.GetCurrentName();
+            Debug.Log(name + " not exist");
+            return 0;
         }
+        return itemStorageDict[name].quantity;
 
-        if (recipes.ContainsKey(currentRecipe))
-        {
-            //Debug.Log("ContainsKey");
-            productPos = recipes[currentRecipe].product.transform;
-            foreach (CraftingSlot slot in craftingSlots)
-            {
-                slot.UseItemToCraft();
-            }
-        }
-        else return false;
-
-        inCrafting = true;
-        Invoke("CompleteCrafting", recipes[currentRecipe].ammoStats.totalProducingTime);
-        return true;
     }
 
-    public void CompleteCrafting()
+    public void Craft()
     {
-        foreach (CraftingSlot slot in craftingSlots)
-        {
-            slot.CompeleteCrafting();
-        }
-        product = Instantiate(recipes[currentRecipe].product.gameObject, productPos.position, Quaternion.identity).GetComponent<Suckable>();
-        product.ResetVelocity();
-        ResetCraftingState();
+        Debug.Log("Start craft a " + currentQuantity.ToString() + " " + allowedProductList[currentRecipeIndex].name);
+    }
+
+    public int GetProductCanBeCrafted()
+    {
+
+        return 0;
     }
 }

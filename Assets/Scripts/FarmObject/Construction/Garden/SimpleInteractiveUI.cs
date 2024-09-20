@@ -10,7 +10,7 @@ public class SimpleInteractiveUI : MonoBehaviour
     public ActivateBehaviour activateBehaviour;
     public GameObject guildDisplayUI;
 
-    public RectTransform interactiveElement;
+    public Transform interactiveElement;
     //private Tween interactiveElementTween;
 
     //[Range(0, 2)]
@@ -21,8 +21,11 @@ public class SimpleInteractiveUI : MonoBehaviour
     //public float endScalePress;
     //public float animationSpeed;
 
+    [SerializeField]
     private bool enableUI = false;
+    [SerializeField]
     private bool canInteract = false;
+    [SerializeField]
     private bool isLookAtUI = false;
 
     [Tooltip("Limit angle when player look at monitor screen. Calculating by two vector: vector from center of monitor to player camera and normal vector of monitor screen")]
@@ -39,6 +42,7 @@ public class SimpleInteractiveUI : MonoBehaviour
         {
             //PressElementAnimation(interactiveElement, new Vector3(endScalePress, endScalePress, 1), animationSpeed);
             guildDisplayUI.SetActive(false);
+            enableUI = false;
             activateBehaviour?.ExecuteActivateAction();
         }   
     }
@@ -80,6 +84,11 @@ public class SimpleInteractiveUI : MonoBehaviour
     {
         canInteract = true;
         isLookAtUI = CheckLookAtMonitorScreen(Camera.main.transform.forward, interactiveElement.transform.position - Camera.main.transform.position, limitAngleToInteractBuildButton);
+        if (!isLookAtUI)
+        {
+            enableUI = false;
+            guildDisplayUI.SetActive(false);
+        }
         if (isLookAtUI && !enableUI)
         {
             //StartZoomInOutAnimation(interactiveElement, new Vector3(endScale, endScale, 1), LoopType.Yoyo, animationSpeed);

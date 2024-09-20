@@ -6,8 +6,7 @@ using UnityEngine;
 public class RecipeData : ScriptableObject
 {
     public AmmoStats ammoStats;
-    public string recipeString;
-    public List<AmmoStats> item;
-    public List<int> ammountPerSlot;
+    public List<AmmoStats> items;
+    public List<int> ammountPerSlots;
     public Suckable product;
 }

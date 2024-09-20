@@ -14,6 +14,11 @@ public class ResourceUnStored : ObjectState
 
     }
 
+    public ResourceUnStored(FarmingEssence essence) : base(essence)
+    {
+
+    }
+
     public override void Start()
     {
         //Debug.Log("Start Seed");

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AudioBuildingManager : Singleton<AudioBuildingManager>
 {
-    public AudioClip activeClip;
-    public AudioSource audioSource;
+    public AudioClip activeClip, switchSound, enemyAttack, enemyDie, breakCrystal;
+    public AudioSource audioSource, walk, suckUpSound;
 
     private void Start()
     {

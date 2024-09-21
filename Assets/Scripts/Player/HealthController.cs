@@ -20,6 +20,16 @@ public class HealthController : MonoBehaviour
         healthText.text = health.ToString();
     }
 
+    private void Update()
+    {
+        if (TimeManager.Instance.Hours == 7 && TimeManager.Instance.Minutes == 0)
+        {
+            health = 100;
+            healthBar.localScale = Vector3.one;
+            healthText.text = health.ToString();
+        }
+    }
+
     public void TakeDamage(float damage)
     {
         health -= damage;

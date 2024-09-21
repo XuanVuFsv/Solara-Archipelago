@@ -102,6 +102,10 @@ public class ActiveWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            transform.position = new Vector3(4.11f, 0.77f, 26.72f);
+        }
         //if (Input.GetKeyDown(KeyCode.X))
         //{
         //    //SceneManager.LoadScene("LoadingScene");

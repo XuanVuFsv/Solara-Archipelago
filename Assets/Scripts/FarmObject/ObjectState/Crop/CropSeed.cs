@@ -40,7 +40,7 @@ public class CropSeed : ObjectState
     IEnumerator DestroyTimer()
     {
         (objectMachine as Plant).startDestroyedTimer = true;
-        int t = Random.Range(40, 80);
+        int t = Random.Range((objectMachine as Plant).minDestroyTime, (objectMachine as Plant).maxDestroyTime);
         yield return new WaitForSeconds(t);
         if ((objectMachine as Plant).startDestroyedTimer && !(objectMachine as Plant).inCrafting)
         {

@@ -50,13 +50,15 @@ public class CropGrowing : ObjectState
         if ((objectMachine as Plant).ownerGarden.waterManager.outOfResource) await UniTask.WaitUntil(() => (objectMachine as Plant).ownerGarden.waterManager.outOfResource == false);
         inGrowing = true;
 
-        (objectMachine as Plant).ownerSlot.countDownUI.StartCountDown((int)((objectMachine as Plant).ammoStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue));
+        (objectMachine as Plant).ownerSlot.countDownUI.StartCountDown((int)((objectMachine as Plant).ammoStats.totalGrowingTime));
+        //(objectMachine as Plant).ownerSlot.countDownUI.StartCountDown((int)((objectMachine as Plant).ammoStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue));
         if ((objectMachine as Plant).ownerGarden.monitorGardenController.currentSlotIndex == (objectMachine as Plant).ownerSlot.index) (objectMachine as Plant).ownerGarden.monitorGardenController.CheckCropUIState();
 
         //if ((objectMachine as Plant).ownerGarden.waterManager.outOfResource == false) return;
 
         (objectMachine as Plant).startGrowingTime = DateTime.UtcNow.ToLocalTime();
-        TimeSpan span = TimeSpan.FromSeconds((objectMachine as Plant).ammoStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
+        TimeSpan span = TimeSpan.FromSeconds((objectMachine as Plant).ammoStats.totalGrowingTime);
+        //TimeSpan span = TimeSpan.FromSeconds((objectMachine as Plant).ammoStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
         (objectMachine as Plant).endGrowingTime = (objectMachine as Plant).startGrowingTime.Add(span);
         (objectMachine as Plant).StartCoroutine(StartGrowingProcess());
         Debug.Log("StartGrowingProcess");
@@ -65,7 +67,8 @@ public class CropGrowing : ObjectState
     IEnumerator StartGrowingProcess()
     {
         //Debug.Log("StartGrowingProcess");
-        yield return new WaitForSeconds((objectMachine as Plant).ammoStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
+        yield return new WaitForSeconds((objectMachine as Plant).ammoStats.totalGrowingTime);
+        //yield return new WaitForSeconds((objectMachine as Plant).ammoStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
         (objectMachine as Plant).seedOuterEffect.SetActive(false);
         //wholeOuterEffect.SetActive(true);
         CompleteGrowingSession();

@@ -34,8 +34,9 @@ public class WaterManager : Singleton<WaterManager>
         UpdateFreshWaterUI();
     }
 
-    public void CollectWater(ObjectState waterState, float value)
+    public void CollectWater(WaterObject waterObject, float value)
     {
+        ObjectState waterState = waterObject.state;
         //Debug.Log("Collect Water Handle in manager");
 
         if (waterState is SaltWater && saltWaterContain < maxSaltWaterContain)
@@ -45,6 +46,15 @@ public class WaterManager : Singleton<WaterManager>
         }
         else if (waterState is FreshWater && freshWaterContain < maxFreshWaterContain)
         {
+            if (waterObject.owner)
+            {
+                if (waterObject.owner.CurrentResourceValue == 0) return;
+
+                waterObject.owner.UseWater(value);
+                freshWaterContain += value;
+                UpdateFreshWaterUI();
+                return;
+            }
             freshWaterContain += value;
             UpdateFreshWaterUI();
         }

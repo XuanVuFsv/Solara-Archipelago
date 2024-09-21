@@ -11,6 +11,7 @@ public class CropWhole : ObjectState
     public override void Start()
     {
         //Debug.Log("Start Whole");
+        GemManager.Instance.AddGem((objectMachine as Plant).ammoStats.gemEarnWhenHaverst);
 
         (objectMachine as Plant).startDestroyedTimer = false;
         //StopCoroutine("DestroyTimer");

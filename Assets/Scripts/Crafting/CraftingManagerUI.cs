@@ -37,6 +37,8 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
     public Transform storageParent;
     public List<MaterialCardWrapper> storageCardWrappers = new List<MaterialCardWrapper>();
 
+    public PowerManager powerManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +58,7 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
         ShowCurrentItemInformation(itemUIs[0].ammoStats);
         ShowRecipe();
         LoadMaterialsRequired(itemUIs[0].ammoStats.recipe);
-        LoadMaterialStorage();
+        UpdateMaterialStorage();
         Debug.Log("Setup Done");
         body.gameObject.SetActive(false);
     }
@@ -71,14 +73,22 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
             ReLoadQuantityMaterialsRequired();
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            if (cursorAvaiable && isActive)
-            {
-                Show(false);
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.Tab))
+        //{
+        //    if (cursorAvaiable && isActive)
+        //    {
+        //        Show(false);
+        //    }
+        //}
     }
+
+    public void CloseCraftingUI()
+    {
+        if (cursorAvaiable && isActive)
+        {
+            Show(false);
+        }
+    }    
 
     public void Show(bool show)
     {
@@ -171,6 +181,7 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
         for (int i = 0; i < materialCardWrappers.Count; i++)
         {
             materialCardWrappers[i].gameObject.SetActive(true);
+            materialCardWrappers[i].ammoStats = recipeData.items[i];
             materialCardWrappers[i].image.sprite = craftingManager.productRecipes[recipeData.ammoStats.name].items[i].artwork;
 
             materialCardWrappers[i].quantity = craftingManager.GetItemStorageQuantityByName(recipeData.items[i].name);
@@ -199,6 +210,8 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
                 [craftingManager.allowedProductList[craftingManager.currentRecipeIndex].ammoStats.name].ammountPerSlots[i]
                 * craftingManager.currentQuantity);
 
+            materialCardWrappers[i].quantity = craftingManager.GetItemStorage(materialCardWrappers[i].ammoStats.name);
+
             materialCardWrappers[i].quanityText.text = materialCardWrappers[i].requiredQuantity.ToString()
             + "/" + materialCardWrappers[i].quantity.ToString();
 
@@ -213,27 +226,36 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
         }
     }
 
-    public void InitMaterialStorage()
+    public void ResetMaterialStorage()
     {
         for (int i = 0; i < storageCardWrappers.Count; i++)
         {
-            if (i >= craftingManager.unlockedSlot)
+            if (i >= craftingManager.unlockedStorageSlot)
             {
                 //storageCardWrappers[i].gameObject.SetActive(false);
+                //storageCardWrappers[i].image.gameObject.SetActive(false);
+                //storageCardWrappers[i].quanityText.text = "";
                 continue;
             }
-            storageCardWrappers[i].image.gameObject.SetActive(false);
-            storageCardWrappers[i].quanityText.text = "";
+            else if (i < craftingManager.unlockedStorageSlot)
+            {
+                storageCardWrappers[i].image.gameObject.SetActive(false);
+                storageCardWrappers[i].quanityText.text = "";
+                storageCardWrappers[i].GetComponent<Image>().color = new Color32(0, 0, 0, 100);
+                continue;
+            }
+            //storageCardWrappers[i].image.gameObject.SetActive(false);
+            //storageCardWrappers[i].quanityText.text = "";
         }
     }
 
-    public void LoadMaterialStorage()
+    public void UpdateMaterialStorage()
     {
-        InitMaterialStorage();
+        ResetMaterialStorage();
 
         for (int i = 0; i < craftingManager.itemStorages.Count; i++)
         {
-            if (i >= craftingManager.unlockedSlot)
+            if (i >= craftingManager.unlockedStorageSlot)
             {
                 //storageCardWrappers[i].gameObject.SetActive(false);
                 //storageCardWrappers[i].quanityText.text = "";
@@ -249,9 +271,49 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
         }
     }
 
+
     public void Craft()
     {
+        if (!CheckCraftCondition())
+        {
+            Debug.Log("Not enough material or Energy");
+            return;
+        }
         craftingManager.Craft();
+    }
+
+    public bool CheckCraftCondition()
+    {
+        foreach (MaterialCardWrapper card in materialCardWrappers)
+        {
+            if (card.requiredQuantity > card.quantity)
+            {
+                return false;
+            }
+        }
+        if (powerManager.currentPower < 10 * craftingManager.currentQuantity)
+        {
+            craftingManager.WarningNotEnoughPower();
+            return false;
+        }
+        return true;
+    }
+
+    public void UpdateItemStorageDatas()
+    {
+        foreach (MaterialCardWrapper card in materialCardWrappers)
+        {
+            card.quantity -= card.requiredQuantity;
+            craftingManager.SetItemStorage(card.ammoStats.name, card.quantity);
+            if (card.quantity == 0)
+            {
+                craftingManager.RemoveItemStorage(card.ammoStats.name);
+            }
+        }
+
+        craftingManager.UpdateItemStorageList();
+        ReLoadQuantityMaterialsRequired();
+        UpdateMaterialStorage();
     }
 }
 

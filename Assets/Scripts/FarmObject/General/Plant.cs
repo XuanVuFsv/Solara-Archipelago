@@ -58,6 +58,9 @@ public class Plant : Suckable
     public float destroyedTime;
     public bool startDestroyedTimer;
 
+    public int minDestroyTime = 50;
+    public int maxDestroyTime = 100;
+
     // Start is called before the first frame update
     void Start()
     {

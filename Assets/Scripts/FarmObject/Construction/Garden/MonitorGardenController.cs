@@ -76,6 +76,7 @@ public class MonitorGardenController : MonoBehaviour
     public RectTransform landSelectedElement;
 
     public int currentSlotIndex = 0;
+    public int unlockFee = 100;
 
     public void Start()
     {
@@ -154,6 +155,14 @@ public class MonitorGardenController : MonoBehaviour
     public void UnlockNewSlot()
     {
         ////DisableUnlockNewSlotButton();
+        bool canUseGem = GemManager.Instance.UseGem(unlockFee);
+        Debug.Log(unlockFee);
+        if (!canUseGem)
+        {
+            Debug.Log("Not enough gem");
+            return;
+        }
+
         int slotindex = gardenManager.UnLockNewSlot();
         if (slotindex != -1)
         {

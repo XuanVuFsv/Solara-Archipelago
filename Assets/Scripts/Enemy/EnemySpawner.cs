@@ -28,7 +28,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
     public void Spawn(float seconInRealLifeVsIngame)
     {
-        spawnDelay = 1 / seconInRealLifeVsIngame * (60 * 60 / (numberOfEnemiesToSpawn * TimeManager.Instance.Days));
+        spawnDelay = 2 / seconInRealLifeVsIngame * (60 * 60 / (numberOfEnemiesToSpawn * TimeManager.Instance.Days));
         StartCoroutine(SpawnEnemies());
     }
 

@@ -54,6 +54,9 @@ public class InputController : Singleton<InputController>
     // Update is called once per frame
     void Update()
     {
+        if (move.x != 0 || move.y != 0) AudioBuildingManager.Instance.walk.enabled = true;
+        else AudioBuildingManager.Instance.walk.enabled = false;
+
         UpdateInputValue();
         UpdateFireValue();
         UpdateAnimationValue();

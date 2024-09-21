@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public GameObject parent;
     public Animator animator;
     public EnemyStats enemyStats;
     public HealthController healthController;
@@ -21,7 +22,7 @@ public class EnemyController : MonoBehaviour
     {
         if (!TimeManager.Instance.isNight)
         {
-            Destroy(gameObject, Random.Range(0, 5));
+            Destroy(parent, Random.Range(0, 5));
         }
     }
 
@@ -53,6 +54,7 @@ public class EnemyController : MonoBehaviour
     {
         canAttack = false;
         animator.Play("Attack");
+        AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.enemyAttack);
 
         yield return new WaitForSeconds(1 / enemyStats.speedAttack);
         canAttack = true;
@@ -61,7 +63,9 @@ public class EnemyController : MonoBehaviour
     private IEnumerator Die()
     {
         animator.Play("Die");
-        yield return new WaitForSeconds(2);
-        Destroy(transform.parent.gameObject);
+        AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.enemyDie);
+        yield return new WaitForSeconds(1);
+        //Destroy(transform.parent.gameObject);
+        Destroy(parent);
     }
 }

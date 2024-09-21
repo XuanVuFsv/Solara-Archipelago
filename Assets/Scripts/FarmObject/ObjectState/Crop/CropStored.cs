@@ -15,7 +15,7 @@ public class CropStored : ObjectState
             (objectMachine as Plant).orginalPlant.wholePlants.Remove((objectMachine as Plant));
         }
 
-        GemManager.Instance.AddGem((objectMachine as Plant).ammoStats.gemEarnWhenHaverst);
+        //GemManager.Instance.AddGem((objectMachine as Plant).ammoStats.gemEarnWhenHaverst);
 
         (objectMachine as Plant).startDestroyedTimer = false;
         //(objectMachine as Plant).StopCoroutine("DestroyTimer");

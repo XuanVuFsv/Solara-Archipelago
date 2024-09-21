@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStragety
 {
@@ -29,6 +30,8 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
 
     public WaterMode waterMode;
 
+    public TextMeshProUGUI mode;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,8 +48,23 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.switchSound);
+
             waterMode += 1;
             if ((int)waterMode > 2) waterMode = 0;
+
+            if (waterMode == WaterMode.Off)
+            {
+                mode.text = "Water Mode: Off";
+            }
+            else if (waterMode == WaterMode.Salt)
+            {
+                mode.text = "Water Mode: Salt";
+            }
+            else
+            {
+                mode.text = "Water Mode: Fresh";
+            }
         }
     }
 
@@ -68,12 +86,14 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     public void HandleLeftMouseClick()
     {
         CollectingHandle();
+        AudioBuildingManager.Instance.suckUpSound.enabled = true;
     }
 
     public void HandleRightMouseClick()
     {
         //Debug.Log("Handle Right Click");
         ShootOutHandle();
+        //AudioBuildingManager.Instance.suckUpSound.enabled = true;
     }
 
     public void CollectingHandle()
@@ -99,7 +119,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
 
             if (suckedObject is WaterObject)
             {
-                WaterManager.Instance.CollectWater((suckedObject as WaterObject).state, suckSpeed * Time.deltaTime);
+                WaterManager.Instance.CollectWater((suckedObject as WaterObject), suckSpeed * Time.deltaTime);
             }
 
             if (Physics.SphereCast(shootingInputData.raycastOrigin.position, radiusSphereCastToCheckSucked, shootingInputData.fpsCameraTransform.forward, out hit, distanceThresholdToGotAmmo, shootingInputData.layerMask))
@@ -127,6 +147,14 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     {
         if (waterMode != WaterMode.Off) {
             WaterManager.Instance.BlowWater(suckSpeed * Time.deltaTime);
+            if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, 1))
+            {
+                if (hit.collider.CompareTag("Water Receiver"))
+                {
+                    Debug.Log(hit.collider.name);
+                    hit.collider.GetComponent<WaterResourceManager>().RefillResource();
+                }
+            }
             return;
         }
 

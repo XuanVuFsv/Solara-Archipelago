@@ -165,15 +165,18 @@ MonoBehaviour:
   ammoContain: 1
   rigid: {fileID: 6830580894502916191}
   suckableCollider: {fileID: 6830580894502916188}
+  s: 0
+  varSpeed: 0
   plantData:
     trailTracer: {fileID: 0}
     bulletObject: {fileID: 0}
     hitEffectPrefab: {fileID: 0}
     wholePlantPrefab: {fileID: 0}
     wateringStack: 0
+  ownerGarden: {fileID: 0}
+  ownerSlot: {fileID: 0}
   growingBody: {fileID: 0}
   orginalPlant: {fileID: 0}
-  growingTime: 5
   elapsedTime: 0
   onTree: 0
   nonPlanting: 0
@@ -187,6 +190,8 @@ MonoBehaviour:
   startTimeDestroy: 0
   destroyedTime: 0
   startDestroyedTimer: 0
+  minDestroyTime: 40
+  maxDestroyTime: 80
 --- !u!1 &6830580895357616296
 GameObject:
   m_ObjectHideFlags: 0

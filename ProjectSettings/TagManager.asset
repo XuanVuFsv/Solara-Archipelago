@@ -17,6 +17,7 @@ TagManager:
   - CheckingHarvest
   - Enemy
   - Cluster
+  - Water Receiver
   layers:
   - Default
   - TransparentFX

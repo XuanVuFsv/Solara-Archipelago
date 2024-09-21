@@ -80,6 +80,7 @@ public class ClusterResource : MonoBehaviour
 
     void BreakCluster()
     {
+        AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.breakCrystal);
         for (int i = 0; i < resources.Count; i++)
         {
             resources[i].SetActive(true);

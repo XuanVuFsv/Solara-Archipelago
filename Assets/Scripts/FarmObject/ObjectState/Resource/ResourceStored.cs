@@ -23,7 +23,7 @@ public class ResourceStored : ObjectState
     {
         //Debug.Log("Start Stored");
 
-        GemManager.Instance.AddGem((objectMachine).ammoStats.gemEarnWhenHaverst);
+        //GemManager.Instance.AddGem((objectMachine).ammoStats.gemEarnWhenHaverst);
 
         (objectMachine).gameObject.transform.position = CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position;
 

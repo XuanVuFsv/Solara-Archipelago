@@ -24,7 +24,7 @@ public class GrowingResourceManagerUI : MonoBehaviour
         {
             //Debug.Log(owner.GetCurrentResourceValueRatio());
             fillImage.rectTransform.localScale = new Vector3(owner.GetCurrentResourceValueRatio(), 1, 1);
-            resourceValueText.text = owner.CurrentResourceValue.ToString();
+            resourceValueText.text = ((int)owner.CurrentResourceValue).ToString();
         }
     }
 }

@@ -166,7 +166,7 @@ public class TimeManager : Singleton<TimeManager>
 
         if (isNight)
         {
-            //EnemySpawner.Instance.Spawn(seconInRealLifeVsIngame);
+            EnemySpawner.Instance.Spawn(seconInRealLifeVsIngame);
         }
     }
 

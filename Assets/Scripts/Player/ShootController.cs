@@ -144,6 +144,8 @@ public class ShootController : MonoBehaviour
                 }
             }
         }
+
+        if (inputController.isStopFire) AudioBuildingManager.Instance.suckUpSound.enabled = false;
     }
 
     void LeftMouseBehaviourHandle()

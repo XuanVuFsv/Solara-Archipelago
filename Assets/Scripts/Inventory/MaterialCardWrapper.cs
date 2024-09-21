@@ -8,6 +8,13 @@ using System;
 [System.Serializable]
 public class MaterialCardWrapper : MonoBehaviour
 {
+    //public MaterialCardWrapper(AmmoStats ammoStats, int quantity)
+    //{
+    //    image.sprite = ammoStats.artwork;
+    //    this.ammoStats = ammoStats;
+    //    this.quantity = quantity;
+    //}
+
     public Image image;
     public TextMeshProUGUI quanityText;
     public AmmoStats ammoStats;

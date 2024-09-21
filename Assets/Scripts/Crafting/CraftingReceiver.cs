@@ -1,0 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CraftingReceiver : MonoBehaviour
+{
+    public CraftingManager craftingManager;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Suckable suckable = other.GetComponent<Suckable>();
+        if (other && (suckable is PowerContainer || suckable is NaturalResource))
+        {
+            bool addSuccess = craftingManager.AddItemStorage(suckable.ammoStats, suckable.ammoContain);
+            if (addSuccess)
+            {
+                suckable.gameObject.SetActive(false);
+                StartCoroutine(AutoDestroy(suckable.gameObject));
+            }
+        }
+    }
+
+    IEnumerator AutoDestroy(GameObject suckable)
+    {
+        yield return new WaitForSeconds(Random.value * 5);
+        if (suckable) Destroy(suckable);
+    }
+}

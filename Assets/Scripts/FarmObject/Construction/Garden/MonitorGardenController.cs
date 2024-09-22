@@ -100,12 +100,12 @@ public class MonitorGardenController : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.Z))
             {
                 UnlockNewSlot();
             }
 
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.X))
             {
                 ClearCurrentField();
             }

@@ -26,15 +26,6 @@ public class EnemyStats : ScriptableObject
 
     public int gemRewardForPlayerWhenKilled;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int bulletForce;
+    public float shieldDecreaseDamage;
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e681a7d669fe242aa6199fc348de1d, type: 3}
   m_Name: FarmingEssenceRecipe
   m_EditorClassIdentifier: 
-  ammoStats: {fileID: 11400000, guid: 0c824a3d7cf9008409e037b35f10e0cb, type: 2}
+  cropStats: {fileID: 11400000, guid: 0c824a3d7cf9008409e037b35f10e0cb, type: 2}
   items:
   - {fileID: 11400000, guid: 3a17597dfe64d5a4c944a49f6d8f5e8b, type: 2}
   - {fileID: 11400000, guid: 3a17597dfe64d5a4c944a49f6d8f5e8b, type: 2}

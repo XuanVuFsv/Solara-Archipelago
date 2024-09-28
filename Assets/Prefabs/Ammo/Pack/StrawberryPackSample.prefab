@@ -5287,10 +5287,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd2d9cb7e36467428d17df281c82b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoStats: {fileID: 11400000, guid: 4669f5be9d362e74394c759d8c535100, type: 2}
-  ammoContain: 10
+  cropStats: {fileID: 11400000, guid: 4669f5be9d362e74394c759d8c535100, type: 2}
+  cropContain: 0
   rigid: {fileID: 9210864702402777661}
   suckableCollider: {fileID: 9210864702402777660}
+  s: 0
+  varSpeed: 0
   plantState: 0
   suckableSample: {fileID: 6830580894502916190, guid: 7816ce9f6be5be64ab75b480a3d090ea, type: 3}
 --- !u!1 &9210864702597892343

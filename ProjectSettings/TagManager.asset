@@ -18,6 +18,7 @@ TagManager:
   - Enemy
   - Cluster
   - Water Receiver
+  - BreakShield
   layers:
   - Default
   - TransparentFX

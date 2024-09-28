@@ -17,7 +17,7 @@ public interface IHandGunWeaponStragety : IWeaponStragety
     
 }
 
-public interface IAxieCollectorWeaponStragety : IWeaponStragety
+public interface ICollectorWeaponStragety : IWeaponStragety
 {
 
 }

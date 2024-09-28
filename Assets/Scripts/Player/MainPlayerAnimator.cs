@@ -110,7 +110,7 @@ public class MainPlayerAnimator : MonoBehaviour
                     if(activeweapon.activeWeaponIndex == 1) animator.SetBool("isFire", shootController.isFire && inputController.isSingleFire && !shootController.isReloading);
                     else animator.SetBool("isFire", shootController.isFire && !shootController.isReloading);
                     animator.SetFloat("fireValue", 1);
-                    animator.SetFloat("fireRate", shootController.currentWeaponStatsController.currentAmmoStatsController.fireRate * multiplierFireAnimationSpeed);
+                    animator.SetFloat("fireRate", shootController.currentWeaponStatsController.currentCropStatsController.fireRate * multiplierFireAnimationSpeed);
                 }
             }
 
@@ -129,7 +129,7 @@ public class MainPlayerAnimator : MonoBehaviour
 
     public IEnumerator ApplyFireRateAnimation()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(1 / shootController.currentWeaponStatsController.currentAmmoStatsController.fireRate);
+        WaitForSeconds waitForSeconds = new WaitForSeconds(1 / shootController.currentWeaponStatsController.currentCropStatsController.fireRate);
         yield return waitForSeconds;
         exitFireSession = true;
     }

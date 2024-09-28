@@ -108,7 +108,7 @@ public class CameraShake : GameObserver
         index = 0;
     }
 
-    public void GenerateRecoil(AmmoStats.ZoomType zoomType)
+    public void GenerateRecoil(CropStats.ZoomType zoomType)
     {
         time = duration;
 
@@ -118,7 +118,7 @@ public class CameraShake : GameObserver
         //MyDebug.Instance.Log(transform.forward);
 
         //random index use for sniper when scope turn off
-        if (zoomType == AmmoStats.ZoomType.HasScope)
+        if (zoomType == CropStats.ZoomType.HasScope)
         {
             index = Random.Range(0, recoilPattern.Count);
             horizontalRecoil = recoilPattern[index].x;

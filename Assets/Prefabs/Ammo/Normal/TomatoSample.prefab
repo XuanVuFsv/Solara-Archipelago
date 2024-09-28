@@ -4933,8 +4933,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935236a31fe54ec4aa0b5699241db75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoStats: {fileID: 11400000, guid: f9f1885313c5e9a48ac0464175943a8a, type: 2}
-  ammoContain: 1
+  cropStats: {fileID: 11400000, guid: f9f1885313c5e9a48ac0464175943a8a, type: 2}
+  cropContain: 1
   rigid: {fileID: 3582941738491335301}
   suckableCollider: {fileID: 3582941738491335300}
   s: 0

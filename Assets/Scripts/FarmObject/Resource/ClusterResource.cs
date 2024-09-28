@@ -27,7 +27,7 @@ public class ClusterResource : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        collectTime = resourcePrefab.GetComponent<NaturalResource>().ammoStats.totalProducingTime;
+        collectTime = resourcePrefab.GetComponent<NaturalResource>().cropStats.totalProducingTime;
         resourceContain = Random.Range(1, maxResourceContain);
         InstantiateResources(resourceContain);
     }
@@ -80,6 +80,7 @@ public class ClusterResource : MonoBehaviour
 
     void BreakCluster()
     {
+        AudioBuildingManager.Instance.audioSource.volume = 0.75f;
         AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.breakCrystal);
         for (int i = 0; i < resources.Count; i++)
         {

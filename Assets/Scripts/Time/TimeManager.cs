@@ -100,6 +100,8 @@ public class TimeManager : Singleton<TimeManager>
 
     public HealthController player;
 
+    public GameEvent atNightEvent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -166,7 +168,8 @@ public class TimeManager : Singleton<TimeManager>
 
         if (isNight)
         {
-            EnemySpawner.Instance.Spawn(seconInRealLifeVsIngame);
+            //EnemySpawner.Instance.Spawn(seconInRealLifeVsIngame);
+            atNightEvent.Notify(seconInRealLifeVsIngame);
         }
     }
 

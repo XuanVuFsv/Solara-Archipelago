@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using TMPro;
 
-public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStragety
+public class CollectHandler : Singleton<CollectHandler>, ICollectorWeaponStragety
 {
     public enum WaterMode
     {
@@ -48,6 +48,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            AudioBuildingManager.Instance.audioSource.volume = 0.5f;
             AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.switchSound);
 
             waterMode += 1;
@@ -86,7 +87,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
     public void HandleLeftMouseClick()
     {
         CollectingHandle();
-        AudioBuildingManager.Instance.suckUpSound.enabled = true;
+        AudioBuildingManager.Instance.suckUpSound.mute = false;
     }
 
     public void HandleRightMouseClick()
@@ -115,7 +116,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
 
             if (suckedObject as WaterObject) (suckedObject as WaterObject).suckedPosition = hit.transform.position;
 
-            suckedObject.GoToAxieCollector();
+            suckedObject.GoToCollector();
 
             if (suckedObject is WaterObject)
             {
@@ -128,9 +129,9 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
                 {
                     if (suckedObject is Plant || suckedObject is PowerContainer || suckedObject is NaturalResource)
                         {
-                        if (suckedObject.ammoStats != null)
+                        if (suckedObject.cropStats != null)
                         {
-                            AmmoStats ammoStats = suckedObject.ammoStats;
+                            CropStats cropStats = suckedObject.cropStats;
                             weaponStatsController.SuckUpAmmo(suckedObject);
                         }
                     }
@@ -158,7 +159,7 @@ public class CollectHandler : Singleton<CollectHandler>, IAxieCollectorWeaponStr
             return;
         }
 
-        if (weaponStatsController.itemInInventory.ammoStats.name == "Null" || weaponStatsController.itemInInventory == null) return;
+        if (weaponStatsController.itemInInventory.cropStats.name == "Null" || weaponStatsController.itemInInventory == null) return;
         weaponStatsController.UseAmmo(1);
     }
 

@@ -24,7 +24,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         return _reference != null;
     }
 
-    protected virtual void Awake()
+    public virtual void Awake()
     {
         if (IsValidInstance() && !ReferenceEquals(_reference, this))
         {

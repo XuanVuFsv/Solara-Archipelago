@@ -7,7 +7,7 @@ using TMPro;
 public class CraftQueueHandler : MonoBehaviour
 {
     public CraftingManager craftingManager;
-    public AmmoStats ammoStats;
+    public CropStats cropStats;
     public Suckable product;
 
     public GameObject UIContainer;
@@ -36,16 +36,16 @@ public class CraftQueueHandler : MonoBehaviour
     public IEnumerator CraftProduct(int time)
     {
         craftingManager.VFX.SetActive(true);
-        productImage.sprite = ammoStats.artwork;
+        productImage.sprite = cropStats.artwork;
         totalTime = time;
 
-        Debug.Log("Start waiting " + (time / product.ammoStats.totalProducingTime).ToString() + "energy");
+        Debug.Log("Start waiting " + (time / product.cropStats.totalProducingTime).ToString() + "energy");
         isReady = false;
         craftingManager.queueActiveQuantity++;
 
         yield return new WaitForSeconds(time);
 
-        for (int i = 0; i < time / product.ammoStats.totalProducingTime; i++)
+        for (int i = 0; i < time / product.cropStats.totalProducingTime; i++)
         {
             Debug.Log("Init");
             GameObject newGameObject = Instantiate(product.gameObject, craftingManager.productPos.position + Random.value * 0.25f * Vector3.one, Quaternion.identity);

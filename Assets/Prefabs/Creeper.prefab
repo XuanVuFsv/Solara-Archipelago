@@ -747,10 +747,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 8798995106139451441}
+  shield: {fileID: 0}
   animator: {fileID: 2861952995524489457}
   enemyStats: {fileID: 11400000, guid: eaa3c9a0df8b2c2458b5cc66a284e7e6, type: 2}
   healthController: {fileID: 7329621386446906464}
+  bullet: {fileID: 0}
+  spawnBulletTransform: {fileID: 0}
   canAttack: 1
+  defender: 1
+  attacker: 0
 --- !u!114 &7329621386446906464
 MonoBehaviour:
   m_ObjectHideFlags: 0

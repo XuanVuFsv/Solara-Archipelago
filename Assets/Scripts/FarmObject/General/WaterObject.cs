@@ -29,7 +29,7 @@ public class WaterObject : Suckable
         
     }
 
-    public override void GoToAxieCollector()
+    public override void GoToCollector()
     {
         if ((WaterManager.Instance.saltWaterContain == WaterManager.Instance.maxSaltWaterContain && CollectHandler.Instance.waterMode == CollectHandler.WaterMode.Salt)
     || (WaterManager.Instance.freshWaterContain == WaterManager.Instance.maxFreshWaterContain && CollectHandler.Instance.waterMode == CollectHandler.WaterMode.Fresh)) return;

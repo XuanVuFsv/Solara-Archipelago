@@ -42,7 +42,10 @@ public class ShootController : MonoBehaviour
     public bool isReloading = false;
     public bool inAim = false;
     public bool readyToFire = true;
+    public bool canPunch = true;
     public int shootingTime = 0;
+
+    public Collider punchCollider;
 
     int frame = 0;
 
@@ -97,6 +100,8 @@ public class ShootController : MonoBehaviour
 
         //Reload handling
         ReloadHandle();
+
+        Punch();
     }
 
     void CheckOuOfAmmo()
@@ -106,6 +111,27 @@ public class ShootController : MonoBehaviour
             //Toggle bool
             isFire = false;
         }
+    }
+
+    void Punch()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl) && canPunch && currentWeaponStatsController.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun)
+        {
+            AudioBuildingManager.Instance.audioSource.volume = 1;
+            AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.punch);
+            StartCoroutine(PunchCountDown());
+        }
+    }
+
+    IEnumerator PunchCountDown()
+    {
+        canPunch = false;
+        rigController.Play("Punch");
+        punchCollider.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.25f);
+        punchCollider.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        canPunch = true;
     }
 
     void RightMouseBehaviourHandle()
@@ -119,7 +145,7 @@ public class ShootController : MonoBehaviour
             }
             else
             {
-                if (raycastWeapon.weaponHandler is IAxieCollectorWeaponStragety)
+                if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
                 {
                     if (Time.time - lastFired > 1 / 5f)
                     {
@@ -136,7 +162,7 @@ public class ShootController : MonoBehaviour
 
         if (inputController.isHoldAim)
         {
-            if (raycastWeapon.weaponHandler is IAxieCollectorWeaponStragety)
+            if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
             {
                 if ((raycastWeapon.weaponHandler as CollectHandler).waterMode != CollectHandler.WaterMode.Off)
                 {
@@ -145,7 +171,11 @@ public class ShootController : MonoBehaviour
             }
         }
 
-        if (inputController.isStopFire) AudioBuildingManager.Instance.suckUpSound.enabled = false;
+        if (inputController.isStopFire)
+        {
+            //AudioBuildingManager.Instance.suckUpSound.Stop();
+            AudioBuildingManager.Instance.suckUpSound.mute = true;
+        }
     }
 
     void LeftMouseBehaviourHandle()
@@ -157,9 +187,9 @@ public class ShootController : MonoBehaviour
             || (inputController.isSingleFire && activeWeapon.activeWeaponIndex != 0))
             && !currentWeaponStatsController.IsOutOfAmmo() && !isReloading)
             {
-                //Debug.Log("Shoot");
+                Debug.Log("Shoot");
                 //Shoot automatic
-                if (Time.time - lastFired > 1 / currentWeaponStatsController.currentAmmoStatsController.fireRate)
+                if (Time.time - lastFired > 1 / currentWeaponStatsController.currentCropStatsController.fireRate)
                 {
                     readyToFire = true;
    
@@ -167,14 +197,14 @@ public class ShootController : MonoBehaviour
                     lastFired = Time.time;
 
                     //Remove 1 bullet from ammo
-                    //currentWeaponStatsController.UseAmmo(currentWeaponStatsController.currentAmmoStatsController.bulletCount);
+                    //currentWeaponStatsController.UseAmmo(currentWeaponStatsController.currentCropStatsController.bulletCount);
                     raycastWeapon.HandleLeftMouseClick();
                     shootingTime++;
                     //currentWeaponStatsController.UpdateAmmoUI();
 
                     isFire = true;
 
-                    if (currentWeaponStatsController.currentAmmoStatsController.ammoStats.zoomType == AmmoStats.ZoomType.HasScope && inAim)
+                    if (currentWeaponStatsController.currentCropStatsController.cropStats.zoomType == CropStats.ZoomType.HasScope && inAim)
                     {
                         //MyDebug.Log("Handle Right Click");
                         //MyDebug.Log(frame);
@@ -198,7 +228,7 @@ public class ShootController : MonoBehaviour
         {
             if (inputController.isSingleFire && activeWeapon.activeWeaponIndex == 1 && !(raycastWeapon.weaponHandler as ActionHandler).inGrapple) raycastWeapon.HandleLeftMouseClick();
         }
-        else if (raycastWeapon.weaponHandler is IAxieCollectorWeaponStragety)
+        else if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
         {
             if (inputController.isFire && activeWeapon.activeWeaponIndex == 2) raycastWeapon.HandleLeftMouseClick();
         }
@@ -244,7 +274,7 @@ public class ShootController : MonoBehaviour
             aimEvent.Notify(inAim);
         }
 
-        yield return currentWeaponStatsController.currentAmmoStatsController.reloadTimer;
+        yield return currentWeaponStatsController.currentCropStatsController.reloadTimer;
 
         //Restore ammo when reloading
         UpdateEndedReloadStats(true);

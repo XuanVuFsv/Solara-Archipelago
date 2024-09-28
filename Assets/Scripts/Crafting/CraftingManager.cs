@@ -41,12 +41,12 @@ public class CraftingManager : ActivateBehaviour
     {
         foreach (RecipeData recipe in allowedProductList)
         {
-            productRecipes.Add(recipe.ammoStats.name, recipe);
+            productRecipes.Add(recipe.cropStats.name, recipe);
         }
 
         foreach (ItemStorageData item in itemStorages)
         {
-            itemStorageDict.Add(item.ammoStats.name, item);
+            itemStorageDict.Add(item.cropStats.name, item);
         }
 
         for (int i = 0; i < craftQueueHandlers.Count; i++)
@@ -93,10 +93,10 @@ public class CraftingManager : ActivateBehaviour
                 CraftingManagerUI.Instance.UpdateItemStorageDatas();
                 craftQueueHandlers[index].UIContainer.SetActive(true);
 
-                craftQueueHandlers[index].ammoStats = allowedProductList[currentRecipeIndex].ammoStats;
+                craftQueueHandlers[index].cropStats = allowedProductList[currentRecipeIndex].cropStats;
                 craftQueueHandlers[index].product = allowedProductList[currentRecipeIndex].product;
 
-                int totalTime = currentQuantity * (int)allowedProductList[currentRecipeIndex].ammoStats.totalProducingTime;
+                int totalTime = currentQuantity * (int)allowedProductList[currentRecipeIndex].cropStats.totalProducingTime;
                 craftQueueHandlers[index].Craft(totalTime);
                 CraftingManagerUI.Instance.powerManager.UsePower(currentQuantity * 10);
             }   
@@ -142,7 +142,7 @@ public class CraftingManager : ActivateBehaviour
     {
         foreach (ItemStorageData item in itemStorages)
         {
-            item.quantity = itemStorageDict[item.ammoStats.name].quantity;
+            item.quantity = itemStorageDict[item.cropStats.name].quantity;
         }
     }
 
@@ -171,18 +171,18 @@ public class CraftingManager : ActivateBehaviour
         return true;
     }
 
-    public bool AddItemStorage(AmmoStats ammoStats, int quantity)
+    public bool AddItemStorage(CropStats cropStats, int quantity)
     {
-        if (itemStorageDict.ContainsKey(ammoStats.name))
+        if (itemStorageDict.ContainsKey(cropStats.name))
         {
-            itemStorageDict[ammoStats.name].quantity += quantity;
+            itemStorageDict[cropStats.name].quantity += quantity;
             //UpdateItemStorageList();
             return true;
         }
         else if (CheckStorage())
         {
-            itemStorages.Add(new ItemStorageData(ammoStats.name, ammoStats, ItemStorageData.StorageLocation.CraftMachine, ammoStats.fruitPrefab, quantity));
-            itemStorageDict.Add(ammoStats.name, itemStorages[itemStorages.Count - 1]);
+            itemStorages.Add(new ItemStorageData(cropStats.name, cropStats, ItemStorageData.StorageLocation.CraftMachine, cropStats.cropPrefab, quantity));
+            itemStorageDict.Add(cropStats.name, itemStorages[itemStorages.Count - 1]);
             return true;
         }
         else if (!CheckStorage()) return false;

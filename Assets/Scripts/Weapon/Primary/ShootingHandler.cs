@@ -27,27 +27,27 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
     public void HandleLeftMouseClick()
     {
-        if (weaponStatsController.itemInInventory.ammoStats.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
+        if (weaponStatsController.itemInInventory.cropStats.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
         ShootingHandle();
         shootingInputData.source.PlayOneShot(shootingInputData.source.clip);
     }
 
     public void HandleRightMouseClick()
     {
-        if (shootingInputData.ammoStatsController.zoomType == AmmoStats.ZoomType.NoZoom) return;
+        if (shootingInputData.cropStatsController.zoomType == CropStats.ZoomType.NoZoom) return;
         PlayAimAnimation();
     }
 
     public void ShootingHandle()
     {
-        if (shootingInputData.ammoStatsController.ammoStats.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
+        if (shootingInputData.cropStatsController.cropStats.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
         shootingInputData.shootController.ApplyAttackAnimation();
-        if (shootingInputData.shootingHandleType == AmmoStats.ShootingHandleType.Raycast)
+        if (shootingInputData.shootingHandleType == CropStats.ShootingHandleType.Raycast)
         {
             //Debug.Log("Shoot");
             RaycastHandle();
         }
-        else if (shootingInputData.shootingHandleType == AmmoStats.ShootingHandleType.InstantiateBullet)
+        else if (shootingInputData.shootingHandleType == CropStats.ShootingHandleType.InstantiateBullet)
         {
             InstantiateBulletHandle();
         }
@@ -55,20 +55,20 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
 
     void RaycastHandle()
     {
-        if (shootingInputData.ammoStatsController.bulletCount == 1)
+        if (shootingInputData.cropStatsController.bulletCount == 1)
         {
             //Enemy enemy;
-            shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
+            shootingInputData.cameraShake.GenerateRecoil(shootingInputData.cropStatsController.zoomType);
             //Debug.Log("Shoot");
 
-            if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, shootingInputData.ammoStatsController.range, shootingInputData.layerMask))
+            if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, shootingInputData.cropStatsController.range, shootingInputData.layerMask))
             {
                 //Debug.Log(hit.transform);
                 //hitEffectPrefab.transform.position = hit.point;
                 //hitEffectPrefab.transform.forward = hit.normal;
                 //hitEffectPrefab.Emit(5);
 
-                PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
+                PoolingManager.Instance.Get("Pool" + shootingInputData.cropStatsController.cropStats.name + "Setup");
                 PoolingManager.Instance.Get("PoolTomatoSetup");
 
                 shootingInputData.hitEvent.Notify(hit);
@@ -87,8 +87,8 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 if (hit.transform.gameObject.tag == "Wall")
                 {
                     GameObject wall = hit.transform.gameObject;
-                    //GemManager.Instance.AddGem(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
-                    //Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
+                    //GemManager.Instance.AddGem(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
+                    //Debug.Log(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
                     WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
                 }
 
@@ -96,8 +96,8 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                 {
                     EnemyController enemy = hit.transform.GetComponent<EnemyController>();
                     //GemManager.Instance.AddGem(enemy.enemyStats.gemRewardForPlayerWhenKilled);
-                    enemy.TakeDamage(weaponStatsController.currentAmmoStatsController.ammoStats.damage);
-                    //Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
+                    enemy.TakeDamage(weaponStatsController.currentCropStatsController.cropStats.damage);
+                    //Debug.Log(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
                 }
                 #endregion
             }
@@ -113,17 +113,17 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
             bool destroyedObstacle = false;
             //Enemy enemy;
 
-            foreach (Vector3 pattern in shootingInputData.ammoStatsController.ammoStats.bulletDirectionPattern)
+            foreach (Vector3 pattern in shootingInputData.cropStatsController.cropStats.bulletDirectionPattern)
             {
                 Vector3 localDirection = Vector3.forward + pattern;
                 Vector3 direction = shootingInputData.fpsCameraTransform.TransformDirection(localDirection).normalized;
 
-                shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
-                if (Physics.Raycast(shootingInputData.raycastOrigin.position, direction, out hit, shootingInputData.ammoStatsController.range, shootingInputData.layerMask))
+                shootingInputData.cameraShake.GenerateRecoil(shootingInputData.cropStatsController.zoomType);
+                if (Physics.Raycast(shootingInputData.raycastOrigin.position, direction, out hit, shootingInputData.cropStatsController.range, shootingInputData.layerMask))
                 {
                     raycastHits.Add(hit);
-                    //Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
-                    PoolingManager.Instance.Get("Pool" + shootingInputData.ammoStatsController.ammoStats.name + "Setup");
+                    //Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.cropStatsController.cropStats.name + "Setup");
+                    PoolingManager.Instance.Get("Pool" + shootingInputData.cropStatsController.cropStats.name + "Setup");
                     PoolingManager.Instance.Get("PoolTomatoSetup");
 
                     shootingInputData.hitEvent.Notify(hit);
@@ -133,8 +133,8 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                     if (!destroyedObstacle && hit.transform.gameObject.tag == "Wall")
                     {
                         GameObject wall = hit.transform.gameObject;
-                        GemManager.Instance.AddGem(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
-                        //Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
+                        GemManager.Instance.AddGem(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
+                        //Debug.Log(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
                         WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
                         destroyedObstacle = true;
                     }
@@ -143,8 +143,8 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
                     {
                         EnemyController enemy = hit.transform.GetComponent<EnemyController>();
                         //GemManager.Instance.AddGem(enemy.enemyStats.gemRewardForPlayerWhenKilled);
-                        enemy.TakeDamage(weaponStatsController.currentAmmoStatsController.ammoStats.damage);
-                        //Debug.Log(weaponStatsController.currentAmmoStatsController.ammoStats.gemEarnWhenKillEnemy);
+                        enemy.TakeDamage(weaponStatsController.currentCropStatsController.cropStats.damage);
+                        //Debug.Log(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
                     }
                     #endregion
                 }
@@ -158,16 +158,16 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
     {
         Vector3 direction = shootingInputData.fpsCameraTransform.forward;
 
-        if (shootingInputData.ammoStatsController.ammoStats.zoomType == AmmoStats.ZoomType.HasScope)
+        if (shootingInputData.cropStatsController.cropStats.zoomType == CropStats.ZoomType.HasScope)
         {
             MyDebug.Log("Shoot");
             Vector3 localDirection = Vector3.forward + shootingInputData.cameraShake.GetCurrentPatternVector();
             direction = shootingInputData.fpsCameraTransform.TransformDirection(localDirection).normalized;
         }
 
-        GameObject newBullet = Instantiate(shootingInputData.ammoStatsController.ammoStats.bulletObject, shootingInputData.bulletSpawnPoint.position, Quaternion.identity);
-        newBullet.GetComponent<BulletBehaviour>().TriggerBullet(shootingInputData.ammoStatsController.ammoStats.name, shootingInputData.ammoStatsController.force, direction);
-        shootingInputData.cameraShake.GenerateRecoil(shootingInputData.ammoStatsController.zoomType);
+        GameObject newBullet = Instantiate(shootingInputData.cropStatsController.cropStats.bulletObject, shootingInputData.bulletSpawnPoint.position, Quaternion.identity);
+        newBullet.GetComponent<BulletBehaviour>().TriggerBullet(shootingInputData.cropStatsController.cropStats.name, shootingInputData.cropStatsController.force, direction);
+        shootingInputData.cameraShake.GenerateRecoil(shootingInputData.cropStatsController.zoomType);
 
         weaponStatsController.UseAmmo(1);
     }
@@ -182,7 +182,7 @@ public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
         shootController.inAim = !shootController.inAim;
         shootController.aimEvent.Notify(shootController.inAim);
 
-        if (shootController.inAim) shootController.aimEvent.Notify(shootingInputData.ammoStatsController.multiplierRecoilOnAim);
+        if (shootController.inAim) shootController.aimEvent.Notify(shootingInputData.cropStatsController.multiplierRecoilOnAim);
 
         shootController.rigController.SetBool("inAim", shootController.inAim);
     }

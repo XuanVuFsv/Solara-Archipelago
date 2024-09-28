@@ -1,15 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class EnemyController : MonoBehaviour
 {
     public GameObject parent;
+    public GameObject shield;
+    public ParticleSystem breakShieldFX;
     public Animator animator;
     public EnemyStats enemyStats;
     public HealthController healthController;
 
+    public EnemyBullet bullet;
+    public Transform spawnBulletTransform;
+
     public bool canAttack = true;
+
+    public enum Defender
+    {
+        None = 1,
+        Shield = 2
+    }
+    public Defender defender;
+
+    public enum Attacker
+    {
+        Normal = 0,
+        Bullet = 1
+    }    
+    public Attacker attacker;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,25 +42,43 @@ public class EnemyController : MonoBehaviour
     {
         if (!TimeManager.Instance.isNight)
         {
-            Destroy(parent, Random.Range(0, 5));
+            Destroy(parent, Random.Range(0, 100));
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
         //Debug.Log("Collide");
-        if (other.tag == "Player" && canAttack)
+        if (other.CompareTag("BreakShield"))
         {
-            StartCoroutine(Attack());
-            other.GetComponent<HealthController>().TakeDamage(enemyStats.damage);
+            //Debug.Log("BreakShieldStay");
+        }
+
+        if (other.CompareTag("Player") && canAttack)
+        {
+            StartCoroutine(Attack(other.gameObject));
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("BreakShield") && defender == Defender.Shield)
+        {
+            //Debug.Log("BreakShield");
+            breakShieldFX.Emit(1);
+            defender = Defender.None;
+            shield.SetActive(false);
+            AudioBuildingManager.Instance.audioSource.volume = 1;
+            AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.breakShield);
         }
     }
 
     public void TakeDamage(int damage)
     {
-        healthController.TakeDamage(damage);
+        if (defender == Defender.None) healthController.TakeDamage(damage);
+        else healthController.TakeDamage(damage * enemyStats.shieldDecreaseDamage);
 
-        animator.Play("TakeDamage");
+        animator?.Play("TakeDamage");
 
         if (healthController.health <= 0)
         {
@@ -50,10 +88,21 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private IEnumerator Attack()
+    private IEnumerator Attack(GameObject target)
     {
         canAttack = false;
-        animator.Play("Attack");
+        animator?.Play("Attack");
+        if (attacker == Attacker.Normal) target.GetComponent<HealthController>().TakeDamage(enemyStats.damage);
+        else
+        {
+            Vector3 direction = (target.transform.position - spawnBulletTransform.position).normalized;
+
+            EnemyBullet newBullet = Instantiate(bullet.gameObject, spawnBulletTransform.position, Quaternion.Euler(target.transform.position - spawnBulletTransform.position)).GetComponent<EnemyBullet>();
+            newBullet.gameObject.SetActive(true);
+
+            newBullet.TriggerBullet(enemyStats.bulletForce, direction);
+        }
+        AudioBuildingManager.Instance.audioSource.volume = 0.25f;
         AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.enemyAttack);
 
         yield return new WaitForSeconds(1 / enemyStats.speedAttack);
@@ -62,10 +111,10 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator Die()
     {
-        animator.Play("Die");
+        animator?.Play("Die");
+        AudioBuildingManager.Instance.audioSource.volume = 0.5f;
         AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.enemyDie);
-        yield return new WaitForSeconds(1);
-        //Destroy(transform.parent.gameObject);
+        yield return new WaitForSeconds(0.25f);
         Destroy(parent);
     }
 }

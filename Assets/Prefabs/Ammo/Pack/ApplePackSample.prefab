@@ -15107,10 +15107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd2d9cb7e36467428d17df281c82b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoStats: {fileID: 11400000, guid: dfd8a0737941677488f362ccdaf46a37, type: 2}
-  ammoContain: 10
+  cropStats: {fileID: 11400000, guid: dfd8a0737941677488f362ccdaf46a37, type: 2}
+  cropContain: 0
   rigid: {fileID: 835325396470618962}
   suckableCollider: {fileID: 835325396470618961}
+  s: 0
+  varSpeed: 0
   plantState: 0
   suckableSample: {fileID: 9111278382419106460, guid: 9fc7457080722af4c852b23734bfbfb7, type: 3}
 --- !u!1 &835325397091692228

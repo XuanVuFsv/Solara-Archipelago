@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExplosionDealDamage : MonoBehaviour
 {
-    public AmmoStats ammoStats;
+    public CropStats cropStats;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +23,7 @@ public class ExplosionDealDamage : MonoBehaviour
         if (other.tag == "Enemy")
         {
             //Debug.Log("Explode");
-            other.gameObject.GetComponent<EnemyController>().TakeDamage(ammoStats.damage);
+            other.gameObject.GetComponent<EnemyController>().TakeDamage(cropStats.damage);
         }
     }
 }

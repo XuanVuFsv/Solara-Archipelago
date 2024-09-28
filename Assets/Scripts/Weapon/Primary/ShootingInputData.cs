@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class ShootingInputData
 {
-    public ShootingInputData(ShootController _shootController, AmmoStats.ShootingHandleType _shootingHandleType, AmmoStatsController _ammoStatsController, AudioSource _source, Transform _raycastOrigin, Transform _fpsCameraTransform, GameEvent _hitEvent, CameraShake _cameraShake, Transform _bulletSpawnPoint, int _layerMask)
+    public ShootingInputData(ShootController _shootController, CropStats.ShootingHandleType _shootingHandleType, CropStatsController _cropStatsController, AudioSource _source, Transform _raycastOrigin, Transform _fpsCameraTransform, GameEvent _hitEvent, CameraShake _cameraShake, Transform _bulletSpawnPoint, int _layerMask)
     {
         shootController = _shootController;
         shootingHandleType = _shootingHandleType;
-        ammoStatsController = _ammoStatsController;
+        cropStatsController = _cropStatsController;
         source = _source;
         raycastOrigin = _raycastOrigin;
         fpsCameraTransform = _fpsCameraTransform;
@@ -21,8 +21,8 @@ public class ShootingInputData
 
     public ShootController shootController;
 
-    public AmmoStats.ShootingHandleType shootingHandleType;
-    public AmmoStatsController ammoStatsController;
+    public CropStats.ShootingHandleType shootingHandleType;
+    public CropStatsController cropStatsController;
     public AudioSource source;
     public Transform raycastOrigin;
     public Transform fpsCameraTransform;

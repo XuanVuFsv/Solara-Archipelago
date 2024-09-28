@@ -10138,8 +10138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935236a31fe54ec4aa0b5699241db75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoStats: {fileID: 11400000, guid: dfd8a0737941677488f362ccdaf46a37, type: 2}
-  ammoContain: 1
+  cropStats: {fileID: 11400000, guid: dfd8a0737941677488f362ccdaf46a37, type: 2}
+  cropContain: 1
   rigid: {fileID: 9111278382419106463}
   suckableCollider: {fileID: 9111278382419106462}
   s: 0

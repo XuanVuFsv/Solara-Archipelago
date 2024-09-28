@@ -257,7 +257,7 @@ public class ActiveWeapon : MonoBehaviour
         SetupNewWeapon(activateWeapon.weaponStats);
 
         rigController.SetInteger("weaponIndex", activeWeaponIndex);
-        gunCameraController.SetHasScope(activateWeapon.GetComponent<AmmoStatsController>().ammoStats.zoomType == AmmoStats.ZoomType.HasScope);
+        gunCameraController.SetHasScope(activateWeapon.GetComponent<CropStatsController>().cropStats.zoomType == CropStats.ZoomType.HasScope);
         GetComponent<MovementController>().SetMultiplierSpeed(1);
     }
 
@@ -274,7 +274,7 @@ public class ActiveWeapon : MonoBehaviour
         {
             //newWeapon.GetComponent<CameraShake>().Subscribe();
             shootController.currentWeaponStatsController = newWeapon.GetComponent<WeaponStatsController>();
-            shootController.currentWeaponStatsController.currentAmmoStatsController = newWeapon.GetComponent<AmmoStatsController>();
+            shootController.currentWeaponStatsController.currentCropStatsController = newWeapon.GetComponent<CropStatsController>();
 
             //shootController.currentWeaponStatsController.UpdateAmmoUI();
             //shootController.currentWeaponStatsController.refferedToShootController = true;
@@ -336,7 +336,7 @@ public class ActiveWeapon : MonoBehaviour
         else
         {
             //equippedWeapon[weaponSlotIndex].GetComponent<CameraShake>().UnSubscribe();
-            //shootController.currentWeaponStatsController.currentAmmoStatsController = null;
+            //shootController.currentWeaponStatsController.currentCropStatsController = null;
             //shootController.currentWeaponStatsController.ofActiveAmmo = false;
             shootController.currentWeaponStatsController = null;
 
@@ -407,7 +407,7 @@ public class ActiveWeapon : MonoBehaviour
         //if (activeWeaponIndex == 2 || activeWeaponIndex == 3) gunCameraController.SetHoldWeaponAnimation(false, (int)weaponStats.weaponSlot);
         //else gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStats.weaponSlot);
         gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStats.weaponSlot);
-        //equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().ofActiveAmmo = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().weaponSlot == InventoryController.Instance.GetCurrentItem().ammoStats.weaponSlot;
+        //equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().ofActiveAmmo = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().weaponSlot == InventoryController.Instance.GetCurrentItem().cropStats.weaponSlot;
     }
 
     void SetWeaponAnimation()

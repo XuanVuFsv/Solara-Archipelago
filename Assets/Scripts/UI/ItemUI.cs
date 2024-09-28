@@ -8,7 +8,7 @@ public class ItemUI : MonoBehaviour
 {
     public int index = 0;
 
-    public AmmoStats ammoStats;
+    public CropStats cropStats;
 
     public Image icon;
     public TextMeshProUGUI nameItem;
@@ -22,7 +22,7 @@ public class ItemUI : MonoBehaviour
         icon.gameObject.SetActive(false);
         GetComponent<Button>().interactable = false;
 
-        if (ammoStats != null) SetItemUI(ammoStats);
+        if (cropStats != null) SetItemUI(cropStats);
     }
 
     // Update is called once per frame
@@ -31,9 +31,9 @@ public class ItemUI : MonoBehaviour
         
     }
 
-    public void SetItemUI(AmmoStats ammoStats)
+    public void SetItemUI(CropStats cropStats)
     {
-        if (ammoStats.name == "Null")
+        if (cropStats.name == "Null")
         {
             icon.gameObject.SetActive(false);
             nameItem.text = "";
@@ -41,17 +41,17 @@ public class ItemUI : MonoBehaviour
         }
         icon.gameObject.SetActive(true);
         GetComponent<Button>().interactable = true;
-        icon.sprite = ammoStats.artwork;
-        nameItem.text = ammoStats.name;
+        icon.sprite = cropStats.artwork;
+        nameItem.text = cropStats.name;
     }   
     
     public void OnClick()
     {
-        Debug.Log("Click" + " " + ammoStats.name);
-        if (ammoStats == null || ammoStats.name == "Null") return;
+        Debug.Log("Click" + " " + cropStats.name);
+        if (cropStats == null || cropStats.name == "Null") return;
         CraftingManagerUI.Instance.craftingManager.currentRecipeIndex = index;
-        CraftingManagerUI.Instance.ShowCurrentItemInformation(ammoStats);
+        CraftingManagerUI.Instance.ShowCurrentItemInformation(cropStats);
 
-        CraftingManagerUI.Instance.LoadMaterialsRequired(ammoStats.recipe);
+        CraftingManagerUI.Instance.LoadMaterialsRequired(cropStats.recipe);
     }    
 }

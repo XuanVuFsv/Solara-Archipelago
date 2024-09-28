@@ -80,7 +80,7 @@ public class WeaponSystemUI : MonoBehaviour
                     DisplayItem newDisplayItem = new DisplayItem(item.Find("Amount").GetComponent<TextMeshProUGUI>(), item.Find("Icon").GetComponent<Image>(), item.Find("Rouned").gameObject);
                     displayItems.Add(newDisplayItem);
                     Item itemInInventory = InventoryController.Instance.GetItemByIndex(i);
-                    newDisplayItem.artwork.sprite = itemInInventory.ammoStats.artwork;
+                    newDisplayItem.artwork.sprite = itemInInventory.cropStats.artwork;
                     newDisplayItem.totalAmmoText.text = itemInInventory.count.ToString();
                     
                 }

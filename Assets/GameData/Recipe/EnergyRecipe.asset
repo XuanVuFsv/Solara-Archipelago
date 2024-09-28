@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e681a7d669fe242aa6199fc348de1d, type: 3}
   m_Name: EnergyRecipe
   m_EditorClassIdentifier: 
-  ammoStats: {fileID: 11400000, guid: 8c4846b88385ebf4abb36580b9464533, type: 2}
+  cropStats: {fileID: 11400000, guid: 8c4846b88385ebf4abb36580b9464533, type: 2}
   items:
   - {fileID: 11400000, guid: 32c78819e706f2149b5364430a9db275, type: 2}
   - {fileID: 11400000, guid: fc815f76020f3d84e830c978ed3dffc8, type: 2}

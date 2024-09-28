@@ -112,7 +112,7 @@ public class AxieBehaviour : MonoBehaviour
     {
         Plant item = collision.gameObject.GetComponent<Plant>();
         if (item == null) return;
-        if (item.ammoStats.name == "StrawberryJam" || item.ammoStats.name == "AppleJam" && food < foodStack)
+        if (item.cropStats.name == "StrawberryJam" || item.cropStats.name == "AppleJam" && food < foodStack)
         {
             food++;
             if (food == foodStack)

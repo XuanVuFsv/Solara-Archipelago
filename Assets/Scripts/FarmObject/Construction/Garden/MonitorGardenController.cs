@@ -54,7 +54,7 @@ public class MonitorGardenController : MonoBehaviour
 
     [Header("Display element")]
     [SerializeField]
-    private AmmoStats currentCropStats;
+    private CropStats currentCropStats;
     public List<DisplayUIElementState> displayUIElementStates;
 
     public Image currentCropIcon;
@@ -139,7 +139,7 @@ public class MonitorGardenController : MonoBehaviour
     public void NextSlot()
     {
         currentSlotIndex = gardenManager.NextSlot();
-        AssignCurrentCropStats(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentAmmoStats());
+        AssignCurrentCropStats(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentCropStats());
         SetupDisplayCropStats();
         landSelectedElement.anchoredPosition = slotCells[currentSlotIndex].GetComponent<RectTransform>().parent.GetComponent<RectTransform>().anchoredPosition;
     }
@@ -147,7 +147,7 @@ public class MonitorGardenController : MonoBehaviour
     public void PreviousSlot()
     {
         currentSlotIndex = gardenManager.PreviousSLot();
-        AssignCurrentCropStats(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentAmmoStats());
+        AssignCurrentCropStats(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentCropStats());
         SetupDisplayCropStats();
         landSelectedElement.anchoredPosition = slotCells[currentSlotIndex].GetComponent<RectTransform>().parent.GetComponent<RectTransform>().anchoredPosition;
     }
@@ -180,16 +180,16 @@ public class MonitorGardenController : MonoBehaviour
         bool canClear = gardenManager.ClearCurrentField();
 
         if (!canClear) return;
-        AssignCurrentCropStats(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentAmmoStats());
+        AssignCurrentCropStats(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentCropStats());
         SetupDisplayCropStats();
     }
 
-    public void AssignCurrentCropStats(AmmoStats newCropStats)
+    public void AssignCurrentCropStats(CropStats newCropStats)
     {
         currentCropStats = newCropStats;
     }
 
-    /// <summary> Setup what you will see about crop on monitor by pass crop stats as AmmoStats </summary>
+    /// <summary> Setup what you will see about crop on monitor by pass crop stats as CropStats </summary>
     public void SetupDisplayCropStats()
     {
         CheckCropUIState();

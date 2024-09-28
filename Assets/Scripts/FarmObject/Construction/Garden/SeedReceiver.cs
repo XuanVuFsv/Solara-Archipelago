@@ -18,9 +18,9 @@ public class SeedReceiver : MonoBehaviour
             Plant plant = other.gameObject.GetComponent<Plant>();
             if (plant == null) return;
 
-            if (plant.ammoStats.featuredType != AmmoStats.FeaturedType.Normal
-                || plant.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.None
-                || plant.ammoStats.weaponSlot == ActiveWeapon.WeaponSlot.HandGun
+            if (plant.cropStats.featuredType != GameObjectType.FeaturedType.Normal
+                || plant.cropStats.weaponSlot == ActiveWeapon.WeaponSlot.None
+                || plant.cropStats.weaponSlot == ActiveWeapon.WeaponSlot.HandGun
                 || plant.onTree == true
                 || plant.state is CropGrowing
                 //|| plant.plantState == Plant.PlantState.GrowingBody
@@ -37,7 +37,7 @@ public class SeedReceiver : MonoBehaviour
             //Auto assign or bind data to slot that was current slot on monitor
             if (ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].crop == null)
             {
-                monitorGardenController.AssignCurrentCropStats(plant.ammoStats);
+                monitorGardenController.AssignCurrentCropStats(plant.cropStats);
                 monitorGardenController.SetupDisplayCropStats();
                 Debug.Log("Update UI");
             }
@@ -48,7 +48,7 @@ public class SeedReceiver : MonoBehaviour
             if (ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].crop == null)
             {
                 ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].crop = plant;
-                //ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].countDownUI.StartCountDown(plant.ammoStats.totalGrowingTime);
+                //ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].countDownUI.StartCountDown(plant.cropStats.totalGrowingTime);
 
                 plant.ownerGarden = ownerGarden;
                 plant.ownerSlot = ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex];
@@ -61,7 +61,7 @@ public class SeedReceiver : MonoBehaviour
             else // Asign to first empty slot found by FindEmptySlotIndex method if slot on monitor not null
             {
                 ownerGarden.gardenSlotProperties[emptySlotIndex].crop = plant;
-                //ownerGarden.gardenSlotProperties[emptySlotIndex].countDownUI.StartCountDown(plant.ammoStats.totalGrowingTime);
+                //ownerGarden.gardenSlotProperties[emptySlotIndex].countDownUI.StartCountDown(plant.cropStats.totalGrowingTime);
 
                 plant.ownerGarden = ownerGarden;
                 plant.ownerSlot = ownerGarden.gardenSlotProperties[emptySlotIndex];

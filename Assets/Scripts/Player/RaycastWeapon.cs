@@ -8,7 +8,7 @@ public class RaycastWeapon : MonoBehaviour
 {
     public IWeaponStragety weaponHandler;
 
-    public AmmoStatsController ammoStatsController;
+    public CropStatsController cropStatsController;
     public ShootController shootController;
     CameraShake cameraShake;
     GunCameraShake gunCameraShake;
@@ -43,8 +43,8 @@ public class RaycastWeapon : MonoBehaviour
 
     public async UniTaskVoid SetAsInputData(LayerMask _layerMask)
     {
-        await UniTask.WaitUntil(() => ammoStatsController.ammoStats != null);
-        ShootingInputData shootingInputData = new ShootingInputData(shootController, ammoStatsController.ammoStats.shootingHandleType, ammoStatsController, shootController.source, raycastOrigin, fpsCameraTransform, hitEvent, cameraShake, bulletSpawnPoint, _layerMask);
+        await UniTask.WaitUntil(() => cropStatsController.cropStats != null);
+        ShootingInputData shootingInputData = new ShootingInputData(shootController, cropStatsController.cropStats.shootingHandleType, cropStatsController, shootController.source, raycastOrigin, fpsCameraTransform, hitEvent, cameraShake, bulletSpawnPoint, _layerMask);
         weaponHandler.SetInputData(shootingInputData);
     }
 
@@ -70,7 +70,7 @@ public class RaycastWeapon : MonoBehaviour
     }
 
     /// <summary>
-    /// Run this method to shoot and select what type of bullet <see cref="AmmoStats.ShootingHandleType"/> and how to bullet interact to other objects
+    /// Run this method to shoot and select what type of bullet <see cref="CropStats.ShootingHandleType"/> and how to bullet interact to other objects
     /// </summary>
     public void HandleLeftMouseClick()
     {
@@ -80,7 +80,7 @@ public class RaycastWeapon : MonoBehaviour
 
     /// <summary>
     /// Run this method to aim. An ammo type can aim or not and how a gun aim with different ammo will depend on their ammo type. Check this:
-    /// <see cref="AmmoStats.ZoomType"></see>
+    /// <see cref="CropStats.ZoomType"></see>
     /// </summary>
     public void HandleRightMouseClick()
     {
@@ -108,7 +108,7 @@ public class RaycastWeapon : MonoBehaviour
         Gizmos.color = Color.green;
         Vector3 direction = fpsCameraTransform.forward;
 
-        if (ammoStatsController.ammoStats.zoomType == AmmoStats.ZoomType.HasScope)
+        if (cropStatsController.cropStats.zoomType == CropStats.ZoomType.HasScope)
         {
             Vector3 localDirection = Vector3.forward + cameraShake.GetCurrentPatternVector();
             direction = fpsCameraTransform.TransformDirection(localDirection).normalized;
@@ -122,7 +122,7 @@ public class RaycastWeapon : MonoBehaviour
         //}
 
         Gizmos.DrawRay(raycastOrigin.position, direction);
-        Gizmos.DrawLine(raycastOrigin.position, raycastOrigin.position + direction * ammoStatsController.range);
+        Gizmos.DrawLine(raycastOrigin.position, raycastOrigin.position + direction * cropStatsController.range);
     }
 
     private void OnEnable()

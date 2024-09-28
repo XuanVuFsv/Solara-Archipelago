@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Item
 {
-    public AmmoStats ammoStats;
+    public CropStats cropStats;
     public List<Suckable> totalPlant = new List<Suckable>();
     public Suckable suckableSample;
     public int index;
@@ -13,9 +13,9 @@ public class Item
     public int ammountAmmoUsedByAttackWeapon = 0;
     public bool isActive = true;
 
-    public Item(AmmoStats ammoStats, int count, bool isActive, Suckable ammoObject, int index)
+    public Item(CropStats cropStats, int count, bool isActive, Suckable ammoObject, int index)
     {
-        this.ammoStats = ammoStats;
+        this.cropStats = cropStats;
         AddAmmo(count, ammoObject);
         this.isActive = isActive;
         this.index = index;
@@ -23,7 +23,7 @@ public class Item
 
     public bool IsFull()
     {
-        return count < ammoStats.maxCount;
+        return count < cropStats.maxCount;
     }
 
     public int AddAmmo(int newCount, Suckable ammoObject)
@@ -41,7 +41,7 @@ public class Item
         int currentCount = count + newCount;
         //Debug.Log(currentCount);
 
-        if ((isPlant || isPower || isNaturalResource) && currentCount <= ammoStats.maxCount)
+        if ((isPlant || isPower || isNaturalResource) && currentCount <= cropStats.maxCount)
         {
             //Debug.Log("add");
             totalPlant.Add(ammoObject);
@@ -52,7 +52,7 @@ public class Item
             suckableSample = (ammoObject as AmmoPickup).suckableSample;
         }
 
-        if (currentCount <= ammoStats.maxCount)
+        if (currentCount <= cropStats.maxCount)
         {
             count = currentCount;
             //Debug.Log(isPlant);
@@ -80,9 +80,9 @@ public class Item
         }
         else
         {
-            count = ammoStats.maxCount;
+            count = cropStats.maxCount;
             if (!isPlant) GameObject.Destroy(ammoObject.gameObject);
-            return currentCount - ammoStats.maxCount;
+            return currentCount - cropStats.maxCount;
         }
     }
 
@@ -136,7 +136,7 @@ public class Item
 
     public void ResetItem(Item resetItem)
     {
-        ammoStats = resetItem.ammoStats;
+        cropStats = resetItem.cropStats;
         totalPlant = null;
         suckableSample = null;
         count = 0;

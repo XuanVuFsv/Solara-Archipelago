@@ -46,8 +46,8 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
         for (int i = 0; i < craftingManager.allowedProductList.Count; i++)
         {
             Debug.Log(i);
-            itemUIs[i].ammoStats = craftingManager.allowedProductList[i].ammoStats;
-            itemUIs[i].SetItemUI(craftingManager.allowedProductList[i].ammoStats);
+            itemUIs[i].cropStats = craftingManager.allowedProductList[i].cropStats;
+            itemUIs[i].SetItemUI(craftingManager.allowedProductList[i].cropStats);
         }
 
         for (int i = 0; i < storageCardWrappers.Count; i++)
@@ -55,9 +55,9 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
             storageCardWrappers[i] = storageParent.GetChild(i).GetComponent<MaterialCardWrapper>();
         }
 
-        ShowCurrentItemInformation(itemUIs[0].ammoStats);
+        ShowCurrentItemInformation(itemUIs[0].cropStats);
         ShowRecipe();
-        LoadMaterialsRequired(itemUIs[0].ammoStats.recipe);
+        LoadMaterialsRequired(itemUIs[0].cropStats.recipe);
         UpdateMaterialStorage();
         Debug.Log("Setup Done");
         body.gameObject.SetActive(false);
@@ -110,15 +110,15 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
         }
     }    
 
-    public void ShowCurrentItemInformation(AmmoStats ammoStats)
+    public void ShowCurrentItemInformation(CropStats cropStats)
     {
-        currentItemName.text = ammoStats.name;
-        type.text = ammoStats.filteredType.ToString() + " - Level " + ammoStats.requiredLevel.ToString();
-        description.text = ammoStats.description;
-        currentProductImage.sprite = ammoStats.artwork;
+        currentItemName.text = cropStats.name;
+        type.text = cropStats.filteredType.ToString() + " - Level " + cropStats.requiredLevel.ToString();
+        description.text = cropStats.description;
+        currentProductImage.sprite = cropStats.artwork;
 
-        cost.text = "Cost: " + ammoStats.cost.ToString();
-        time.text = "Time: " + ammoStats.totalProducingTime.ToString() + "s";
+        cost.text = "Cost: " + cropStats.cost.ToString();
+        time.text = "Time: " + cropStats.totalProducingTime.ToString() + "s";
     }
 
     #region Main Action Components
@@ -174,18 +174,18 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
 
     public void LoadMaterialsRequired(RecipeData recipeData)
     {
-        Debug.Log("Load " + recipeData.ammoStats.name);
+        Debug.Log("Load " + recipeData.cropStats.name);
         Debug.Log(materialCardWrappers.Count);
         Debug.Log(craftingManager.productRecipes.Count);
 
         for (int i = 0; i < materialCardWrappers.Count; i++)
         {
             materialCardWrappers[i].gameObject.SetActive(true);
-            materialCardWrappers[i].ammoStats = recipeData.items[i];
-            materialCardWrappers[i].image.sprite = craftingManager.productRecipes[recipeData.ammoStats.name].items[i].artwork;
+            materialCardWrappers[i].cropStats = recipeData.items[i];
+            materialCardWrappers[i].image.sprite = craftingManager.productRecipes[recipeData.cropStats.name].items[i].artwork;
 
             materialCardWrappers[i].quantity = craftingManager.GetItemStorageQuantityByName(recipeData.items[i].name);
-            materialCardWrappers[i].requiredQuantity = (craftingManager.productRecipes[recipeData.ammoStats.name].ammountPerSlots[i]
+            materialCardWrappers[i].requiredQuantity = (craftingManager.productRecipes[recipeData.cropStats.name].ammountPerSlots[i]
                 * craftingManager.currentQuantity);
 
             materialCardWrappers[i].quanityText.text = materialCardWrappers[i].requiredQuantity.ToString()
@@ -207,10 +207,10 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
         for (int i = 0; i < materialCardWrappers.Count; i++)
         {
             materialCardWrappers[i].requiredQuantity = (craftingManager.productRecipes
-                [craftingManager.allowedProductList[craftingManager.currentRecipeIndex].ammoStats.name].ammountPerSlots[i]
+                [craftingManager.allowedProductList[craftingManager.currentRecipeIndex].cropStats.name].ammountPerSlots[i]
                 * craftingManager.currentQuantity);
 
-            materialCardWrappers[i].quantity = craftingManager.GetItemStorage(materialCardWrappers[i].ammoStats.name);
+            materialCardWrappers[i].quantity = craftingManager.GetItemStorage(materialCardWrappers[i].cropStats.name);
 
             materialCardWrappers[i].quanityText.text = materialCardWrappers[i].requiredQuantity.ToString()
             + "/" + materialCardWrappers[i].quantity.ToString();
@@ -264,9 +264,9 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
             {
                 storageCardWrappers[i].image.gameObject.SetActive(true);
                 storageCardWrappers[i].GetComponent<Image>().color = new Color32(0, 0, 0, 100);
-                storageCardWrappers[i].image.sprite = craftingManager.itemStorages[i].ammoStats.artwork;
+                storageCardWrappers[i].image.sprite = craftingManager.itemStorages[i].cropStats.artwork;
                 storageCardWrappers[i].quanityText.text = craftingManager.itemStorages[i].quantity.ToString();
-                storageCardWrappers[i].ammoStats = craftingManager.itemStorages[i].ammoStats;
+                storageCardWrappers[i].cropStats = craftingManager.itemStorages[i].cropStats;
             }
         }
     }
@@ -304,10 +304,10 @@ public class CraftingManagerUI : Singleton<CraftingManagerUI>
         foreach (MaterialCardWrapper card in materialCardWrappers)
         {
             card.quantity -= card.requiredQuantity;
-            craftingManager.SetItemStorage(card.ammoStats.name, card.quantity);
+            craftingManager.SetItemStorage(card.cropStats.name, card.quantity);
             if (card.quantity == 0)
             {
-                craftingManager.RemoveItemStorage(card.ammoStats.name);
+                craftingManager.RemoveItemStorage(card.cropStats.name);
             }
         }
 

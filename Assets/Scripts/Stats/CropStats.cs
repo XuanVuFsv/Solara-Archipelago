@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Ammo", menuName = "Ammo")]
-public class AmmoStats : ScriptableObject
+public class CropStats : ScriptableObject
 {
-    [Header("Type of Plant")]
+    [Header("Crop")]
 
     [Tooltip("Slot for Plant. All of ammo can used by slot 3 (collect/shoot out). Product type can't use slot 1 to attack so it's will be select slot3. While normal Plant can attack and collect/shoot out shoud be select slot 1")]
     public ActiveWeapon.WeaponSlot weaponSlot;
@@ -18,22 +18,22 @@ public class AmmoStats : ScriptableObject
     public int force;
     public float fireRate;
 
-    [Tooltip("Type of Plant. Now, it's can be same as Plant name")]
-    public enum FruitType
-    {
-        Null = -1,
-        Berry = 0,
-        Chilli = 1,
-        Onion = 2,
-        Apple = 4,
-        Star = 5,
-        Tomato = 6,
-        Waternelon = 7,
-        Strawberry = 8
-    }
+    //[Tooltip("Type of Plant. Now, it's can be same as Plant name")]
+    //public enum FruitType
+    //{
+    //    Null = -1,
+    //    Berry = 0,
+    //    Chilli = 1,
+    //    Onion = 2,
+    //    Apple = 4,
+    //    Star = 5,
+    //    Tomato = 6,
+    //    Waternelon = 7,
+    //    Strawberry = 8
+    //}
 
     public Sprite artwork;
-    public Plant fruitPrefab;
+    public Plant cropPrefab;
 
     public enum ShootingHandleType
     {
@@ -43,14 +43,9 @@ public class AmmoStats : ScriptableObject
         Both = 2
     }
     public ShootingHandleType shootingHandleType;
+    public GameObject bulletObject;
 
-    public enum FeaturedType
-    {
-        None = -1,
-        Product = 1,
-        Normal = 2
-    }
-    public FeaturedType featuredType;
+    public GameObjectType.FeaturedType featuredType;
 
     [Tooltip("What effect will be ins when shooting Plant")]
     public enum BulletEffectComponent
@@ -61,21 +56,21 @@ public class AmmoStats : ScriptableObject
         Both = 2
     }
     public BulletEffectComponent bulletEffectComponent;
+
     public GameObject trailTracer;
-    public GameObject bulletObject;
     public ParticleSystem hitEffectPrefab;
 
-    public GameObject GetTrailTracer()
+    public GameObject TrailTracer
     {
-        return trailTracer;
+        get { return trailTracer; }
     }
 
-    [Header("Attacking Plant")]
+    [Header("Attacking Crop")]
     public int damage;
-    [Tooltip("Only for attacking Plant. With Specific Enemy. This fruit will deal more damage")]
+    [Tooltip("Only for attacking Crop. With specific enemy. This fruit will deal more damage")]
     public int damageDealToSpecificEnemy;
 
-    [Tooltip("Only for attack Plant. Scope mode of Plant")]
+    [Tooltip("Only for attack Crop. Scope mode of Crop")]
     public enum ZoomType
     {
         NoZoom = 0,
@@ -97,7 +92,7 @@ public class AmmoStats : ScriptableObject
     public int bulletCount = 1;
     public List<Vector3> bulletDirectionPattern;
 
-    [Header("Normal Plant")]
+    [Header("Normal Crop")]
     public int totalGrowingTime;
     public int numberOfFruitPerSeed;
 
@@ -119,15 +114,8 @@ public class AmmoStats : ScriptableObject
     [Header("Type of Resource")]
     public float totalProducingTime;
     //public int resourceContain;
-    public enum FilteredType
-    {
-        Crop = 0,
-        NaturePlant = 1,
-        Fertilizer = 2,
-        Mining = 3,
-        Power = 4
-    }
-    public FilteredType filteredType;
+
+    public GameObjectType.FilteredType filteredType;
     public RecipeData recipe;
     public int cost;
 }

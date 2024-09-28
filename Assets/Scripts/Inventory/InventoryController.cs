@@ -40,12 +40,12 @@ public class InventoryController : Singleton<InventoryController>
         if (activeSlotIndex == currentAmmoList.Count) activeSlotIndex = 0;
         currentAmmoList[activeSlotIndex].isActive = true;
         WeaponSystemUI.Instance.displayItems[activeSlotIndex].selectedIcon.SetActive(true);
-        //WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().ammoStats.artwork;
+        //WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().cropStats.artwork;
     }
 
-    public Item AddNewAmmoToInventory(AmmoStats ammoStats, int count, Suckable ammoObject)
+    public Item AddNewAmmoToInventory(CropStats cropStats, int count, Suckable ammoObject)
     {
-        int firstSlot = GetSlotByName(ammoStats.name);
+        int firstSlot = GetSlotByName(cropStats.name);
         int emptySlot = GetSlotByName("Null");
         Item item = GetCurrentItem();
 
@@ -55,23 +55,23 @@ public class InventoryController : Singleton<InventoryController>
         {
             //Check stack item here with existed item
             int leftOverAmmo = currentAmmoList[firstSlot].AddAmmo(count, ammoObject);
-            //Debug.Log("Add MORE" + count + ammoStats.name + " and left over" + leftOverAmmo);
+            //Debug.Log("Add MORE" + count + cropStats.name + " and left over" + leftOverAmmo);
             item = currentAmmoList[firstSlot];
         }
         else if (emptySlot != -1)
         {
             //Add new iteam which not existed in inventory
-            //currentAmmoList[emptySlot] = new Item(ammoStats, count, ofActiveAmmo && !IsExistedAmmoForWeaponSlot(ammoStats.weaponSlot));
+            //currentAmmoList[emptySlot] = new Item(cropStats, count, ofActiveAmmo && !IsExistedAmmoForWeaponSlot(cropStats.weaponSlot));
             if (emptySlot == activeSlotIndex)
             {
-                currentAmmoList[emptySlot] = new Item(ammoStats, count, true, ammoObject, emptySlot);
-                //WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().ammoStats.artwork;
+                currentAmmoList[emptySlot] = new Item(cropStats, count, true, ammoObject, emptySlot);
+                //WeaponSystemUI.Instance.artwork.sprite = GetCurrentItem().cropStats.artwork;
             }
-            else currentAmmoList[emptySlot] = new Item(ammoStats, count, false, ammoObject, emptySlot);
+            else currentAmmoList[emptySlot] = new Item(cropStats, count, false, ammoObject, emptySlot);
             item = currentAmmoList[emptySlot];
             //Debug.Log(item);
             //if (ofActiveAmmo) activeSlotIndex = emptySlot;
-            //Debug.Log("Add NEW" + count + ammoStats.name);
+            //Debug.Log("Add NEW" + count + cropStats.name);
         }
         else
         {
@@ -91,7 +91,7 @@ public class InventoryController : Singleton<InventoryController>
     {
         for (int i = 0; i < itemCountInInventory; i++)
         {
-            if (currentAmmoList[i].ammoStats.name == name) return i;
+            if (currentAmmoList[i].cropStats.name == name) return i;
         }
         return -1;
     }
@@ -101,9 +101,9 @@ public class InventoryController : Singleton<InventoryController>
         return currentAmmoList[index];
     }
 
-    public Item GetItem(AmmoStats ammoStats)
+    public Item GetItem(CropStats cropStats)
     {
-        return currentAmmoList[GetSlotByName(ammoStats.name)];
+        return currentAmmoList[GetSlotByName(cropStats.name)];
     }
 
     public Item GetCurrentItem()
@@ -115,7 +115,7 @@ public class InventoryController : Singleton<InventoryController>
     {
         for (int i = 0; i < itemCountInInventory; i++)
         {
-            if (currentAmmoList[i].ammoStats.weaponSlot == weaponSlot) return true;
+            if (currentAmmoList[i].cropStats.weaponSlot == weaponSlot) return true;
         }
         return false;
     }
@@ -124,7 +124,7 @@ public class InventoryController : Singleton<InventoryController>
     {
         foreach (Item item in currentAmmoList)
         {
-            if (plant.ammoStats == item.ammoStats && item.count == item.ammoStats.maxCount) return true;
+            if (plant.cropStats == item.cropStats && item.count == item.cropStats.maxCount) return true;
         }
 
         return false;

@@ -5,10 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class ItemStorageData
 {
-    public ItemStorageData(string itemID, AmmoStats ammoStats, StorageLocation storageLocation, Suckable suckable, int quantity)
+    public ItemStorageData(string itemID, CropStats cropStats, StorageLocation storageLocation, Suckable suckable, int quantity)
     {
         this.itemID = itemID;  
-        this.ammoStats = ammoStats;
+        this.cropStats = cropStats;
         this.storageLocation = storageLocation;
         this.quantity = quantity;
         this.suckableItem = suckable;
@@ -20,7 +20,7 @@ public class ItemStorageData
         CraftMachine = 1
     }
     public string itemID;
-    public AmmoStats ammoStats;
+    public CropStats cropStats;
     public StorageLocation storageLocation;
     public Suckable suckableItem;
     public int quantity;

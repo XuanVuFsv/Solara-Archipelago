@@ -5,7 +5,7 @@ using UnityEngine;
 public class GardenSlotProperties : MonoBehaviour
 {
     public int index;
-    public AmmoStats nullAmmo;
+    public CropStats nullAmmo;
 
     [Header("Slot properties")]
     public bool isUnLock;
@@ -39,7 +39,7 @@ public class GardenSlotProperties : MonoBehaviour
         isUnLock = _isUnlock;
         crop = _crop;
         totalGrowingProduct = _crop.wholePlantPoss.Count;
-        totalGrowingTime = _crop.ammoStats.totalGrowingTime;
+        totalGrowingTime = _crop.cropStats.totalGrowingTime;
 
         upgradingLevel = _upgradingLevel;
         hasWatering = _hasWatering;
@@ -77,10 +77,10 @@ public class GardenSlotProperties : MonoBehaviour
         return true;
     }
 
-    public AmmoStats GetCurrentAmmoStats()
+    public CropStats GetCurrentCropStats()
     {
         if (crop == null) return nullAmmo;
-        return crop.ammoStats;
+        return crop.cropStats;
     }
 
     public bool IsLockedSot()

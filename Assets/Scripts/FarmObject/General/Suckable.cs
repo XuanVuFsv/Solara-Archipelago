@@ -13,8 +13,8 @@ public abstract class Suckable : StateMachine, ISuckable
 
     //protected SuckableObjectType type;
 
-    public AmmoStats ammoStats;
-    public int ammoContain;
+    public CropStats cropStats;
+    public int cropContain;
 
     public Rigidbody rigid;
     public Collider suckableCollider;
@@ -24,7 +24,7 @@ public abstract class Suckable : StateMachine, ISuckable
     [SerializeField]
     protected float varSpeed;
 
-    public virtual void GoToAxieCollector()
+    public virtual void GoToCollector()
     {
         s += Time.deltaTime * CollectHandler.Instance.acceleratonSuckUpSpeed;
         varSpeed = Mathf.Lerp(CollectHandler.Instance.minSuckUpSpeed, CollectHandler.Instance.maxSuckUpSpeed, CollectHandler.Instance.velocityCurve.Evaluate(s / 1f));
@@ -42,19 +42,19 @@ public abstract class Suckable : StateMachine, ISuckable
         rigid.velocity = Vector3.zero;
     }
   
-    public AmmoStats GetAmmoStats()
+    public CropStats GetCropStats()
     {
-        return ammoStats;
+        return cropStats;
     }
     
-    public int GetAmmoContain()
+    public int GetCropContain()
     {
-        return ammoContain;
+        return cropContain;
     }
 
-    public void SetAmmoContain(int count)
+    public void SetCropContain(int count)
     {
-        ammoContain = count;
+        cropContain = count;
     }
 
     public virtual void ChangeToStored()
@@ -69,15 +69,15 @@ public abstract class Suckable : StateMachine, ISuckable
 
     public virtual void AddUsedGameEvent()
     {
-        Debug.Log("Pool" + ammoStats.name + "Setup");
-        Debug.Log("Add Game Event Pool" + ammoStats.name + "Setup");
+        Debug.Log("Pool" + cropStats.name + "Setup");
+        Debug.Log("Add Game Event Pool" + cropStats.name + "Setup");
 
-        PoolingManager.Instance.AddGameEvent("Pool" + ammoStats.name + "Setup");
+        PoolingManager.Instance.AddGameEvent("Pool" + cropStats.name + "Setup");
     }
 
     public virtual void RemoveUseGameEvent()
     {
-        PoolingManager.Instance.RemoveGameEvent("Pool" + ammoStats.name + "Setup");
-        Debug.Log("Remove Game Event Pool" + ammoStats.name + "Setup");
+        PoolingManager.Instance.RemoveGameEvent("Pool" + cropStats.name + "Setup");
+        Debug.Log("Remove Game Event Pool" + cropStats.name + "Setup");
     }
 }

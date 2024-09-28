@@ -116,9 +116,9 @@ MonoBehaviour:
   fx: {fileID: 2840818142290881024}
   animator: {fileID: 0}
   resources: []
-  maxResourceContain: 3
+  maxResourceContain: 5
   resourceContain: 0
-  collectTime: 0
+  collectTime: 4
   recoverTime: 3
   inCollecting: 0
   health: 100

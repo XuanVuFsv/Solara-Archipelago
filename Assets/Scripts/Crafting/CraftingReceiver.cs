@@ -11,7 +11,7 @@ public class CraftingReceiver : MonoBehaviour
         Suckable suckable = other.GetComponent<Suckable>();
         if (other && (suckable is PowerContainer || suckable is NaturalResource))
         {
-            bool addSuccess = craftingManager.AddItemStorage(suckable.ammoStats, suckable.ammoContain);
+            bool addSuccess = craftingManager.AddItemStorage(suckable.cropStats, suckable.cropContain);
             if (addSuccess)
             {
                 suckable.gameObject.SetActive(false);

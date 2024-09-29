@@ -1,40 +1,43 @@
-
 using UnityEngine;
 
-/// <summary>
-/// A generic class that implements the singleton pattern in Unity
-/// </summary>
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+namespace VitsehLand.Scripts.Pattern.Singleton
 {
-    private static T _reference;
-    public static T Instance
+
+    /// <summary>
+    /// A generic class that implements the singleton pattern in Unity
+    /// </summary>
+    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        get
+        private static T _reference;
+        public static T Instance
         {
-            if (!IsValidInstance())
+            get
             {
-                _reference = FindAnyObjectByType<T>();
+                if (!IsValidInstance())
+                {
+                    _reference = FindAnyObjectByType<T>();
+                }
+                return _reference;
             }
-            return _reference;
         }
-    }
 
-    public static bool IsValidInstance()
-    {
-        return _reference != null;
-    }
-
-    public virtual void Awake()
-    {
-        if (IsValidInstance() && !ReferenceEquals(_reference, this))
+        public static bool IsValidInstance()
         {
-            Destroy(gameObject);
+            return _reference != null;
         }
-        else
+
+        public virtual void Awake()
         {
-            if (typeof(T) == typeof(Singleton<T>))
+            if (IsValidInstance() && !ReferenceEquals(_reference, this))
             {
-                _reference = (T)(MonoBehaviour)this;
+                Destroy(gameObject);
+            }
+            else
+            {
+                if (typeof(T) == typeof(Singleton<T>))
+                {
+                    _reference = (T)(MonoBehaviour)this;
+                }
             }
         }
     }

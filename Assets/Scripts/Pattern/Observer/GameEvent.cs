@@ -1,87 +1,88 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-[CreateAssetMenu(menuName = "GameEvent", fileName = "New Game Event")]
-public class GameEvent : ScriptableObject, IGameEvent
+namespace VitsehLand.Scripts.Pattern.Observer
 {
-    [SerializeField]
-    private string _gameEventName;
-    public string GameEventName
+    [CreateAssetMenu(menuName = "GameEvent", fileName = "New Game Event")]
+    public class GameEvent : ScriptableObject, IGameEvent
     {
-        get => _gameEventName;
-        set => _gameEventName = value;
-    }
-
-    // List of subscribers. In real life, the list of subscribers can be
-    // stored more comprehensively (categorized by event type, etc.).
-    private HashSet<IGameObserver> gameObservers = new HashSet<IGameObserver>();
-    // The subscription management methods.
-    public void Subscribe(IGameObserver observer)
-    {
-        this.gameObservers.Add(observer);
-        //Debug.Log($"Add {observer}");
-    }
-
-    public void UnSubscribe(IGameObserver observer)
-    {
-        this.gameObservers.Remove(observer);
-        //Debug.Log($"Remove {observer}");
-    }
-
-    // Trigger an update in each subscriber.
-    public void Notify()
-    {
-        foreach (var observer in gameObservers)
+        [SerializeField]
+        private string _gameEventName;
+        public string GameEventName
         {
-            //Debug.Log($"Execute {this}");
-            observer.Execute(this);
+            get => _gameEventName;
+            set => _gameEventName = value;
         }
-    }
 
-    public void Notify(int val)
-    {
-        foreach (var observer in gameObservers)
+        // List of subscribers. In real life, the list of subscribers can be
+        // stored more comprehensively (categorized by event type, etc.).
+        private HashSet<IGameObserver> gameObservers = new HashSet<IGameObserver>();
+        // The subscription management methods.
+        public void Subscribe(IGameObserver observer)
         {
-            //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
-            observer.Execute(this, val);
+            gameObservers.Add(observer);
+            //Debug.Log($"Add {observer}");
         }
-    }
 
-    public void Notify(float val)
-    {
-        foreach (var observer in gameObservers)
+        public void UnSubscribe(IGameObserver observer)
         {
-            //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
-            observer.Execute(this, val);
+            gameObservers.Remove(observer);
+            //Debug.Log($"Remove {observer}");
         }
-    }
 
-    public void Notify(bool val)
-    {
-        foreach (var observer in gameObservers)
+        // Trigger an update in each subscriber.
+        public void Notify()
         {
-            //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
-            observer.Execute(this, val);
+            foreach (var observer in gameObservers)
+            {
+                //Debug.Log($"Execute {this}");
+                observer.Execute(this);
+            }
         }
-    }
 
-    public void Notify(RaycastHit hit)
-    {
-        foreach (var observer in gameObservers)
+        public void Notify(int val)
         {
-            //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
-            observer.Execute(this, hit);
+            foreach (var observer in gameObservers)
+            {
+                //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
+                observer.Execute(this, val);
+            }
         }
-    }
 
-    public void Notify(Vector3 point, Vector3 normal)
-    {
-        foreach (var observer in gameObservers)
+        public void Notify(float val)
         {
-            //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
-            observer.Execute(this, point, normal);
+            foreach (var observer in gameObservers)
+            {
+                //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
+                observer.Execute(this, val);
+            }
+        }
+
+        public void Notify(bool val)
+        {
+            foreach (var observer in gameObservers)
+            {
+                //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
+                observer.Execute(this, val);
+            }
+        }
+
+        public void Notify(RaycastHit hit)
+        {
+            foreach (var observer in gameObservers)
+            {
+                //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
+                observer.Execute(this, hit);
+            }
+        }
+
+        public void Notify(Vector3 point, Vector3 normal)
+        {
+            foreach (var observer in gameObservers)
+            {
+                //Debug.Log($"Execute {this} {observer} in {gameObservers.Count}");
+                observer.Execute(this, point, normal);
+            }
         }
     }
 }

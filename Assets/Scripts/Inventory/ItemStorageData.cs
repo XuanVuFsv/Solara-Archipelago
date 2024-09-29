@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using VitsehLand.Scripts.Farming.General;
+using VitsehLand.Scripts.Stats;
 
-[System.Serializable]
-public class ItemStorageData
+namespace VitsehLand.Scripts.Inventory
 {
-    public ItemStorageData(string itemID, CropStats cropStats, StorageLocation storageLocation, Suckable suckable, int quantity)
+    [System.Serializable]
+    public class ItemStorageData
     {
-        this.itemID = itemID;  
-        this.cropStats = cropStats;
-        this.storageLocation = storageLocation;
-        this.quantity = quantity;
-        this.suckableItem = suckable;
-    }
+        public ItemStorageData(string itemID, CropStats cropStats, StorageLocation storageLocation, Suckable suckable, int quantity)
+        {
+            this.itemID = itemID;
+            this.cropStats = cropStats;
+            this.storageLocation = storageLocation;
+            this.quantity = quantity;
+            suckableItem = suckable;
+        }
 
-    public enum StorageLocation
-    {
-        Silo = 0,
-        CraftMachine = 1
+        public enum StorageLocation
+        {
+            Silo = 0,
+            CraftMachine = 1
+        }
+        public string itemID;
+        public CropStats cropStats;
+        public StorageLocation storageLocation;
+        public Suckable suckableItem;
+        public int quantity;
     }
-    public string itemID;
-    public CropStats cropStats;
-    public StorageLocation storageLocation;
-    public Suckable suckableItem;
-    public int quantity;
 }

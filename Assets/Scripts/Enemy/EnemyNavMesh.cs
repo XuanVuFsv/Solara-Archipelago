@@ -1,53 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using VitsehLand.Scripts.Stats;
 
-public class EnemyNavMesh : MonoBehaviour
+namespace VitsehLand.Scripts.Enemy
 {
-    public Transform movePosTransform;
-
-    private NavMeshAgent navMeshAgent;
-    public EnemyStats stats;
-
-    private void Awake()
+    public class EnemyNavMesh : MonoBehaviour
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-    }
+        public Transform movePosTransform;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+        private NavMeshAgent navMeshAgent;
+        public EnemyStats stats;
 
-    // Update is called once per frame
-    void Update()
-    {
-        navMeshAgent.destination = movePosTransform.position;
-    }
+        private void Awake()
+        {
+            navMeshAgent = GetComponent<NavMeshAgent>();
+        }
 
-    public virtual void SetupAgentFromConfiguration()
-    {
-        navMeshAgent.acceleration = stats.acceleration;
-        navMeshAgent.angularSpeed = stats.angularSpeed;
-        navMeshAgent.areaMask = stats.areaMask;
-        navMeshAgent.avoidancePriority = stats.avoidancePriority;
-        navMeshAgent.baseOffset = stats.baseOffset;
-        navMeshAgent.height = stats.height;
-        navMeshAgent.obstacleAvoidanceType = stats.obstacleAvoidanceType;
-        navMeshAgent.radius = stats.radius;
-        navMeshAgent.speed = stats.speed;
-        navMeshAgent.stoppingDistance = stats.stoppingDistance;
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
 
-    public virtual void OnEnable()
-    {
-        SetupAgentFromConfiguration();
-    }
+        }
 
-    private void OnDisable()
-    {
-        navMeshAgent.enabled = false;
+        // Update is called once per frame
+        void Update()
+        {
+            navMeshAgent.destination = movePosTransform.position;
+        }
+
+        public virtual void SetupAgentFromConfiguration()
+        {
+            navMeshAgent.acceleration = stats.acceleration;
+            navMeshAgent.angularSpeed = stats.angularSpeed;
+            navMeshAgent.areaMask = stats.areaMask;
+            navMeshAgent.avoidancePriority = stats.avoidancePriority;
+            navMeshAgent.baseOffset = stats.baseOffset;
+            navMeshAgent.height = stats.height;
+            navMeshAgent.obstacleAvoidanceType = stats.obstacleAvoidanceType;
+            navMeshAgent.radius = stats.radius;
+            navMeshAgent.speed = stats.speed;
+            navMeshAgent.stoppingDistance = stats.stoppingDistance;
+        }
+
+        public virtual void OnEnable()
+        {
+            SetupAgentFromConfiguration();
+        }
+
+        private void OnDisable()
+        {
+            navMeshAgent.enabled = false;
+        }
     }
 }

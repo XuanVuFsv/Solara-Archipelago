@@ -1,114 +1,119 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using VitsehLand.Scripts.Pattern.Observer;
+using VitsehLand.Scripts.Ultility;
 
-public class PoolingManager : MonoBehaviour
+namespace VitsehLand.Scripts.Pattern.Pooling
 {
-    private static PoolingManager instance;
-
-    public Dictionary<string, IPoolSetup> pooledList = new Dictionary<string, IPoolSetup>();
-
-    [SerializeField]
-    private string currentPool;
-
-    void MakeInstance()
+    public class PoolingManager : MonoBehaviour
     {
-        if (instance != null && instance != this)
+        private static PoolingManager instance;
+
+        public Dictionary<string, IPoolSetup> pooledList = new Dictionary<string, IPoolSetup>();
+
+        [SerializeField]
+        private string currentPool;
+
+        void MakeInstance()
         {
-            Destroy(this.gameObject);
-        }
-        else instance = this;
-    }
-
-    public static PoolingManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
-    private void Awake()
-    {
-        MakeInstance();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        foreach (Transform manager in transform)
-        {
-            IPoolSetup _manager = manager.GetComponent(typeof(IPoolSetup)) as IPoolSetup;
-            try
+            if (instance != null && instance != this)
             {
-                _manager.InitPool();
-                pooledList.Add(_manager.GetName(), _manager);
+                Destroy(gameObject);
             }
-            catch (Exception ex)
+            else instance = this;
+        }
+
+        public static PoolingManager Instance
+        {
+            get
             {
-                Debug.LogError(ex.Message);
+                return instance;
             }
         }
-    }
 
-    public void Get(string objectPooledManagerName)
-    {
-        //Debug.Log("Access " + objectPooledManagerName);
-        pooledList[objectPooledManagerName].Get();;
-    }
-
-    public void Release(string objectPooledManagerName)
-    {
-        pooledList[objectPooledManagerName].Release();
-    }
-
-    public void AddPoolManager(string poolManagerName, int initPoolSize, int maxPoolSize, GameObject prefab, GameEvent gameEvent)
-    {
-        GameObject newPoolManager = new GameObject(poolManagerName);
-        newPoolManager.transform.parent = transform;
-        newPoolManager.AddComponent<PoolSetup>();
-        
-        pooledList.Add(poolManagerName, newPoolManager.GetComponent<PoolSetup>().InitPool(poolManagerName, initPoolSize, maxPoolSize, prefab, gameEvent) as IPoolSetup);
-    }
-
-    public void RemovePoolManagerByName(string poolManagerName)
-    {
-        pooledList[poolManagerName].Dispose();
-        pooledList.Remove(poolManagerName);
-    }
-
-    public void ResetPoolingManager()
-    {
-
-    }
-
-    public void AddGameEvent(string poolName)
-    {
-        if (!IsContainsPool(poolName))
+        private void Awake()
         {
-            MyDebug.Log("Pool not exist");
-            //currentPool = "";
-            return;
+            MakeInstance();
         }
 
-        pooledList[poolName].AddGameEvent();
-        //currentPool = poolName;
-    }
-
-    public void RemoveGameEvent(string poolName)
-    {
-        if (!IsContainsPool(poolName))
+        // Start is called before the first frame update
+        void Start()
         {
-            MyDebug.Log("Pool not exist");
-            //currentPool = "";
-            return;
+            foreach (Transform manager in transform)
+            {
+                IPoolSetup _manager = manager.GetComponent(typeof(IPoolSetup)) as IPoolSetup;
+                try
+                {
+                    _manager.InitPool();
+                    pooledList.Add(_manager.GetName(), _manager);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError(ex.Message);
+                }
+            }
         }
-        pooledList[poolName].RemoveGameEvent();
-        //currentPool = "";
-    }
 
-    public bool IsContainsPool(string poolName)
-    {
-        return pooledList.ContainsKey(poolName);
+        public void Get(string objectPooledManagerName)
+        {
+            //Debug.Log("Access " + objectPooledManagerName);
+            pooledList[objectPooledManagerName].Get(); ;
+        }
+
+        public void Release(string objectPooledManagerName)
+        {
+            pooledList[objectPooledManagerName].Release();
+        }
+
+        public void AddPoolManager(string poolManagerName, int initPoolSize, int maxPoolSize, GameObject prefab, GameEvent gameEvent)
+        {
+            GameObject newPoolManager = new GameObject(poolManagerName);
+            newPoolManager.transform.parent = transform;
+            newPoolManager.AddComponent<PoolSetup>();
+
+            pooledList.Add(poolManagerName, newPoolManager.GetComponent<PoolSetup>().InitPool(poolManagerName, initPoolSize, maxPoolSize, prefab, gameEvent) as IPoolSetup);
+        }
+
+        public void RemovePoolManagerByName(string poolManagerName)
+        {
+            pooledList[poolManagerName].Dispose();
+            pooledList.Remove(poolManagerName);
+        }
+
+        public void ResetPoolingManager()
+        {
+
+        }
+
+        public void AddGameEvent(string poolName)
+        {
+            if (!IsContainsPool(poolName))
+            {
+                MyDebug.Log("Pool not exist");
+                //currentPool = "";
+                return;
+            }
+
+            pooledList[poolName].AddGameEvent();
+            //currentPool = poolName;
+        }
+
+        public void RemoveGameEvent(string poolName)
+        {
+            if (!IsContainsPool(poolName))
+            {
+                MyDebug.Log("Pool not exist");
+                //currentPool = "";
+                return;
+            }
+            pooledList[poolName].RemoveGameEvent();
+            //currentPool = "";
+        }
+
+        public bool IsContainsPool(string poolName)
+        {
+            return pooledList.ContainsKey(poolName);
+        }
     }
 }

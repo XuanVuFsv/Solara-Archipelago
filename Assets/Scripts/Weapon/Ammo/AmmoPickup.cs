@@ -1,15 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using VitsehLand.Scripts.Farming.General;
 
-public class AmmoPickup : Suckable
+namespace VitsehLand.Scripts.Weapon.Ammo
 {
-    public Plant.PlantState plantState;
-    public Suckable suckableSample;
-    // Start is called before the first frame update
-    void Start()
+    public class AmmoPickup : Suckable
     {
-        rigid = GetComponent<Rigidbody>();
-        suckableCollider = GetComponent<Collider>();
+        public Crop.PlantState plantState;
+        public Suckable suckableSample;
+        // Start is called before the first frame update
+        void Start()
+        {
+            rigid = GetComponent<Rigidbody>();
+            suckableCollider = GetComponent<Collider>();
+        }
     }
 }

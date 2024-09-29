@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using VitsehLand.Scripts.Pattern.Observer;
+using VitsehLand.Scripts.Pattern.Pooling;
 
 public class BulletBehaviour : MonoBehaviour
 {

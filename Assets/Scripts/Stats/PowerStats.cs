@@ -1,10 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using VitsehLand.Assets.Scripts.Farming.General;
+using VitsehLand.Scripts.Crafting;
 
-[CreateAssetMenu(fileName = "New PowerCotainer", menuName = "PowerContainer")]
-public class PowerStats : ScriptableObject
+namespace VitsehLand.Scripts.Stats
 {
-    public GameObjectType.FilteredType filteredType;
-    public RecipeData recipe;
+    [CreateAssetMenu(fileName = "New PowerCotainer", menuName = "PowerContainer")]
+    public class PowerStats : ScriptableObject
+    {
+        public GameObjectType.FilteredType filteredType;
+        public RecipeData recipe;
+    }
 }

@@ -1,390 +1,401 @@
 using System.Collections;
 using UnityEngine;
-//using Cysharp.Threading.Tasks;
-//using System;
+using VitsehLand.Scripts.Pattern.Observer;
+using VitsehLand.Scripts.Stats;
+using VitsehLand.Scripts.Audio;
+using VitsehLand.Scripts.Pattern.Strategy;
+using VitsehLand.Scripts.Ultility;
+using VitsehLand.Scripts.Weapon.General;
+using VitsehLand.Assets.Scripts.Weapon.General;
+using VitsehLand.Scripts.Weapon.HandGun;
+using VitsehLand.Assets.Scripts.Weapon.Collector;
+using VitsehLand.Assets.Scripts.Ultility;
 
-public class ShootController : MonoBehaviour
+namespace VitsehLand.Scripts.Player
 {
-    public static class ShootingState
+    public class ShootController : MonoBehaviour
     {
-        public static string None = "";
-        public static string Aim = "Aim ";
-    }
-
-    [Header("Shooting")]
-    public ActiveWeapon activeWeapon;
-    public WeaponStatsController currentWeaponStatsController;
-    public bool isFire;
-    public RaycastWeapon raycastWeapon;
-
-    [Header("Aiming")]
-    [SerializeField]
-    private PlayerAim playerAim;
-
-    public InputController inputController;
-
-    [Header("Reload")]
-    public Animator rigController;
-    public WeaponAnimationEvents animationEvents;
-    public GameObject leftHand, magazineObject, magazineHand;
-    private Vector3 newMagazineLocalPosition;
-    private Vector3 newMagazineLocalEulerAngles;
-
-    [Header("Events")]
-    public GameEvent aimEvent;
-    [SerializeField]
-    GameEvent fireEvent;
-    [SerializeField]
-    GameEvent reloadEvent;
-
-    [Header("Shooting Information")]
-    private float lastFired;
-    public bool isReloading = false;
-    public bool inAim = false;
-    public bool readyToFire = true;
-    public bool canPunch = true;
-    public int shootingTime = 0;
-
-    public Collider punchCollider;
-
-    int frame = 0;
-
-    public AudioSource source;
-
-    #region Advance Settings for muzzle and flash effect
-    //[Header("Muzzleflash Settings")]
-    //public ParticleSystem sparkParticles;
-    //public ParticleSystem muzzleParticles;
-    //public int maxRandomValue = 5;
-    //public int minSparkEmission = 1;
-    //public int maxSparkEmission = 7;
-    //public bool randomMuzzleflash = false;
-    //[Range(2, 25)]
-    //public bool enableMuzzleflash = true;
-    //public bool enableSparks = true;
-
-    //private int minRandomValue = 1;
-    //private int randomMuzzleflashValue;
-
-    //[Header("Muzzleflash Light Settings")]
-    //public Light muzzleflashLight;
-    //public float lightDuration = 0.02f;
-    #endregion
-
-    #region Testing
-    //float time = 0;
-    #endregion
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //MyDebug.Log("Created");
-
-        animationEvents.weaponAnimationEvent.AddListener(OnAnimationEvent);
-        inputController = GetComponent<InputController>();
-        playerAim = GetComponent<PlayerAim>();
-        activeWeapon = GetComponent<ActiveWeapon>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        frame++;
-
-        //Out of ammo check
-        CheckOuOfAmmo();
-
-        RightMouseBehaviourHandle();
-
-        LeftMouseBehaviourHandle();
-
-        //Reload handling
-        ReloadHandle();
-
-        Punch();
-    }
-
-    void CheckOuOfAmmo()
-    {
-        if (currentWeaponStatsController.IsOutOfAmmo())
+        public static class ShootingState
         {
-            //Toggle bool
-            isFire = false;
+            public static string None = "";
+            public static string Aim = "Aim ";
         }
-    }
 
-    void Punch()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && canPunch && currentWeaponStatsController.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun)
+        [Header("Shooting")]
+        public ActiveWeapon activeWeapon;
+        public WeaponStatsController currentWeaponStatsController;
+        public bool isFire;
+        public RaycastWeapon raycastWeapon;
+
+        [Header("Aiming")]
+        [SerializeField]
+        private PlayerAim playerAim;
+
+        public InputController inputController;
+
+        [Header("Reload")]
+        public Animator rigController;
+        public WeaponAnimationEvents animationEvents;
+        public GameObject leftHand, magazineObject, magazineHand;
+        private Vector3 newMagazineLocalPosition;
+        private Vector3 newMagazineLocalEulerAngles;
+
+        [Header("Events")]
+        public GameEvent aimEvent;
+        [SerializeField]
+        GameEvent fireEvent;
+        [SerializeField]
+        GameEvent reloadEvent;
+
+        [Header("Shooting Information")]
+        private float lastFired;
+        public bool isReloading = false;
+        public bool inAim = false;
+        public bool readyToFire = true;
+        public bool canPunch = true;
+        public int shootingTime = 0;
+
+        public Collider punchCollider;
+
+        int frame = 0;
+
+        public AudioSource source;
+
+        #region Advance Settings for muzzle and flash effect
+        //[Header("Muzzleflash Settings")]
+        //public ParticleSystem sparkParticles;
+        //public ParticleSystem muzzleParticles;
+        //public int maxRandomValue = 5;
+        //public int minSparkEmission = 1;
+        //public int maxSparkEmission = 7;
+        //public bool randomMuzzleflash = false;
+        //[Range(2, 25)]
+        //public bool enableMuzzleflash = true;
+        //public bool enableSparks = true;
+
+        //private int minRandomValue = 1;
+        //private int randomMuzzleflashValue;
+
+        //[Header("Muzzleflash Light Settings")]
+        //public Light muzzleflashLight;
+        //public float lightDuration = 0.02f;
+        #endregion
+
+        #region Testing
+        //float time = 0;
+        #endregion
+
+        // Start is called before the first frame update
+        void Start()
         {
-            AudioBuildingManager.Instance.audioSource.volume = 1;
-            AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.punch);
-            StartCoroutine(PunchCountDown());
+            //MyDebug.Log("Created");
+
+            animationEvents.weaponAnimationEvent.AddListener(OnAnimationEvent);
+            inputController = GetComponent<InputController>();
+            playerAim = GetComponent<PlayerAim>();
+            activeWeapon = GetComponent<ActiveWeapon>();
         }
-    }
 
-    IEnumerator PunchCountDown()
-    {
-        canPunch = false;
-        rigController.Play("Punch");
-        punchCollider.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.25f);
-        punchCollider.gameObject.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
-        canPunch = true;
-    }
-
-    void RightMouseBehaviourHandle()
-    {
-        if (inputController.isAim)
+        // Update is called once per frame
+        void Update()
         {
-            if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety && !isReloading)
+            frame++;
+
+            //Out of ammo check
+            CheckOuOfAmmo();
+
+            RightMouseBehaviourHandle();
+
+            LeftMouseBehaviourHandle();
+
+            //Reload handling
+            ReloadHandle();
+
+            Punch();
+        }
+
+        void CheckOuOfAmmo()
+        {
+            if (currentWeaponStatsController.IsOutOfAmmo())
             {
-                //MyDebug.Log(frame);
-                raycastWeapon.HandleRightMouseClick();
+                //Toggle bool
+                isFire = false;
             }
-            else
+        }
+
+        void Punch()
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl) && canPunch && currentWeaponStatsController.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun)
+            {
+                AudioBuildingManager.Instance.audioSource.volume = 1;
+                AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.punch);
+                StartCoroutine(PunchCountDown());
+            }
+        }
+
+        IEnumerator PunchCountDown()
+        {
+            canPunch = false;
+            rigController.Play("Punch");
+            punchCollider.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.25f);
+            punchCollider.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            canPunch = true;
+        }
+
+        void RightMouseBehaviourHandle()
+        {
+            if (inputController.isAim)
+            {
+                if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety && !isReloading)
+                {
+                    //MyDebug.Log(frame);
+                    raycastWeapon.HandleRightMouseClick();
+                }
+                else
+                {
+                    if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
+                    {
+                        if (Time.time - lastFired > 1 / 5f)
+                        {
+                            lastFired = Time.time;
+                            raycastWeapon.HandleRightMouseClick();
+                        }
+                    }
+                    else
+                    {
+                        raycastWeapon.HandleRightMouseClick();
+                    }
+                }
+            }
+
+            if (inputController.isHoldAim)
             {
                 if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
                 {
-                    if (Time.time - lastFired > 1 / 5f)
+                    if ((raycastWeapon.weaponHandler as CollectHandler).waterMode != CollectHandler.WaterMode.Off)
                     {
-                        lastFired = Time.time;
                         raycastWeapon.HandleRightMouseClick();
                     }
-                }
-                else
-                {
-                    raycastWeapon.HandleRightMouseClick();
-                }
-            }
-        }
-
-        if (inputController.isHoldAim)
-        {
-            if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
-            {
-                if ((raycastWeapon.weaponHandler as CollectHandler).waterMode != CollectHandler.WaterMode.Off)
-                {
-                    raycastWeapon.HandleRightMouseClick();
-                }
-            }
-        }
-
-        if (inputController.isStopFire)
-        {
-            //AudioBuildingManager.Instance.suckUpSound.Stop();
-            AudioBuildingManager.Instance.suckUpSound.mute = true;
-        }
-    }
-
-    void LeftMouseBehaviourHandle()
-    {
-        #region Logic for PrimaryWeapon
-        if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety)
-        {
-            if (((inputController.isFire && activeWeapon.activeWeaponIndex == 0)
-            || (inputController.isSingleFire && activeWeapon.activeWeaponIndex != 0))
-            && !currentWeaponStatsController.IsOutOfAmmo() && !isReloading)
-            {
-                Debug.Log("Shoot");
-                //Shoot automatic
-                if (Time.time - lastFired > 1 / currentWeaponStatsController.currentCropStatsController.fireRate)
-                {
-                    readyToFire = true;
-   
-                    //Debug.Log("Shoot");
-                    lastFired = Time.time;
-
-                    //Remove 1 bullet from ammo
-                    //currentWeaponStatsController.UseAmmo(currentWeaponStatsController.currentCropStatsController.bulletCount);
-                    raycastWeapon.HandleLeftMouseClick();
-                    shootingTime++;
-                    //currentWeaponStatsController.UpdateAmmoUI();
-
-                    isFire = true;
-
-                    if (currentWeaponStatsController.currentCropStatsController.cropStats.zoomType == CropStats.ZoomType.HasScope && inAim)
-                    {
-                        //MyDebug.Log("Handle Right Click");
-                        //MyDebug.Log(frame);
-                        raycastWeapon.HandleRightMouseClick();
-                    }
-                }
-                else
-                {
-                    DeactivateShooting();
                 }
             }
 
             if (inputController.isStopFire)
             {
-                isFire = false;
-                raycastWeapon.StopFiring();
-                DeactivateShooting();
+                //AudioBuildingManager.Instance.suckUpSound.Stop();
+                AudioBuildingManager.Instance.suckUpSound.mute = true;
             }
         }
-        else if (raycastWeapon.weaponHandler is IHandGunWeaponStragety)
+
+        void LeftMouseBehaviourHandle()
         {
-            if (inputController.isSingleFire && activeWeapon.activeWeaponIndex == 1 && !(raycastWeapon.weaponHandler as ActionHandler).inGrapple) raycastWeapon.HandleLeftMouseClick();
+            #region Logic for PrimaryWeapon
+            if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety)
+            {
+                if ((inputController.isFire && activeWeapon.activeWeaponIndex == 0
+                || inputController.isSingleFire && activeWeapon.activeWeaponIndex != 0)
+                && !currentWeaponStatsController.IsOutOfAmmo() && !isReloading)
+                {
+                    Debug.Log("Shoot");
+                    //Shoot automatic
+                    if (Time.time - lastFired > 1 / currentWeaponStatsController.currentCropStatsController.fireRate)
+                    {
+                        readyToFire = true;
+
+                        //Debug.Log("Shoot");
+                        lastFired = Time.time;
+
+                        //Remove 1 bullet from ammo
+                        //currentWeaponStatsController.UseAmmo(currentWeaponStatsController.currentCropStatsController.bulletCount);
+                        raycastWeapon.HandleLeftMouseClick();
+                        shootingTime++;
+                        //currentWeaponStatsController.UpdateAmmoUI();
+
+                        isFire = true;
+
+                        if (currentWeaponStatsController.currentCropStatsController.cropStats.zoomType == CropStats.ZoomType.HasScope && inAim)
+                        {
+                            //MyDebug.Log("Handle Right Click");
+                            //MyDebug.Log(frame);
+                            raycastWeapon.HandleRightMouseClick();
+                        }
+                    }
+                    else
+                    {
+                        DeactivateShooting();
+                    }
+                }
+
+                if (inputController.isStopFire)
+                {
+                    isFire = false;
+                    raycastWeapon.StopFiring();
+                    DeactivateShooting();
+                }
+            }
+            else if (raycastWeapon.weaponHandler is IHandGunWeaponStragety)
+            {
+                if (inputController.isSingleFire && activeWeapon.activeWeaponIndex == 1 && !(raycastWeapon.weaponHandler as ActionHandler).inGrapple) raycastWeapon.HandleLeftMouseClick();
+            }
+            else if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
+            {
+                if (inputController.isFire && activeWeapon.activeWeaponIndex == 2) raycastWeapon.HandleLeftMouseClick();
+            }
+            #endregion
         }
-        else if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
+
+        void DeactivateShooting()
         {
-            if (inputController.isFire && activeWeapon.activeWeaponIndex == 2) raycastWeapon.HandleLeftMouseClick();
+            readyToFire = false;
+            rigController.SetBool("inAttack", false);
         }
-        #endregion
-    }
 
-    void DeactivateShooting()
-    {
-        readyToFire = false;
-        rigController.SetBool("inAttack", false);
-    }
-
-    void ReloadHandle()
-    {
-        if (((inputController.isReload && !currentWeaponStatsController.IsFullMagazine())
-            || (currentWeaponStatsController.autoReload && currentWeaponStatsController.IsOutOfAmmo()))
-            && currentWeaponStatsController.weaponSlot != ActiveWeapon.WeaponSlot.AxieCollector
-            && !isReloading
-            && currentWeaponStatsController.IsContainAmmo())
+        void ReloadHandle()
         {
-            //MyDebug.Log("Reload " + inputController.isReload + currentWeaponStatsController.IsFullMagazine() + currentWeaponStatsController.IsOutOfAmmo() + isReloading + currentWeaponStatsController.IsContainAmmo());
-            StartCoroutine(Reload());
-        }
-    }
-
-    //Reload handling
-    IEnumerator Reload()
-    {
-        if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.AttackGun)
-        {
-            MyDebug.Log("Reload");
-
-            rigController.SetTrigger("ReloadAK");
-            rigController.SetBool("reloading", true);
-            rigController.SetBool("inAim", false);
+            if ((inputController.isReload && !currentWeaponStatsController.IsFullMagazine()
+                || currentWeaponStatsController.autoReload && currentWeaponStatsController.IsOutOfAmmo())
+                && currentWeaponStatsController.weaponSlot != ActiveWeapon.WeaponSlot.AxieCollector
+                && !isReloading
+                && currentWeaponStatsController.IsContainAmmo())
+            {
+                //MyDebug.Log("Reload " + inputController.isReload + currentWeaponStatsController.IsFullMagazine() + currentWeaponStatsController.IsOutOfAmmo() + isReloading + currentWeaponStatsController.IsContainAmmo());
+                StartCoroutine(Reload());
+            }
         }
 
-        isReloading = true;
-        MyDebug.Log(isReloading);
-        if (inAim)
-        {
-            inAim = false; 
-            aimEvent.Notify(inAim);
-        }
-
-        yield return currentWeaponStatsController.currentCropStatsController.reloadTimer;
-
-        //Restore ammo when reloading
-        UpdateEndedReloadStats(true);
-    }
-
-    public void UpdateEndedReloadStats(bool ended)
-    {
-        if (ended)
+        //Reload handling
+        IEnumerator Reload()
         {
             if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.AttackGun)
             {
                 MyDebug.Log("Reload");
+
                 rigController.SetTrigger("ReloadAK");
+                rigController.SetBool("reloading", true);
+                rigController.SetBool("inAim", false);
+            }
+
+            isReloading = true;
+            MyDebug.Log(isReloading);
+            if (inAim)
+            {
+                inAim = false;
+                aimEvent.Notify(inAim);
+            }
+
+            yield return currentWeaponStatsController.currentCropStatsController.reloadTimer;
+
+            //Restore ammo when reloading
+            UpdateEndedReloadStats(true);
+        }
+
+        public void UpdateEndedReloadStats(bool ended)
+        {
+            if (ended)
+            {
+                if (activeWeapon.activeWeaponIndex == (int)ActiveWeapon.WeaponSlot.AttackGun)
+                {
+                    MyDebug.Log("Reload");
+                    rigController.SetTrigger("ReloadAK");
+                }
+            }
+
+            //if (ActiveWeapon.equippedWeapon[activeWeapon.activeWeaponIndex])
+            rigController.SetBool("reloading", false);
+            RefillMagazine();
+        }
+
+        public void ApplyAttackAnimation()
+        {
+            //MyDebug.Log("Checking inAttack");
+            if (activeWeapon.GetActiveWeaponPickup().weaponSlot == ActiveWeapon.WeaponSlot.HandGun) rigController.SetBool("inAttack", inputController.isSingleFire);
+            else rigController.SetBool("inAttack", true);
+        }
+
+        public void ApplyAimingAttributes()
+        {
+
+        }
+
+        //Apply aim value to reference class. Affect to other attributes. Ex: recoild pattern, animation, player's movement speed
+        public void ApllyAimValue(float val)
+        {
+            //MyDebug.Log($"Apply this value: {val} when aim");
+        }
+
+        #region Animation Events Handling
+        void OnAnimationEvent(string eventName)
+        {
+            switch (eventName)
+            {
+                case "detach_magazine":
+                    DeTachMagazine();
+                    MyDebug.Log("Detach event");
+                    break;
+                case "drop_magazine":
+                    MyDebug.Log("Drop event");
+                    DropMagazine();
+                    break;
+                case "refill_magazine":
+                    MyDebug.Log("Refill event");
+                    //Avoid delay and unexpected behaviour. RefillMagazine will execute in UpdateEndedReloadStats()
+                    break;
+                case "attach_magazine":
+                    MyDebug.Log("Attach event");
+                    AttachMagazine();
+                    break;
+                case "take_new_magazine":
+                    MyDebug.Log("Take new event");
+                    TakeNewMagazine();
+                    break;
             }
         }
 
-        //if (ActiveWeapon.equippedWeapon[activeWeapon.activeWeaponIndex])
-        rigController.SetBool("reloading", false);
-        RefillMagazine();
-    }
-
-    public void ApplyAttackAnimation()
-    {
-        //MyDebug.Log("Checking inAttack");
-        if (activeWeapon.GetActiveWeaponPickup().weaponSlot == ActiveWeapon.WeaponSlot.HandGun) rigController.SetBool("inAttack", inputController.isSingleFire);
-        else rigController.SetBool("inAttack", true);
-    }
-
-    public void ApplyAimingAttributes()
-    {
-
-    }
-
-    //Apply aim value to reference class. Affect to other attributes. Ex: recoild pattern, animation, player's movement speed
-    public void ApllyAimValue(float val)
-    {
-        //MyDebug.Log($"Apply this value: {val} when aim");
-    }
-
-    #region Animation Events Handling
-    void OnAnimationEvent(string eventName)
-    {
-        switch (eventName)
+        void DeTachMagazine()
         {
-            case "detach_magazine":
-                DeTachMagazine();
-                MyDebug.Log("Detach event");
-                break;
-            case "drop_magazine":
-                MyDebug.Log("Drop event");
-                DropMagazine();
-                break;
-            case "refill_magazine":
-                MyDebug.Log("Refill event");
-                //Avoid delay and unexpected behaviour. RefillMagazine will execute in UpdateEndedReloadStats()
-                break;
-            case "attach_magazine":
-                MyDebug.Log("Attach event");
-                AttachMagazine();
-                break;
-            case "take_new_magazine":
-                MyDebug.Log("Take new event");
-                TakeNewMagazine();
-                break;
+            MyDebug.Log("Run Detach funtion");
+            if (!magazineHand) magazineHand = Instantiate(magazineObject, leftHand.transform, true);
+
+            newMagazineLocalPosition = magazineHand.transform.localPosition;
+            newMagazineLocalEulerAngles = magazineHand.transform.localEulerAngles;
+
+            magazineObject.SetActive(false);
         }
+
+        void DropMagazine()
+        {
+            MyDebug.Log("Run Drop funtion");
+            magazineHand.GetComponent<Rigidbody>().isKinematic = false;
+        }
+
+        void TakeNewMagazine()
+        {
+            MyDebug.Log("Run Take New funtion");
+            magazineHand.GetComponent<Rigidbody>().isKinematic = true;
+            magazineHand.transform.localPosition = newMagazineLocalPosition;
+            magazineHand.transform.localEulerAngles = newMagazineLocalEulerAngles;
+        }
+
+        void RefillMagazine()
+        {
+            MyDebug.Log("Run Refill function");
+            isReloading = false;
+            currentWeaponStatsController.UpdateAmmoAfterReload();
+        }
+
+        public void AttachMagazine()
+        {
+            MyDebug.Log("Run AttachMagazine function");
+            if (magazineObject != null) magazineObject.SetActive(true);
+            Destroy(magazineHand);
+        }
+
+        public void ResetMagazine()
+        {
+            MyDebug.Log("Run ResetMagazine funtion");
+            if (magazineHand) Destroy(magazineHand);
+        }
+        #endregion
     }
-
-    void DeTachMagazine()
-    {
-        MyDebug.Log("Run Detach funtion");
-        if(!magazineHand) magazineHand = Instantiate(magazineObject, leftHand.transform, true);
-
-        newMagazineLocalPosition = magazineHand.transform.localPosition;
-        newMagazineLocalEulerAngles = magazineHand.transform.localEulerAngles;
-
-        magazineObject.SetActive(false);
-    }
-
-    void DropMagazine()
-    {
-        MyDebug.Log("Run Drop funtion");
-        magazineHand.GetComponent<Rigidbody>().isKinematic = false;
-    }
-
-    void TakeNewMagazine()
-    {
-        MyDebug.Log("Run Take New funtion");
-        magazineHand.GetComponent<Rigidbody>().isKinematic = true;
-        magazineHand.transform.localPosition = newMagazineLocalPosition;
-        magazineHand.transform.localEulerAngles = newMagazineLocalEulerAngles;
-    }
-
-    void RefillMagazine()
-    {
-        MyDebug.Log("Run Refill function");
-        isReloading = false;
-        currentWeaponStatsController.UpdateAmmoAfterReload();
-    }
-
-    public void AttachMagazine()
-    {
-        MyDebug.Log("Run AttachMagazine function");
-        if (magazineObject != null) magazineObject.SetActive(true);
-        Destroy(magazineHand);
-    }
-
-    public void ResetMagazine()
-    {
-        MyDebug.Log("Run ResetMagazine funtion");
-        if (magazineHand) Destroy(magazineHand);
-    }
-    #endregion
 }

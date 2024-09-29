@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using VitsehLand.Scripts.Pattern.Singleton;
 
 public class AXSManager : Singleton<AXSManager>
 {

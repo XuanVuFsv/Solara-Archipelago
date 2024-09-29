@@ -1,20 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using VitsehLand.Scripts.Farming.ObjectState;
 
-public abstract class StateMachine : MonoBehaviour
+namespace VitsehLand.Scripts.Pattern.State
 {
-    public ObjectState state;
-
-    public void EndCurrentState()
+    public abstract class StateMachine : MonoBehaviour
     {
-        if (state == null) return;
-        state.End();
-    }
+        public ObjectState state;
 
-    public void SetState(ObjectState state)
-    {
-        this.state = state;
-        this.state.Start();
+        public void EndCurrentState()
+        {
+            if (state == null) return;
+            state.End();
+        }
+
+        public void SetState(ObjectState state)
+        {
+            this.state = state;
+            this.state.Start();
+        }
     }
 }

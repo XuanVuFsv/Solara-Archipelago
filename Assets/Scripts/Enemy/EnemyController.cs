@@ -1,120 +1,126 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+using VitsehLand.Scripts.Audio;
+using VitsehLand.Scripts.Manager;
+using VitsehLand.Scripts.Player;
+using VitsehLand.Scripts.Stats;
+using VitsehLand.Scripts.TimeManager;
 
-public class EnemyController : MonoBehaviour
+namespace VitsehLand.Scripts.Enemy
 {
-    public GameObject parent;
-    public GameObject shield;
-    public ParticleSystem breakShieldFX;
-    public Animator animator;
-    public EnemyStats enemyStats;
-    public HealthController healthController;
-
-    public EnemyBullet bullet;
-    public Transform spawnBulletTransform;
-
-    public bool canAttack = true;
-
-    public enum Defender
+    public class EnemyController : MonoBehaviour
     {
-        None = 1,
-        Shield = 2
-    }
-    public Defender defender;
+        public GameObject parent;
+        public GameObject shield;
+        public ParticleSystem breakShieldFX;
+        public Animator animator;
+        public EnemyStats enemyStats;
+        public HealthController healthController;
 
-    public enum Attacker
-    {
-        Normal = 0,
-        Bullet = 1
-    }    
-    public Attacker attacker;
+        public EnemyBullet bullet;
+        public Transform spawnBulletTransform;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        healthController.health = enemyStats.health;
-    }
+        public bool canAttack = true;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!TimeManager.Instance.isNight)
+        public enum Defender
         {
-            Destroy(parent, Random.Range(0, 100));
+            None = 1,
+            Shield = 2
         }
-    }
+        public Defender defender;
 
-    private void OnTriggerStay(Collider other)
-    {
-        //Debug.Log("Collide");
-        if (other.CompareTag("BreakShield"))
+        public enum Attacker
         {
-            //Debug.Log("BreakShieldStay");
+            Normal = 0,
+            Bullet = 1
+        }
+        public Attacker attacker;
+
+        // Start is called before the first frame update
+        void Awake()
+        {
+            healthController.health = enemyStats.health;
         }
 
-        if (other.CompareTag("Player") && canAttack)
+        // Update is called once per frame
+        void Update()
         {
-            StartCoroutine(Attack(other.gameObject));
+            if (!GameTimeManager.Instance.isNight)
+            {
+                Destroy(parent, Random.Range(0, 100));
+            }
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("BreakShield") && defender == Defender.Shield)
+        private void OnTriggerStay(Collider other)
         {
-            //Debug.Log("BreakShield");
-            breakShieldFX.Emit(1);
-            defender = Defender.None;
-            shield.SetActive(false);
-            AudioBuildingManager.Instance.audioSource.volume = 1;
-            AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.breakShield);
+            //Debug.Log("Collide");
+            if (other.CompareTag("BreakShield"))
+            {
+                //Debug.Log("BreakShieldStay");
+            }
+
+            if (other.CompareTag("Player") && canAttack)
+            {
+                StartCoroutine(Attack(other.gameObject));
+            }
         }
-    }
 
-    public void TakeDamage(int damage)
-    {
-        if (defender == Defender.None) healthController.TakeDamage(damage);
-        else healthController.TakeDamage(damage * enemyStats.shieldDecreaseDamage);
-
-        animator?.Play("TakeDamage");
-
-        if (healthController.health <= 0)
+        private void OnTriggerEnter(Collider other)
         {
-            healthController.health = 0;
-            GemManager.Instance.AddGem(enemyStats.gemRewardForPlayerWhenKilled);
-            StartCoroutine(Die());
+            if (other.CompareTag("BreakShield") && defender == Defender.Shield)
+            {
+                //Debug.Log("BreakShield");
+                breakShieldFX.Emit(1);
+                defender = Defender.None;
+                shield.SetActive(false);
+                AudioBuildingManager.Instance.audioSource.volume = 1;
+                AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.breakShield);
+            }
         }
-    }
 
-    private IEnumerator Attack(GameObject target)
-    {
-        canAttack = false;
-        animator?.Play("Attack");
-        if (attacker == Attacker.Normal) target.GetComponent<HealthController>().TakeDamage(enemyStats.damage);
-        else
+        public void TakeDamage(int damage)
         {
-            Vector3 direction = (target.transform.position - spawnBulletTransform.position).normalized;
+            if (defender == Defender.None) healthController.TakeDamage(damage);
+            else healthController.TakeDamage(damage * enemyStats.shieldDecreaseDamage);
 
-            EnemyBullet newBullet = Instantiate(bullet.gameObject, spawnBulletTransform.position, Quaternion.Euler(target.transform.position - spawnBulletTransform.position)).GetComponent<EnemyBullet>();
-            newBullet.gameObject.SetActive(true);
+            animator?.Play("TakeDamage");
 
-            newBullet.TriggerBullet(enemyStats.bulletForce, direction);
+            if (healthController.health <= 0)
+            {
+                healthController.health = 0;
+                GemManager.Instance.AddGem(enemyStats.gemRewardForPlayerWhenKilled);
+                StartCoroutine(Die());
+            }
         }
-        AudioBuildingManager.Instance.audioSource.volume = 0.25f;
-        AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.enemyAttack);
 
-        yield return new WaitForSeconds(1 / enemyStats.speedAttack);
-        canAttack = true;
-    }
+        private IEnumerator Attack(GameObject target)
+        {
+            canAttack = false;
+            animator?.Play("Attack");
+            if (attacker == Attacker.Normal) target.GetComponent<HealthController>().TakeDamage(enemyStats.damage);
+            else
+            {
+                Vector3 direction = (target.transform.position - spawnBulletTransform.position).normalized;
 
-    private IEnumerator Die()
-    {
-        animator?.Play("Die");
-        AudioBuildingManager.Instance.audioSource.volume = 0.5f;
-        AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.enemyDie);
-        yield return new WaitForSeconds(0.25f);
-        Destroy(parent);
+                EnemyBullet newBullet = Instantiate(bullet.gameObject, spawnBulletTransform.position, Quaternion.Euler(target.transform.position - spawnBulletTransform.position)).GetComponent<EnemyBullet>();
+                newBullet.gameObject.SetActive(true);
+
+                newBullet.TriggerBullet(enemyStats.bulletForce, direction);
+            }
+            AudioBuildingManager.Instance.audioSource.volume = 0.25f;
+            AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.enemyAttack);
+
+            yield return new WaitForSeconds(1 / enemyStats.speedAttack);
+            canAttack = true;
+        }
+
+        private IEnumerator Die()
+        {
+            animator?.Play("Die");
+            AudioBuildingManager.Instance.audioSource.volume = 0.5f;
+            AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.enemyDie);
+            yield return new WaitForSeconds(0.25f);
+            Destroy(parent);
+        }
     }
 }

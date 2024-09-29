@@ -1,74 +1,76 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-
-//Logic in this class need to refactor by using event system and put logic UI, Sound to other class
-public class HealthController : MonoBehaviour
+using VitsehLand.Scripts.TimeManager;
+namespace VitsehLand.Scripts.Player
 {
-    public TextMeshProUGUI healthText;
-    public float health;
-    public bool inRestart = false;
-    public GameObject loadUI;
-    public RectTransform progressBar;
-    public RectTransform healthBar;
 
-    private void Start()
+    //Logic in this class need to refactor by using event system and put logic UI, Sound to other class
+    public class HealthController : MonoBehaviour
     {
-        healthText.text = health.ToString();
-    }
+        public TextMeshProUGUI healthText;
+        public float health;
+        public bool inRestart = false;
+        public GameObject loadUI;
+        public RectTransform progressBar;
+        public RectTransform healthBar;
 
-    private void Update()
-    {
-        if (TimeManager.Instance.Hours == 7 && TimeManager.Instance.Minutes == 0)
+        private void Start()
         {
-            health = 100;
-            healthBar.localScale = Vector3.one;
             healthText.text = health.ToString();
         }
-    }
 
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        if (healthBar) healthBar.localScale = new Vector3(health / 100, 1, 1);
-
-        if (health <= 0)
+        private void Update()
         {
-            health = 0;
-            if (gameObject.tag == "Player" && !inRestart)
+            if (GameTimeManager.Instance.Hours == 7 && GameTimeManager.Instance.Minutes == 0)
             {
-                inRestart = true;
-                StartCoroutine(ReStart());
+                health = 100;
+                healthBar.localScale = Vector3.one;
+                healthText.text = health.ToString();
             }
         }
 
-        healthText.text = health.ToString();
-    }
-
-    IEnumerator ReStart()
-    {
-        progressBar.localScale = new Vector3(0, 1, 1);
-        loadUI.SetActive(true);
-
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-        asyncOperation.allowSceneActivation = false;
-        float progress = 0;
-
-        while (!asyncOperation.isDone)
+        public void TakeDamage(float damage)
         {
-            progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
-            progressBar.localScale = new Vector3(progress, 1, 1);
+            health -= damage;
+            if (healthBar) healthBar.localScale = new Vector3(health / 100, 1, 1);
 
-            if (progress >= 0.9f)
+            if (health <= 0)
             {
-                progressBar.localScale = new Vector3(1, 1, 1);
-                asyncOperation.allowSceneActivation = true;
+                health = 0;
+                if (gameObject.tag == "Player" && !inRestart)
+                {
+                    inRestart = true;
+                    StartCoroutine(ReStart());
+                }
             }
 
-            yield return null;
+            healthText.text = health.ToString();
+        }
+
+        IEnumerator ReStart()
+        {
+            progressBar.localScale = new Vector3(0, 1, 1);
+            loadUI.SetActive(true);
+
+            AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+            asyncOperation.allowSceneActivation = false;
+            float progress = 0;
+
+            while (!asyncOperation.isDone)
+            {
+                progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
+                progressBar.localScale = new Vector3(progress, 1, 1);
+
+                if (progress >= 0.9f)
+                {
+                    progressBar.localScale = new Vector3(1, 1, 1);
+                    asyncOperation.allowSceneActivation = true;
+                }
+
+                yield return null;
+            }
         }
     }
 }

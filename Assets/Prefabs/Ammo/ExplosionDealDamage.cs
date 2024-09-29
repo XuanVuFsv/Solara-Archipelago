@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VitsehLand.Scripts.Enemy;
+using VitsehLand.Scripts.Stats;
 
 public class ExplosionDealDamage : MonoBehaviour
 {

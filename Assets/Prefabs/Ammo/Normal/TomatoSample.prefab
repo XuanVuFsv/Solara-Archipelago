@@ -4930,7 +4930,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3582941738491335302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 935236a31fe54ec4aa0b5699241db75b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a54b70af07a41f4a92162d2888dcea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cropStats: {fileID: 11400000, guid: f9f1885313c5e9a48ac0464175943a8a, type: 2}
@@ -4965,8 +4965,8 @@ MonoBehaviour:
   startTimeDestroy: 0
   destroyedTime: 0
   startDestroyedTimer: 0
-  minDestroyTime: 40
-  maxDestroyTime: 80
+  minDestroyTime: 50
+  maxDestroyTime: 100
 --- !u!1 &5011514439905238989
 GameObject:
   m_ObjectHideFlags: 0

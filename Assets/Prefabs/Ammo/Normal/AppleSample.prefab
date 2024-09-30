@@ -10148,7 +10148,7 @@ MonoBehaviour:
     trailTracer: {fileID: 0}
     bulletObject: {fileID: 0}
     hitEffectPrefab: {fileID: 0}
-    wholePlantPrefab: {fileID: 0}
+    wholePlantPrefab: {fileID: 9111278382419106458}
     wateringStack: 0
   ownerGarden: {fileID: 0}
   ownerSlot: {fileID: 0}

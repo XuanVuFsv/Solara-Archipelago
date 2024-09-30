@@ -160,7 +160,7 @@ namespace VitsehLand.Scripts.Construction.Garden
         public void UnlockNewSlot()
         {
             ////DisableUnlockNewSlotButton();
-            bool canUseGem = GemManager.Instance.UseGem(unlockFee);
+            bool canUseGem = GemManager.Instance.CanUseGem(unlockFee);
             Debug.Log(unlockFee);
             if (!canUseGem)
             {
@@ -170,7 +170,7 @@ namespace VitsehLand.Scripts.Construction.Garden
 
             int slotindex = gardenManager.UnLockNewSlot();
             if (slotindex != -1)
-            {
+            {  
                 slotCells[slotindex].SetActive(false);
             }
         }

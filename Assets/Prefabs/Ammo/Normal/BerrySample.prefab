@@ -404,30 +404,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a54b70af07a41f4a92162d2888dcea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cropStats: {fileID: 0}
-  cropContain: 0
-  rigid: {fileID: 0}
-  suckableCollider: {fileID: 0}
+  cropStats: {fileID: 11400000, guid: 1bfeca6234170be4ea60badc372d9f00, type: 2}
+  cropContain: 1
+  rigid: {fileID: 8666578511412482017}
+  suckableCollider: {fileID: 8666578511412482018}
   s: 0
   varSpeed: 0
   plantData:
     trailTracer: {fileID: 0}
     bulletObject: {fileID: 0}
     hitEffectPrefab: {fileID: 0}
-    wholePlantPrefab: {fileID: 0}
+    wholePlantPrefab: {fileID: 8666578511412481950}
     wateringStack: 0
   ownerGarden: {fileID: 0}
   ownerSlot: {fileID: 0}
-  growingBody: {fileID: 0}
+  growingBody: {fileID: 1576380371240974785}
   orginalPlant: {fileID: 0}
   elapsedTime: 0
   onTree: 0
   nonPlanting: 0
-  wholePlantPoss: []
+  wholePlantPoss:
+  - {fileID: 6512898251658537780}
+  - {fileID: 5666226482996000007}
+  - {fileID: 4130146602752090440}
   wholePlants: []
-  seedOuterEffect: {fileID: 0}
-  wholeOuterEffect: {fileID: 0}
-  defaultModelPlant: {fileID: 0}
+  seedOuterEffect: {fileID: 8666578511423780825}
+  wholeOuterEffect: {fileID: 8666578513177007881}
+  defaultModelPlant: {fileID: 8666578512871756486}
   wholePlantCount: 0
   inCrafting: 0
   startTimeDestroy: 0

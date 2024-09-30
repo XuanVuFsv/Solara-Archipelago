@@ -41,5 +41,11 @@ namespace VitsehLand.Scripts.Manager
             text.text = gemCount.ToString();
             return true;
         }
+
+        public bool CanUseGem(int usedGemCount)
+        {
+            if (gemCount - usedGemCount < 0) return false;
+            return true;
+        }
     }
 }

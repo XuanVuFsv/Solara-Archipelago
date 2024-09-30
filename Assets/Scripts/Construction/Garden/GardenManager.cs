@@ -53,7 +53,11 @@ namespace VitsehLand.Scripts.Construction.Garden
 
         public int UnLockNewSlot()
         {
+            Debug.Log(activeSlotCount + " " + MAX_SLOT);
+            Debug.Log(activeSlotCount == MAX_SLOT);
             if (activeSlotCount == MAX_SLOT) return -1;
+
+            Debug.Log("Run");
 
             bool unlockSuccess = gardenSlotProperties[activeSlotCount].UnLockSlot();
             if (!unlockSuccess)

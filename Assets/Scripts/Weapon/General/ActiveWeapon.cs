@@ -316,7 +316,7 @@ namespace VitsehLand.Scripts.Weapon.General
                 newWeapon.GetComponent<CameraShake>().SetUpWeaponRecoilForNewWeapon(playerCamera, rigController);
 
                 //UI, Layer, Physic
-                if (newWeapon.weaponUI) newWeapon.weaponUI.gameObject.SetActive(false);
+                //if (newWeapon.weaponUI) newWeapon.weaponUI.gameObject.SetActive(false);
                 SetupUtilities.SetLayers(equippedWeaponParent[weaponSlotIndex], "Local Player", "Local Player", "Effect");
                 //equippedWeaponParent[weaponSlotIndex].gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
@@ -373,10 +373,10 @@ namespace VitsehLand.Scripts.Weapon.General
                 isHoldWeapon = false;
                 //Debug.Log(isHoldWeapon);
 
-                if (!equippedWeapon[weaponSlotIndex].weaponUI)
-                {
-                    equippedWeapon[weaponSlotIndex].CreateWeaponUI();
-                }
+                //if (!equippedWeapon[weaponSlotIndex].weaponUI)
+                //{
+                //    equippedWeapon[weaponSlotIndex].CreateWeaponUI();
+                //}
             }
 
             if (action == WeaponAction.Throw || action == WeaponAction.Pickup && isExsitWeaponSlot)

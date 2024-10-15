@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ namespace VitsehLand.Scripts.UI.DisplayItem
 
         public Image icon;
         public TextMeshProUGUI nameItem;
+
+        public event Action<int, CropStats> OnItemClicked = delegate { };
 
         // Start is called before the first frame update
         void Awake()
@@ -47,14 +50,19 @@ namespace VitsehLand.Scripts.UI.DisplayItem
             nameItem.text = cropStats.name;
         }
 
-        public void OnClick()
-        {
-            Debug.Log("Click" + " " + cropStats.name);
-            if (cropStats == null || cropStats.name == "Null") return;
-            CraftingManagerUI.Instance.craftingManager.currentRecipeIndex = index;
-            CraftingManagerUI.Instance.ShowCurrentItemInformation(cropStats);
+        //public void OnClick()
+        //{
+        //    Debug.Log("Click" + " " + cropStats.name);
+        //    if (cropStats == null || cropStats.name == "Null") return;
+        //    CraftingView.Instance.craftingManager.currentRecipeIndex = index;
+        //    CraftingView.Instance.ShowCurrentItemInformation(cropStats);
 
-            CraftingManagerUI.Instance.LoadMaterialsRequired(cropStats.recipe);
+        //    CraftingView.Instance.LoadMaterialsRequired(cropStats.recipe);
+        //}
+
+        public void RegisterListener(Action<int, CropStats> listener)
+        {
+            OnItemClicked += listener;
         }
     }
 }

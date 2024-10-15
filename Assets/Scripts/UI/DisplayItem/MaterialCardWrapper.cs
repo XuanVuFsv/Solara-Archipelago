@@ -18,16 +18,16 @@ namespace VitsehLand.Scripts.UI.DisplayItem
         //}
 
         public Image image;
-        public TextMeshProUGUI quanityText;
+        public TextMeshProUGUI quantityText;
         public CropStats cropStats;
 
         public int quantity, requiredQuantity;
 
-        public void OnClick()
-        {
-            Debug.Log("Click" + " " + cropStats.name);
-            if (cropStats == null || cropStats.name == "Null") return;
-            CraftingManagerUI.Instance.ShowCurrentItemInformation(cropStats);
-        }
+        //public void OnClick()
+        //{
+        //    Debug.Log("Click" + " " + cropStats.name);
+        //    if (cropStats == null || cropStats.name == "Null") return;
+        //    CraftingView.Instance.ShowCurrentItemInformation(cropStats);
+        //}
     }
 }

@@ -7,7 +7,7 @@ namespace VitsehLand.Scripts.Crafting
 {
     public class CraftingReceiver : MonoBehaviour
     {
-        public CraftingManager craftingManager;
+        public CraftingPresenter craftingManager;
 
         private void OnTriggerEnter(Collider other)
         {

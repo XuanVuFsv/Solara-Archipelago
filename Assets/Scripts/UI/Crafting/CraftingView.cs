@@ -14,12 +14,10 @@ using VitsehLand.Scripts.UI.DisplayItem;
 namespace VitsehLand.Assets.Scripts.UI.Crafting
 {
     [System.Serializable]
-    public class CraftingView : Singleton<CraftingView>
+    public class CraftingView : MonoBehaviour
     {
-        public event Action<int> onQuantityChanged = delegate { };
-
         [Header("Main elements")]
-        public CraftingPresenter craftingManager;
+        //public CraftingPresenter craftingManager;
 
         public List<ItemUI> itemUIs = new List<ItemUI>();
 
@@ -57,6 +55,14 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
         [Header("Storage components")]
         public Transform storageParent;
         public List<MaterialCardWrapper> storageCardWrappers = new List<MaterialCardWrapper>();
+
+        public enum QuanityChangedActionType
+        {
+            Button = 0,
+            Slider = 1
+        }
+        public event Action<int, QuanityChangedActionType> OnQuantityChanged = delegate { };
+        public event Action OnCraftButtonClick = delegate { };
 
         //public PowerManager powerManager; //**//
 
@@ -171,19 +177,24 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
         #endregion
 
         #region Crafting Components
-        public void RegisterListener(Action<int> listener)
+        public void RegisterListener(Action<int, QuanityChangedActionType> listener)
         {
-            onQuantityChanged += listener;
+            OnQuantityChanged += listener;
         }
 
         public void PlusQuantity()
         {
-            onQuantityChanged(1);
+            OnQuantityChanged(1, QuanityChangedActionType.Button);
         }
 
         public void MinusQuantity()
         {
-            onQuantityChanged(-1);
+            OnQuantityChanged(-1, QuanityChangedActionType.Button);
+        }
+
+        public void OnSliderChanged()
+        {
+            OnQuantityChanged((int)slider.value, QuanityChangedActionType.Slider);
         }
         #endregion
 
@@ -285,15 +296,15 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
             }
         }
 
-        //public void Craft()
-        //{
-        //    if (!CheckCraftCondition())
-        //    {
-        //        Debug.Log("Not enough material or Energy");
-        //        return;
-        //    }
-        //    craftingManager.StartCraft();
-        //}
+        public void RegisterListener(Action listener)
+        {
+            OnCraftButtonClick += listener;
+        }
+
+        public void Craft()
+        {
+            OnCraftButtonClick();
+        }
 
         //public bool CheckCraftCondition()
         //{

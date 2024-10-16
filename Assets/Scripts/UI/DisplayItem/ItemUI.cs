@@ -26,6 +26,7 @@ namespace VitsehLand.Scripts.UI.DisplayItem
 
             icon.gameObject.SetActive(false);
             GetComponent<Button>().interactable = false;
+            GetComponent<Button>().onClick.AddListener(OnClick);
 
             if (cropStats != null) SetItemUI(cropStats);
         }
@@ -50,15 +51,13 @@ namespace VitsehLand.Scripts.UI.DisplayItem
             nameItem.text = cropStats.name;
         }
 
-        //public void OnClick()
-        //{
-        //    Debug.Log("Click" + " " + cropStats.name);
-        //    if (cropStats == null || cropStats.name == "Null") return;
-        //    CraftingView.Instance.craftingManager.currentRecipeIndex = index;
-        //    CraftingView.Instance.ShowCurrentItemInformation(cropStats);
+        public void OnClick()
+        {
+            Debug.Log("Click" + " " + cropStats.name);
+            if (cropStats == null || cropStats.name == "Null") return;
 
-        //    CraftingView.Instance.LoadMaterialsRequired(cropStats.recipe);
-        //}
+            OnItemClicked(index, cropStats);
+        }
 
         public void RegisterListener(Action<int, CropStats> listener)
         {

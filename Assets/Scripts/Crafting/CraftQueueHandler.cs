@@ -10,9 +10,7 @@ namespace VitsehLand.Scripts.Crafting
 {
     public class CraftQueueHandler : MonoBehaviour
     {
-        public event Action onCraftCompleted = delegate { };
-
-        public CraftingPresenter craftingManager;
+        //public CraftingPresenter craftingManager;
         public CropStats cropStats;
         public Suckable product;
 
@@ -22,6 +20,8 @@ namespace VitsehLand.Scripts.Crafting
 
         public float totalTime;
         public bool isReady = true;
+
+        public event Action OnCraftCompleted = delegate { };
 
         // Start is called before the first frame update
         void Start()
@@ -41,10 +41,10 @@ namespace VitsehLand.Scripts.Crafting
 
         public void RegisterListener(Action listener)
         {
-            onCraftCompleted += listener;
+            OnCraftCompleted += listener;
         }
 
-        public IEnumerator CraftProduct(int time)
+        public IEnumerator CraftProduct(int time, Transform pos)
         {
             productImage.sprite = cropStats.artwork;
             totalTime = time;
@@ -59,7 +59,7 @@ namespace VitsehLand.Scripts.Crafting
             for (int i = 0; i < time / product.cropStats.totalProducingTime; i++)
             {
                 Debug.Log("Init");
-                GameObject newGameObject = Instantiate(product.gameObject, craftingManager.productPos.position + UnityEngine.Random.value * 0.25f * Vector3.one, Quaternion.identity);
+                GameObject newGameObject = Instantiate(product.gameObject, pos.position + UnityEngine.Random.value * 0.25f * Vector3.one, Quaternion.identity);
                 Debug.Log(newGameObject.name);
             }
 
@@ -71,11 +71,13 @@ namespace VitsehLand.Scripts.Crafting
             Debug.Log("Done");
 
             UIContainer.SetActive(false);
+
+            OnCraftCompleted();
         }
 
-        public void Craft(int time)
+        public void Craft(int time, Transform pos)
         {
-            StartCoroutine(CraftProduct(time));
+            StartCoroutine(CraftProduct(time, pos));
         }
     }
 }

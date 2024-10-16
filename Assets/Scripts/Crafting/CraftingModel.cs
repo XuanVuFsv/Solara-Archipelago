@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using System.Linq;
 using UnityEngine;
 using VitsehLand.Scripts.Farming.General;
 using VitsehLand.Scripts.Inventory;
@@ -62,6 +62,14 @@ namespace VitsehLand.Scripts.Crafting
         public RecipeData GetCurrentRecipe()
         {
             return allowedProductList[currentRecipeIndex];
+        }
+
+        /// <summary>
+        /// Return a list containing the quantities of materials needed for the specific recipe.
+        /// </summary>
+        public List<int> GetQuantityByMaterialOfRecipe(RecipeData recipe)
+        {
+            return recipe.items.Select(item => GetItemStorageQuantityByName(item.name)).ToList();
         }
 
         public int FindFirstCraftSlotReady()

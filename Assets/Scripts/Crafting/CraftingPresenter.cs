@@ -77,7 +77,8 @@ namespace VitsehLand.Scripts.Crafting
             SetupInitViewElements();
             view.queueQuantityDisplay.text = "You can use " + model.queueQuantity.ToString() + " slot in queue";
 
-            view.RegisterListener(UpdateQuantityByButton);
+            view.RegisterListener(UpdateQuantity);
+            view.RegisterListener(Craft);
 
             for (int i = 0; i < view.itemUIs.Count; i++)
             {
@@ -95,11 +96,12 @@ namespace VitsehLand.Scripts.Crafting
             if (view.isActive) return;
 
             view.Show(true);
+
             model.UpdateItemStorageList();
+
             view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorages);
             view.ReLoadQuantityMaterialsRequired(model.GetCurrentRecipe(), 
-                model.GetCurrentRecipe().items.Select
-                (item => model.GetItemStorageQuantityByName(item.name)).ToList(),
+                model.GetQuantityByMaterialOfRecipe(model.GetCurrentRecipe()),
                 model.currentQuantity);
         }
 
@@ -121,9 +123,12 @@ namespace VitsehLand.Scripts.Crafting
             view.ShowCurrentItemInformation(firstItemUI.cropStats);
             view.ShowRecipe();
 
+            Debug.Log(firstItemUI);
+            Debug.Log(model.GetQuantityByMaterialOfRecipe(firstItemUI.cropStats.recipe));
+            Debug.Log(model.currentQuantity);
+
             view.LoadMaterialsRequired(firstItemUI.cropStats.recipe,
-                firstItemUI.cropStats.recipe.items.Select
-                (item => model.GetItemStorageQuantityByName(item.name)).ToList(),
+                model.GetQuantityByMaterialOfRecipe(firstItemUI.cropStats.recipe),
                 model.currentQuantity);
 
             view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorages);
@@ -141,8 +146,7 @@ namespace VitsehLand.Scripts.Crafting
             view.ShowCurrentItemInformation(cropStats);
 
             view.LoadMaterialsRequired(cropStats.recipe,
-                cropStats.recipe.items.Select
-                (item => model.GetItemStorageQuantityByName(item.name)).ToList(),
+                model.GetQuantityByMaterialOfRecipe(cropStats.recipe),
                 model.currentQuantity);
         }
 
@@ -176,8 +180,7 @@ namespace VitsehLand.Scripts.Crafting
 
             model.UpdateItemStorageList();
             view.ReLoadQuantityMaterialsRequired(model.GetCurrentRecipe(),
-                model.GetCurrentRecipe().items.Select
-                (item => model.GetItemStorageQuantityByName(item.name)).ToList(),
+                model.GetQuantityByMaterialOfRecipe(model.GetCurrentRecipe()),
                 model.currentQuantity);
             view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorages);
         }
@@ -224,7 +227,7 @@ namespace VitsehLand.Scripts.Crafting
                     model.craftQueueHandlers[index].product = model.GetCurrentRecipe().product;
 
                     int totalTime = model.currentQuantity * (int)model.GetCurrentRecipe().cropStats.totalProducingTime;
-                    model.craftQueueHandlers[index].Craft(totalTime);
+                    model.craftQueueHandlers[index].Craft(totalTime, productPos);
                     model.queueActiveQuantity++;
 
                     view.VFX.SetActive(true);
@@ -313,29 +316,30 @@ namespace VitsehLand.Scripts.Crafting
         {
             return model.AddItemStorage(cropStats, quantity);
         }
-    
-        public void UpdateQuantityBySlider()
+
+        public void UpdateQuantity(int value, CraftingView.QuanityChangedActionType actionType)
         {
-            model.currentQuantity = (int)view.slider.value;
-            view.quantityTitle.text = "Quantity: " + model.currentQuantity.ToString();
+            if (actionType == CraftingView.QuanityChangedActionType.Button)
+            {
+                int quantity = model.currentQuantity + value;
+                if (quantity > model.maxQuantity || quantity <= 0) return;
+                model.currentQuantity = quantity;
+                view.slider.value = model.currentQuantity;
+                view.quantityTitle.text = "Quantity: " + model.currentQuantity.ToString();
 
-            view.ReLoadQuantityMaterialsRequired(model.GetCurrentRecipe(),
-                model.GetCurrentRecipe().items.Select
-                (item => model.GetItemStorageQuantityByName(item.name)).ToList(),
-                model.currentQuantity);
-        }
+                view.ReLoadQuantityMaterialsRequired(model.GetCurrentRecipe(),
+                    model.GetQuantityByMaterialOfRecipe(model.GetCurrentRecipe()),
+                    model.currentQuantity);
+            }
+            else
+            {
+                model.currentQuantity = value;
+                view.quantityTitle.text = "Quantity: " + model.currentQuantity.ToString();
 
-        public void UpdateQuantityByButton(int value)
-        {
-            if (model.currentQuantity == model.maxQuantity) return;
-            model.currentQuantity += value;
-            view.slider.value = model.currentQuantity;
-            view.quantityTitle.text = "Quantity: " + model.currentQuantity.ToString();
-
-            view.ReLoadQuantityMaterialsRequired(model.GetCurrentRecipe(),
-                model.GetCurrentRecipe().items.Select
-                (item => model.GetItemStorageQuantityByName(item.name)).ToList(),
-                model.currentQuantity);
+                view.ReLoadQuantityMaterialsRequired(model.GetCurrentRecipe(),
+                    model.GetQuantityByMaterialOfRecipe(model.GetCurrentRecipe()),
+                    model.currentQuantity);
+            }
         }
     }
 }

@@ -1,14 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
 using VitsehLand.Assets.Scripts.Interactive;
 using VitsehLand.Assets.Scripts.UI.Crafting;
-using VitsehLand.Scripts.Farming.General;
 using VitsehLand.Scripts.Farming.Resource;
-using VitsehLand.Scripts.Inventory;
 using VitsehLand.Scripts.Stats;
 using VitsehLand.Scripts.UI.DisplayItem;
 
@@ -20,61 +13,21 @@ namespace VitsehLand.Scripts.Crafting
         public CraftingModel model;
         public CraftingView view;
 
-        //public List<RecipeData> allowedProductList = new List<RecipeData>();
-        //public Dictionary<string, RecipeData> productRecipes = new Dictionary<string, RecipeData>();
-
-        //public List<ItemStorageData> itemStorages = new List<ItemStorageData>();
-        //public Dictionary<string, ItemStorageData> itemStorageDict = new Dictionary<string, ItemStorageData>();
-
-        //public List<Suckable> products = new List<Suckable>();
-
         public Transform productPos;
-        public PowerManager powerManager; //**//
-
-        //public int maxQuantity;
-        //public int currentQuantity;
-
-        //public int currentRecipeIndex;
-
-        //public int unlockedStorageSlot = 3;
-        //public int maxStorageSlot = 9;
-
-        //public int queueQuantity = 1;
-        //public int maxQueueQuantity = 4;
-        //public int queueActiveQuantity = 0;
-        //public TextMeshProUGUI queueQuantityDisplay;
-
-        //public GameObject warningFullQueue;
-        //public GameObject warningNotEnoughPower;
-
-        //public GameObject VFX;
-
-        //public List<CraftQueueHandler> craftQueueHandlers = new List<CraftQueueHandler>();
+        public PowerManager powerManager;
 
         // Start is called before the first frame update
         void Awake()
         {
-            //foreach (RecipeData recipe in allowedProductList)
-            //{
-            //    productRecipes.Add(recipe.cropStats.name, recipe);
-            //}
-
-            //foreach (ItemStorageData item in itemStorages)
-            //{
-            //    itemStorageDict.Add(item.cropStats.name, item);
-            //}
-
-            //for (int i = 0; i < craftQueueHandlers.Count; i++)
-            //{
-            //    craftQueueHandlers[i].UIContainer.SetActive(false);
-            //}
-
             model.SetupInitData();
         }
 
         void Start()
         {
             SetupInitViewElements();
+
+            view.slider.value = 1;
+            model.currentQuantity = 1;
             view.queueQuantityDisplay.text = "You can use " + model.queueQuantity.ToString() + " slot in queue";
 
             view.RegisterListener(UpdateQuantity);
@@ -149,22 +102,6 @@ namespace VitsehLand.Scripts.Crafting
                 model.GetQuantityByMaterialOfRecipe(cropStats.recipe),
                 model.currentQuantity);
         }
-
-        //public int GetItemStorageQuantityByName(string name)
-        //{
-        //    if (model.itemStorages.Count == 0)
-        //    {
-        //        Debug.Log("Empty Storage");
-        //        return 0;
-        //    }
-        //    if (!model.itemStorageDict.ContainsKey(name))
-        //    {
-        //        Debug.Log(name + " not exist");
-        //        return 0;
-        //    }
-        //    return model.itemStorageDict[name].quantity;
-
-        //}
 
         public void UpdateItemStorageDatas()
         {
@@ -250,67 +187,6 @@ namespace VitsehLand.Scripts.Crafting
             model.queueActiveQuantity--;
             view.VFX.SetActive(true);
         }
-
-        //public int FindFirstCraftSlotReady()
-        //{
-        //    for (int i = 0; i < model.queueQuantity; i++)
-        //    {
-        //        if (model.craftQueueHandlers[i].isReady) return i;
-        //    }
-        //    return -1;
-        //}
-
-        //public void SetItemStorage(string name, int value)
-        //{
-        //    model.itemStorageDict[name].quantity = value;
-        //}
-
-        //public int GetItemStorage(string name)
-        //{
-        //    if (!model.itemStorageDict.ContainsKey(name)) return 0;
-        //    return model.itemStorageDict[name].quantity;
-        //}
-
-        //public void RemoveItemStorage(string name)
-        //{
-        //    model.itemStorages.Remove(model.itemStorageDict[name]);
-        //    model.itemStorageDict.Remove(name);
-        //}
-
-        //public void UpdateItemStorageList()
-        //{
-        //    foreach (ItemStorageData item in itemStorages)
-        //    {
-        //        item.quantity = itemStorageDict[item.cropStats.name].quantity;
-        //    }
-        //}
-
-        ////**//
-        //IEnumerator ShowWarning()
-        //{
-        //    warningFullQueue.SetActive(true);
-        //    yield return new WaitForSeconds(0.5f);
-        //    warningFullQueue.SetActive(false);
-        //}
-
-        ////**//
-        //IEnumerator ShowWarningNotEnoughPower()
-        //{
-        //    warningNotEnoughPower.SetActive(true);
-        //    yield return new WaitForSeconds(0.5f);
-        //    warningNotEnoughPower.SetActive(false);
-        //}
-
-        //public void WarningNotEnoughPower()
-        //{
-        //    StartCoroutine(view.ShowWarningNotEnoughPower());
-        //}
-
-        //public bool CheckStorage()
-        //{
-        //    if (itemStorages.Count == unlockedStorageSlot) return false;
-        //    return true;
-        //}
 
         public bool AddItemStorage(CropStats cropStats, int quantity)
         {

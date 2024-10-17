@@ -7,12 +7,6 @@ namespace VitsehLand.Scripts.UI.Interactive
     {
         public GameObject guildPanel;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
         public override void ExecuteActivateAction()
         {
             guildPanel.SetActive(true);

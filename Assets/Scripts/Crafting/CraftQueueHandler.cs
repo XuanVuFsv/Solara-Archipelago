@@ -10,7 +10,6 @@ namespace VitsehLand.Scripts.Crafting
 {
     public class CraftQueueHandler : MonoBehaviour
     {
-        //public CraftingPresenter craftingManager;
         public CropStats cropStats;
         public Suckable product;
 
@@ -51,8 +50,6 @@ namespace VitsehLand.Scripts.Crafting
 
             Debug.Log("Start waiting " + (time / product.cropStats.totalProducingTime).ToString() + "energy");
             isReady = false;
-            //craftingManager.VFX.SetActive(true);
-            //craftingManager.queueActiveQuantity++;
 
             yield return new WaitForSeconds(time);
 
@@ -64,14 +61,11 @@ namespace VitsehLand.Scripts.Crafting
             }
 
             isReady = true;
-            //craftingManager.queueActiveQuantity--;
             totalTime = 0;
 
-            //craftingManager.VFX.SetActive(true);
             Debug.Log("Done");
 
             UIContainer.SetActive(false);
-
             OnCraftCompleted();
         }
 

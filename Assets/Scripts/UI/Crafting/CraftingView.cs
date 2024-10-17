@@ -5,9 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VitsehLand.Scripts.Crafting;
-using VitsehLand.Scripts.Farming.Resource;
 using VitsehLand.Scripts.Inventory;
-using VitsehLand.Scripts.Pattern.Singleton;
 using VitsehLand.Scripts.Stats;
 using VitsehLand.Scripts.UI.DisplayItem;
 
@@ -17,8 +15,6 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
     public class CraftingView : MonoBehaviour
     {
         [Header("Main elements")]
-        //public CraftingPresenter craftingManager;
-
         public List<ItemUI> itemUIs = new List<ItemUI>();
 
         public TextMeshProUGUI currentItemName;
@@ -64,48 +60,10 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
         public event Action<int, QuanityChangedActionType> OnQuantityChanged = delegate { };
         public event Action OnCraftButtonClick = delegate { };
 
-        //public PowerManager powerManager; //**//
-
         // Start is called before the first frame update
         void Start()
         {
-            //for (int i = 0; i < craftingManager.allowedProductList.Count; i++)
-            //{
-            //    Debug.Log(i);
-            //    itemUIs[i].cropStats = craftingManager.allowedProductList[i].cropStats;
-            //    itemUIs[i].SetItemUI(craftingManager.allowedProductList[i].cropStats);
-            //}
 
-            //for (int i = 0; i < storageCardWrappers.Count; i++)
-            //{
-            //    storageCardWrappers[i] = storageParent.GetChild(i).GetComponent<MaterialCardWrapper>();
-            //}
-
-            //ShowCurrentItemInformation(itemUIs[0].cropStats);
-            //ShowRecipe();
-            //LoadMaterialsRequired(itemUIs[0].cropStats.recipe);
-            //UpdateMaterialStorage();
-            //Debug.Log("Setup Done");
-            //body.gameObject.SetActive(false);
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            //if (craftingManager.currentQuantity != slider.value)
-            //{
-            //    craftingManager.currentQuantity = (int)slider.value;
-            //    quantityTitle.text = "Quantity: " + craftingManager.currentQuantity.ToString();
-            //    ReLoadQuantityMaterialsRequired();
-            //}
-
-            //if (Input.GetKeyDown(KeyCode.Tab))
-            //{
-            //    if (cursorAvaiable && isActive)
-            //    {
-            //        Show(false);
-            //    }
-            //}
         }
 
         public void CloseCraftingUI()
@@ -202,7 +160,6 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
         {
             Debug.Log("Load " + recipeData.cropStats.name);
             Debug.Log(materialCardWrappers.Count);
-            //Debug.Log(craftingManager.productRecipes.Count);
 
             for (int i = 0; i < materialCardWrappers.Count; i++)
             {
@@ -255,13 +212,7 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
         {
             for (int i = 0; i < storageCardWrappers.Count; i++)
             {
-                if (i >= unlockedStorageSlot)
-                {
-                    //storageCardWrappers[i].gameObject.SetActive(false);
-                    //storageCardWrappers[i].image.gameObject.SetActive(false);
-                    //storageCardWrappers[i].quantityText.text = "";
-                    continue;
-                }
+                if (i >= unlockedStorageSlot) continue;
                 else if (i < unlockedStorageSlot)
                 {
                     storageCardWrappers[i].image.gameObject.SetActive(false);
@@ -269,8 +220,6 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
                     storageCardWrappers[i].GetComponent<Image>().color = new Color32(0, 0, 0, 100);
                     continue;
                 }
-                //storageCardWrappers[i].image.gameObject.SetActive(false);
-                //storageCardWrappers[i].quantityText.text = "";
             }
         }
 
@@ -280,12 +229,7 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
 
             for (int i = 0; i < itemStorages.Count; i++)
             {
-                if (i >= unlockedStorageSlot)
-                {
-                    //storageCardWrappers[i].gameObject.SetActive(false);
-                    //storageCardWrappers[i].quantityText.text = "";
-                }
-                else
+                if (i < unlockedStorageSlot)
                 {
                     storageCardWrappers[i].image.gameObject.SetActive(true);
                     storageCardWrappers[i].GetComponent<Image>().color = new Color32(0, 0, 0, 100);
@@ -306,40 +250,6 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
             OnCraftButtonClick();
         }
 
-        //public bool CheckCraftCondition()
-        //{
-        //    foreach (MaterialCardWrapper card in materialCardWrappers)
-        //    {
-        //        if (card.requiredQuantity > card.quantity)
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    if (powerManager.currentPower < 10 * craftingManager.currentQuantity)
-        //    {
-        //        StartCoroutine(ShowWarningNotEnoughPower());
-        //        return false;
-        //    }
-        //    return true;
-        //}
-
-        //public void UpdateItemStorageDatas()
-        //{
-        //    foreach (MaterialCardWrapper card in materialCardWrappers)
-        //    {
-        //        card.quantity -= card.requiredQuantity;
-        //        craftingManager.SetItemStorage(card.cropStats.name, card.quantity);
-        //        if (card.quantity == 0)
-        //        {
-        //            craftingManager.RemoveItemStorage(card.cropStats.name);
-        //        }
-        //    }
-
-        //    craftingManager.UpdateItemStorageList();
-        //    ReLoadQuantityMaterialsRequired();
-        //    UpdateMaterialStorage();
-        //}
-
         public IEnumerator ShowWarning()
         {
             warningFullQueue.SetActive(true);
@@ -347,7 +257,6 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
             warningFullQueue.SetActive(false);
         }
 
-        //**//
         public IEnumerator ShowWarningNotEnoughPower()
         {
             warningNotEnoughPower.SetActive(true);

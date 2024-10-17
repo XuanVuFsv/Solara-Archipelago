@@ -31,12 +31,6 @@ namespace VitsehLand.Scripts.UI.DisplayItem
             if (cropStats != null) SetItemUI(cropStats);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         public void SetItemUI(CropStats cropStats)
         {
             if (cropStats.name == "Null")

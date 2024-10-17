@@ -9,15 +9,6 @@ namespace VitsehLand.Scripts.UI.Interactive
         public GameObject guildDisplayUI;
 
         public Transform interactiveElement;
-        //private Tween interactiveElementTween;
-
-        //[Range(0, 2)]
-        //public float startScale;
-        //[Range(0, 2)]
-        //public float endScale;
-        //[Range(0, 2)]
-        //public float endScalePress;
-        //public float animationSpeed;
 
         [SerializeField]
         private bool enableUI = false;
@@ -29,20 +20,55 @@ namespace VitsehLand.Scripts.UI.Interactive
         [Tooltip("Limit angle when player look at monitor screen. Calculating by two vector: vector from center of monitor to player camera and normal vector of monitor screen")]
         public float limitAngleToInteractBuildButton;
 
-        private void Start()
-        {
-            //growingResourceManager = GetComponent<ActivateBehaviour>();
-        }
-
         private void Update()
         {
             if (canInteract && isLookAtUI && Input.GetKeyDown(KeyCode.E))
             {
-                //PressElementAnimation(interactiveElement, new Vector3(endScalePress, endScalePress, 1), animationSpeed);
                 guildDisplayUI.SetActive(false);
                 enableUI = false;
                 activateBehaviour?.ExecuteActivateAction();
             }
+        }
+
+        public bool CheckLookAtMonitorScreen(Vector3 lookAtVector, Vector3 monitorScreenVector, float limitAngle)
+        {
+            float dotValue = Vector3.Dot(lookAtVector, monitorScreenVector);
+            float angle = Mathf.Acos(dotValue / (lookAtVector.magnitude * monitorScreenVector.magnitude)) * Mathf.Rad2Deg;
+
+            if (dotValue > 0)
+            {
+                if (angle <= limitAngle) return true;
+                return false;
+            }
+            return false;
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (!other.CompareTag("Player")) return;
+
+            canInteract = true;
+            isLookAtUI = CheckLookAtMonitorScreen(Camera.main.transform.forward, interactiveElement.transform.position - Camera.main.transform.position, limitAngleToInteractBuildButton);
+            if (!isLookAtUI)
+            {
+                enableUI = false;
+                guildDisplayUI.SetActive(false);
+            }
+            if (isLookAtUI && !enableUI)
+            {
+                enableUI = true;
+                guildDisplayUI.SetActive(true);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!other.CompareTag("Player")) return;
+
+            canInteract = false;
+            isLookAtUI = false;
+            enableUI = false;
+            guildDisplayUI.SetActive(false);
         }
 
         /// <summary> Zoom in and zoom out element animation. </summary>
@@ -64,44 +90,5 @@ namespace VitsehLand.Scripts.UI.Interactive
         //{
         //    interactiveElementTween = rect.DOScale(endScale, cycleTime).SetLoops(1, loopType).SetEase(Ease.Linear);
         //}
-
-        public bool CheckLookAtMonitorScreen(Vector3 lookAtVector, Vector3 monitorScreenVector, float limitAngle)
-        {
-            float dotValue = Vector3.Dot(lookAtVector, monitorScreenVector);
-            float angle = Mathf.Acos(dotValue / (lookAtVector.magnitude * monitorScreenVector.magnitude)) * Mathf.Rad2Deg;
-
-            if (dotValue > 0)
-            {
-                if (angle <= limitAngle) return true;
-                return false;
-            }
-            return false;
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            canInteract = true;
-            isLookAtUI = CheckLookAtMonitorScreen(Camera.main.transform.forward, interactiveElement.transform.position - Camera.main.transform.position, limitAngleToInteractBuildButton);
-            if (!isLookAtUI)
-            {
-                enableUI = false;
-                guildDisplayUI.SetActive(false);
-            }
-            if (isLookAtUI && !enableUI)
-            {
-                //StartZoomInOutAnimation(interactiveElement, new Vector3(endScale, endScale, 1), LoopType.Yoyo, animationSpeed);
-                enableUI = true;
-                guildDisplayUI.SetActive(true);
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            canInteract = false;
-            isLookAtUI = false;
-            enableUI = false;
-            guildDisplayUI.SetActive(false);
-            //EndZoomInOutAnimation(interactiveElement, new Vector3(startScale, startScale, 1), LoopType.Yoyo, animationSpeed);
-        }
     }
 }

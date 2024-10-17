@@ -20,13 +20,6 @@ namespace VitsehLand.Scripts.Crafting
 
         public List<Suckable> products = new List<Suckable>();
 
-        //public GameObject warningFullQueue;
-        //public GameObject warningNotEnoughPower;
-
-        //public GameObject VFX;
-
-        //public Transform productPos;
-
         public int maxQuantity;
         public int currentQuantity;
 
@@ -38,8 +31,6 @@ namespace VitsehLand.Scripts.Crafting
         public int queueQuantity = 1;
         public int maxQueueQuantity = 4;
         public int queueActiveQuantity = 0;
-
-        //public TextMeshProUGUI queueQuantityDisplay;
 
         public void SetupInitData()
         {

@@ -1,9 +1,10 @@
+using System;
 using VitsehLand.Scripts.Farming.General;
 using VitsehLand.Scripts.Stats;
 
 namespace VitsehLand.Scripts.Inventory
 {
-    [System.Serializable]
+    [Serializable]
     public class ItemStorageData
     {
         public ItemStorageData(string itemID, CropStats cropStats, StorageLocation storageLocation, Suckable suckable, int quantity)

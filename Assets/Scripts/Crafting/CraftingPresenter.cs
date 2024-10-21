@@ -16,7 +16,6 @@ namespace VitsehLand.Scripts.Crafting
         public Transform productPos;
         public PowerManager powerManager;
 
-        // Start is called before the first frame update
         void Awake()
         {
             model.SetupInitData();
@@ -50,9 +49,7 @@ namespace VitsehLand.Scripts.Crafting
 
             view.Show(true);
 
-            model.UpdateItemStorageList();
-
-            view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorages);
+            view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorageDict);
             view.ReLoadQuantityMaterialsRequired(model.GetCurrentRecipe(), 
                 model.GetQuantityByMaterialOfRecipe(model.GetCurrentRecipe()),
                 model.currentQuantity);
@@ -60,14 +57,16 @@ namespace VitsehLand.Scripts.Crafting
 
         public void SetupInitViewElements()
         {
-            for (int i = 0; i < model.allowedProductList.Count; i++)
+            int i = 0;
+            foreach (var productRecipe in model.productRecipes)
             {
                 Debug.Log(i);
-                view.itemUIs[i].cropStats = model.allowedProductList[i].cropStats;
-                view.itemUIs[i].SetItemUI(model.allowedProductList[i].cropStats);
-            }
+                view.itemUIs[i].cropStats = productRecipe.Value.cropStats;
+                view.itemUIs[i].SetItemUI(productRecipe.Value.cropStats);
+                i++;
+            }    
 
-            for (int i = 0; i < view.storageCardWrappers.Count; i++)
+            for (i = 0; i < view.storageCardWrappers.Count; i++)
             {
                 view.storageCardWrappers[i] = view.storageParent.GetChild(i).GetComponent<MaterialCardWrapper>();
             }
@@ -84,17 +83,17 @@ namespace VitsehLand.Scripts.Crafting
                 model.GetQuantityByMaterialOfRecipe(firstItemUI.cropStats.recipe),
                 model.currentQuantity);
 
-            view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorages);
+            view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorageDict);
             Debug.Log("Setup Done");
             view.body.gameObject.SetActive(false);
         }
 
-        public void OnClickProduct(int productIndex, CropStats cropStats)
+        public void OnClickProduct(CropStats cropStats)
         {
             Debug.Log("Click" + " " + cropStats.name);
             if (cropStats == null || cropStats.name == "Null") return;
 
-            model.currentRecipeIndex = productIndex;
+            model.currentRecipeNameId = cropStats.name;
 
             view.ShowCurrentItemInformation(cropStats);
 
@@ -115,11 +114,10 @@ namespace VitsehLand.Scripts.Crafting
                 }
             }
 
-            model.UpdateItemStorageList();
             view.ReLoadQuantityMaterialsRequired(model.GetCurrentRecipe(),
                 model.GetQuantityByMaterialOfRecipe(model.GetCurrentRecipe()),
                 model.currentQuantity);
-            view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorages);
+            view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorageDict);
         }
 
         public void Craft()

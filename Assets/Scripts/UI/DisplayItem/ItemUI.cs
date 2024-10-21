@@ -2,7 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using VitsehLand.Assets.Scripts.UI.Crafting;
 using VitsehLand.Scripts.Stats;
 
 namespace VitsehLand.Scripts.UI.DisplayItem
@@ -16,7 +15,7 @@ namespace VitsehLand.Scripts.UI.DisplayItem
         public Image icon;
         public TextMeshProUGUI nameItem;
 
-        public event Action<int, CropStats> OnItemClicked = delegate { };
+        public event Action<CropStats> OnItemClicked = delegate { };
 
         // Start is called before the first frame update
         void Awake()
@@ -50,10 +49,10 @@ namespace VitsehLand.Scripts.UI.DisplayItem
             Debug.Log("Click" + " " + cropStats.name);
             if (cropStats == null || cropStats.name == "Null") return;
 
-            OnItemClicked(index, cropStats);
+            OnItemClicked(cropStats);
         }
 
-        public void RegisterListener(Action<int, CropStats> listener)
+        public void RegisterListener(Action<CropStats> listener)
         {
             OnItemClicked += listener;
         }

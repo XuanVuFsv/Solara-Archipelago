@@ -1,4 +1,4 @@
-using System.Collections;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,41 +8,65 @@ using VitsehLand.Scripts.Stats;
 
 namespace VitsehLand.Scripts.Crafting
 {
-    public class CraftingModel : MonoBehaviour
+    public class CraftingModel : SerializedMonoBehaviour
     {
-        public List<RecipeData> allowedProductList = new List<RecipeData>();
+        #region Data Storage Variables
+        [PropertySpace(SpaceBefore = 20, SpaceAfter = 20)]
+        [InfoBox("List of product's recipes player currently can craft.")]
+        [DictionaryDrawerSettings(KeyLabel = "Product Name", ValueLabel = "RecipeData")]
         public Dictionary<string, RecipeData> productRecipes = new Dictionary<string, RecipeData>();
 
-        public List<ItemStorageData> itemStorages = new List<ItemStorageData>();
+        [PropertySpace(SpaceBefore = 0, SpaceAfter = 20)]
+        [InfoBox("List of items has been stored in crafting machine.")]
+        [DictionaryDrawerSettings(KeyLabel = "Item Name", ValueLabel = "ItemStorageData")]
         public Dictionary<string, ItemStorageData> itemStorageDict = new Dictionary<string, ItemStorageData>();
 
+        [PropertySpace(SpaceBefore = 0, SpaceAfter = 20)]
+        [InfoBox("List of CraftQueueHandler references that handle the craft progress.")]
         public List<CraftQueueHandler> craftQueueHandlers = new List<CraftQueueHandler>();
 
+        [PropertySpace(SpaceBefore = 0, SpaceAfter = 20)]
+        [InfoBox("Products that were crafted will be stored here.")]
         public List<Suckable> products = new List<Suckable>();
+        #endregion
 
+
+        #region Other Variables
+        [BoxGroup("Quantity")]
+        [Tooltip("Max products per one-time crafting")]
         public int maxQuantity;
+
+        [BoxGroup("Quantity")]
+        [Tooltip("Quantity the user has currently chosen for one-time crafting.")]
         public int currentQuantity;
 
-        public int currentRecipeIndex;
-
+        [BoxGroup("Storage Slot")]
+        [Tooltip("Quantity of storage slots has been unlocked and ready to store.")]
         public int unlockedStorageSlot = 3;
+
+        [BoxGroup("Storage Slot")]
+        [Tooltip("Max quantity of storage slots user can use to store materials.")]
         public int maxStorageSlot = 9;
 
+        [BoxGroup("Queue Info")]
+        [Tooltip("Quantity of queue slots has been unlocked and ready to use.")]
         public int queueQuantity = 1;
+
+        [BoxGroup("Queue Info")]
+        [Tooltip("Max quantity of queue slots user can use to craft products.")]
         public int maxQueueQuantity = 4;
+
+        [BoxGroup("Queue Info")]
+        [Tooltip("Quantity of queue slots being used.")]
         public int queueActiveQuantity = 0;
+
+        [PropertySpace(SpaceBefore = 20)]
+        public string currentRecipeNameId;
+        #endregion
 
         public void SetupInitData()
         {
-            foreach (RecipeData recipe in allowedProductList)
-            {
-                productRecipes.Add(recipe.cropStats.name, recipe);
-            }
-
-            foreach (ItemStorageData item in itemStorages)
-            {
-                itemStorageDict.Add(item.cropStats.name, item);
-            }
+            currentRecipeNameId = productRecipes.ElementAt(0).Key;
 
             for (int i = 0; i < craftQueueHandlers.Count; i++)
             {
@@ -52,7 +76,7 @@ namespace VitsehLand.Scripts.Crafting
 
         public RecipeData GetCurrentRecipe()
         {
-            return allowedProductList[currentRecipeIndex];
+            return productRecipes[currentRecipeNameId];
         }
 
         /// <summary>
@@ -74,7 +98,7 @@ namespace VitsehLand.Scripts.Crafting
 
         public int GetItemStorageQuantityByName(string name)
         {
-            if (itemStorages.Count == 0)
+            if (itemStorageDict.Count == 0)
             {
                 Debug.Log("Empty Storage");
                 return 0;
@@ -101,21 +125,12 @@ namespace VitsehLand.Scripts.Crafting
 
         public void RemoveItemStorage(string name)
         {
-            itemStorages.Remove(itemStorageDict[name]);
             itemStorageDict.Remove(name);
-        }
-
-        public void UpdateItemStorageList()
-        {
-            foreach (ItemStorageData item in itemStorages)
-            {
-                item.quantity = itemStorageDict[item.cropStats.name].quantity;
-            }
         }
 
         public bool CheckStorage()
         {
-            if (itemStorages.Count == unlockedStorageSlot) return false;
+            if (itemStorageDict.Count == unlockedStorageSlot) return false;
             return true;
         }
 
@@ -124,13 +139,11 @@ namespace VitsehLand.Scripts.Crafting
             if (itemStorageDict.ContainsKey(cropStats.name))
             {
                 itemStorageDict[cropStats.name].quantity += quantity;
-                //UpdateItemStorageList();
                 return true;
             }
             else if (CheckStorage())
             {
-                itemStorages.Add(new ItemStorageData(cropStats.name, cropStats, ItemStorageData.StorageLocation.CraftMachine, cropStats.cropPrefab, quantity));
-                itemStorageDict.Add(cropStats.name, itemStorages[itemStorages.Count - 1]);
+                itemStorageDict.Add(cropStats.name, new ItemStorageData(cropStats.name, cropStats, ItemStorageData.StorageLocation.CraftMachine, cropStats.cropPrefab, quantity));
                 return true;
             }
             else if (!CheckStorage()) return false;

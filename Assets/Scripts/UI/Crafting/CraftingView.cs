@@ -223,20 +223,23 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
             }
         }
 
-        public void UpdateMaterialStorage(int unlockedStorageSlot, List<ItemStorageData> itemStorages)
+        public void UpdateMaterialStorage(int unlockedStorageSlot, Dictionary<string, ItemStorageData> itemStorageDict)
         {
             ResetMaterialStorage(unlockedStorageSlot);
 
-            for (int i = 0; i < itemStorages.Count; i++)
+            int i = 0;
+            foreach (var item in itemStorageDict)
             {
                 if (i < unlockedStorageSlot)
                 {
                     storageCardWrappers[i].image.gameObject.SetActive(true);
                     storageCardWrappers[i].GetComponent<Image>().color = new Color32(0, 0, 0, 100);
-                    storageCardWrappers[i].image.sprite = itemStorages[i].cropStats.artwork;
-                    storageCardWrappers[i].quantityText.text = itemStorages[i].quantity.ToString();
-                    storageCardWrappers[i].cropStats = itemStorages[i].cropStats;
+                    storageCardWrappers[i].image.sprite = item.Value.cropStats.artwork;
+                    storageCardWrappers[i].quantityText.text = item.Value.quantity.ToString();
+                    storageCardWrappers[i].cropStats = item.Value.cropStats;
+                    i++;
                 }
+                else break;
             }
         }
 

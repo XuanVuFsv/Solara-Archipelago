@@ -21,9 +21,9 @@ namespace VitsehLand.Scripts.Construction.Garden
                 Crop plant = other.gameObject.GetComponent<Crop>();
                 if (plant == null) return;
 
-                if (plant.cropStats.featuredType != GameObjectType.FeaturedType.Normal
-                    || plant.cropStats.weaponSlot == ActiveWeapon.WeaponSlot.None
-                    || plant.cropStats.weaponSlot == ActiveWeapon.WeaponSlot.HandGun
+                if (plant.collectableObjectStat.featuredType != GameObjectType.FeaturedType.Normal
+                    || plant.collectableObjectStat.weaponSlot == ActiveWeapon.WeaponSlot.None
+                    || plant.collectableObjectStat.weaponSlot == ActiveWeapon.WeaponSlot.HandGun
                     || plant.onTree == true
                     || plant.state is CropGrowing
                     //|| plant.plantState == Plant.PlantState.GrowingBody
@@ -40,8 +40,8 @@ namespace VitsehLand.Scripts.Construction.Garden
                 //Auto assign or bind data to slot that was current slot on monitor
                 if (ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].crop == null)
                 {
-                    monitorGardenController.AssignCurrentCropStats(plant.cropStats);
-                    monitorGardenController.SetupDisplayCropStats();
+                    monitorGardenController.AssignCurrentCollectableObjectStat(plant.collectableObjectStat);
+                    monitorGardenController.SetupDisplayCollectableObjectStat();
                     Debug.Log("Update UI");
                 }
 
@@ -51,7 +51,7 @@ namespace VitsehLand.Scripts.Construction.Garden
                 if (ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].crop == null)
                 {
                     ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].crop = plant;
-                    //ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].countDownUI.StartCountDown(plant.cropStats.totalGrowingTime);
+                    //ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].countDownUI.StartCountDown(plant.collectableObjectStat.totalGrowingTime);
 
                     plant.ownerGarden = ownerGarden;
                     plant.ownerSlot = ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex];
@@ -64,7 +64,7 @@ namespace VitsehLand.Scripts.Construction.Garden
                 else // Asign to first empty slot found by FindEmptySlotIndex method if slot on monitor not null
                 {
                     ownerGarden.gardenSlotProperties[emptySlotIndex].crop = plant;
-                    //ownerGarden.gardenSlotProperties[emptySlotIndex].countDownUI.StartCountDown(plant.cropStats.totalGrowingTime);
+                    //ownerGarden.gardenSlotProperties[emptySlotIndex].countDownUI.StartCountDown(plant.collectableObjectStat.totalGrowingTime);
 
                     plant.ownerGarden = ownerGarden;
                     plant.ownerSlot = ownerGarden.gardenSlotProperties[emptySlotIndex];

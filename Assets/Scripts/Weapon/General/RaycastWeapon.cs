@@ -19,7 +19,7 @@ namespace VitsehLand.Scripts.Weapon.General
     {
         public IWeaponStragety weaponHandler;
 
-        public CropStatsController cropStatsController;
+        public CollectableObjectStatController collectableObjectStatController;
         public ShootController shootController;
         CameraShake cameraShake;
         GunCameraShake gunCameraShake;
@@ -38,13 +38,13 @@ namespace VitsehLand.Scripts.Weapon.General
 
         //public AnimationClip weaponAnimation;
 
-        WeaponStats weaponStats;
+        WeaponStat weaponStat;
         int layerMask;
 
         private void Start()
         {
             cameraShake = GetComponent<CameraShake>();
-            weaponStats = GetComponent<WeaponStatsController>().weaponStats;
+            weaponStat = GetComponent<WeaponStatsController>().weaponStat;
 
             fpsCameraTransform = Camera.main.transform;
             layerMask = ~(1 << LayerMask.NameToLayer("Ignore Raycast") | 1 << LayerMask.NameToLayer("Ignore Player") | 1 << LayerMask.NameToLayer("Only Player"));
@@ -54,8 +54,8 @@ namespace VitsehLand.Scripts.Weapon.General
 
         public async UniTaskVoid SetAsInputData(LayerMask _layerMask)
         {
-            await UniTask.WaitUntil(() => cropStatsController.cropStats != null);
-            ShootingInputData shootingInputData = new ShootingInputData(shootController, cropStatsController.cropStats.shootingHandleType, cropStatsController, shootController.source, raycastOrigin, fpsCameraTransform, hitEvent, cameraShake, bulletSpawnPoint, _layerMask);
+            await UniTask.WaitUntil(() => collectableObjectStatController.collectableObjectStat != null);
+            ShootingInputData shootingInputData = new ShootingInputData(shootController, collectableObjectStatController.collectableObjectStat.shootingHandleType, collectableObjectStatController, shootController.source, raycastOrigin, fpsCameraTransform, hitEvent, cameraShake, bulletSpawnPoint, _layerMask);
             weaponHandler.SetInputData(shootingInputData);
         }
 
@@ -81,7 +81,7 @@ namespace VitsehLand.Scripts.Weapon.General
         }
 
         /// <summary>
-        /// Run this method to shoot and select what type of bullet <see cref="CropStats.ShootingHandleType"/> and how to bullet interact to other objects
+        /// Run this method to shoot and select what type of bullet <see cref="CollectableObjectStat.ShootingHandleType"/> and how to bullet interact to other objects
         /// </summary>
         public void HandleLeftMouseClick()
         {
@@ -119,7 +119,7 @@ namespace VitsehLand.Scripts.Weapon.General
             Gizmos.color = Color.green;
             Vector3 direction = fpsCameraTransform.forward;
 
-            if (cropStatsController.cropStats.zoomType == CropStats.ZoomType.HasScope)
+            if (collectableObjectStatController.collectableObjectStat.zoomType == CollectableObjectStat.ZoomType.HasScope)
             {
                 Vector3 localDirection = Vector3.forward + cameraShake.GetCurrentPatternVector();
                 direction = fpsCameraTransform.TransformDirection(localDirection).normalized;
@@ -133,7 +133,7 @@ namespace VitsehLand.Scripts.Weapon.General
             //}
 
             Gizmos.DrawRay(raycastOrigin.position, direction);
-            Gizmos.DrawLine(raycastOrigin.position, raycastOrigin.position + direction * cropStatsController.range);
+            Gizmos.DrawLine(raycastOrigin.position, raycastOrigin.position + direction * collectableObjectStatController.range);
         }
 
         private void OnEnable()

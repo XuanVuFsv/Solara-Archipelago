@@ -134,16 +134,16 @@ namespace VitsehLand.Scripts.Crafting
             return true;
         }
 
-        public bool AddItemStorage(CropStats cropStats, int quantity)
+        public bool AddItemStorage(CollectableObjectStat collectableObjectStat, int quantity)
         {
-            if (itemStorageDict.ContainsKey(cropStats.name))
+            if (itemStorageDict.ContainsKey(collectableObjectStat.name))
             {
-                itemStorageDict[cropStats.name].quantity += quantity;
+                itemStorageDict[collectableObjectStat.name].quantity += quantity;
                 return true;
             }
             else if (CheckStorage())
             {
-                itemStorageDict.Add(cropStats.name, new ItemStorageData(cropStats.name, cropStats, ItemStorageData.StorageLocation.CraftMachine, cropStats.cropPrefab, quantity));
+                itemStorageDict.Add(collectableObjectStat.name, new ItemStorageData(collectableObjectStat.name, collectableObjectStat, ItemStorageData.StorageLocation.CraftMachine, collectableObjectStat.cropPrefab, quantity));
                 return true;
             }
             else if (!CheckStorage()) return false;

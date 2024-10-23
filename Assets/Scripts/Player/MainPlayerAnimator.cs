@@ -112,7 +112,7 @@ namespace VitsehLand.Scripts.Player
                         if (activeweapon.activeWeaponIndex == 1) animator.SetBool("isFire", shootController.isFire && inputController.isSingleFire && !shootController.isReloading);
                         else animator.SetBool("isFire", shootController.isFire && !shootController.isReloading);
                         animator.SetFloat("fireValue", 1);
-                        animator.SetFloat("fireRate", shootController.currentWeaponStatsController.currentCropStatsController.fireRate * multiplierFireAnimationSpeed);
+                        animator.SetFloat("fireRate", shootController.currentWeaponStatsController.currentCollectableObjectStatController.fireRate * multiplierFireAnimationSpeed);
                     }
                 }
 
@@ -131,7 +131,7 @@ namespace VitsehLand.Scripts.Player
 
         public IEnumerator ApplyFireRateAnimation()
         {
-            WaitForSeconds waitForSeconds = new WaitForSeconds(1 / shootController.currentWeaponStatsController.currentCropStatsController.fireRate);
+            WaitForSeconds waitForSeconds = new WaitForSeconds(1 / shootController.currentWeaponStatsController.currentCollectableObjectStatController.fireRate);
             yield return waitForSeconds;
             exitFireSession = true;
         }

@@ -59,7 +59,7 @@ namespace VitsehLand.Scripts.Construction.Garden
 
         [Header("Display element")]
         [SerializeField]
-        private CropStats currentCropStats;
+        private CollectableObjectStat currentCollectableObjectStat;
         public List<DisplayUIElementState> displayUIElementStates;
 
         public Image currentCropIcon;
@@ -86,7 +86,7 @@ namespace VitsehLand.Scripts.Construction.Garden
         public void Start()
         {
             UpdateBuildingStatus(true);
-            if (currentCropStats) SetupDisplayCropStats();
+            if (currentCollectableObjectStat) SetupDisplayCollectableObjectStat();
         }
 
         private void Update()
@@ -144,16 +144,16 @@ namespace VitsehLand.Scripts.Construction.Garden
         public void NextSlot()
         {
             currentSlotIndex = gardenManager.NextSlot();
-            AssignCurrentCropStats(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentCropStats());
-            SetupDisplayCropStats();
+            AssignCurrentCollectableObjectStat(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentCollectableObjectStat());
+            SetupDisplayCollectableObjectStat();
             landSelectedElement.anchoredPosition = slotCells[currentSlotIndex].GetComponent<RectTransform>().parent.GetComponent<RectTransform>().anchoredPosition;
         }
 
         public void PreviousSlot()
         {
             currentSlotIndex = gardenManager.PreviousSLot();
-            AssignCurrentCropStats(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentCropStats());
-            SetupDisplayCropStats();
+            AssignCurrentCollectableObjectStat(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentCollectableObjectStat());
+            SetupDisplayCollectableObjectStat();
             landSelectedElement.anchoredPosition = slotCells[currentSlotIndex].GetComponent<RectTransform>().parent.GetComponent<RectTransform>().anchoredPosition;
         }
 
@@ -185,23 +185,23 @@ namespace VitsehLand.Scripts.Construction.Garden
             bool canClear = gardenManager.ClearCurrentField();
 
             if (!canClear) return;
-            AssignCurrentCropStats(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentCropStats());
-            SetupDisplayCropStats();
+            AssignCurrentCollectableObjectStat(gardenManager.GetCurrentAvailableSlotIndex().GetCurrentCollectableObjectStat());
+            SetupDisplayCollectableObjectStat();
         }
 
-        public void AssignCurrentCropStats(CropStats newCropStats)
+        public void AssignCurrentCollectableObjectStat(CollectableObjectStat newCollectableObjectStat)
         {
-            currentCropStats = newCropStats;
+            currentCollectableObjectStat = newCollectableObjectStat;
         }
 
-        /// <summary> Setup what you will see about crop on monitor by pass crop stats as CropStats </summary>
-        public void SetupDisplayCropStats()
+        /// <summary> Setup what you will see about crop on monitor by pass crop stats as CollectableObjectStat </summary>
+        public void SetupDisplayCollectableObjectStat()
         {
             CheckCropUIState();
 
-            currentCropIcon.sprite = currentCropStats.artwork;
-            productName.text = currentCropStats.name.ToString();
-            information.text = currentCropStats.description;
+            currentCropIcon.sprite = currentCollectableObjectStat.artwork;
+            productName.text = currentCollectableObjectStat.name.ToString();
+            information.text = currentCollectableObjectStat.description;
         }
 
         public void CheckCropUIState()

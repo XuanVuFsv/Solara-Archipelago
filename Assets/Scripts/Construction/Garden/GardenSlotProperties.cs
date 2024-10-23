@@ -9,7 +9,7 @@ namespace VitsehLand.Scripts.Construction.Garden
     public class GardenSlotProperties : MonoBehaviour
     {
         public int index;
-        public CropStats nullAmmo;
+        public CollectableObjectStat nullAmmo;
 
         [Header("Slot properties")]
         public bool isUnLock;
@@ -43,7 +43,7 @@ namespace VitsehLand.Scripts.Construction.Garden
             isUnLock = _isUnlock;
             crop = _crop;
             totalGrowingProduct = _crop.wholePlantPoss.Count;
-            totalGrowingTime = _crop.cropStats.totalGrowingTime;
+            totalGrowingTime = _crop.collectableObjectStat.totalGrowingTime;
 
             upgradingLevel = _upgradingLevel;
             hasWatering = _hasWatering;
@@ -81,10 +81,10 @@ namespace VitsehLand.Scripts.Construction.Garden
             return true;
         }
 
-        public CropStats GetCurrentCropStats()
+        public CollectableObjectStat GetCurrentCollectableObjectStat()
         {
             if (crop == null) return nullAmmo;
-            return crop.cropStats;
+            return crop.collectableObjectStat;
         }
 
         public bool IsLockedSot()

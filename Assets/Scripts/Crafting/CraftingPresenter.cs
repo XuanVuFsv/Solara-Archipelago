@@ -61,8 +61,8 @@ namespace VitsehLand.Scripts.Crafting
             foreach (var productRecipe in model.productRecipes)
             {
                 Debug.Log(i);
-                view.itemUIs[i].cropStats = productRecipe.Value.cropStats;
-                view.itemUIs[i].SetItemUI(productRecipe.Value.cropStats);
+                view.itemUIs[i].collectableObjectStat = productRecipe.Value.collectableObjectStat;
+                view.itemUIs[i].SetItemUI(productRecipe.Value.collectableObjectStat);
                 i++;
             }    
 
@@ -72,15 +72,15 @@ namespace VitsehLand.Scripts.Crafting
             }
 
             ItemUI firstItemUI = view.itemUIs[0];
-            view.ShowCurrentItemInformation(firstItemUI.cropStats);
+            view.ShowCurrentItemInformation(firstItemUI.collectableObjectStat);
             view.ShowRecipe();
 
             Debug.Log(firstItemUI);
-            Debug.Log(model.GetQuantityByMaterialOfRecipe(firstItemUI.cropStats.recipe));
+            Debug.Log(model.GetQuantityByMaterialOfRecipe(firstItemUI.collectableObjectStat.recipe));
             Debug.Log(model.currentQuantity);
 
-            view.LoadMaterialsRequired(firstItemUI.cropStats.recipe,
-                model.GetQuantityByMaterialOfRecipe(firstItemUI.cropStats.recipe),
+            view.LoadMaterialsRequired(firstItemUI.collectableObjectStat.recipe,
+                model.GetQuantityByMaterialOfRecipe(firstItemUI.collectableObjectStat.recipe),
                 model.currentQuantity);
 
             view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorageDict);
@@ -88,17 +88,17 @@ namespace VitsehLand.Scripts.Crafting
             view.body.gameObject.SetActive(false);
         }
 
-        public void OnClickProduct(CropStats cropStats)
+        public void OnClickProduct(CollectableObjectStat collectableObjectStat)
         {
-            Debug.Log("Click" + " " + cropStats.name);
-            if (cropStats == null || cropStats.name == "Null") return;
+            Debug.Log("Click" + " " + collectableObjectStat.name);
+            if (collectableObjectStat == null || collectableObjectStat.name == "Null") return;
 
-            model.currentRecipeNameId = cropStats.name;
+            model.currentRecipeNameId = collectableObjectStat.name;
 
-            view.ShowCurrentItemInformation(cropStats);
+            view.ShowCurrentItemInformation(collectableObjectStat);
 
-            view.LoadMaterialsRequired(cropStats.recipe,
-                model.GetQuantityByMaterialOfRecipe(cropStats.recipe),
+            view.LoadMaterialsRequired(collectableObjectStat.recipe,
+                model.GetQuantityByMaterialOfRecipe(collectableObjectStat.recipe),
                 model.currentQuantity);
         }
 
@@ -107,10 +107,10 @@ namespace VitsehLand.Scripts.Crafting
             foreach (MaterialCardWrapper card in view.materialCardWrappers)
             {
                 card.quantity -= card.requiredQuantity;
-                model.SetItemStorage(card.cropStats.name, card.quantity);
+                model.SetItemStorage(card.collectableObjectStat.name, card.quantity);
                 if (card.quantity == 0)
                 {
-                    model.RemoveItemStorage(card.cropStats.name);
+                    model.RemoveItemStorage(card.collectableObjectStat.name);
                 }
             }
 
@@ -158,10 +158,10 @@ namespace VitsehLand.Scripts.Crafting
                     UpdateItemStorageDatas();
                     model.craftQueueHandlers[index].UIContainer.SetActive(true);
 
-                    model.craftQueueHandlers[index].cropStats = model.GetCurrentRecipe().cropStats;
+                    model.craftQueueHandlers[index].collectableObjectStat = model.GetCurrentRecipe().collectableObjectStat;
                     model.craftQueueHandlers[index].product = model.GetCurrentRecipe().product;
 
-                    int totalTime = model.currentQuantity * (int)model.GetCurrentRecipe().cropStats.totalProducingTime;
+                    int totalTime = model.currentQuantity * (int)model.GetCurrentRecipe().collectableObjectStat.totalProducingTime;
                     model.craftQueueHandlers[index].Craft(totalTime, productPos);
                     model.queueActiveQuantity++;
 
@@ -186,9 +186,9 @@ namespace VitsehLand.Scripts.Crafting
             view.VFX.SetActive(true);
         }
 
-        public bool AddItemStorage(CropStats cropStats, int quantity)
+        public bool AddItemStorage(CollectableObjectStat collectableObjectStat, int quantity)
         {
-            return model.AddItemStorage(cropStats, quantity);
+            return model.AddItemStorage(collectableObjectStat, quantity);
         }
 
         public void UpdateQuantity(int value, CraftingView.QuanityChangedActionType actionType)

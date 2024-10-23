@@ -9,7 +9,7 @@ namespace VitsehLand.Scripts.Enemy
         public Transform movePosTransform;
 
         private NavMeshAgent navMeshAgent;
-        public EnemyStats stats;
+        public EnemyStat enemyStat;
 
         private void Awake()
         {
@@ -30,16 +30,16 @@ namespace VitsehLand.Scripts.Enemy
 
         public virtual void SetupAgentFromConfiguration()
         {
-            navMeshAgent.acceleration = stats.acceleration;
-            navMeshAgent.angularSpeed = stats.angularSpeed;
-            navMeshAgent.areaMask = stats.areaMask;
-            navMeshAgent.avoidancePriority = stats.avoidancePriority;
-            navMeshAgent.baseOffset = stats.baseOffset;
-            navMeshAgent.height = stats.height;
-            navMeshAgent.obstacleAvoidanceType = stats.obstacleAvoidanceType;
-            navMeshAgent.radius = stats.radius;
-            navMeshAgent.speed = stats.speed;
-            navMeshAgent.stoppingDistance = stats.stoppingDistance;
+            navMeshAgent.acceleration = enemyStat.acceleration;
+            navMeshAgent.angularSpeed = enemyStat.angularSpeed;
+            navMeshAgent.areaMask = enemyStat.areaMask;
+            navMeshAgent.avoidancePriority = enemyStat.avoidancePriority;
+            navMeshAgent.baseOffset = enemyStat.baseOffset;
+            navMeshAgent.height = enemyStat.height;
+            navMeshAgent.obstacleAvoidanceType = enemyStat.obstacleAvoidanceType;
+            navMeshAgent.radius = enemyStat.radius;
+            navMeshAgent.speed = enemyStat.speed;
+            navMeshAgent.stoppingDistance = enemyStat.stoppingDistance;
         }
 
         public virtual void OnEnable()

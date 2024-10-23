@@ -7,10 +7,10 @@ namespace VitsehLand.Scripts.Inventory
     [Serializable]
     public class ItemStorageData
     {
-        public ItemStorageData(string itemID, CropStats cropStats, StorageLocation storageLocation, Suckable suckable, int quantity)
+        public ItemStorageData(string itemID, CollectableObjectStat collectableObjectStat, StorageLocation storageLocation, Suckable suckable, int quantity)
         {
             this.itemID = itemID;
-            this.cropStats = cropStats;
+            this.collectableObjectStat = collectableObjectStat;
             this.storageLocation = storageLocation;
             this.quantity = quantity;
             suckableItem = suckable;
@@ -22,7 +22,7 @@ namespace VitsehLand.Scripts.Inventory
             CraftMachine = 1
         }
         public string itemID;
-        public CropStats cropStats;
+        public CollectableObjectStat collectableObjectStat;
         public StorageLocation storageLocation;
         public Suckable suckableItem;
         public int quantity;

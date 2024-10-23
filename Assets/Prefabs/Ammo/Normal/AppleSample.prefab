@@ -10138,7 +10138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a54b70af07a41f4a92162d2888dcea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cropStats: {fileID: 11400000, guid: dfd8a0737941677488f362ccdaf46a37, type: 2}
+  collectableObjectStat: {fileID: 11400000, guid: dfd8a0737941677488f362ccdaf46a37, type: 2}
   cropContain: 1
   rigid: {fileID: 9111278382419106463}
   suckableCollider: {fileID: 9111278382419106462}

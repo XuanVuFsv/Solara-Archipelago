@@ -94,15 +94,15 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
             }
         }
 
-        public void ShowCurrentItemInformation(CropStats cropStats)
+        public void ShowCurrentItemInformation(CollectableObjectStat cropStat)
         {
-            currentItemName.text = cropStats.name;
-            type.text = cropStats.filteredType.ToString() + " - Level " + cropStats.requiredLevel.ToString();
-            description.text = cropStats.description;
-            currentProductImage.sprite = cropStats.artwork;
+            currentItemName.text = cropStat.name;
+            type.text = cropStat.filteredType.ToString() + " - Level " + cropStat.requiredLevel.ToString();
+            description.text = cropStat.description;
+            currentProductImage.sprite = cropStat.artwork;
 
-            cost.text = "Cost: " + cropStats.cost.ToString();
-            time.text = "Time: " + cropStats.totalProducingTime.ToString() + "s";
+            cost.text = "Cost: " + cropStat.cost.ToString();
+            time.text = "Time: " + cropStat.totalProducingTime.ToString() + "s";
         }
 
         #region Main Action Components
@@ -158,13 +158,13 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
 
         public void LoadMaterialsRequired(RecipeData recipeData, List<int> quantityMaterials, int quantity)
         {
-            Debug.Log("Load " + recipeData.cropStats.name);
+            Debug.Log("Load " + recipeData.collectableObjectStat.name);
             Debug.Log(materialCardWrappers.Count);
 
             for (int i = 0; i < materialCardWrappers.Count; i++)
             {
                 materialCardWrappers[i].gameObject.SetActive(true);
-                materialCardWrappers[i].cropStats = recipeData.items[i];
+                materialCardWrappers[i].collectableObjectStat = recipeData.items[i];
                 materialCardWrappers[i].image.sprite = recipeData.items[i].artwork;
 
                 materialCardWrappers[i].quantity = quantityMaterials[i];
@@ -234,9 +234,9 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
                 {
                     storageCardWrappers[i].image.gameObject.SetActive(true);
                     storageCardWrappers[i].GetComponent<Image>().color = new Color32(0, 0, 0, 100);
-                    storageCardWrappers[i].image.sprite = item.Value.cropStats.artwork;
+                    storageCardWrappers[i].image.sprite = item.Value.collectableObjectStat.artwork;
                     storageCardWrappers[i].quantityText.text = item.Value.quantity.ToString();
-                    storageCardWrappers[i].cropStats = item.Value.cropStats;
+                    storageCardWrappers[i].collectableObjectStat = item.Value.collectableObjectStat;
                     i++;
                 }
                 else break;

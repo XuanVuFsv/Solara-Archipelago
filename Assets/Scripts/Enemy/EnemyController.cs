@@ -14,7 +14,7 @@ namespace VitsehLand.Scripts.Enemy
         public GameObject shield;
         public ParticleSystem breakShieldFX;
         public Animator animator;
-        public EnemyStats enemyStats;
+        public EnemyStat enemyStat;
         public HealthController healthController;
 
         public EnemyBullet bullet;
@@ -39,7 +39,7 @@ namespace VitsehLand.Scripts.Enemy
         // Start is called before the first frame update
         void Awake()
         {
-            healthController.health = enemyStats.health;
+            healthController.health = enemyStat.health;
         }
 
         // Update is called once per frame
@@ -81,14 +81,14 @@ namespace VitsehLand.Scripts.Enemy
         public void TakeDamage(int damage)
         {
             if (defender == Defender.None) healthController.TakeDamage(damage);
-            else healthController.TakeDamage(damage * enemyStats.shieldDecreaseDamage);
+            else healthController.TakeDamage(damage * enemyStat.shieldDecreaseDamage);
 
             animator?.Play("TakeDamage");
 
             if (healthController.health <= 0)
             {
                 healthController.health = 0;
-                GemManager.Instance.AddGem(enemyStats.gemRewardForPlayerWhenKilled);
+                GemManager.Instance.AddGem(enemyStat.gemRewardForPlayerWhenKilled);
                 StartCoroutine(Die());
             }
         }
@@ -97,7 +97,7 @@ namespace VitsehLand.Scripts.Enemy
         {
             canAttack = false;
             animator?.Play("Attack");
-            if (attacker == Attacker.Normal) target.GetComponent<HealthController>().TakeDamage(enemyStats.damage);
+            if (attacker == Attacker.Normal) target.GetComponent<HealthController>().TakeDamage(enemyStat.damage);
             else
             {
                 Vector3 direction = (target.transform.position - spawnBulletTransform.position).normalized;
@@ -105,12 +105,12 @@ namespace VitsehLand.Scripts.Enemy
                 EnemyBullet newBullet = Instantiate(bullet.gameObject, spawnBulletTransform.position, Quaternion.Euler(target.transform.position - spawnBulletTransform.position)).GetComponent<EnemyBullet>();
                 newBullet.gameObject.SetActive(true);
 
-                newBullet.TriggerBullet(enemyStats.bulletForce, direction);
+                newBullet.TriggerBullet(enemyStat.bulletForce, direction);
             }
             AudioBuildingManager.Instance.audioSource.volume = 0.25f;
             AudioBuildingManager.Instance.PlayAudioClip(AudioBuildingManager.Instance.enemyAttack);
 
-            yield return new WaitForSeconds(1 / enemyStats.speedAttack);
+            yield return new WaitForSeconds(1 / enemyStat.speedAttack);
             canAttack = true;
         }
 

@@ -7,7 +7,7 @@ namespace VitsehLand.Scripts.Farming.General
         public void GoToCollector();
         public void ChangeToStored();
         public void ChangeToUnStored();
-        public CropStats GetCropStats();
+        public CollectableObjectStat GetCollectableObjectStat();
         public int GetCropContain();
         public void SetCropContain(int count);
     }

@@ -13,7 +13,7 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
         public override void Start()
         {
             //Debug.Log("Start Whole");
-            GemManager.Instance.AddGem((objectMachine as global::Crop).cropStats.gemEarnWhenHaverst);
+            GemManager.Instance.AddGem((objectMachine as global::Crop).collectableObjectStat.gemEarnWhenHaverst);
 
             (objectMachine as global::Crop).startDestroyedTimer = false;
             //StopCoroutine("DestroyTimer");

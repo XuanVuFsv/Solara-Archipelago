@@ -10,12 +10,12 @@ namespace VitsehLand.Scripts.UI.DisplayItem
     {
         public int index = 0;
 
-        public CropStats cropStats;
+        public CollectableObjectStat collectableObjectStat;
 
         public Image icon;
         public TextMeshProUGUI nameItem;
 
-        public event Action<CropStats> OnItemClicked = delegate { };
+        public event Action<CollectableObjectStat> OnItemClicked = delegate { };
 
         // Start is called before the first frame update
         void Awake()
@@ -27,12 +27,12 @@ namespace VitsehLand.Scripts.UI.DisplayItem
             GetComponent<Button>().interactable = false;
             GetComponent<Button>().onClick.AddListener(OnClick);
 
-            if (cropStats != null) SetItemUI(cropStats);
+            if (collectableObjectStat != null) SetItemUI(collectableObjectStat);
         }
 
-        public void SetItemUI(CropStats cropStats)
+        public void SetItemUI(CollectableObjectStat collectableObjectStat)
         {
-            if (cropStats.name == "Null")
+            if (collectableObjectStat.name == "Null")
             {
                 icon.gameObject.SetActive(false);
                 nameItem.text = "";
@@ -40,19 +40,19 @@ namespace VitsehLand.Scripts.UI.DisplayItem
             }
             icon.gameObject.SetActive(true);
             GetComponent<Button>().interactable = true;
-            icon.sprite = cropStats.artwork;
-            nameItem.text = cropStats.name;
+            icon.sprite = collectableObjectStat.artwork;
+            nameItem.text = collectableObjectStat.name;
         }
 
         public void OnClick()
         {
-            Debug.Log("Click" + " " + cropStats.name);
-            if (cropStats == null || cropStats.name == "Null") return;
+            Debug.Log("Click" + " " + collectableObjectStat.name);
+            if (collectableObjectStat == null || collectableObjectStat.name == "Null") return;
 
-            OnItemClicked(cropStats);
+            OnItemClicked(collectableObjectStat);
         }
 
-        public void RegisterListener(Action<CropStats> listener)
+        public void RegisterListener(Action<CollectableObjectStat> listener)
         {
             OnItemClicked += listener;
         }

@@ -99,7 +99,7 @@ namespace VitsehLand.Scripts.Weapon.General
             movementController = GetComponent<MovementController>();
 
             EquipWeapon(WeaponAction.Pickup, defaultWeapon0, true);
-            SetupNewWeapon(defaultWeapon0.weaponStats);
+            SetupNewWeapon(defaultWeapon0.weaponStat);
 
             AttachWeapon(defaultWeapon1, weaponActivateSlots[1], 1);
             AttachWeapon(defaultWeapon2, weaponActivateSlots[2], 2);
@@ -237,7 +237,7 @@ namespace VitsehLand.Scripts.Weapon.General
             bool isExistWeaponSlot = GetWeapon(pickedWeaponSlot);
             DropWeapon(WeaponAction.Pickup, pickedWeaponSlot);
             EquipWeapon(WeaponAction.Pickup, pickedWeapon, false, isExistWeaponSlot);
-            SetupNewWeapon(pickedWeapon.weaponStats);
+            SetupNewWeapon(pickedWeapon.weaponStat);
         }
 
         void SwitchWeapon(WeaponPickup activateWeapon)
@@ -263,10 +263,10 @@ namespace VitsehLand.Scripts.Weapon.General
             if (isHoldWeapon) DropWeapon(WeaponAction.Switch, (int)equippedWeapon[activeWeaponIndex].weaponSlot);
 
             EquipWeapon(WeaponAction.Switch, activateWeapon, true);
-            SetupNewWeapon(activateWeapon.weaponStats);
+            SetupNewWeapon(activateWeapon.weaponStat);
 
             rigController.SetInteger("weaponIndex", activeWeaponIndex);
-            gunCameraController.SetHasScope(activateWeapon.GetComponent<CropStatsController>().cropStats.zoomType == CropStats.ZoomType.HasScope);
+            gunCameraController.SetHasScope(activateWeapon.GetComponent<CollectableObjectStatController>().collectableObjectStat.zoomType == CollectableObjectStat.ZoomType.HasScope);
             GetComponent<MovementController>().SetMultiplierSpeed(1);
         }
 
@@ -283,7 +283,7 @@ namespace VitsehLand.Scripts.Weapon.General
             {
                 //newWeapon.GetComponent<CameraShake>().Subscribe();
                 shootController.currentWeaponStatsController = newWeapon.GetComponent<WeaponStatsController>();
-                shootController.currentWeaponStatsController.currentCropStatsController = newWeapon.GetComponent<CropStatsController>();
+                shootController.currentWeaponStatsController.currentCollectableObjectStatController = newWeapon.GetComponent<CollectableObjectStatController>();
 
                 //shootController.currentWeaponStatsController.UpdateAmmoUI();
                 //shootController.currentWeaponStatsController.refferedToShootController = true;
@@ -353,7 +353,7 @@ namespace VitsehLand.Scripts.Weapon.General
                 if (action == WeaponAction.Switch)
                 {
                     rigController.SetFloat("multiplier", -1);
-                    rigController.Play("Base Layer.Equip " + equippedWeapon[activeWeaponIndex].weaponStats.name, 0, 0f);
+                    rigController.Play("Base Layer.Equip " + equippedWeapon[activeWeaponIndex].weaponStat.name, 0, 0f);
                     rigController.SetFloat("multiplier", 1);
                     equippedWeaponParent[activeWeaponIndex].gameObject.SetActive(false);
                     return;
@@ -403,20 +403,20 @@ namespace VitsehLand.Scripts.Weapon.General
             attachedWeapon.GetComponent<WeaponStatsController>().OnStart();
         }
 
-        public void SetupNewWeapon(WeaponStats weaponStats)
+        public void SetupNewWeapon(WeaponStat weaponStat)
         {
             WeaponSystemUI.Instance.weaponNameText.text = GetCurrentWeaponName();
 
-            equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStats);
+            equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().SetupWeaponStats(weaponStat);
 
             shootController.magazineObject = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().magazineObject;
             //shootController.magazineObject = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().magazineObject;
             shootController.raycastWeapon = equippedWeapon[activeWeaponIndex].GetComponent<RaycastWeapon>();
 
-            //if (activeWeaponIndex == 2 || activeWeaponIndex == 3) gunCameraController.SetHoldWeaponAnimation(false, (int)weaponStats.weaponSlot);
-            //else gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStats.weaponSlot);
-            gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStats.weaponSlot);
-            //equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().ofActiveAmmo = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().weaponSlot == InventoryController.Instance.GetCurrentItem().cropStats.weaponSlot;
+            //if (activeWeaponIndex == 2 || activeWeaponIndex == 3) gunCameraController.SetHoldWeaponAnimation(false, (int)weaponStat.weaponSlot);
+            //else gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStat.weaponSlot);
+            gunCameraController.SetHoldWeaponAnimation(true, (int)weaponStat.weaponSlot);
+            //equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().ofActiveAmmo = equippedWeapon[activeWeaponIndex].GetComponent<WeaponStatsController>().weaponSlot == InventoryController.Instance.GetCurrentItem().cropStat.weaponSlot;
         }
 
         void SetWeaponAnimation()
@@ -430,16 +430,16 @@ namespace VitsehLand.Scripts.Weapon.General
             }
             else rigController.Rebind();
 
-            rigController.Play("Base Layer.Equip " + equippedWeapon[activeWeaponIndex].weaponStats.name, 0, 0f);
+            rigController.Play("Base Layer.Equip " + equippedWeapon[activeWeaponIndex].weaponStat.name, 0, 0f);
         }
 
         IEnumerator SetWeaponParent(WeaponPickup weapon, Transform weaponParent)
         {
             float timeToSetupWeaponParent = 1;
 
-            if (defaultWeapon2.GetComponent<WeaponPickup>().weaponStats.weaponAnimation)
+            if (defaultWeapon2.GetComponent<WeaponPickup>().weaponStat.weaponAnimation)
             {
-                timeToSetupWeaponParent = defaultWeapon2.GetComponent<WeaponPickup>().weaponStats.weaponAnimation.length;
+                timeToSetupWeaponParent = defaultWeapon2.GetComponent<WeaponPickup>().weaponStat.weaponAnimation.length;
             }
             yield return new WaitForSeconds(timeToSetupWeaponParent);
             //Debug.Log(weapon);
@@ -515,7 +515,7 @@ namespace VitsehLand.Scripts.Weapon.General
 
         public string GetCurrentWeaponName()
         {
-            return equippedWeapon[activeWeaponIndex].weaponStats.name;
+            return equippedWeapon[activeWeaponIndex].weaponStat.name;
         }
 
 #if UNITY_EDITOR

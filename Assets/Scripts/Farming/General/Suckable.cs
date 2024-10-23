@@ -17,7 +17,7 @@ namespace VitsehLand.Scripts.Farming.General
 
         //protected SuckableObjectType type;
 
-        public CropStats cropStats;
+        public CollectableObjectStat collectableObjectStat;
         public int cropContain;
 
         public Rigidbody rigid;
@@ -46,9 +46,9 @@ namespace VitsehLand.Scripts.Farming.General
             rigid.velocity = Vector3.zero;
         }
 
-        public CropStats GetCropStats()
+        public CollectableObjectStat GetCollectableObjectStat()
         {
-            return cropStats;
+            return collectableObjectStat;
         }
 
         public int GetCropContain()
@@ -73,16 +73,16 @@ namespace VitsehLand.Scripts.Farming.General
 
         public virtual void AddUsedGameEvent()
         {
-            Debug.Log("Pool" + cropStats.name + "Setup");
-            Debug.Log("Add Game Event Pool" + cropStats.name + "Setup");
+            Debug.Log("Pool" + collectableObjectStat.name + "Setup");
+            Debug.Log("Add Game Event Pool" + collectableObjectStat.name + "Setup");
 
-            PoolingManager.Instance.AddGameEvent("Pool" + cropStats.name + "Setup");
+            PoolingManager.Instance.AddGameEvent("Pool" + collectableObjectStat.name + "Setup");
         }
 
         public virtual void RemoveUseGameEvent()
         {
-            PoolingManager.Instance.RemoveGameEvent("Pool" + cropStats.name + "Setup");
-            Debug.Log("Remove Game Event Pool" + cropStats.name + "Setup");
+            PoolingManager.Instance.RemoveGameEvent("Pool" + collectableObjectStat.name + "Setup");
+            Debug.Log("Remove Game Event Pool" + collectableObjectStat.name + "Setup");
         }
     }
 }

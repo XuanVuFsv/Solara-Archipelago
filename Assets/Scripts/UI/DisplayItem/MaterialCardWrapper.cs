@@ -11,7 +11,7 @@ namespace VitsehLand.Scripts.UI.DisplayItem
     {
         public Image image;
         public TextMeshProUGUI quantityText;
-        public CropStats cropStats;
+        public CollectableObjectStat collectableObjectStat;
 
         public int quantity, requiredQuantity;
     }

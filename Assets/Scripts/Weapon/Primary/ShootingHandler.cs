@@ -37,27 +37,27 @@ namespace VitsehLand.Scripts.Weapon.Primary
 
         public void HandleLeftMouseClick()
         {
-            if (weaponStatsController.itemInInventory.cropStats.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
+            if (weaponStatsController.itemInInventory.collectableObjectStat.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
             ShootingHandle();
             shootingInputData.source.PlayOneShot(shootingInputData.source.clip);
         }
 
         public void HandleRightMouseClick()
         {
-            if (shootingInputData.cropStatsController.zoomType == CropStats.ZoomType.NoZoom) return;
+            if (shootingInputData.collectableObjectStatController.zoomType == CollectableObjectStat.ZoomType.NoZoom) return;
             PlayAimAnimation();
         }
 
         public void ShootingHandle()
         {
-            if (shootingInputData.cropStatsController.cropStats.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
+            if (shootingInputData.collectableObjectStatController.collectableObjectStat.weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
             shootingInputData.shootController.ApplyAttackAnimation();
-            if (shootingInputData.shootingHandleType == CropStats.ShootingHandleType.Raycast)
+            if (shootingInputData.shootingHandleType == CollectableObjectStat.ShootingHandleType.Raycast)
             {
                 //Debug.Log("Shoot");
                 RaycastHandle();
             }
-            else if (shootingInputData.shootingHandleType == CropStats.ShootingHandleType.InstantiateBullet)
+            else if (shootingInputData.shootingHandleType == CollectableObjectStat.ShootingHandleType.InstantiateBullet)
             {
                 InstantiateBulletHandle();
             }
@@ -65,20 +65,20 @@ namespace VitsehLand.Scripts.Weapon.Primary
 
         void RaycastHandle()
         {
-            if (shootingInputData.cropStatsController.bulletCount == 1)
+            if (shootingInputData.collectableObjectStatController.bulletCount == 1)
             {
                 //Enemy enemy;
-                shootingInputData.cameraShake.GenerateRecoil(shootingInputData.cropStatsController.zoomType);
+                shootingInputData.cameraShake.GenerateRecoil(shootingInputData.collectableObjectStatController.zoomType);
                 //Debug.Log("Shoot");
 
-                if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, shootingInputData.cropStatsController.range, shootingInputData.layerMask))
+                if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, shootingInputData.collectableObjectStatController.range, shootingInputData.layerMask))
                 {
                     //Debug.Log(hit.transform);
                     //hitEffectPrefab.transform.position = hit.point;
                     //hitEffectPrefab.transform.forward = hit.normal;
                     //hitEffectPrefab.Emit(5);
 
-                    PoolingManager.Instance.Get("Pool" + shootingInputData.cropStatsController.cropStats.name + "Setup");
+                    PoolingManager.Instance.Get("Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "Setup");
                     PoolingManager.Instance.Get("PoolTomatoSetup");
 
                     shootingInputData.hitEvent.Notify(hit);
@@ -97,8 +97,8 @@ namespace VitsehLand.Scripts.Weapon.Primary
                     if (hit.transform.gameObject.tag == "Wall")
                     {
                         GameObject wall = hit.transform.gameObject;
-                        //GemManager.Instance.AddGem(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
-                        //Debug.Log(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
+                        //GemManager.Instance.AddGem(weaponStatsController.currentCropStatsController.collectableObjectStat.gemEarnWhenKillEnemy);
+                        //Debug.Log(weaponStatsController.currentCropStatsController.collectableObjectStat.gemEarnWhenKillEnemy);
                         WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
                     }
 
@@ -106,8 +106,8 @@ namespace VitsehLand.Scripts.Weapon.Primary
                     {
                         EnemyController enemy = hit.transform.GetComponent<EnemyController>();
                         //GemManager.Instance.AddGem(enemy.enemyStats.gemRewardForPlayerWhenKilled);
-                        enemy.TakeDamage(weaponStatsController.currentCropStatsController.cropStats.damage);
-                        //Debug.Log(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
+                        enemy.TakeDamage(weaponStatsController.currentCollectableObjectStatController.collectableObjectStat.damage);
+                        //Debug.Log(weaponStatsController.currentCropStatsController.collectableObjectStat.gemEarnWhenKillEnemy);
                     }
                     #endregion
                 }
@@ -123,17 +123,17 @@ namespace VitsehLand.Scripts.Weapon.Primary
                 bool destroyedObstacle = false;
                 //Enemy enemy;
 
-                foreach (Vector3 pattern in shootingInputData.cropStatsController.cropStats.bulletDirectionPattern)
+                foreach (Vector3 pattern in shootingInputData.collectableObjectStatController.collectableObjectStat.bulletDirectionPattern)
                 {
                     Vector3 localDirection = Vector3.forward + pattern;
                     Vector3 direction = shootingInputData.fpsCameraTransform.TransformDirection(localDirection).normalized;
 
-                    shootingInputData.cameraShake.GenerateRecoil(shootingInputData.cropStatsController.zoomType);
-                    if (Physics.Raycast(shootingInputData.raycastOrigin.position, direction, out hit, shootingInputData.cropStatsController.range, shootingInputData.layerMask))
+                    shootingInputData.cameraShake.GenerateRecoil(shootingInputData.collectableObjectStatController.zoomType);
+                    if (Physics.Raycast(shootingInputData.raycastOrigin.position, direction, out hit, shootingInputData.collectableObjectStatController.range, shootingInputData.layerMask))
                     {
                         raycastHits.Add(hit);
-                        //Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.cropStatsController.cropStats.name + "Setup");
-                        PoolingManager.Instance.Get("Pool" + shootingInputData.cropStatsController.cropStats.name + "Setup");
+                        //Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "Setup");
+                        PoolingManager.Instance.Get("Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "Setup");
                         PoolingManager.Instance.Get("PoolTomatoSetup");
 
                         shootingInputData.hitEvent.Notify(hit);
@@ -143,8 +143,8 @@ namespace VitsehLand.Scripts.Weapon.Primary
                         if (!destroyedObstacle && hit.transform.gameObject.tag == "Wall")
                         {
                             GameObject wall = hit.transform.gameObject;
-                            GemManager.Instance.AddGem(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
-                            //Debug.Log(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
+                            GemManager.Instance.AddGem(weaponStatsController.currentCollectableObjectStatController.collectableObjectStat.gemEarnWhenKillEnemy);
+                            //Debug.Log(weaponStatsController.currentCropStatsController.collectableObjectStat.gemEarnWhenKillEnemy);
                             WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
                             destroyedObstacle = true;
                         }
@@ -153,8 +153,8 @@ namespace VitsehLand.Scripts.Weapon.Primary
                         {
                             EnemyController enemy = hit.transform.GetComponent<EnemyController>();
                             //GemManager.Instance.AddGem(enemy.enemyStats.gemRewardForPlayerWhenKilled);
-                            enemy.TakeDamage(weaponStatsController.currentCropStatsController.cropStats.damage);
-                            //Debug.Log(weaponStatsController.currentCropStatsController.cropStats.gemEarnWhenKillEnemy);
+                            enemy.TakeDamage(weaponStatsController.currentCollectableObjectStatController.collectableObjectStat.damage);
+                            //Debug.Log(weaponStatsController.currentCropStatsController.collectableObjectStat.gemEarnWhenKillEnemy);
                         }
                         #endregion
                     }
@@ -168,16 +168,16 @@ namespace VitsehLand.Scripts.Weapon.Primary
         {
             Vector3 direction = shootingInputData.fpsCameraTransform.forward;
 
-            if (shootingInputData.cropStatsController.cropStats.zoomType == CropStats.ZoomType.HasScope)
+            if (shootingInputData.collectableObjectStatController.collectableObjectStat.zoomType == CollectableObjectStat.ZoomType.HasScope)
             {
                 MyDebug.Log("Shoot");
                 Vector3 localDirection = Vector3.forward + shootingInputData.cameraShake.GetCurrentPatternVector();
                 direction = shootingInputData.fpsCameraTransform.TransformDirection(localDirection).normalized;
             }
 
-            GameObject newBullet = Instantiate(shootingInputData.cropStatsController.cropStats.bulletObject, shootingInputData.bulletSpawnPoint.position, Quaternion.identity);
-            newBullet.GetComponent<BulletBehaviour>().TriggerBullet(shootingInputData.cropStatsController.cropStats.name, shootingInputData.cropStatsController.force, direction);
-            shootingInputData.cameraShake.GenerateRecoil(shootingInputData.cropStatsController.zoomType);
+            GameObject newBullet = Instantiate(shootingInputData.collectableObjectStatController.collectableObjectStat.bulletObject, shootingInputData.bulletSpawnPoint.position, Quaternion.identity);
+            newBullet.GetComponent<BulletBehaviour>().TriggerBullet(shootingInputData.collectableObjectStatController.collectableObjectStat.name, shootingInputData.collectableObjectStatController.force, direction);
+            shootingInputData.cameraShake.GenerateRecoil(shootingInputData.collectableObjectStatController.zoomType);
 
             weaponStatsController.UseAmmo(1);
         }
@@ -192,7 +192,7 @@ namespace VitsehLand.Scripts.Weapon.Primary
             shootController.inAim = !shootController.inAim;
             shootController.aimEvent.Notify(shootController.inAim);
 
-            if (shootController.inAim) shootController.aimEvent.Notify(shootingInputData.cropStatsController.multiplierRecoilOnAim);
+            if (shootController.inAim) shootController.aimEvent.Notify(shootingInputData.collectableObjectStatController.multiplierRecoilOnAim);
 
             shootController.rigController.SetBool("inAim", shootController.inAim);
         }

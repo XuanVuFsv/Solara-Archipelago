@@ -10,8 +10,8 @@ namespace VitsehLand.Scripts.Crafting
     [CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
     public class RecipeData : ScriptableObject
     {
-        public CropStats cropStats;
-        public List<CropStats> items;
+        public CollectableObjectStat collectableObjectStat;
+        public List<CollectableObjectStat> items;
         public List<int> ammountPerSlots;
         public Suckable product;
     }

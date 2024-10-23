@@ -28,7 +28,7 @@ namespace VitsehLand.Scripts.Farming.Resource
         void Start()
         {
             animator = GetComponent<Animator>();
-            collectTime = resourcePrefab.GetComponent<NaturalResource>().cropStats.totalProducingTime;
+            collectTime = resourcePrefab.GetComponent<NaturalResource>().collectableObjectStat.totalProducingTime;
             resourceContain = Random.Range(1, maxResourceContain);
             InstantiateResources(resourceContain);
         }

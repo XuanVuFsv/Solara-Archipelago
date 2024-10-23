@@ -199,7 +199,7 @@ namespace VitsehLand.Scripts.Player
                 {
                     Debug.Log("Shoot");
                     //Shoot automatic
-                    if (Time.time - lastFired > 1 / currentWeaponStatsController.currentCropStatsController.fireRate)
+                    if (Time.time - lastFired > 1 / currentWeaponStatsController.currentCollectableObjectStatController.fireRate)
                     {
                         readyToFire = true;
 
@@ -214,7 +214,7 @@ namespace VitsehLand.Scripts.Player
 
                         isFire = true;
 
-                        if (currentWeaponStatsController.currentCropStatsController.cropStats.zoomType == CropStats.ZoomType.HasScope && inAim)
+                        if (currentWeaponStatsController.currentCollectableObjectStatController.collectableObjectStat.zoomType == CollectableObjectStat.ZoomType.HasScope && inAim)
                         {
                             //MyDebug.Log("Handle Right Click");
                             //MyDebug.Log(frame);
@@ -284,7 +284,7 @@ namespace VitsehLand.Scripts.Player
                 aimEvent.Notify(inAim);
             }
 
-            yield return currentWeaponStatsController.currentCropStatsController.reloadTimer;
+            yield return currentWeaponStatsController.currentCollectableObjectStatController.reloadTimer;
 
             //Restore ammo when reloading
             UpdateEndedReloadStats(true);

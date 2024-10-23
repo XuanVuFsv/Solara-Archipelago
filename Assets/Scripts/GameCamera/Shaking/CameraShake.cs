@@ -113,7 +113,7 @@ namespace VitsehLand.GameCamera.Shaking
             index = 0;
         }
 
-        public void GenerateRecoil(CropStats.ZoomType zoomType)
+        public void GenerateRecoil(CollectableObjectStat.ZoomType zoomType)
         {
             time = duration;
 
@@ -123,7 +123,7 @@ namespace VitsehLand.GameCamera.Shaking
             //MyDebug.Instance.Log(transform.forward);
 
             //random index use for sniper when scope turn off
-            if (zoomType == CropStats.ZoomType.HasScope)
+            if (zoomType == CollectableObjectStat.ZoomType.HasScope)
             {
                 index = Random.Range(0, recoilPattern.Count);
                 horizontalRecoil = recoilPattern[index].x;

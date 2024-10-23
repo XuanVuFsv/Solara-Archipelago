@@ -8,7 +8,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
     public class WeaponPickup : MonoBehaviour
     {
         public RectTransform weaponUIPrefab, weaponUI;
-        public WeaponStats weaponStats;
+        public WeaponStat weaponStat;
         public ActiveWeapon.WeaponSlot weaponSlot;
         public Vector3 viewPortPoint;
         public bool noParent = true;
@@ -22,8 +22,8 @@ namespace VitsehLand.Scripts.Weapon.Ammo
 
         private void Start()
         {
-            weaponStats = GetComponent<WeaponStatsController>().weaponStats;
-            weaponSlot = weaponStats.weaponSlot;
+            weaponStat = GetComponent<WeaponStatsController>().weaponStat;
+            weaponSlot = weaponStat.weaponSlot;
             if (noParent)
             {
                 CreateWeaponUI();
@@ -114,14 +114,14 @@ namespace VitsehLand.Scripts.Weapon.Ammo
         public void ShowWeaponStats()
         {
             weaponUI.gameObject.SetActive(true);
-            weaponUI.GetChild(0).GetComponent<WeaponUI>().weaponName.text = weaponStats.name;
+            weaponUI.GetChild(0).GetComponent<WeaponUI>().weaponName.text = weaponStat.name;
         }
 
         public void CreateWeaponUI()
         {
             weaponUI = Instantiate(weaponUIPrefab, transform.parent);
             weaponUI.localScale = CalcualteLocalScale(0.19f, 0.19f, 0.19f, transform.parent.localScale);
-            int multiplier = weaponStats.name.Length - standardLengthWeponName;
+            int multiplier = weaponStat.name.Length - standardLengthWeponName;
             if (multiplier > 0) weaponUI.GetChild(0).GetComponent<WeaponUI>().panel.localPosition -= offsetPerOverLetter * multiplier * Vector3.right;
 
             weaponUI.gameObject.SetActive(false);

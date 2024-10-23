@@ -13,7 +13,7 @@ namespace VitsehLand.Scripts.Enemy
         Rigidbody rigid;
 
         [SerializeField]
-        EnemyStats enemyStats;
+        EnemyStat enemyStat;
 
         public void TriggerBullet(int force, Vector3 direction)
         {
@@ -40,7 +40,7 @@ namespace VitsehLand.Scripts.Enemy
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<HealthController>().TakeDamage(enemyStats.damage);
+                other.gameObject.GetComponent<HealthController>().TakeDamage(enemyStat.damage);
             }
             Explode();
         }

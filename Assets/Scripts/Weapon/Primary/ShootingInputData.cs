@@ -10,11 +10,11 @@ namespace VitsehLand.Scripts.Weapon.Primary
     [System.Serializable]
     public class ShootingInputData
     {
-        public ShootingInputData(ShootController _shootController, CropStats.ShootingHandleType _shootingHandleType, CropStatsController _cropStatsController, AudioSource _source, Transform _raycastOrigin, Transform _fpsCameraTransform, GameEvent _hitEvent, CameraShake _cameraShake, Transform _bulletSpawnPoint, int _layerMask)
+        public ShootingInputData(ShootController _shootController, CollectableObjectStat.ShootingHandleType _shootingHandleType, CollectableObjectStatController _collectableObjectStatController, AudioSource _source, Transform _raycastOrigin, Transform _fpsCameraTransform, GameEvent _hitEvent, CameraShake _cameraShake, Transform _bulletSpawnPoint, int _layerMask)
         {
             shootController = _shootController;
             shootingHandleType = _shootingHandleType;
-            cropStatsController = _cropStatsController;
+            collectableObjectStatController = _collectableObjectStatController;
             source = _source;
             raycastOrigin = _raycastOrigin;
             fpsCameraTransform = _fpsCameraTransform;
@@ -26,8 +26,8 @@ namespace VitsehLand.Scripts.Weapon.Primary
 
         public ShootController shootController;
 
-        public CropStats.ShootingHandleType shootingHandleType;
-        public CropStatsController cropStatsController;
+        public CollectableObjectStat.ShootingHandleType shootingHandleType;
+        public CollectableObjectStatController collectableObjectStatController;
         public AudioSource source;
         public Transform raycastOrigin;
         public Transform fpsCameraTransform;

@@ -12,7 +12,7 @@ namespace VitsehLand.Scripts.Inventory
     [System.Serializable]
     public class Item
     {
-        public CropStats cropStats;
+        public CollectableObjectStat collectableObjectStat;
         public List<Suckable> totalPlant = new List<Suckable>();
         public Suckable suckableSample;
         public int index;
@@ -20,9 +20,9 @@ namespace VitsehLand.Scripts.Inventory
         public int ammountAmmoUsedByAttackWeapon = 0;
         public bool isActive = true;
 
-        public Item(CropStats cropStats, int count, bool isActive, Suckable ammoObject, int index)
+        public Item(CollectableObjectStat collectableObjectStat, int count, bool isActive, Suckable ammoObject, int index)
         {
-            this.cropStats = cropStats;
+            this.collectableObjectStat = collectableObjectStat;
             AddAmmo(count, ammoObject);
             this.isActive = isActive;
             this.index = index;
@@ -30,7 +30,7 @@ namespace VitsehLand.Scripts.Inventory
 
         public bool IsFull()
         {
-            return count < cropStats.maxCount;
+            return count < collectableObjectStat.maxCount;
         }
 
         public int AddAmmo(int newCount, Suckable ammoObject)
@@ -48,7 +48,7 @@ namespace VitsehLand.Scripts.Inventory
             int currentCount = count + newCount;
             //Debug.Log(currentCount);
 
-            if ((isPlant || isPower || isNaturalResource) && currentCount <= cropStats.maxCount)
+            if ((isPlant || isPower || isNaturalResource) && currentCount <= collectableObjectStat.maxCount)
             {
                 //Debug.Log("add");
                 totalPlant.Add(ammoObject);
@@ -59,7 +59,7 @@ namespace VitsehLand.Scripts.Inventory
                 suckableSample = (ammoObject as AmmoPickup).suckableSample;
             }
 
-            if (currentCount <= cropStats.maxCount)
+            if (currentCount <= collectableObjectStat.maxCount)
             {
                 count = currentCount;
                 //Debug.Log(isPlant);
@@ -87,9 +87,9 @@ namespace VitsehLand.Scripts.Inventory
             }
             else
             {
-                count = cropStats.maxCount;
+                count = collectableObjectStat.maxCount;
                 if (!isPlant) Object.Destroy(ammoObject.gameObject);
-                return currentCount - cropStats.maxCount;
+                return currentCount - collectableObjectStat.maxCount;
             }
         }
 
@@ -143,7 +143,7 @@ namespace VitsehLand.Scripts.Inventory
 
         public void ResetItem(Item resetItem)
         {
-            cropStats = resetItem.cropStats;
+            collectableObjectStat = resetItem.collectableObjectStat;
             totalPlant = null;
             suckableSample = null;
             count = 0;

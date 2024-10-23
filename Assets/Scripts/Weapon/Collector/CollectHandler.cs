@@ -138,9 +138,9 @@ namespace VitsehLand.Assets.Scripts.Weapon.Collector
                     {
                         if (suckedObject is Crop || suckedObject is PowerContainer || suckedObject is NaturalResource)
                         {
-                            if (suckedObject.cropStats != null)
+                            if (suckedObject.collectableObjectStat != null)
                             {
-                                CropStats cropStats = suckedObject.cropStats;
+                                CollectableObjectStat collectableObjectStat = suckedObject.collectableObjectStat;
                                 weaponStatsController.SuckUpAmmo(suckedObject);
                             }
                         }
@@ -169,7 +169,7 @@ namespace VitsehLand.Assets.Scripts.Weapon.Collector
                 return;
             }
 
-            if (weaponStatsController.itemInInventory.cropStats.name == "Null" || weaponStatsController.itemInInventory == null) return;
+            if (weaponStatsController.itemInInventory.collectableObjectStat.name == "Null" || weaponStatsController.itemInInventory == null) return;
             weaponStatsController.UseAmmo(1);
         }
 

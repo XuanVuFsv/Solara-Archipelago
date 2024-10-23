@@ -10,7 +10,7 @@ namespace VitsehLand.Scripts.Crafting
 {
     public class CraftQueueHandler : MonoBehaviour
     {
-        public CropStats cropStats;
+        public CollectableObjectStat collectableObjectStat;
         public Suckable product;
 
         public GameObject UIContainer;
@@ -45,15 +45,15 @@ namespace VitsehLand.Scripts.Crafting
 
         public IEnumerator CraftProduct(int time, Transform pos)
         {
-            productImage.sprite = cropStats.artwork;
+            productImage.sprite = collectableObjectStat.artwork;
             totalTime = time;
 
-            Debug.Log("Start waiting " + (time / product.cropStats.totalProducingTime).ToString() + "energy");
+            Debug.Log("Start waiting " + (time / product.collectableObjectStat.totalProducingTime).ToString() + "energy");
             isReady = false;
 
             yield return new WaitForSeconds(time);
 
-            for (int i = 0; i < time / product.cropStats.totalProducingTime; i++)
+            for (int i = 0; i < time / product.collectableObjectStat.totalProducingTime; i++)
             {
                 Debug.Log("Init");
                 GameObject newGameObject = Instantiate(product.gameObject, pos.position + UnityEngine.Random.value * 0.25f * Vector3.one, Quaternion.identity);

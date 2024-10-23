@@ -52,15 +52,15 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
             if ((objectMachine as global::Crop).ownerGarden.waterManager.outOfResource) await UniTask.WaitUntil(() => (objectMachine as global::Crop).ownerGarden.waterManager.outOfResource == false);
             inGrowing = true;
 
-            (objectMachine as global::Crop).ownerSlot.countDownUI.StartCountDown((objectMachine as global::Crop).cropStats.totalGrowingTime);
-            //(objectMachine as Plant).ownerSlot.countDownUI.StartCountDown((int)((objectMachine as Plant).cropStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue));
+            (objectMachine as global::Crop).ownerSlot.countDownUI.StartCountDown((objectMachine as global::Crop).collectableObjectStat.totalGrowingTime);
+            //(objectMachine as Plant).ownerSlot.countDownUI.StartCountDown((int)((objectMachine as Plant).collectableObjectStat.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue));
             if ((objectMachine as global::Crop).ownerGarden.monitorGardenController.currentSlotIndex == (objectMachine as global::Crop).ownerSlot.index) (objectMachine as global::Crop).ownerGarden.monitorGardenController.CheckCropUIState();
 
             //if ((objectMachine as Plant).ownerGarden.waterManager.outOfResource == false) return;
 
             (objectMachine as global::Crop).startGrowingTime = DateTime.UtcNow.ToLocalTime();
-            TimeSpan span = TimeSpan.FromSeconds((objectMachine as global::Crop).cropStats.totalGrowingTime);
-            //TimeSpan span = TimeSpan.FromSeconds((objectMachine as Plant).cropStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
+            TimeSpan span = TimeSpan.FromSeconds((objectMachine as global::Crop).collectableObjectStat.totalGrowingTime);
+            //TimeSpan span = TimeSpan.FromSeconds((objectMachine as Plant).collectableObjectStat.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
             (objectMachine as global::Crop).endGrowingTime = (objectMachine as global::Crop).startGrowingTime.Add(span);
             (objectMachine as global::Crop).StartCoroutine(StartGrowingProcess());
             Debug.Log("StartGrowingProcess");
@@ -69,8 +69,8 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
         IEnumerator StartGrowingProcess()
         {
             //Debug.Log("StartGrowingProcess");
-            yield return new WaitForSeconds((objectMachine as global::Crop).cropStats.totalGrowingTime);
-            //yield return new WaitForSeconds((objectMachine as Plant).cropStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
+            yield return new WaitForSeconds((objectMachine as global::Crop).collectableObjectStat.totalGrowingTime);
+            //yield return new WaitForSeconds((objectMachine as Plant).collectableObjectStat.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
             (objectMachine as global::Crop).seedOuterEffect.SetActive(false);
             //wholeOuterEffect.SetActive(true);
             CompleteGrowingSession();
@@ -99,7 +99,7 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
             if ((objectMachine as global::Crop).ownerGarden.monitorGardenController.currentSlotIndex == (objectMachine as global::Crop).ownerSlot.index) (objectMachine as global::Crop).ownerGarden.monitorGardenController.CheckCropUIState();
 
             await UniTask.WaitUntil(() => (objectMachine as global::Crop).HaveWholeCrop() == false);
-            //(objectMachine as Plant).ownerSlot.countDownUI.StartCountDown((int)((objectMachine as Plant).cropStats.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue));
+            //(objectMachine as Plant).ownerSlot.countDownUI.StartCountDown((int)((objectMachine as Plant).collectableObjectStat.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue));
 
             //if ((objectMachine as Plant).ownerGarden.monitorGardenController.currentSlotIndex == (objectMachine as Plant).ownerSlot.index) (objectMachine as Plant).ownerGarden.monitorGardenController.CheckCropUIState();
 

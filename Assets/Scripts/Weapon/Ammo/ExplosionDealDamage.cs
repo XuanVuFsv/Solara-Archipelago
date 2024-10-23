@@ -8,7 +8,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
 {
     public class ExplosionDealDamage : MonoBehaviour
     {
-        public CropStats cropStats;
+        public CollectableObjectStat collectableObjectStat;
 
         // Start is called before the first frame update
         void Start()
@@ -27,7 +27,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
             if (other.tag == "Enemy")
             {
                 //Debug.Log("Explode");
-                other.gameObject.GetComponent<EnemyController>().TakeDamage(cropStats.damage);
+                other.gameObject.GetComponent<EnemyController>().TakeDamage(collectableObjectStat.damage);
             }
         }
     }

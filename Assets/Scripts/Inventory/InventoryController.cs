@@ -52,7 +52,7 @@ namespace VitsehLand.Scripts.Inventory
 
         public Item AddNewAmmoToInventory(CollectableObjectStat collectableObjectStat, int count, Suckable ammoObject)
         {
-            int firstSlot = GetSlotByName(collectableObjectStat.name);
+            int firstSlot = GetSlotByName(collectableObjectStat.collectableObjectName);
             int emptySlot = GetSlotByName("Null");
             Item item = GetCurrentItem();
 
@@ -98,7 +98,7 @@ namespace VitsehLand.Scripts.Inventory
         {
             for (int i = 0; i < itemCountInInventory; i++)
             {
-                if (currentAmmoList[i].collectableObjectStat.name == name) return i;
+                if (currentAmmoList[i].collectableObjectStat.collectableObjectName == name) return i;
             }
             return -1;
         }
@@ -110,7 +110,7 @@ namespace VitsehLand.Scripts.Inventory
 
         public Item GetItem(CollectableObjectStat collectableObjectStat)
         {
-            return currentAmmoList[GetSlotByName(collectableObjectStat.name)];
+            return currentAmmoList[GetSlotByName(collectableObjectStat.collectableObjectName)];
         }
 
         public Item GetCurrentItem()

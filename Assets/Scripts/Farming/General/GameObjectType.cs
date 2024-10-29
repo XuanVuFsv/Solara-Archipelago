@@ -1,14 +1,15 @@
-namespace VitsehLand.Assets.Scripts.Farming.General
+namespace VitsehLand.Scripts.Farming.General
 {
     public static class GameObjectType
     {
         public enum FilteredType
         {
             Crop = 0,
-            NaturePlant = 1,
-            Fertilizer = 2,
-            NaturalResource = 3,
-            Power = 4
+            FarmingProduct = 1,
+            NaturalResource = 2,
+            Power = 3,
+            Water = 4,
+            Fertilizer = 5,
         }
 
         public enum FeaturedType

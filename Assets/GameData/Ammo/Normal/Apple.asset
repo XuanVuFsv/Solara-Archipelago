@@ -12,20 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
+  strSelectingComponents:
+  - FarmingCropStat
+  - AttackingCropStat
+  strComponents: []
+  selectingComponents: 6
+  components: []
   weaponSlot: 0
-  name: Apple
+  collectableObjectName: 
   maxCount: 100
   ammoAllowedInMagazine: 5
   amplitudeGainImpulse: 1
   force: 100
   fireRate: 1.5
   artwork: {fileID: 21300000, guid: e6bd9038895bb4d6d80ac65fb8b7e5d6, type: 3}
-  fruitPrefab: {fileID: 0}
+  cropPrefab: {fileID: 0}
   shootingHandleType: 1
+  bulletObject: {fileID: 1834515177923798, guid: 56f810c590fcf384582ce73c1ac356dc, type: 3}
   featuredType: 2
   bulletEffectComponent: -1
   trailTracer: {fileID: 0}
-  bulletObject: {fileID: 1834515177923798, guid: 56f810c590fcf384582ce73c1ac356dc, type: 3}
   hitEffectPrefab: {fileID: 0}
   damage: 75
   damageDealToSpecificEnemy: 0
@@ -48,3 +54,7 @@ MonoBehaviour:
   description: Bomb. Only earn GEM from harvest but its power so huge
   gemEarnWhenKillEnemy: 0
   gemEarnWhenHaverst: 25
+  totalProducingTime: 0
+  filteredType: 0
+  recipe: {fileID: 0}
+  cost: 0

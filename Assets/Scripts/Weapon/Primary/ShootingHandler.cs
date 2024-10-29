@@ -78,7 +78,7 @@ namespace VitsehLand.Scripts.Weapon.Primary
                     //hitEffectPrefab.transform.forward = hit.normal;
                     //hitEffectPrefab.Emit(5);
 
-                    PoolingManager.Instance.Get("Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "Setup");
+                    PoolingManager.Instance.Get("Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.collectableObjectName + "Setup");
                     PoolingManager.Instance.Get("PoolTomatoSetup");
 
                     shootingInputData.hitEvent.Notify(hit);
@@ -133,7 +133,7 @@ namespace VitsehLand.Scripts.Weapon.Primary
                     {
                         raycastHits.Add(hit);
                         //Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "Setup");
-                        PoolingManager.Instance.Get("Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "Setup");
+                        PoolingManager.Instance.Get("Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.collectableObjectName + "Setup");
                         PoolingManager.Instance.Get("PoolTomatoSetup");
 
                         shootingInputData.hitEvent.Notify(hit);
@@ -143,7 +143,7 @@ namespace VitsehLand.Scripts.Weapon.Primary
                         if (!destroyedObstacle && hit.transform.gameObject.tag == "Wall")
                         {
                             GameObject wall = hit.transform.gameObject;
-                            GemManager.Instance.AddGem(weaponStatsController.currentCollectableObjectStatController.collectableObjectStat.gemEarnWhenKillEnemy);
+                            //GemManager.Instance.AddGem(weaponStatsController.currentCollectableObjectStatController.collectableObjectStat.gemEarnWhenKillEnemy);
                             //Debug.Log(weaponStatsController.currentCropStatsController.collectableObjectStat.gemEarnWhenKillEnemy);
                             WallSpawner.Instance.DestroyWall(wall.GetComponent<WallBehaviour>().index);
                             destroyedObstacle = true;
@@ -176,7 +176,7 @@ namespace VitsehLand.Scripts.Weapon.Primary
             }
 
             GameObject newBullet = Instantiate(shootingInputData.collectableObjectStatController.collectableObjectStat.bulletObject, shootingInputData.bulletSpawnPoint.position, Quaternion.identity);
-            newBullet.GetComponent<BulletBehaviour>().TriggerBullet(shootingInputData.collectableObjectStatController.collectableObjectStat.name, shootingInputData.collectableObjectStatController.force, direction);
+            newBullet.GetComponent<BulletBehaviour>().TriggerBullet(shootingInputData.collectableObjectStatController.collectableObjectStat.collectableObjectName, shootingInputData.collectableObjectStatController.force, direction);
             shootingInputData.cameraShake.GenerateRecoil(shootingInputData.collectableObjectStatController.zoomType);
 
             weaponStatsController.UseAmmo(1);

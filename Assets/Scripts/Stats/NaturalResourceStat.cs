@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace VitsehLand.Scripts.Stats
 {
-    public class ResourceStat : MonoBehaviour
+    public class NaturalResourceStat : MonoBehaviour
     {
         // Start is called before the first frame update
         void Start()

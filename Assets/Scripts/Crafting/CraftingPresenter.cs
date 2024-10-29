@@ -90,10 +90,10 @@ namespace VitsehLand.Scripts.Crafting
 
         public void OnClickProduct(CollectableObjectStat collectableObjectStat)
         {
-            Debug.Log("Click" + " " + collectableObjectStat.name);
-            if (collectableObjectStat == null || collectableObjectStat.name == "Null") return;
+            Debug.Log("Click" + " " + collectableObjectStat.collectableObjectName);
+            if (collectableObjectStat == null || collectableObjectStat.collectableObjectName == "Null") return;
 
-            model.currentRecipeNameId = collectableObjectStat.name;
+            model.currentRecipeNameId = collectableObjectStat.collectableObjectName;
 
             view.ShowCurrentItemInformation(collectableObjectStat);
 
@@ -107,10 +107,10 @@ namespace VitsehLand.Scripts.Crafting
             foreach (MaterialCardWrapper card in view.materialCardWrappers)
             {
                 card.quantity -= card.requiredQuantity;
-                model.SetItemStorage(card.collectableObjectStat.name, card.quantity);
+                model.SetItemStorage(card.collectableObjectStat.collectableObjectName, card.quantity);
                 if (card.quantity == 0)
                 {
-                    model.RemoveItemStorage(card.collectableObjectStat.name);
+                    model.RemoveItemStorage(card.collectableObjectStat.collectableObjectName);
                 }
             }
 

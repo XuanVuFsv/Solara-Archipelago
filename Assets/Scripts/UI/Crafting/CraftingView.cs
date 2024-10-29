@@ -96,7 +96,7 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
 
         public void ShowCurrentItemInformation(CollectableObjectStat cropStat)
         {
-            currentItemName.text = cropStat.name;
+            currentItemName.text = cropStat.collectableObjectName;
             type.text = cropStat.filteredType.ToString() + " - Level " + cropStat.requiredLevel.ToString();
             description.text = cropStat.description;
             currentProductImage.sprite = cropStat.artwork;
@@ -158,7 +158,7 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
 
         public void LoadMaterialsRequired(RecipeData recipeData, List<int> quantityMaterials, int quantity)
         {
-            Debug.Log("Load " + recipeData.collectableObjectStat.name);
+            Debug.Log("Load " + recipeData.collectableObjectStat.collectableObjectName);
             Debug.Log(materialCardWrappers.Count);
 
             for (int i = 0; i < materialCardWrappers.Count; i++)

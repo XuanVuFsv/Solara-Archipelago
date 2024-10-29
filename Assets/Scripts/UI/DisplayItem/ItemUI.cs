@@ -32,7 +32,7 @@ namespace VitsehLand.Scripts.UI.DisplayItem
 
         public void SetItemUI(CollectableObjectStat collectableObjectStat)
         {
-            if (collectableObjectStat.name == "Null")
+            if (collectableObjectStat.collectableObjectName == "Null")
             {
                 icon.gameObject.SetActive(false);
                 nameItem.text = "";
@@ -41,13 +41,13 @@ namespace VitsehLand.Scripts.UI.DisplayItem
             icon.gameObject.SetActive(true);
             GetComponent<Button>().interactable = true;
             icon.sprite = collectableObjectStat.artwork;
-            nameItem.text = collectableObjectStat.name;
+            nameItem.text = collectableObjectStat.collectableObjectName;
         }
 
         public void OnClick()
         {
-            Debug.Log("Click" + " " + collectableObjectStat.name);
-            if (collectableObjectStat == null || collectableObjectStat.name == "Null") return;
+            Debug.Log("Click" + " " + collectableObjectStat.collectableObjectName);
+            if (collectableObjectStat == null || collectableObjectStat.collectableObjectName == "Null") return;
 
             OnItemClicked(collectableObjectStat);
         }

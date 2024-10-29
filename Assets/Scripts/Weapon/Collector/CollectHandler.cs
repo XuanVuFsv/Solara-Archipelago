@@ -169,7 +169,7 @@ namespace VitsehLand.Assets.Scripts.Weapon.Collector
                 return;
             }
 
-            if (weaponStatsController.itemInInventory.collectableObjectStat.name == "Null" || weaponStatsController.itemInInventory == null) return;
+            if (weaponStatsController.itemInInventory.collectableObjectStat.collectableObjectName == "Null" || weaponStatsController.itemInInventory == null) return;
             weaponStatsController.UseAmmo(1);
         }
 

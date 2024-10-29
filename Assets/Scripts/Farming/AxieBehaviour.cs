@@ -114,7 +114,7 @@ namespace VitsehLand.Scripts.Farming
         {
             Crop item = collision.gameObject.GetComponent<Crop>();
             if (item == null) return;
-            if (item.collectableObjectStat.name == "StrawberryJam" || item.collectableObjectStat.name == "AppleJam" && food < foodStack)
+            if (item.collectableObjectStat.collectableObjectName == "StrawberryJam" || item.collectableObjectStat.collectableObjectName == "AppleJam" && food < foodStack)
             {
                 food++;
                 if (food == foodStack)

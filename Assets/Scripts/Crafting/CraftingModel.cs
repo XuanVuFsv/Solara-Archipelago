@@ -84,7 +84,7 @@ namespace VitsehLand.Scripts.Crafting
         /// </summary>
         public List<int> GetQuantityByMaterialOfRecipe(RecipeData recipe)
         {
-            return recipe.items.Select(item => GetItemStorageQuantityByName(item.name)).ToList();
+            return recipe.items.Select(item => GetItemStorageQuantityByName(item.collectableObjectName)).ToList();
         }
 
         public int FindFirstCraftSlotReady()
@@ -136,14 +136,14 @@ namespace VitsehLand.Scripts.Crafting
 
         public bool AddItemStorage(CollectableObjectStat collectableObjectStat, int quantity)
         {
-            if (itemStorageDict.ContainsKey(collectableObjectStat.name))
+            if (itemStorageDict.ContainsKey(collectableObjectStat.collectableObjectName))
             {
-                itemStorageDict[collectableObjectStat.name].quantity += quantity;
+                itemStorageDict[collectableObjectStat.collectableObjectName].quantity += quantity;
                 return true;
             }
             else if (CheckStorage())
             {
-                itemStorageDict.Add(collectableObjectStat.name, new ItemStorageData(collectableObjectStat.name, collectableObjectStat, ItemStorageData.StorageLocation.CraftMachine, collectableObjectStat.cropPrefab, quantity));
+                itemStorageDict.Add(collectableObjectStat.collectableObjectName, new ItemStorageData(collectableObjectStat.collectableObjectName, collectableObjectStat, ItemStorageData.StorageLocation.CraftMachine, collectableObjectStat.cropPrefab, quantity));
                 return true;
             }
             else if (!CheckStorage()) return false;

@@ -1,5 +1,4 @@
 using UnityEngine;
-using VitsehLand.Assets.Scripts.Farming.General;
 using VitsehLand.GameCamera;
 using VitsehLand.GameCamera.Shaking;
 using VitsehLand.Scripts.Farming.General;
@@ -171,7 +170,7 @@ namespace VitsehLand.Scripts.Weapon.General
             //    //ammunitionChestPicked = ammoPickup;
             //}
             //else
-            if (currentCollectableObjectStatController.collectableObjectStat.name == ammoPickup.collectableObjectStat.name)
+            if (currentCollectableObjectStatController.collectableObjectStat.collectableObjectName == ammoPickup.collectableObjectStat.collectableObjectName)
             {
                 //Debug.Log("Add same ammo");
 
@@ -211,7 +210,7 @@ namespace VitsehLand.Scripts.Weapon.General
                 Item newItem = InventoryController.Instance.AddNewAmmoToInventory(ammoPickup.collectableObjectStat, ammoPickup.GetCropContain(), ammoPickup);
                 //if (ammoPickup.collectableObjectStat.featuredType == CropStats.FeaturedType.Normal && ammoPickup.collectableObjectStat.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) ammoPickup.AddUsedGameEvent(false);
 
-                if (itemInInventory.collectableObjectStat.name == "Null" && itemInInventory != InventoryController.Instance.GetCurrentItem())
+                if (itemInInventory.collectableObjectStat.collectableObjectName == "Null" && itemInInventory != InventoryController.Instance.GetCurrentItem())
                 {
                     itemInInventory = InventoryController.Instance.GetCurrentItem();
                     currentCollectableObjectStatController.collectableObjectStat = ammoPickup.collectableObjectStat;

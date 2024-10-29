@@ -1,6 +1,6 @@
 using UnityEngine;
-using VitsehLand.Assets.Scripts.Farming.General;
 using VitsehLand.Scripts.Crafting;
+using VitsehLand.Scripts.Farming.General;
 
 namespace VitsehLand.Scripts.Stats
 {

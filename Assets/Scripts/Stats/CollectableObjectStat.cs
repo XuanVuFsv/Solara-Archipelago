@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using VitsehLand.Assets.Scripts.Farming.General;
 using VitsehLand.Scripts.Crafting;
+using VitsehLand.Scripts.Farming.General;
 using VitsehLand.Scripts.Weapon.General;
 
 namespace VitsehLand.Scripts.Stats
@@ -9,22 +12,81 @@ namespace VitsehLand.Scripts.Stats
     [CreateAssetMenu(fileName = "New Collectable Object", menuName = "Collectable Object")]
     public class CollectableObjectStat : ScriptableObject
     {
-        [Header("Crop")]
+        [Title("Choose Collectable Object Components")]
+#if UNITY_EDITOR
+        [System.Flags]
+        public enum CollectableObjectComponentBitmaskEnum
+        {
+            FarmingCropStat = 1 << 1,
+            AttackingCropStat = 1 << 2,
+            FarmingProductStat = 1 << 3,
+            NaturalResourceStat = 1 << 4,
+            PowerStat = 1 << 5,
+            WaterStat = 1 << 6,
+            FertilizerStat = 1 << 7,
+            All = FarmingCropStat | AttackingCropStat |
+                FarmingProductStat | NaturalResourceStat |
+                PowerStat | WaterStat | FertilizerStat
+        }
+        public readonly List<string> componentEnums = Enum.GetNames(typeof(CollectableObjectComponentBitmaskEnum)).ToList();
+        public List<string> strSelectingComponents;
+        public List<string> strComponents;
 
-        [Tooltip("Slot for Plant. All of ammo can used by slot 3 (collect/shoot out). Product type can't use slot 1 to attack so it's will be select slot3. While normal Plant can attack and collect/shoot out shoud be select slot 1")]
+        [OnValueChanged("UpdateContainingComponents")]
+        public CollectableObjectComponentBitmaskEnum selectingComponents;
+
+        private void UpdateContainingComponents()
+        {
+            strSelectingComponents = selectingComponents.ToString().Split(", ").ToList();
+            foreach (var component in strSelectingComponents) Debug.Log(component);
+            strComponents = components.Select(item => item.GetType().ToString()).ToList();
+            foreach (var component in strComponents) Debug.Log(component);
+
+            for (int i = 0; i < strComponents.Count; i++)
+            {
+                Debug.Log(strComponents[i]);
+                if (!strSelectingComponents.Contains(strComponents[i]))
+                {
+                    Debug.Log("Remove " + strComponents[i]);
+                    components.Remove(components[i]);
+                }
+            }
+
+            foreach (var typeName in strSelectingComponents)
+            {
+                Debug.Log(typeName);
+                if (!componentEnums.Contains(typeName))
+                {
+                    Debug.Log("Add new " + typeName);
+                }
+            }
+        }
+#endif
+
+        public List<CollectableObjectComponent> components = new List<CollectableObjectComponent>();
+
+        [Title("Base Collectable Object Attributes")]
+        [InfoBox("A collectable object is set to Weapon Slot 3 by default. It will be assigned to Weapon Slot 1 or Weapon Slot 2 if it can be used in one of those respective slots.")]
         public ActiveWeapon.WeaponSlot weaponSlot;
 
-        public new string name;
+        public string collectableObjectName;
         public int maxCount;
+
+        /**/
         public int ammoAllowedInMagazine;
         public int amplitudeGainImpulse;
+        /**/
+
+        /**/
         [Tooltip("Speed for plant when plant is Attack Plant and InstantiateBullet or Normal Plant")]
         public int force;
         public float fireRate;
+        /**/
 
         public Sprite artwork;
         public Crop cropPrefab;
 
+        /**/
         public enum ShootingHandleType
         {
             None = -1,
@@ -50,11 +112,6 @@ namespace VitsehLand.Scripts.Stats
         public GameObject trailTracer;
         public ParticleSystem hitEffectPrefab;
 
-        public GameObject TrailTracer
-        {
-            get { return trailTracer; }
-        }
-
         [Header("Attacking Crop")]
         public int damage;
         [Tooltip("Only for attacking Crop. With specific enemy. This fruit will deal more damage")]
@@ -72,7 +129,6 @@ namespace VitsehLand.Scripts.Stats
         [Tooltip("Only for attacking Plant. Range for raycast checking")]
         public int range;
 
-        //public float runSpeed;
         public float reloadSpeed;
         public float multiplierRecoilOnAim;
         public float multiplierForAmmo;
@@ -103,7 +159,6 @@ namespace VitsehLand.Scripts.Stats
         public int gemEarnWhenHaverst;
         [Header("Type of Resource")]
         public float totalProducingTime;
-        //public int resourceContain;
 
         public GameObjectType.FilteredType filteredType;
         public RecipeData recipe;

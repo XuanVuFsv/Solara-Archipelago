@@ -1,5 +1,5 @@
 using UnityEngine;
-using VitsehLand.Assets.Scripts.Farming.General;
+using VitsehLand.Scripts.Farming.General;
 using VitsehLand.Scripts.Farming.ObjectState.Crop;
 using VitsehLand.Scripts.Weapon.General;
 

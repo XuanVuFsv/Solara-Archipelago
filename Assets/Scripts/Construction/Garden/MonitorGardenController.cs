@@ -200,7 +200,7 @@ namespace VitsehLand.Scripts.Construction.Garden
             CheckCropUIState();
 
             currentCropIcon.sprite = currentCollectableObjectStat.artwork;
-            productName.text = currentCollectableObjectStat.name.ToString();
+            productName.text = currentCollectableObjectStat.collectableObjectName.ToString();
             information.text = currentCollectableObjectStat.description;
         }
 

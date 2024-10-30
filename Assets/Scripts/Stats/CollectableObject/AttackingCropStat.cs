@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace VitsehLand.Scripts.Stats
 {
-    public class AttackingCropStat : CollectableObjectComponent
+    [System.Serializable]
+    public class AttackingCropStat : CollectableObjectStatComponent
     {
         public enum ShootingHandleType
         {

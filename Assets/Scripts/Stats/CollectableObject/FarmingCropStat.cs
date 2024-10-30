@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace VitsehLand.Scripts.Stats
 {
-    public class FarmingCropStat : CollectableObjectComponent
+    [System.Serializable]
+    public class FarmingCropStat : CollectableObjectStatComponent
     {
         public enum BodyType
         {

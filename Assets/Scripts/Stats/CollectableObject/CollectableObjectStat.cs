@@ -12,7 +12,6 @@ namespace VitsehLand.Scripts.Stats
     [CreateAssetMenu(fileName = "New Collectable Object", menuName = "Collectable Object")]
     public class CollectableObjectStat : ScriptableObject
     {
-        [Title("Choose Collectable Object Components")]
 #if UNITY_EDITOR
         [System.Flags]
         public enum CollectableObjectComponentBitmaskEnum
@@ -28,42 +27,67 @@ namespace VitsehLand.Scripts.Stats
                 FarmingProductStat | NaturalResourceStat |
                 PowerStat | WaterStat | FertilizerStat
         }
-        public readonly List<string> componentEnums = Enum.GetNames(typeof(CollectableObjectComponentBitmaskEnum)).ToList();
-        public List<string> strSelectingComponents;
-        public List<string> strComponents;
+        public List<string> componentEnums = Enum.GetNames(typeof(CollectableObjectComponentBitmaskEnum)).ToList();
 
+        [Title("Choose Collectable Object Components")]
+        [PropertySpace(SpaceBefore = 20, SpaceAfter = 10)]
         [OnValueChanged("UpdateContainingComponents")]
         public CollectableObjectComponentBitmaskEnum selectingComponents;
 
+        public List<string> strSelectingComponents;
+        public List<string> strComponents;
+        public string namespaceName;
+
         private void UpdateContainingComponents()
         {
+            namespaceName = (new CollectableObjectStatComponent()).GetType().Namespace + ".";
+
             strSelectingComponents = selectingComponents.ToString().Split(", ").ToList();
-            foreach (var component in strSelectingComponents) Debug.Log(component);
-            strComponents = components.Select(item => item.GetType().ToString()).ToList();
-            foreach (var component in strComponents) Debug.Log(component);
 
-            for (int i = 0; i < strComponents.Count; i++)
+            if (selectingComponents.ToString() == "0")
             {
-                Debug.Log(strComponents[i]);
-                if (!strSelectingComponents.Contains(strComponents[i]))
-                {
-                    Debug.Log("Remove " + strComponents[i]);
-                    components.Remove(components[i]);
-                }
+                Debug.Log("Clear");
+                components.Clear();
+                strComponents.Clear();
             }
-
-            foreach (var typeName in strSelectingComponents)
+            else
             {
-                Debug.Log(typeName);
-                if (!componentEnums.Contains(typeName))
+                strComponents = components.Select(item => item.GetType().ToString().Replace(namespaceName, "")).ToList();
+
+                Debug.Log("Remove: ");
+                for (int i = 0; i < strComponents.Count; i++)
                 {
-                    Debug.Log("Add new " + typeName);
+                    if (strComponents[i] == null) continue;
+
+                    if (!strSelectingComponents.Contains(strComponents[i]))
+                    {
+                        Debug.Log(strComponents[i] + " don't exist in selecting components anymore so...");
+
+                        Debug.Log("Remove " + strComponents[i]);
+                        components.Remove(components[i]);
+                        strComponents.Remove(strComponents[i]);
+                    }
+                }
+
+                Debug.Log("Add: ");
+                foreach (var component in strSelectingComponents)
+                {
+                    if (!strComponents.Contains(component))
+                    {
+                        Debug.Log(component + " hasn't added to components so ...");
+                        Debug.Log("Add new " + namespaceName + component);
+                        components.Add((CollectableObjectStatComponent)Activator.CreateInstance(Type.GetType(namespaceName + component)));
+                        strComponents.Add(component);
+                    }
                 }
             }
         }
 #endif
-
-        public List<CollectableObjectComponent> components = new List<CollectableObjectComponent>();
+        [PropertySpace(SpaceBefore = 20, SpaceAfter = 20)]
+        [Title("Containing Components")]
+        [InfoBox("Components are groups of data that the game uses to process the corresponding actions of the player with a Collectable Object. Not having Component A,B or C means that the player cannot perform the corresponding action on that Collectable Object.")]
+        [SerializeReference]
+        public List<CollectableObjectStatComponent> components;
 
         [Title("Base Collectable Object Attributes")]
         [InfoBox("A collectable object is set to Weapon Slot 3 by default. It will be assigned to Weapon Slot 1 or Weapon Slot 2 if it can be used in one of those respective slots.")]

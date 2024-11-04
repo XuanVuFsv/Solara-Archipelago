@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Berry
   m_EditorClassIdentifier: 
+  selectedComponents: 0
+  components: []
   weaponSlot: 0
-  name: Berry
+  collectableObjectName: 
   maxCount: 300
   ammoAllowedInMagazine: 15
   amplitudeGainImpulse: 1
   force: 0
   fireRate: 5
   artwork: {fileID: 21300000, guid: 26b4d8692c5e74d17bd9dc28bcbe961b, type: 3}
-  fruitPrefab: {fileID: 0}
+  cropPrefab: {fileID: 0}
   shootingHandleType: 0
+  bulletObject: {fileID: 0}
   featuredType: 2
   bulletEffectComponent: 0
   trailTracer: {fileID: 0}
-  bulletObject: {fileID: 0}
   hitEffectPrefab: {fileID: 3306171731122782009, guid: 9efff6761586a664f9b76807673f5f95, type: 3}
   damage: 20
   damageDealToSpecificEnemy: 0
@@ -60,3 +62,10 @@ MonoBehaviour:
   description: Asssault Rifle Ammo. Deal 25 damage
   gemEarnWhenKillEnemy: 3
   gemEarnWhenHaverst: 5
+  totalProducingTime: 0
+  filteredType: 0
+  recipe: {fileID: 0}
+  cost: 0
+  references:
+    version: 2
+    RefIds: []

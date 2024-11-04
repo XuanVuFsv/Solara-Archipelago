@@ -4,10 +4,11 @@ using VitsehLand.Scripts.Farming.General;
 
 namespace VitsehLand.Scripts.Stats
 {
-    [CreateAssetMenu(fileName = "New Power Stat", menuName = "Power Stat")]
-    public class PowerStat : ScriptableObject
+    [System.Serializable]
+    public class CraftedProductStat : CollectableObjectStatComponent
     {
-        public GameObjectType.FilteredType filteredType;
         public RecipeData recipe;
+        public float totalProducingTime;
+        public int cost;
     }
 }

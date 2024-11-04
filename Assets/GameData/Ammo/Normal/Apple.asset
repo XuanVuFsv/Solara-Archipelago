@@ -12,26 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
-  componentEnums:
-  - FarmingCropStat
-  - AttackingCropStat
-  - FarmingProductStat
-  - NaturalResourceStat
-  - PowerStat
-  - WaterStat
-  - FertilizerStat
-  - All
-  selectingComponents: 6
-  strSelectingComponents:
-  - FarmingCropStat
-  - AttackingCropStat
-  strComponents:
-  - FarmingCropStat
-  - AttackingCropStat
-  namespaceName: VitsehLand.Scripts.Stats.
-  components:
-  - rid: 6670803713562509312
-  - rid: 6670803713562509313
+  selectedComponents: 0
+  components: []
   weaponSlot: 0
   collectableObjectName: 
   maxCount: 100
@@ -74,38 +56,4 @@ MonoBehaviour:
   cost: 0
   references:
     version: 2
-    RefIds:
-    - rid: 6670803713562509312
-      type: {class: FarmingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
-      data:
-        ID: 0
-        bodyType: 0
-        growingBody: {fileID: 0}
-        totalGrowingTime: 0
-        totalHarvestingQuantity: 0
-        wateringTime: 0
-        requiredLevel: 0
-        description: 
-        gemEarnWhenHaverst: 0
-    - rid: 6670803713562509313
-      type: {class: AttackingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
-      data:
-        ID: 0
-        shootingHandleType: 0
-        bulletEffectComponent: 0
-        zoomType: 0
-        bulletObject: {fileID: 0}
-        trailTracer: {fileID: 0}
-        hitEffectPrefab: {fileID: 0}
-        force: 0
-        range: 0
-        fireRate: 0
-        damage: 0
-        damageDealToSpecificEnemy: 0
-        reloadSpeed: 0
-        amplitudeGainImpulse: 0
-        multiplierRecoilOnAim: 0
-        multiplierForAmmo: 0
-        recoilPattern: []
-        bulletCount: 1
-        bulletDirectionPattern: []
+    RefIds: []

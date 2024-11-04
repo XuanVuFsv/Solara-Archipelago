@@ -35,25 +35,25 @@ namespace VitsehLand.Scripts.Inventory
 
         public int AddAmmo(int newCount, Suckable ammoObject)
         {
-            bool isPlant = ammoObject is Crop;
+            bool isCrop = ammoObject is Crop;
             bool isPower = ammoObject is PowerContainer;
             bool isNaturalResource = ammoObject is NaturalResource;
 
             //if (count == 0)
             //{
-            //    if (isPlant) suckableSample = ammoObject.gameObject;
+            //    if (isCrop) suckableSample = ammoObject.gameObject;
             //    else suckableSample = (ammoObject as AmmoPickup).suckableSample;
             //}
 
             int currentCount = count + newCount;
             //Debug.Log(currentCount);
 
-            if ((isPlant || isPower || isNaturalResource) && currentCount <= collectableObjectStat.maxCount)
+            if ((isCrop || isPower || isNaturalResource) && currentCount <= collectableObjectStat.maxCount)
             {
                 //Debug.Log("add");
                 totalPlant.Add(ammoObject);
             }
-            else if (totalPlant.Count == 0 && !(isPlant || isPower || isNaturalResource))
+            else if (totalPlant.Count == 0 && !(isCrop || isPower || isNaturalResource))
             {
                 Debug.Log("Just set plant sample");
                 suckableSample = (ammoObject as AmmoPickup).suckableSample;
@@ -64,7 +64,7 @@ namespace VitsehLand.Scripts.Inventory
                 count = currentCount;
                 //Debug.Log(isPlant);
 
-                if (isPlant || isPower || isNaturalResource)
+                if (isCrop || isPower || isNaturalResource)
                 {
                     ammoObject.GetComponent<Suckable>().ChangeToStored();
                     suckableSample = Object.Instantiate(ammoObject.gameObject, CollectHandler.Instance.shootingInputData.bulletSpawnPoint.position, Quaternion.identity).GetComponent<Suckable>();
@@ -88,7 +88,7 @@ namespace VitsehLand.Scripts.Inventory
             else
             {
                 count = collectableObjectStat.maxCount;
-                if (!isPlant) Object.Destroy(ammoObject.gameObject);
+                if (!isCrop) Object.Destroy(ammoObject.gameObject);
                 return currentCount - collectableObjectStat.maxCount;
             }
         }

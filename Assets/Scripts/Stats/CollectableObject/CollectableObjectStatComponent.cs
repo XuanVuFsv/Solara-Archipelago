@@ -1,8 +1,11 @@
+using VitsehLand.Scripts.Farming.General;
+
 namespace VitsehLand.Scripts.Stats
 {
     [System.Serializable]
     public class CollectableObjectStatComponent
     {
-        public int ID;
+        public int baseId;
+        public GameObjectType.FilteredType filteredType;
     }
 }

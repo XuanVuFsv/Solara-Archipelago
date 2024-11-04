@@ -61,6 +61,7 @@ namespace VitsehLand.Scripts.Crafting
             foreach (var productRecipe in model.productRecipes)
             {
                 Debug.Log(i);
+
                 view.itemUIs[i].collectableObjectStat = productRecipe.Value.collectableObjectStat;
                 view.itemUIs[i].SetItemUI(productRecipe.Value.collectableObjectStat);
                 i++;
@@ -84,19 +85,20 @@ namespace VitsehLand.Scripts.Crafting
                 model.currentQuantity);
 
             view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorageDict);
-            Debug.Log("Setup Done");
             view.body.gameObject.SetActive(false);
+
+            Debug.Log("Setup Done");
         }
 
         public void OnClickProduct(CollectableObjectStat collectableObjectStat)
         {
             Debug.Log("Click" + " " + collectableObjectStat.collectableObjectName);
+
             if (collectableObjectStat == null || collectableObjectStat.collectableObjectName == "Null") return;
 
             model.currentRecipeNameId = collectableObjectStat.collectableObjectName;
 
             view.ShowCurrentItemInformation(collectableObjectStat);
-
             view.LoadMaterialsRequired(collectableObjectStat.recipe,
                 model.GetQuantityByMaterialOfRecipe(collectableObjectStat.recipe),
                 model.currentQuantity);
@@ -108,6 +110,7 @@ namespace VitsehLand.Scripts.Crafting
             {
                 card.quantity -= card.requiredQuantity;
                 model.SetItemStorage(card.collectableObjectStat.collectableObjectName, card.quantity);
+                
                 if (card.quantity == 0)
                 {
                     model.RemoveItemStorage(card.collectableObjectStat.collectableObjectName);
@@ -127,6 +130,7 @@ namespace VitsehLand.Scripts.Crafting
                 Debug.Log("Not enough material or Energy");
                 return;
             }
+
             StartCraft();
         }
 
@@ -139,11 +143,13 @@ namespace VitsehLand.Scripts.Crafting
                     return false;
                 }
             }
+
             if (powerManager.currentPower < 10 * model.currentQuantity)
             {
                 StartCoroutine(view.ShowWarningNotEnoughPower());
                 return false;
             }
+
             return true;
         }
 
@@ -152,6 +158,7 @@ namespace VitsehLand.Scripts.Crafting
             if (model.queueActiveQuantity < model.queueQuantity)
             {
                 Debug.Log("Start craft a " + model.currentQuantity.ToString() + " " + model.GetCurrentRecipe().name);
+                
                 int index = model.FindFirstCraftSlotReady();
                 if (index >= 0)
                 {
@@ -197,10 +204,11 @@ namespace VitsehLand.Scripts.Crafting
             {
                 int quantity = model.currentQuantity + value;
                 if (quantity > model.maxQuantity || quantity <= 0) return;
+
                 model.currentQuantity = quantity;
+
                 view.slider.value = model.currentQuantity;
                 view.quantityTitle.text = "Quantity: " + model.currentQuantity.ToString();
-
                 view.ReLoadQuantityMaterialsRequired(model.GetCurrentRecipe(),
                     model.GetQuantityByMaterialOfRecipe(model.GetCurrentRecipe()),
                     model.currentQuantity);

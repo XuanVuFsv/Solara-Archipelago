@@ -8,15 +8,6 @@ namespace VitsehLand.Scripts.Farming.General
 {
     public abstract class Suckable : StateMachine, ISuckable
     {
-        //public enum SuckableObjectType
-        //{
-        //    Plant = 0,
-        //    PowerContainer = 1,
-        //    NaturalResource = 2,
-        //}
-
-        //protected SuckableObjectType type;
-
         public CollectableObjectStat collectableObjectStat;
         public int cropContain;
 

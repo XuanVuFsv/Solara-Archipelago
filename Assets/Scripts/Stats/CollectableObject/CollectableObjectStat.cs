@@ -102,32 +102,88 @@ namespace VitsehLand.Scripts.Stats
         [InfoBox("Components are groups of data that the game uses to process the corresponding actions of the player with a Collectable Object. Not having Component A,B or C means that the player cannot perform the corresponding action on that Collectable Object.")]
         [SerializeReference]
         public List<CollectableObjectStatComponent> components;
+
+        [Button("AttachStatFromOldModelToComponentModel")]
 #endif
+
+        void AttachStat()
+        {
+            foreach (var component in components)
+            {
+                maxQuantityStored = maxCount = 9999;
+
+                if (component is AttackingCropStat)
+                {
+                    (component as AttackingCropStat).shootingHandleType = (AttackingCropStat.ShootingHandleType)(int)shootingHandleType;
+                    (component as AttackingCropStat).bulletEffectComponent = (AttackingCropStat.BulletEffectComponent)(int)bulletEffectComponent;
+                    (component as AttackingCropStat).zoomType = (AttackingCropStat.ZoomType)(int)zoomType;
+
+                    (component as AttackingCropStat).bulletObject = bulletObject;
+                    (component as AttackingCropStat).trailTracer = trailTracer;
+                    (component as AttackingCropStat).hitEffectPrefab = hitEffectPrefab;
+
+                    (component as AttackingCropStat).force = force;
+                    (component as AttackingCropStat).range = range;
+                    (component as AttackingCropStat).fireRate = fireRate;
+
+                    (component as AttackingCropStat).damage = damage;
+                    (component as AttackingCropStat).damageDealToSpecificEnemy = damageDealToSpecificEnemy;
+
+                    (component as AttackingCropStat).reloadSpeed = reloadSpeed;
+
+                    (component as AttackingCropStat).amplitudeGainImpulse = amplitudeGainImpulse;
+                    (component as AttackingCropStat).multiplierRecoilOnAim = multiplierRecoilOnAim;
+                    (component as AttackingCropStat).multiplierForAmmo = multiplierForAmmo;
+
+                    (component as AttackingCropStat).recoilPattern = recoildPattern.Select(value => value).ToList();
+                    (component as AttackingCropStat).bulletDirectionPattern = bulletDirectionPattern.Select(value => value).ToList();
+
+                    (component as AttackingCropStat).bulletCount = bulletCount;
+                }
+
+                if (component is FarmingCropStat)
+                {
+                    (component as FarmingCropStat).bodyType = (FarmingCropStat.BodyType)(int)bodyType;
+                    (component as FarmingCropStat).growingBody = growingBody;
+                    (component as FarmingCropStat).totalGrowingTime = totalGrowingTime;
+                    (component as FarmingCropStat).wateringTime = wateringTime;
+                    (component as FarmingCropStat).requiredLevel = requiredLevel;
+                    (component as FarmingCropStat).description = description;
+                    (component as FarmingCropStat).gemEarnWhenHaverst = gemEarnWhenHaverst;
+                }
+
+                if (component is CraftedProductStat)
+                {
+                    (component as CraftedProductStat).recipe = recipe;
+                    (component as CraftedProductStat).totalProducingTime = totalProducingTime;
+                    (component as CraftedProductStat).cost = cost;
+                }
+            }
+        }
 
         [Title("Base Collectable Object Attributes")]
         [InfoBox("A collectable object is set to Weapon Slot 3 by default. It will be assigned to Weapon Slot 1 or Weapon Slot 2 if it can be used in one of those respective slots.")]
         public ActiveWeapon.WeaponSlot weaponSlot;
         public GameObjectType.FilteredType filteredType;
+        public GameObjectType.FeaturedType featuredType;
+
+        public Sprite icon;
 
         public string baseId;
         public string collectableObjectName;
         public int maxCount;
 
-        /**/
-        public int ammoAllowedInMagazine;
-        public int amplitudeGainImpulse;
-        /**/
+        [InfoBox("Warning: It will be created later. List of object can store collectable object and its max quantity stored", InfoMessageType.Warning)]
+        public int maxQuantityStored = 9999;
 
         /**/
-        [Tooltip("Speed for plant when plant is Attack Plant and InstantiateBullet or Normal Plant")]
+        public int amplitudeGainImpulse;
+
         public int force;
         public float fireRate;
-        /**/
 
-        public Sprite artwork;
-        public Crop cropPrefab;
+        //public Crop cropPrefab;
 
-        /**/
         public enum ShootingHandleType
         {
             None = -1,
@@ -137,10 +193,7 @@ namespace VitsehLand.Scripts.Stats
         }
         public ShootingHandleType shootingHandleType;
         public GameObject bulletObject;
-
-        public GameObjectType.FeaturedType featuredType;
-
-        [Tooltip("What effect will be ins when shooting Plant")]
+       
         public enum BulletEffectComponent
         {
             None = -1,
@@ -153,12 +206,9 @@ namespace VitsehLand.Scripts.Stats
         public GameObject trailTracer;
         public ParticleSystem hitEffectPrefab;
 
-        [Header("Attacking Crop")]
         public int damage;
-        [Tooltip("Only for attacking Crop. With specific enemy. This fruit will deal more damage")]
         public int damageDealToSpecificEnemy;
 
-        [Tooltip("Only for attack Crop. Scope mode of Crop")]
         public enum ZoomType
         {
             NoZoom = 0,
@@ -167,7 +217,6 @@ namespace VitsehLand.Scripts.Stats
         }
         public ZoomType zoomType;
 
-        [Tooltip("Only for attacking Plant. Range for raycast checking")]
         public int range;
 
         public float reloadSpeed;
@@ -175,13 +224,10 @@ namespace VitsehLand.Scripts.Stats
         public float multiplierForAmmo;
         public List<Vector2> recoildPattern;
 
-        [Tooltip("number of bullet or raycast will be instantiated when player shoot. Example 1 for rifle type (berry), sniper type(star) and 5 for shotgun type(tomato)")]
         public int bulletCount = 1;
         public List<Vector3> bulletDirectionPattern;
 
-        [Header("Normal Crop")]
         public int totalGrowingTime;
-        public int numberOfFruitPerSeed;
 
         public enum BodyType
         {
@@ -196,12 +242,10 @@ namespace VitsehLand.Scripts.Stats
         public GameObject growingBody;
 
         public string description;
-        public int gemEarnWhenKillEnemy;
         public int gemEarnWhenHaverst;
-        [Header("Type of Resource")]
         public float totalProducingTime;
-
         public RecipeData recipe;
         public int cost;
+        /**/
     }
 }

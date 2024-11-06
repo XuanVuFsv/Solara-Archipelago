@@ -104,7 +104,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
 
             cameraShake.AssignRecoilPattern(collectableObjectStat.recoildPattern);
 
-            weaponStatsController.ammoInMagazine = collectableObjectStat.ammoAllowedInMagazine;
+            weaponStatsController.maxQuantityStored = collectableObjectStat.maxQuantityStored;
             raycastWeapon.SetAsWeaponStrategy();
         }
     }

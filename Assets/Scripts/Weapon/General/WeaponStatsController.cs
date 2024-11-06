@@ -30,7 +30,7 @@ namespace VitsehLand.Scripts.Weapon.General
         public AnimationClip weaponAnimation;
 
         public string weaponName;
-        public int currentAmmo, remainingAmmo, ammoInMagazine;
+        public int currentAmmo, remainingAmmo, maxQuantityStored;
         public bool autoReload = true;
 
         bool outOfAmmo; //out of ammo in magazine
@@ -141,7 +141,7 @@ namespace VitsehLand.Scripts.Weapon.General
             currentCollectableObjectStatController.collectableObjectStat = resetCropStats;
             currentCollectableObjectStatController.AssignCroptData();
 
-            ammoInMagazine = 0;
+            maxQuantityStored = 0;
         }
 
         public void SuckUpAmmo(Suckable ammoPickup)
@@ -287,11 +287,11 @@ namespace VitsehLand.Scripts.Weapon.General
         {
             if (weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
 
-            int neededAmmo = ammoInMagazine - currentAmmo; //ammo need to fill full magazine
+            int neededAmmo = maxQuantityStored - currentAmmo; //ammo need to fill full magazine
 
             if (neededAmmo <= remainingAmmo)
             {
-                currentAmmo = ammoInMagazine;
+                currentAmmo = maxQuantityStored;
                 remainingAmmo -= neededAmmo; //ammo in inventory or bag
                 outOfAmmo = false;
             }
@@ -320,7 +320,7 @@ namespace VitsehLand.Scripts.Weapon.General
         public void UpdateNewAmmo(Item item, int index)
         {
             Debug.Log(item.collectableObjectStat.collectableObjectName + item.count + index);
-            WeaponSystemUI.Instance.SetDisplayItemIcon(item.collectableObjectStat.artwork, index);
+            WeaponSystemUI.Instance.SetDisplayItemIcon(item.collectableObjectStat.icon, index);
             WeaponSystemUI.Instance.SetDisplayItemName(itemInInventory.collectableObjectStat.collectableObjectName, index);
             UpdateAmmoAmmountUI(item.count, index);
         }
@@ -354,7 +354,7 @@ namespace VitsehLand.Scripts.Weapon.General
 
         public bool IsFullMagazine()
         {
-            return currentAmmo == ammoInMagazine;
+            return currentAmmo == maxQuantityStored;
         }
     }
 }

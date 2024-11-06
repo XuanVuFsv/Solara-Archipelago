@@ -199,7 +199,7 @@ namespace VitsehLand.Scripts.Construction.Garden
         {
             CheckCropUIState();
 
-            currentCropIcon.sprite = currentCollectableObjectStat.artwork;
+            currentCropIcon.sprite = currentCollectableObjectStat.icon;
             productName.text = currentCollectableObjectStat.collectableObjectName.ToString();
             information.text = currentCollectableObjectStat.description;
         }

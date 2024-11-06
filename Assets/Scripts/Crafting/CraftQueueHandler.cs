@@ -45,7 +45,7 @@ namespace VitsehLand.Scripts.Crafting
 
         public IEnumerator CraftProduct(int time, Transform pos)
         {
-            productImage.sprite = collectableObjectStat.artwork;
+            productImage.sprite = collectableObjectStat.icon;
             totalTime = time;
 
             Debug.Log("Start waiting " + (time / product.collectableObjectStat.totalProducingTime).ToString() + "energy");

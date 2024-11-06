@@ -99,7 +99,7 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
             currentItemName.text = cropStat.collectableObjectName;
             type.text = cropStat.filteredType.ToString() + " - Level " + cropStat.requiredLevel.ToString();
             description.text = cropStat.description;
-            currentProductImage.sprite = cropStat.artwork;
+            currentProductImage.sprite = cropStat.icon;
 
             cost.text = "Cost: " + cropStat.cost.ToString();
             time.text = "Time: " + cropStat.totalProducingTime.ToString() + "s";
@@ -165,7 +165,7 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
             {
                 materialCardWrappers[i].gameObject.SetActive(true);
                 materialCardWrappers[i].collectableObjectStat = recipeData.items[i];
-                materialCardWrappers[i].image.sprite = recipeData.items[i].artwork;
+                materialCardWrappers[i].image.sprite = recipeData.items[i].icon;
 
                 materialCardWrappers[i].quantity = quantityMaterials[i];
                 materialCardWrappers[i].requiredQuantity = recipeData.ammountPerSlots[i]
@@ -234,7 +234,7 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
                 {
                     storageCardWrappers[i].image.gameObject.SetActive(true);
                     storageCardWrappers[i].GetComponent<Image>().color = new Color32(0, 0, 0, 100);
-                    storageCardWrappers[i].image.sprite = item.Value.collectableObjectStat.artwork;
+                    storageCardWrappers[i].image.sprite = item.Value.collectableObjectStat.icon;
                     storageCardWrappers[i].quantityText.text = item.Value.quantity.ToString();
                     storageCardWrappers[i].collectableObjectStat = item.Value.collectableObjectStat;
                     i++;

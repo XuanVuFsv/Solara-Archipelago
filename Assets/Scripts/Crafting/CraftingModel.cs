@@ -143,7 +143,7 @@ namespace VitsehLand.Scripts.Crafting
             }
             else if (CheckStorage())
             {
-                itemStorageDict.Add(collectableObjectStat.collectableObjectName, new ItemStorageData(collectableObjectStat.collectableObjectName, collectableObjectStat, ItemStorageData.StorageLocation.CraftMachine, collectableObjectStat.cropPrefab, quantity));
+                itemStorageDict.Add(collectableObjectStat.collectableObjectName, new ItemStorageData(collectableObjectStat.collectableObjectName, collectableObjectStat, ItemStorageData.StorageLocation.CraftMachine, /*collectableObjectStat.cropPrefab*/null, quantity));
                 return true;
             }
             else if (!CheckStorage()) return false;

@@ -85,7 +85,7 @@ namespace VitsehLand.Scripts.UI.Weapon
                     DisplayItemElement newDisplayItem = new DisplayItemElement(item.Find("Amount").GetComponent<TextMeshProUGUI>(), item.Find("Icon").GetComponent<Image>(), item.Find("Rouned").gameObject);
                     displayItems.Add(newDisplayItem);
                     Item itemInInventory = InventoryController.Instance.GetItemByIndex(i);
-                    newDisplayItem.artwork.sprite = itemInInventory.collectableObjectStat.artwork;
+                    newDisplayItem.artwork.sprite = itemInInventory.collectableObjectStat.icon;
                     newDisplayItem.totalAmmoText.text = itemInInventory.count.ToString();
 
                 }

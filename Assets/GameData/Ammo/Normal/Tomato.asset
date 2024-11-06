@@ -12,22 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Tomato
   m_EditorClassIdentifier: 
-  selectedComponents: 0
-  components: []
+  selectedComponents: 6
+  components:
+  - rid: 4767322046297800707
+  - rid: 4767322046297800715
   weaponSlot: 0
   filteredType: 0
+  featuredType: 2
+  icon: {fileID: 21300000, guid: 88c60d1f2922f4234ae754e708efd693, type: 3}
   baseId: tomato
   collectableObjectName: Tomato
-  maxCount: 200
-  ammoAllowedInMagazine: 3
+  maxCount: 9999
+  maxQuantityStored: 9999
   amplitudeGainImpulse: 4
   force: 0
   fireRate: 1
-  artwork: {fileID: 21300000, guid: 88c60d1f2922f4234ae754e708efd693, type: 3}
-  cropPrefab: {fileID: 0}
   shootingHandleType: 0
   bulletObject: {fileID: 0}
-  featuredType: 2
   bulletEffectComponent: 0
   trailTracer: {fileID: 0}
   hitEffectPrefab: {fileID: 0}
@@ -48,17 +49,53 @@ MonoBehaviour:
   - {x: 0, y: 0.05, z: 0}
   - {x: 0, y: -0.05, z: 0}
   totalGrowingTime: 35
-  numberOfFruitPerSeed: 30
   bodyType: 0
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
   description: Shotgun ammo with 5 bullet per fruit. Deal total 100 damage
-  gemEarnWhenKillEnemy: 7
   gemEarnWhenHaverst: 15
   totalProducingTime: 0
   recipe: {fileID: 0}
   cost: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4767322046297800707
+      type: {class: FarmingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        bodyType: 0
+        growingBody: {fileID: 0}
+        totalGrowingTime: 35
+        totalHarvestingQuantity: 0
+        wateringTime: 0
+        requiredLevel: 0
+        description: Shotgun ammo with 5 bullet per fruit. Deal total 100 damage
+        gemEarnWhenHaverst: 15
+    - rid: 4767322046297800715
+      type: {class: AttackingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        shootingHandleType: 0
+        bulletEffectComponent: 0
+        zoomType: 0
+        bulletObject: {fileID: 0}
+        trailTracer: {fileID: 0}
+        hitEffectPrefab: {fileID: 0}
+        force: 0
+        range: 100
+        fireRate: 1
+        damage: 30
+        damageDealToSpecificEnemy: 0
+        reloadSpeed: 0.5
+        amplitudeGainImpulse: 4
+        multiplierRecoilOnAim: 0
+        multiplierForAmmo: 1
+        recoilPattern:
+        - {x: 0, y: 0}
+        bulletCount: 5
+        bulletDirectionPattern:
+        - {x: 0, y: 0, z: 0}
+        - {x: 0.05, y: 0, z: 0}
+        - {x: -0.05, y: 0, z: 0}
+        - {x: 0, y: 0.05, z: 0}
+        - {x: 0, y: -0.05, z: 0}

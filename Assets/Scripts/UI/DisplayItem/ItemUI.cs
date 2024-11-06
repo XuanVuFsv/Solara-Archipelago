@@ -40,7 +40,7 @@ namespace VitsehLand.Scripts.UI.DisplayItem
             }
             icon.gameObject.SetActive(true);
             GetComponent<Button>().interactable = true;
-            icon.sprite = collectableObjectStat.artwork;
+            icon.sprite = collectableObjectStat.icon;
             nameItem.text = collectableObjectStat.collectableObjectName;
         }
 

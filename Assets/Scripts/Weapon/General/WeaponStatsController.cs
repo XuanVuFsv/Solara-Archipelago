@@ -172,7 +172,7 @@ namespace VitsehLand.Scripts.Weapon.General
             //else
             if (currentCollectableObjectStatController.collectableObjectStat.collectableObjectName == ammoPickup.collectableObjectStat.collectableObjectName)
             {
-                //Debug.Log("Add same ammo");
+                Debug.Log("Add same ammo");
 
                 AddAmmo(ammoPickup.GetCropContain(), ammoPickup);
                 //ammoPickup.AddUsedGameEvent(transform);
@@ -192,7 +192,7 @@ namespace VitsehLand.Scripts.Weapon.General
             }
             else
             {
-                //Debug.Log("Add new ammo");
+                Debug.Log("Add new ammo");
 
                 //if (ammunitionChestPicked)
                 //{
@@ -210,8 +210,9 @@ namespace VitsehLand.Scripts.Weapon.General
                 Item newItem = InventoryController.Instance.AddNewAmmoToInventory(ammoPickup.collectableObjectStat, ammoPickup.GetCropContain(), ammoPickup);
                 //if (ammoPickup.collectableObjectStat.featuredType == CropStats.FeaturedType.Normal && ammoPickup.collectableObjectStat.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) ammoPickup.AddUsedGameEvent(false);
 
-                if (itemInInventory.collectableObjectStat.collectableObjectName == "Null" && itemInInventory != InventoryController.Instance.GetCurrentItem())
+                if (itemInInventory.collectableObjectStat.baseId == "null" && itemInInventory != InventoryController.Instance.GetCurrentItem())
                 {
+                    Debug.Log("Null item");
                     itemInInventory = InventoryController.Instance.GetCurrentItem();
                     currentCollectableObjectStatController.collectableObjectStat = ammoPickup.collectableObjectStat;
                     currentCollectableObjectStatController.AssignCroptData();
@@ -318,9 +319,9 @@ namespace VitsehLand.Scripts.Weapon.General
 
         public void UpdateNewAmmo(Item item, int index)
         {
-            //Debug.Log(item.collectableObjectStat.artwork.name + item.count + index);
+            Debug.Log(item.collectableObjectStat.collectableObjectName + item.count + index);
             WeaponSystemUI.Instance.SetDisplayItemIcon(item.collectableObjectStat.artwork, index);
-            //WeaponSystemUI.Instance.SetDisplayItemName(itemInInventory.collectableObjectStat.name, index);
+            WeaponSystemUI.Instance.SetDisplayItemName(itemInInventory.collectableObjectStat.collectableObjectName, index);
             UpdateAmmoAmmountUI(item.count, index);
         }
 

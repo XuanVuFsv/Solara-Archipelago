@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VitsehLand.Scripts.Pattern.Observer;
-using VitsehLand.Scripts.Ultility;
+using VitsehLand.Scripts.Ultilities;
 
 namespace VitsehLand.Scripts.Pattern.Pooling
 {

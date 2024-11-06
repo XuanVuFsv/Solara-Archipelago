@@ -110,6 +110,7 @@ namespace VitsehLand.Assets.Scripts.Weapon.Collector
         {
             if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, maxDistance, shootingInputData.layerMask))
             {
+                Debug.Log("CollectingHandle");
                 if (hit.transform.CompareTag("Cluster"))
                 {
                     ClusterResource cluster = hit.transform.GetComponent<ClusterResource>();
@@ -138,8 +139,10 @@ namespace VitsehLand.Assets.Scripts.Weapon.Collector
                     {
                         if (suckedObject is Crop || suckedObject is PowerContainer || suckedObject is NaturalResource)
                         {
+                            Debug.Log("AAA");
                             if (suckedObject.collectableObjectStat != null)
                             {
+                                Debug.Log("BBB");
                                 CollectableObjectStat collectableObjectStat = suckedObject.collectableObjectStat;
                                 weaponStatsController.SuckUpAmmo(suckedObject);
                             }

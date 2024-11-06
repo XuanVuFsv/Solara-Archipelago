@@ -1,7 +1,7 @@
 using UnityEngine;
 using VitsehLand.GameCamera.Shaking;
 using VitsehLand.Scripts.Pattern.Observer;
-using VitsehLand.Scripts.Ultility;
+using VitsehLand.Scripts.Ultilities;
 
 namespace VitsehLand.Scripts.Player
 {

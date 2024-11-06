@@ -4,7 +4,7 @@ using UnityEngine;
 using VitsehLand.GameCamera;
 using VitsehLand.Scripts.Stats;
 using VitsehLand.Scripts.Player;
-using VitsehLand.Scripts.Ultility;
+using VitsehLand.Scripts.Ultilities;
 using VitsehLand.Scripts.Weapon.Ammo;
 using VitsehLand.Scripts.UI.Weapon;
 using VitsehLand.GameCamera.Shaking;

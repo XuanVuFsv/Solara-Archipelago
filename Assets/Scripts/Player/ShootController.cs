@@ -4,7 +4,7 @@ using VitsehLand.Scripts.Pattern.Observer;
 using VitsehLand.Scripts.Stats;
 using VitsehLand.Scripts.Audio;
 using VitsehLand.Scripts.Pattern.Strategy;
-using VitsehLand.Scripts.Ultility;
+using VitsehLand.Scripts.Ultilities;
 using VitsehLand.Scripts.Weapon.General;
 using VitsehLand.Assets.Scripts.Weapon.General;
 using VitsehLand.Scripts.Weapon.HandGun;

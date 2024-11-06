@@ -107,7 +107,9 @@ namespace VitsehLand.Scripts.Stats
         [Title("Base Collectable Object Attributes")]
         [InfoBox("A collectable object is set to Weapon Slot 3 by default. It will be assigned to Weapon Slot 1 or Weapon Slot 2 if it can be used in one of those respective slots.")]
         public ActiveWeapon.WeaponSlot weaponSlot;
+        public GameObjectType.FilteredType filteredType;
 
+        public string baseId;
         public string collectableObjectName;
         public int maxCount;
 
@@ -199,7 +201,6 @@ namespace VitsehLand.Scripts.Stats
         [Header("Type of Resource")]
         public float totalProducingTime;
 
-        public GameObjectType.FilteredType filteredType;
         public RecipeData recipe;
         public int cost;
     }

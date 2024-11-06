@@ -12,20 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Tomato
   m_EditorClassIdentifier: 
+  selectedComponents: 0
+  components: []
   weaponSlot: 0
-  name: Tomato
+  filteredType: 0
+  baseId: tomato
+  collectableObjectName: Tomato
   maxCount: 200
   ammoAllowedInMagazine: 3
   amplitudeGainImpulse: 4
   force: 0
   fireRate: 1
   artwork: {fileID: 21300000, guid: 88c60d1f2922f4234ae754e708efd693, type: 3}
-  fruitPrefab: {fileID: 0}
+  cropPrefab: {fileID: 0}
   shootingHandleType: 0
+  bulletObject: {fileID: 0}
   featuredType: 2
   bulletEffectComponent: 0
   trailTracer: {fileID: 0}
-  bulletObject: {fileID: 0}
   hitEffectPrefab: {fileID: 0}
   damage: 30
   damageDealToSpecificEnemy: 0
@@ -52,3 +56,9 @@ MonoBehaviour:
   description: Shotgun ammo with 5 bullet per fruit. Deal total 100 damage
   gemEarnWhenKillEnemy: 7
   gemEarnWhenHaverst: 15
+  totalProducingTime: 0
+  recipe: {fileID: 0}
+  cost: 0
+  references:
+    version: 2
+    RefIds: []

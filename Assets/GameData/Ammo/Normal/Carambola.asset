@@ -12,20 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Carambola
   m_EditorClassIdentifier: 
+  selectedComponents: 0
+  components: []
   weaponSlot: 0
-  name: Carambola
+  filteredType: 0
+  baseId: carambola
+  collectableObjectName: Carambola
   maxCount: 100
   ammoAllowedInMagazine: 10
   amplitudeGainImpulse: 70
   force: 0
   fireRate: 1
   artwork: {fileID: 21300000, guid: 64f8eb4a25fe643169785ba4aef65d43, type: 3}
-  fruitPrefab: {fileID: 0}
+  cropPrefab: {fileID: 0}
   shootingHandleType: 0
+  bulletObject: {fileID: 2966576973696581955, guid: 7cced171216e01a48a0042b27bfc9ec9, type: 3}
   featuredType: 2
   bulletEffectComponent: 0
   trailTracer: {fileID: 0}
-  bulletObject: {fileID: 2966576973696581955, guid: 7cced171216e01a48a0042b27bfc9ec9, type: 3}
   hitEffectPrefab: {fileID: 0}
   damage: 100
   damageDealToSpecificEnemy: 0
@@ -54,3 +58,9 @@ MonoBehaviour:
   description: Sniper ammo. Deal 80 damage
   gemEarnWhenKillEnemy: 10
   gemEarnWhenHaverst: 20
+  totalProducingTime: 0
+  recipe: {fileID: 0}
+  cost: 0
+  references:
+    version: 2
+    RefIds: []

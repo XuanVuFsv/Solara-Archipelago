@@ -4,7 +4,7 @@ using VitsehLand.Scripts.Farming.General;
 using VitsehLand.Scripts.Pattern.Singleton;
 using VitsehLand.Scripts.Stats;
 using VitsehLand.Scripts.UI.Weapon;
-using VitsehLand.Scripts.Ultility;
+using VitsehLand.Scripts.Ultilities;
 using VitsehLand.Scripts.Weapon.General;
 
 namespace VitsehLand.Scripts.Inventory
@@ -56,7 +56,7 @@ namespace VitsehLand.Scripts.Inventory
             int emptySlot = GetSlotByName("Null");
             Item item = GetCurrentItem();
 
-            MyDebug.Log(firstSlot + " " + emptySlot);
+            Debug.Log(firstSlot + " " + emptySlot);
 
             if (firstSlot >= 0)
             {

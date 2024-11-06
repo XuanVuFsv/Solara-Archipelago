@@ -6,7 +6,7 @@ using VitsehLand.Scripts.Pattern.Pooling;
 using VitsehLand.Scripts.Pattern.Strategy;
 using VitsehLand.Scripts.Player;
 using VitsehLand.Scripts.Stats;
-using VitsehLand.Scripts.Ultility;
+using VitsehLand.Scripts.Ultilities;
 using VitsehLand.Scripts.Weapon.Ammo;
 using VitsehLand.Scripts.Weapon.General;
 

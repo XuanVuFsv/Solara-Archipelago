@@ -13,7 +13,7 @@ using VitsehLand.Scripts.Weapon.Primary;
 
 namespace VitsehLand.Assets.Scripts.Weapon.Collector
 {
-    public class CollectHandler : Singleton<CollectHandler>, ICollectorWeaponStragety
+    public class CollectHandler : Singleton<CollectHandler>, ICollectorWeaponStrategy
     {
         public enum WaterMode
         {

@@ -60,7 +60,7 @@ namespace VitsehLand.Scripts.Crafting
             int i = 0;
             foreach (var productRecipe in model.productRecipes)
             {
-                Debug.Log(i);
+                //Debug.Log("Product Recipe Index: " + i);
 
                 view.itemUIs[i].collectableObjectStat = productRecipe.Value.collectableObjectStat;
                 view.itemUIs[i].SetItemUI(productRecipe.Value.collectableObjectStat);
@@ -76,9 +76,9 @@ namespace VitsehLand.Scripts.Crafting
             view.ShowCurrentItemInformation(firstItemUI.collectableObjectStat);
             view.ShowRecipe();
 
-            Debug.Log(firstItemUI);
-            Debug.Log(model.GetQuantityByMaterialOfRecipe(firstItemUI.collectableObjectStat.recipe));
-            Debug.Log(model.currentQuantity);
+            //Debug.Log(firstItemUI);
+            //Debug.Log(model.GetQuantityByMaterialOfRecipe(firstItemUI.collectableObjectStat.recipe));
+            //Debug.Log("Current Quantity: " + model.currentQuantity);
 
             view.LoadMaterialsRequired(firstItemUI.collectableObjectStat.recipe,
                 model.GetQuantityByMaterialOfRecipe(firstItemUI.collectableObjectStat.recipe),

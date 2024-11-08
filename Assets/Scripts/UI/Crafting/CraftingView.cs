@@ -158,8 +158,8 @@ namespace VitsehLand.Assets.Scripts.UI.Crafting
 
         public void LoadMaterialsRequired(RecipeData recipeData, List<int> quantityMaterials, int quantity)
         {
-            Debug.Log("Load " + recipeData.collectableObjectStat.collectableObjectName);
-            Debug.Log(materialCardWrappers.Count);
+            //Debug.Log("Load " + recipeData.collectableObjectStat.collectableObjectName);
+            //Debug.Log("materialCardWrappers.Count: " + materialCardWrappers.Count);
 
             for (int i = 0; i < materialCardWrappers.Count; i++)
             {

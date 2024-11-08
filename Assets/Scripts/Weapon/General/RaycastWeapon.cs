@@ -17,7 +17,7 @@ namespace VitsehLand.Scripts.Weapon.General
     // The RaycastWeapon as Context defines the interface of interest to clients.
     public class RaycastWeapon : MonoBehaviour
     {
-        public IWeaponStragety weaponHandler;
+        public IWeaponStrategy weaponHandler;
 
         public CollectableObjectStatController collectableObjectStatController;
         public ShootController shootController;

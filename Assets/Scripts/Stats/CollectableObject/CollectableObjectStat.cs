@@ -45,13 +45,14 @@ namespace VitsehLand.Scripts.Stats
             if (selectedComponents.Equals(CollectableObjectComponentBitmaskEnum.All))
             {
                 //All option
-                strSelectedComponents.Clear();
+                //strSelectedComponents.Clear();
                 for (int i = 1; i < componentEnums.Count - 1; i++)
                 {
+                    if (strSelectedComponents.Contains(componentEnums[i])) continue;
                     strSelectedComponents.Add(componentEnums[i]);
                 }
             }
-            else
+            else if (!selectedComponents.Equals(CollectableObjectComponentBitmaskEnum.None))
             {
                 //Other options
                 strSelectedComponents = selectedComponents.ToString().Split(", ").ToList();
@@ -62,6 +63,7 @@ namespace VitsehLand.Scripts.Stats
             {
                 //Clear for None option
                 components.Clear();
+                strSelectedComponents.Clear();
                 strComponents.Clear();
             }
             else
@@ -102,11 +104,11 @@ namespace VitsehLand.Scripts.Stats
         [InfoBox("Components are groups of data that the game uses to process the corresponding actions of the player with a Collectable Object. Not having Component A,B or C means that the player cannot perform the corresponding action on that Collectable Object.")]
         [SerializeReference]
         public List<CollectableObjectStatComponent> components;
+        public Dictionary<string, CollectableObjectStatComponent> dictComponents;
 
-        [Button("AttachStatFromOldModelToComponentModel")]
-#endif
+        [Button("AssignStatFromOldModelToComponentModel")]
 
-        void AttachStat()
+        void AssignStat()
         {
             foreach (var component in components)
             {
@@ -160,6 +162,7 @@ namespace VitsehLand.Scripts.Stats
                 }
             }
         }
+#endif
 
         [Title("Base Collectable Object Attributes")]
         [InfoBox("A collectable object is set to Weapon Slot 3 by default. It will be assigned to Weapon Slot 1 or Weapon Slot 2 if it can be used in one of those respective slots.")]
@@ -174,7 +177,12 @@ namespace VitsehLand.Scripts.Stats
         public int maxCount;
 
         [InfoBox("Warning: It will be created later. List of object can store collectable object and its max quantity stored", InfoMessageType.Warning)]
-        public int maxQuantityStored = 9999;
+        public int maxQuantityStored;
+
+        public CollectableObjectStatComponent GetCollectableObjectStatComponent<T>() where T : CollectableObjectStatComponent
+        {
+            return components.OfType<T>().FirstOrDefault();
+        }
 
         /**/
         public int amplitudeGainImpulse;

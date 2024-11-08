@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using VitsehLand.Scripts.Enemy;
-using VitsehLand.Scripts.Manager;
 using VitsehLand.Scripts.Pattern.Pooling;
 using VitsehLand.Scripts.Pattern.Strategy;
 using VitsehLand.Scripts.Player;
@@ -12,7 +11,7 @@ using VitsehLand.Scripts.Weapon.General;
 
 namespace VitsehLand.Scripts.Weapon.Primary
 {
-    public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStragety
+    public class ShootingHandler : MonoBehaviour, IPrimaryWeaponStrategy
     {
         public ShootingInputData shootingInputData;
         public RaycastWeapon raycastWeapon;
@@ -170,7 +169,7 @@ namespace VitsehLand.Scripts.Weapon.Primary
 
             if (shootingInputData.collectableObjectStatController.collectableObjectStat.zoomType == CollectableObjectStat.ZoomType.HasScope)
             {
-                MyDebug.Log("Shoot");
+                Debug.Log("Shoot");
                 Vector3 localDirection = Vector3.forward + shootingInputData.cameraShake.GetCurrentPatternVector();
                 direction = shootingInputData.fpsCameraTransform.TransformDirection(localDirection).normalized;
             }
@@ -184,7 +183,7 @@ namespace VitsehLand.Scripts.Weapon.Primary
 
         public void PlayAimAnimation()
         {
-            //MyDebug.Log("Handle Right Click");
+            MyDebug.LogCaller();
 
             ShootController shootController = shootingInputData.shootController;
             if (!shootController.rigController) return;

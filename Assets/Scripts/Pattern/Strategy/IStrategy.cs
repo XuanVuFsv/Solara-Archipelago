@@ -2,8 +2,8 @@ using VitsehLand.Scripts.Weapon.Primary;
 
 namespace VitsehLand.Scripts.Pattern.Strategy
 {
-    // The Command interface declares a method for executing a command.
-    public interface IWeaponStragety
+    // The Strategy interface declares a method for executing a stragety.
+    public interface IWeaponStrategy
     {
         public void HandleLeftMouseClick();
         public void HandleRightMouseClick();
@@ -11,18 +11,9 @@ namespace VitsehLand.Scripts.Pattern.Strategy
         ShootingInputData GetShootingInputData();
     }
 
-    public interface IPrimaryWeaponStragety : IWeaponStragety
-    {
+    public interface IPrimaryWeaponStrategy : IWeaponStrategy { }
 
-    }
+    public interface IHandGunWeaponStrategy : IWeaponStrategy { }
 
-    public interface IHandGunWeaponStragety : IWeaponStragety
-    {
-
-    }
-
-    public interface ICollectorWeaponStragety : IWeaponStragety
-    {
-
-    }
+    public interface ICollectorWeaponStrategy : IWeaponStrategy { }
 }

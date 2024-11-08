@@ -4,7 +4,7 @@ using VitsehLand.Scripts.Weapon.Primary;
 
 namespace VitsehLand.Scripts.Weapon.HandGun
 {
-    public class ActionHandler : MonoBehaviour, IHandGunWeaponStragety
+    public class ActionHandler : MonoBehaviour, IHandGunWeaponStrategy
     {
         public ShootingInputData shootingInputData;
         public GrapplingRope grapplingRope;

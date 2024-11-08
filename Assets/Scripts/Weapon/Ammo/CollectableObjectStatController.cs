@@ -1,6 +1,7 @@
 using UnityEngine;
 using VitsehLand.GameCamera.Shaking;
 using VitsehLand.Scripts.Stats;
+using VitsehLand.Scripts.Ultilities;
 using VitsehLand.Scripts.Weapon.General;
 
 namespace VitsehLand.Scripts.Weapon.Ammo
@@ -60,7 +61,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
 
             if (collectableObjectStat)
             {
-                AssignCroptData();
+                AssignCollectableObjecttData();
             }
         }
 
@@ -69,8 +70,10 @@ namespace VitsehLand.Scripts.Weapon.Ammo
             collectableObjectStat = newCollectableObjectStat;
         }
 
-        public void AssignCroptData()
+        public void AssignCollectableObjecttData()
         {
+            Debug.Log(collectableObjectStat.collectableObjectName);
+
             //if (hasAssignCropData) return;
             //GetComponent<RaycastWeapon>().currentShootingMechanic = collectableObjectStat.shootingMechanic;
             //canAttack = collectableObjectStat.canAttack;
@@ -88,6 +91,11 @@ namespace VitsehLand.Scripts.Weapon.Ammo
             range = collectableObjectStat.range;
             force = collectableObjectStat.force;
             amplitudeGainImpulse = collectableObjectStat.amplitudeGainImpulse;
+            //Debug.Log("amplitudeGainImpulse: " + amplitudeGainImpulse);
+            //amplitudeGainImpulse = (collectableObjectStat.GetCollectableObjectStatComponent<AttackingCropStat>() as AttackingCropStat).amplitudeGainImpulse;
+            Debug.Log("amplitudeGainImpulse: " + amplitudeGainImpulse);
+            //MyDebug.LogCaller();
+
             multiplierRecoilOnAim = collectableObjectStat.multiplierRecoilOnAim;
             multiplierForAmmo = collectableObjectStat.multiplierForAmmo;
 

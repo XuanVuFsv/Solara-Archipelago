@@ -18,6 +18,8 @@ namespace VitsehLand.Scripts.Weapon.General
         public CollectableObjectStatController currentCollectableObjectStatController;
         public GunCameraController gunCamera;
 
+        RaycastWeapon raycastWeapon;
+
         [SerializeField]
         Suckable ammunitionChestPicked, defaultAmmoOnStart;
         [SerializeField]
@@ -91,7 +93,7 @@ namespace VitsehLand.Scripts.Weapon.General
             {
                 //Debug.Log("Diff");
                 currentCollectableObjectStatController.collectableObjectStat = itemInInventory.collectableObjectStat;
-                currentCollectableObjectStatController.AssignCroptData();
+                currentCollectableObjectStatController.AssignCollectableObjecttData();
 
                 //currentAmmo = 0;
                 //outOfAmmo = true;
@@ -139,7 +141,7 @@ namespace VitsehLand.Scripts.Weapon.General
         public void ResetCropStats(CollectableObjectStat resetCropStats)
         {
             currentCollectableObjectStatController.collectableObjectStat = resetCropStats;
-            currentCollectableObjectStatController.AssignCroptData();
+            currentCollectableObjectStatController.AssignCollectableObjecttData();
 
             maxQuantityStored = 0;
         }
@@ -215,7 +217,7 @@ namespace VitsehLand.Scripts.Weapon.General
                     Debug.Log("Null item");
                     itemInInventory = InventoryController.Instance.GetCurrentItem();
                     currentCollectableObjectStatController.collectableObjectStat = ammoPickup.collectableObjectStat;
-                    currentCollectableObjectStatController.AssignCroptData();
+                    currentCollectableObjectStatController.AssignCollectableObjecttData();
                     SetupCollectableObjectStat(false);
                     UpdateNewAmmo(itemInInventory, itemInInventory.index);
                 }
@@ -254,6 +256,7 @@ namespace VitsehLand.Scripts.Weapon.General
 
         public void UseAmmo(int count)
         {
+            raycastWeapon = GetComponent<RaycastWeapon>();
             if (currentCollectableObjectStatController.collectableObjectStat.featuredType == GameObjectType.FeaturedType.None || currentCollectableObjectStatController.collectableObjectStat.featuredType == GameObjectType.FeaturedType.Product && weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) return;
             //InventoryController.Instance.GetCurrentItem().AddAmmo(ammo);
             itemInInventory.UseAmmo(count, weaponSlot);
@@ -266,8 +269,15 @@ namespace VitsehLand.Scripts.Weapon.General
                 //Debug.Log("<0");
                 outOfAmmo = true;
 
-                if (itemInInventory.collectableObjectStat.zoomType != CollectableObjectStat.ZoomType.NoZoom && weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) (GetComponent<RaycastWeapon>().weaponHandler as ShootingHandler).HandleRightMouseClick();
+                if (itemInInventory.collectableObjectStat.zoomType != CollectableObjectStat.ZoomType.NoZoom &&
+                    weaponSlot == ActiveWeapon.WeaponSlot.AttackGun &&
+                    raycastWeapon.shootController.inAim)
+                {
+                    (raycastWeapon.weaponHandler as ShootingHandler).HandleRightMouseClick();
+                }
+
                 if (itemInInventory.collectableObjectStat.featuredType == GameObjectType.FeaturedType.Normal && itemInInventory.collectableObjectStat.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun) itemInInventory.suckableSample.RemoveUseGameEvent();
+                
                 InventoryController.Instance.ResetCurrentSlot();
                 itemInInventory = InventoryController.Instance.GetCurrentItem();
 

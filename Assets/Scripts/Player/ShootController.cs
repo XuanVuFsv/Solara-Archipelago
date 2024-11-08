@@ -148,35 +148,38 @@ namespace VitsehLand.Scripts.Player
         {
             if (inputController.isAim)
             {
-                if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety && !isReloading)
+                if (raycastWeapon.weaponHandler is IPrimaryWeaponStrategy && !isReloading)
                 {
-                    //MyDebug.Log(frame);
                     raycastWeapon.HandleRightMouseClick();
+                    MyDebug.LogCaller();
                 }
                 else
                 {
-                    if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
+                    if (raycastWeapon.weaponHandler is ICollectorWeaponStrategy)
                     {
                         if (Time.time - lastFired > 1 / 5f)
                         {
                             lastFired = Time.time;
                             raycastWeapon.HandleRightMouseClick();
+                            MyDebug.LogCaller();
                         }
                     }
                     else
                     {
                         raycastWeapon.HandleRightMouseClick();
+                        MyDebug.LogCaller();
                     }
                 }
             }
 
             if (inputController.isHoldAim)
             {
-                if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
+                if (raycastWeapon.weaponHandler is ICollectorWeaponStrategy)
                 {
                     if ((raycastWeapon.weaponHandler as CollectHandler).waterMode != CollectHandler.WaterMode.Off)
                     {
                         raycastWeapon.HandleRightMouseClick();
+                        MyDebug.LogCaller();
                     }
                 }
             }
@@ -191,10 +194,10 @@ namespace VitsehLand.Scripts.Player
         void LeftMouseBehaviourHandle()
         {
             #region Logic for PrimaryWeapon
-            if (raycastWeapon.weaponHandler is IPrimaryWeaponStragety)
+            if (raycastWeapon.weaponHandler is IPrimaryWeaponStrategy)
             {
-                if ((inputController.isFire && activeWeapon.activeWeaponIndex == 0
-                || inputController.isSingleFire && activeWeapon.activeWeaponIndex != 0)
+                if ((inputController.isFire)
+                //|| inputController.isSingleFire && activeWeapon.activeWeaponIndex != 0)
                 && !currentWeaponStatsController.IsOutOfAmmo() && !isReloading)
                 {
                     Debug.Log("Shoot");
@@ -218,6 +221,7 @@ namespace VitsehLand.Scripts.Player
                         {
                             //MyDebug.Log("Handle Right Click");
                             //MyDebug.Log(frame);
+                            MyDebug.LogCaller();
                             raycastWeapon.HandleRightMouseClick();
                         }
                     }
@@ -234,13 +238,13 @@ namespace VitsehLand.Scripts.Player
                     DeactivateShooting();
                 }
             }
-            else if (raycastWeapon.weaponHandler is IHandGunWeaponStragety)
+            else if (raycastWeapon.weaponHandler is IHandGunWeaponStrategy)
             {
-                if (inputController.isSingleFire && activeWeapon.activeWeaponIndex == 1 && !(raycastWeapon.weaponHandler as ActionHandler).inGrapple) raycastWeapon.HandleLeftMouseClick();
+                if (inputController.isSingleFire && !(raycastWeapon.weaponHandler as ActionHandler).inGrapple) raycastWeapon.HandleLeftMouseClick();
             }
-            else if (raycastWeapon.weaponHandler is ICollectorWeaponStragety)
+            else if (raycastWeapon.weaponHandler is ICollectorWeaponStrategy)
             {
-                if (inputController.isFire && activeWeapon.activeWeaponIndex == 2) raycastWeapon.HandleLeftMouseClick();
+                if (inputController.isFire) raycastWeapon.HandleLeftMouseClick();
             }
             #endregion
         }

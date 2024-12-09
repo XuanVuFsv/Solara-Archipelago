@@ -45,6 +45,7 @@ namespace Solana.Unity.SDK.Example
                 {
                     SetupScreen(screen);
                 }
+                Debug.Log("Screen 0");
                 screens[0].gameObject.SetActive(true);
                 screens[0].ShowScreen();
             }
@@ -74,6 +75,11 @@ namespace Solana.Unity.SDK.Example
             curScreen.HideScreen();
             screensDict[name].ShowScreen(data);
         }
+
+        public SimpleScreen GetScreenByID(string id)
+        {
+            return screensDict[id];
+        }    
     }
 
 }

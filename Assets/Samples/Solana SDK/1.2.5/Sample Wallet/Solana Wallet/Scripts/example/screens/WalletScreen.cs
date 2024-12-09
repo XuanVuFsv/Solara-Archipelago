@@ -73,6 +73,7 @@ namespace Solana.Unity.SDK.Example
             logoutBtn.onClick.AddListener(() =>
             {
                 Web3.Instance.Logout();
+                (manager.GetScreenByID("login_screen") as LoginScreen).hasLogin = false;
                 manager.ShowScreen(this, "login_screen");
                 if(parentManager != null)
                     parentManager.ShowScreen(this, "[Connect_Wallet_Screen]");

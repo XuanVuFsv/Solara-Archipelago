@@ -112,6 +112,7 @@ namespace Solana.Unity.SDK.Example
                 if (!hasLogin)
                 {
                     hasLogin = true;
+                    Debug.Log("Login");
                     WalletManager.Instance.HideWalletUI();
                 }
             }

@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
+  m_Name: Apple
+  m_EditorClassIdentifier: 
+  selectedComponents: 6
+  components:
+  - rid: 4767322037401419776
+  - rid: 4767322046297800716
+  weaponSlot: 0
+  filteredType: 0
+  featuredType: 2
+  icon: {fileID: 21300000, guid: 2aa6ab62866ce4439ab7303f7da55e51, type: 3}
+  baseId: apple
+  collectableObjectName: Apple
+  maxCount: 9999
+  maxQuantityStored: 9999
+  amplitudeGainImpulse: 1
+  force: 100
+  fireRate: 1.5
+  shootingHandleType: 1
+  bulletObject: {fileID: 1834515177923798, guid: 56f810c590fcf384582ce73c1ac356dc, type: 3}
+  bulletEffectComponent: -1
+  trailTracer: {fileID: 0}
+  hitEffectPrefab: {fileID: 0}
+  damage: 75
+  damageDealToSpecificEnemy: 0
+  zoomType: 0
+  range: 100
+  reloadSpeed: 2
+  multiplierRecoilOnAim: 0
+  multiplierForAmmo: 0
+  recoildPattern:
+  - {x: 0, y: 0}
+  bulletCount: 1
+  bulletDirectionPattern:
+  - {x: 0, y: 0, z: 0}
+  totalGrowingTime: 60
+  bodyType: 0
+  wateringTime: 1
+  requiredLevel: 1
+  growingBody: {fileID: 0}
+  description: Bomb. Only earn GEM from harvest but its power so huge
+  gemEarnWhenHaverst: 25
+  totalProducingTime: 0
+  recipe: {fileID: 0}
+  cost: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4767322037401419776
+      type: {class: FarmingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        bodyType: 0
+        growingBody: {fileID: 0}
+        totalGrowingTime: 60
+        totalHarvestingQuantity: 0
+        wateringTime: 1
+        requiredLevel: 1
+        description: Bomb. Only earn GEM from harvest but its power so huge
+        gemEarnWhenHaverst: 25
+    - rid: 4767322046297800716
+      type: {class: AttackingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        shootingHandleType: 1
+        bulletEffectComponent: -1
+        zoomType: 0
+        bulletObject: {fileID: 1834515177923798, guid: 56f810c590fcf384582ce73c1ac356dc, type: 3}
+        trailTracer: {fileID: 0}
+        hitEffectPrefab: {fileID: 0}
+        force: 100
+        range: 100
+        fireRate: 1.5
+        damage: 75
+        damageDealToSpecificEnemy: 0
+        reloadSpeed: 2
+        amplitudeGainImpulse: 1
+        multiplierRecoilOnAim: 0
+        multiplierForAmmo: 0
+        recoilPattern:
+        - {x: 0, y: 0}
+        bulletCount: 1
+        bulletDirectionPattern:
+        - {x: 0, y: 0, z: 0}

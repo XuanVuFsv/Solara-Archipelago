@@ -10,7 +10,7 @@
 [Solana.Unity-SDK](https://github.com/magicblock-labs/Solana.Unity-SDK)  
 [Dotween](https://github.com/Demigiant/dotween)  
 
-**In Unity:**
+**In Unity:**  
 [Pro Builder](https://docs.unity3d.com/Packages/com.unity.probuilder@6.0/manual/index.html)  
 [Cinemachine](https://github.com/Unity-Technologies/com.unity.cinemachine)  
 [AI Navigation](https://docs.unity3d.com/Packages/com.unity.ai.navigation@2.0/manual/index.html)  

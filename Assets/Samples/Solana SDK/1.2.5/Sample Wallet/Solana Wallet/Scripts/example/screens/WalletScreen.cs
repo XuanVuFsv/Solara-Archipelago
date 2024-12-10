@@ -8,6 +8,7 @@ using codebase.utility;
 using Cysharp.Threading.Tasks;
 using Solana.Unity.Extensions;
 using Solana.Unity.Rpc.Types;
+using VitsehLand.Scripts;
 
 // ReSharper disable once CheckNamespace
 
@@ -213,6 +214,7 @@ namespace Solana.Unity.SDK.Example
                 }
             }
             await UniTask.WhenAll(loadingTasks);
+            WalletManager.Instance.UpdateHoldingLandNFTs(_instantiatedTokens);
             _isLoadingTokens = false;
         }
         

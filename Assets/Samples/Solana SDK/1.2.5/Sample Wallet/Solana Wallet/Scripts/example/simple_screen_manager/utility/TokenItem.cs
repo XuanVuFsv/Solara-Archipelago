@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Solana.Unity.Extensions.Models.TokenMint;
+using Solana.Unity.Metaplex.CandyGuard;
 using Solana.Unity.Rpc.Models;
 using Solana.Unity.SDK.Utility;
 using TMPro;
@@ -37,6 +38,11 @@ namespace Solana.Unity.SDK.Example
         private void Start()
         {
             transferButton.onClick.AddListener(TransferAccount);
+        }
+
+        public string GetName()
+        {
+            return _nft.metaplexData?.data?.offchainData?.name;
         }
 
         public async UniTask InitializeData(TokenAccount tokenAccount, SimpleScreen screen, Solana.Unity.SDK.Nft.Nft nftData = null)

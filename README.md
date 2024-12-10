@@ -1,5 +1,6 @@
 
-**Solara Archipelago**
+**Solara Archipelago**  
+  
 [Mint Page Source Code](https://github.com/XuanVuFsv/Solara-Archipelago-Mint-Page-umi-ui)  
   
 **Plugins and Tools:**  

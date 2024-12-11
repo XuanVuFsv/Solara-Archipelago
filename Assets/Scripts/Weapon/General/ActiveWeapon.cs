@@ -11,11 +11,10 @@ using VitsehLand.GameCamera.Shaking;
 
 #if UNITY_EDITOR
 using UnityEditor.Animations;
+#endif
 
 namespace VitsehLand.Scripts.Weapon.General
 {
-#endif
-
     public class ActiveWeapon : MonoBehaviour
     {
         private static ActiveWeapon instance;
@@ -517,7 +516,6 @@ namespace VitsehLand.Scripts.Weapon.General
         {
             return equippedWeapon[activeWeaponIndex].weaponStat.name;
         }
-
 #if UNITY_EDITOR
         [ContextMenu("Save Weapon Pose")]
         void SaveWeaponPose()

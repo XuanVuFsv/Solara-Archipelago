@@ -50,7 +50,8 @@ namespace VitsehLand.Scripts.Enemy
             {
                 while (spawnedEnemies < numberOfEnemiesToSpawn)
                 {
-                    SpawnRoundRobinEnemy(1, enemyPrefabs[defaultIndex].gameObject);
+                    //SpawnRoundRobinEnemy(1, enemyPrefabs[defaultIndex].gameObject);
+                    SpawnRoundRobinEnemy(1, enemyPrefabs[Random.Range(0, enemyPrefabs.Count)].gameObject);
                     spawnedEnemies++;
 
                     yield return wait;

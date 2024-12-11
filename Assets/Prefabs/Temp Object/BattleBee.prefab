@@ -30634,7 +30634,7 @@ MonoBehaviour:
   shield: {fileID: 7650751172767755063}
   breakShieldFX: {fileID: 2968533767241157473}
   animator: {fileID: 3599336668865975993}
-  enemyStats: {fileID: 11400000, guid: 35297e1e241c78b40b426bd43acd4408, type: 2}
+  enemyStat: {fileID: 11400000, guid: 35297e1e241c78b40b426bd43acd4408, type: 2}
   healthController: {fileID: 7100931694363258498}
   bullet: {fileID: 2207389504464185989, guid: 2b4c4b572cf12044a9e8d22a01154b5e, type: 3}
   spawnBulletTransform: {fileID: 2210015248975428721}
@@ -40792,7 +40792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movePosTransform: {fileID: 0}
-  stats: {fileID: 11400000, guid: 35297e1e241c78b40b426bd43acd4408, type: 2}
+  enemyStat: {fileID: 11400000, guid: 35297e1e241c78b40b426bd43acd4408, type: 2}
 --- !u!195 &7427356582829526210
 NavMeshAgent:
   m_ObjectHideFlags: 0

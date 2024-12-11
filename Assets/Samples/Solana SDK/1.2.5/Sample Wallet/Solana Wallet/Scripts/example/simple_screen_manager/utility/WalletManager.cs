@@ -57,6 +57,12 @@ namespace VitsehLand.Scripts
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
                 }
+                else
+                {
+                    //Set up cursor
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
             }
         }
 

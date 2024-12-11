@@ -28,4 +28,4 @@ MonoBehaviour:
   stoppingDistance: 4
   gemRewardForPlayerWhenKilled: 40
   bulletForce: 350
-  shieldDecreaseDamage: 0.25
+  shieldDecreaseDamage: 1

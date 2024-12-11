@@ -4983,7 +4983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeLife: 2
   rigid: {fileID: 2207389504464185988}
-  enemyStats: {fileID: 11400000, guid: 35297e1e241c78b40b426bd43acd4408, type: 2}
+  enemyStat: {fileID: 11400000, guid: 35297e1e241c78b40b426bd43acd4408, type: 2}
 --- !u!1 &5007914960239944689
 GameObject:
   m_ObjectHideFlags: 0

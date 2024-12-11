@@ -19,7 +19,7 @@ MonoBehaviour:
   weaponSlot: -1
   filteredType: 0
   featuredType: -1
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: d035f8bbcc2a543afa3b3bb3c1b67a19, type: 3}
   baseId: null
   collectableObjectName: Null
   maxCount: 9999

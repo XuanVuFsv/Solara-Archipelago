@@ -26,8 +26,15 @@ namespace VitsehLand.Scripts.Player
             if (GameTimeManager.Instance.Hours == 7 && GameTimeManager.Instance.Minutes == 0)
             {
                 health = 100;
-                healthBar.localScale = Vector3.one;
-                healthText.text = health.ToString();
+                if (healthBar == null)
+                {
+                    Debug.Log(gameObject.name);
+                }
+                else
+                {
+                    healthBar.localScale = Vector3.one;
+                    healthText.text = health.ToString();
+                }
             }
         }
 

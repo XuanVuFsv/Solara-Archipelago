@@ -1,5 +1,6 @@
 
-**Solara Archipelago**      
+**Solara Archipelago**     
+**Only Devnet now**
 
 How to play:  
 ![Control](https://github.com/user-attachments/assets/51036a1b-ca53-4b69-8098-8c72efc8b396)    

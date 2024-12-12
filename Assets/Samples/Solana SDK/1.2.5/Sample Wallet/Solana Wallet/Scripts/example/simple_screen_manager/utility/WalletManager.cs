@@ -25,6 +25,7 @@ namespace VitsehLand.Scripts
         public bool assignLandsOnStart;
 
         public List<string> activeLandNames = new List<string>();
+        public string nftLandCollectionAddress = "";
 
         private void Awake()
         {
@@ -87,10 +88,14 @@ namespace VitsehLand.Scripts
 
         public void UpdateHoldingLandNFTs(List<TokenItem> tokenItems)
         {
+            Debug.Log("Updating...");
             int totalLands = 0;
             activeLandNames.Clear();
             for (int i = 0; i < tokenItems.Count; i++)
             {
+                if (nftLandCollectionAddress != tokenItems[i].GetCollectionAddress()) continue;
+                Debug.Log(tokenItems[i].GetCollectionAddress());
+
                 string name = tokenItems[i].GetName();
                 if (landNames.IndexOf(name) < 0) continue;
                 activeLandNames.Add(name);

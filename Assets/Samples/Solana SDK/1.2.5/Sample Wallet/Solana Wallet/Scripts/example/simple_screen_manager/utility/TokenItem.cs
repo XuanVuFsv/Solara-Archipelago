@@ -45,6 +45,11 @@ namespace Solana.Unity.SDK.Example
             return _nft.metaplexData?.data?.offchainData?.name;
         }
 
+        public string GetCollectionAddress()
+        {
+            return _nft.metaplexData?.data?.metadata?.collectionLink?.key.Key;
+        }
+
         public async UniTask InitializeData(TokenAccount tokenAccount, SimpleScreen screen, Solana.Unity.SDK.Nft.Nft nftData = null)
         {
             _parentScreen = screen;

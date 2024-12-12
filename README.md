@@ -4,23 +4,24 @@
 How to play:  
 ![Control](https://github.com/user-attachments/assets/51036a1b-ca53-4b69-8098-8c72efc8b396)    
 
-[Mint Page Source Code](https://github.com/XuanVuFsv/Solara-Archipelago-Mint-Page-umi-ui)    
+**Related source code**  
+[Mint Page Source Code](https://github.com/XuanVuFsv/Solara-Archipelago-Mint-Page-umi-ui)      
   
-**Plugins and Tools:**  
+**Plugins and Tools**  
 [xNode](https://github.com/Siccity/xNode)  
 [UniTask](https://github.com/Cysharp/UniTask)  
 [Odin Inspector](https://assetstore.unity.com/packages/tools/utilities/odin-inspector-and-serializer-89041)  
 [Solana.Unity-SDK](https://github.com/magicblock-labs/Solana.Unity-SDK)  
 [Dotween](https://github.com/Demigiant/dotween)    
 
-**In Unity:**  
+**In Unity**  
 [Pro Builder](https://docs.unity3d.com/Packages/com.unity.probuilder@6.0/manual/index.html)  
 [Cinemachine](https://github.com/Unity-Technologies/com.unity.cinemachine)  
 [AI Navigation](https://docs.unity3d.com/Packages/com.unity.ai.navigation@2.0/manual/index.html)  
 [Animation Rigging](https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.0/manual/index.html)    
 
 
-**Assets:**  
+**Assets**  
 [Low Poly Atmospheric Locations Pack](https://assetstore.unity.com/packages/3d/environments/landscapes/low-poly-atmospheric-locations-pack-278928)
 [Buttons Set](https://assetstore.unity.com/packages/2d/gui/buttons-set-211824)
 [Food Icons Pack](https://assetstore.unity.com/packages/2d/gui/icons/food-icons-pack-70018)

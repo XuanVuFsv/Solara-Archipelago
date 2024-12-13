@@ -1,41 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using VitsehLand.Scripts.Pattern.Singleton;
 
-public class MyQualitySetting : Singleton<MyQualitySetting>
+namespace VitsehLand.Scripts.Ultilities
 {
-    [SerializeField]
-    TextMeshProUGUI vSyncText;
-
-    // Start is called before the first frame update
-    void Start()
+    public class MyQualitySetting : Singleton<MyQualitySetting>
     {
-        vSyncText.text = QualitySettings.vSyncCount.ToString();
-    }
+        [SerializeField]
+        TextMeshProUGUI vSyncText;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Z))
+        public override void Awake()
         {
-            if (QualitySettings.vSyncCount == 3) QualitySettings.vSyncCount = 0;
-            else QualitySettings.vSyncCount++;
+            base.Awake();
+
             vSyncText.text = QualitySettings.vSyncCount.ToString();
+            QualitySettings.vSyncCount = 0;
         }
 
-        //if (Input.GetKeyDown(KeyCode.F)) Application.targetFrameRate = fps;
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                if (QualitySettings.vSyncCount == 3) QualitySettings.vSyncCount = 0;
+                else QualitySettings.vSyncCount++;
+                vSyncText.text = QualitySettings.vSyncCount.ToString();
+            }
 
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    Cursor.visible = false;
-        //    Cursor.lockState = CursorLockMode.Locked;
-        //}
+            //if (Input.GetKeyDown(KeyCode.F)) Application.targetFrameRate = fps;
 
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
-        //    Cursor.visible = true;
-        //    Cursor.lockState = CursorLockMode.None;
-        //}
+            //if (Input.GetKeyDown(KeyCode.L))
+            //{
+            //    Cursor.visible = false;
+            //    Cursor.lockState = CursorLockMode.Locked;
+            //}
+
+            //if (Input.GetKeyDown(KeyCode.U))
+            //{
+            //    Cursor.visible = true;
+            //    Cursor.lockState = CursorLockMode.None;
+            //}
+        }
     }
 }

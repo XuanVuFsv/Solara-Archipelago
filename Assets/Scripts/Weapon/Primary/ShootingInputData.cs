@@ -1,33 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using VitsehLand.GameCamera.Shaking;
+using VitsehLand.Scripts.Pattern.Observer;
+using VitsehLand.Scripts.Player;
+using VitsehLand.Scripts.Stats;
+using VitsehLand.Scripts.Weapon.Ammo;
 
-[System.Serializable]
-public class ShootingInputData
+namespace VitsehLand.Scripts.Weapon.Primary
 {
-    public ShootingInputData(ShootController _shootController, AmmoStats.ShootingHandleType _shootingHandleType, AmmoStatsController _ammoStatsController, AudioSource _source, Transform _raycastOrigin, Transform _fpsCameraTransform, GameEvent _hitEvent, CameraShake _cameraShake, Transform _bulletSpawnPoint, int _layerMask)
+    [System.Serializable]
+    public class ShootingInputData
     {
-        shootController = _shootController;
-        shootingHandleType = _shootingHandleType;
-        ammoStatsController = _ammoStatsController;
-        source = _source;
-        raycastOrigin = _raycastOrigin;
-        fpsCameraTransform = _fpsCameraTransform;
-        hitEvent = _hitEvent;
-        cameraShake = _cameraShake;
-        bulletSpawnPoint = _bulletSpawnPoint;
-        layerMask = _layerMask;
+        public ShootingInputData(ShootController _shootController, CollectableObjectStat.ShootingHandleType _shootingHandleType, CollectableObjectStatController _collectableObjectStatController, AudioSource _source, Transform _raycastOrigin, Transform _fpsCameraTransform, GameEvent _hitEvent, CameraShake _cameraShake, Transform _bulletSpawnPoint, int _layerMask)
+        {
+            shootController = _shootController;
+            shootingHandleType = _shootingHandleType;
+            collectableObjectStatController = _collectableObjectStatController;
+            source = _source;
+            raycastOrigin = _raycastOrigin;
+            fpsCameraTransform = _fpsCameraTransform;
+            hitEvent = _hitEvent;
+            cameraShake = _cameraShake;
+            bulletSpawnPoint = _bulletSpawnPoint;
+            layerMask = _layerMask;
+        }
+
+        public ShootController shootController;
+
+        public CollectableObjectStat.ShootingHandleType shootingHandleType;
+        public CollectableObjectStatController collectableObjectStatController;
+        public AudioSource source;
+        public Transform raycastOrigin;
+        public Transform fpsCameraTransform;
+        public GameEvent hitEvent;
+        public CameraShake cameraShake;
+        public Transform bulletSpawnPoint;
+        public int layerMask;
     }
-
-    public ShootController shootController;
-
-    public AmmoStats.ShootingHandleType shootingHandleType;
-    public AmmoStatsController ammoStatsController;
-    public AudioSource source;
-    public Transform raycastOrigin;
-    public Transform fpsCameraTransform;
-    public GameEvent hitEvent;
-    public CameraShake cameraShake;
-    public Transform bulletSpawnPoint;
-    public int layerMask;
 }

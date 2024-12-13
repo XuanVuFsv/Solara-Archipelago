@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IStoreSuckable
+namespace VitsehLand.Scripts.Weapon.Ammo
 {
+    public interface IStoreSuckable
+    {
 
+    }
 }

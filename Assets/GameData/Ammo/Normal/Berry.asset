@@ -12,26 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Berry
   m_EditorClassIdentifier: 
+  selectedComponents: 6
+  components:
+  - rid: 4767322046297800705
+  - rid: 4767322046297800713
   weaponSlot: 0
-  name: Berry
-  maxCount: 1000
-  ammoAllowedInMagazine: 30
+  filteredType: 0
+  featuredType: 2
+  icon: {fileID: 21300000, guid: 26b4d8692c5e74d17bd9dc28bcbe961b, type: 3}
+  baseId: berry
+  collectableObjectName: Berry
+  maxCount: 9999
+  maxQuantityStored: 9999
   amplitudeGainImpulse: 1
   force: 0
-  fireRate: 10
-  artwork: {fileID: 21300000, guid: 26b4d8692c5e74d17bd9dc28bcbe961b, type: 3}
-  fruitPrefab: {fileID: 0}
+  fireRate: 5
   shootingHandleType: 0
-  featuredType: 2
+  bulletObject: {fileID: 0}
   bulletEffectComponent: 0
   trailTracer: {fileID: 0}
-  bulletObject: {fileID: 0}
   hitEffectPrefab: {fileID: 3306171731122782009, guid: 9efff6761586a664f9b76807673f5f95, type: 3}
-  damage: 0
+  damage: 20
   damageDealToSpecificEnemy: 0
   zoomType: 1
   range: 100
-  reloadSpeed: 2.5
+  reloadSpeed: 0.5
   multiplierRecoilOnAim: 0.5
   multiplierForAmmo: 1
   recoildPattern:
@@ -51,12 +56,62 @@ MonoBehaviour:
   bulletCount: 1
   bulletDirectionPattern:
   - {x: 0, y: 0, z: 0}
-  totalGrowingTime: 20
-  numberOfFruitPerSeed: 0
+  totalGrowingTime: 15
   bodyType: 0
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
   description: Asssault Rifle Ammo. Deal 25 damage
-  gemEarnWhenKillEnemy: 1
-  gemEarnWhenHaverst: 1
+  gemEarnWhenHaverst: 5
+  totalProducingTime: 0
+  recipe: {fileID: 0}
+  cost: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4767322046297800705
+      type: {class: FarmingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        bodyType: 0
+        growingBody: {fileID: 0}
+        totalGrowingTime: 15
+        totalHarvestingQuantity: 0
+        wateringTime: 0
+        requiredLevel: 0
+        description: Asssault Rifle Ammo. Deal 25 damage
+        gemEarnWhenHaverst: 5
+    - rid: 4767322046297800713
+      type: {class: AttackingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        shootingHandleType: 0
+        bulletEffectComponent: 0
+        zoomType: 1
+        bulletObject: {fileID: 0}
+        trailTracer: {fileID: 0}
+        hitEffectPrefab: {fileID: 3306171731122782009, guid: 9efff6761586a664f9b76807673f5f95, type: 3}
+        force: 0
+        range: 100
+        fireRate: 5
+        damage: 20
+        damageDealToSpecificEnemy: 0
+        reloadSpeed: 0.5
+        amplitudeGainImpulse: 1
+        multiplierRecoilOnAim: 0.5
+        multiplierForAmmo: 1
+        recoilPattern:
+        - {x: 0, y: 0.25}
+        - {x: 0, y: 0.5}
+        - {x: -0.025, y: 0.75}
+        - {x: 0.025, y: 1}
+        - {x: 0.2, y: 1.2}
+        - {x: 0.4, y: 1.22}
+        - {x: 0.6, y: 1.2}
+        - {x: 0.8, y: 1.21}
+        - {x: 0.6, y: 1.2}
+        - {x: 0.4, y: 1.2}
+        - {x: 0.2, y: 1.23}
+        - {x: -0.1, y: 1.2}
+        - {x: -0.4, y: 1.22}
+        bulletCount: 1
+        bulletDirectionPattern:
+        - {x: 0, y: 0, z: 0}

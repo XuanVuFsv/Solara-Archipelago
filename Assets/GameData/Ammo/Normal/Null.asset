@@ -12,20 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Null
   m_EditorClassIdentifier: 
+  selectedComponents: 6
+  components:
+  - rid: 4767322046297800704
+  - rid: 4767322046297800712
   weaponSlot: -1
-  name: Null
-  maxCount: 0
-  ammoAllowedInMagazine: 0
+  filteredType: 0
+  featuredType: -1
+  icon: {fileID: 0}
+  baseId: null
+  collectableObjectName: Null
+  maxCount: 9999
+  maxQuantityStored: 9999
   amplitudeGainImpulse: 0
   force: 0
   fireRate: 0
-  artwork: {fileID: 21300000, guid: d035f8bbcc2a543afa3b3bb3c1b67a19, type: 3}
-  fruitPrefab: {fileID: 0}
   shootingHandleType: -1
-  featuredType: -1
+  bulletObject: {fileID: 0}
   bulletEffectComponent: -1
   trailTracer: {fileID: 0}
-  bulletObject: {fileID: 0}
   hitEffectPrefab: {fileID: 0}
   damage: 0
   damageDealToSpecificEnemy: 0
@@ -38,8 +43,47 @@ MonoBehaviour:
   bulletCount: 0
   bulletDirectionPattern: []
   totalGrowingTime: 0
-  numberOfFruitPerSeed: 0
   bodyType: -1
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
+  description: 
+  gemEarnWhenHaverst: 0
+  totalProducingTime: 0
+  recipe: {fileID: 0}
+  cost: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4767322046297800704
+      type: {class: FarmingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        bodyType: -1
+        growingBody: {fileID: 0}
+        totalGrowingTime: 0
+        totalHarvestingQuantity: 0
+        wateringTime: 0
+        requiredLevel: 0
+        description: 
+        gemEarnWhenHaverst: 0
+    - rid: 4767322046297800712
+      type: {class: AttackingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        shootingHandleType: -1
+        bulletEffectComponent: -1
+        zoomType: 0
+        bulletObject: {fileID: 0}
+        trailTracer: {fileID: 0}
+        hitEffectPrefab: {fileID: 0}
+        force: 0
+        range: 0
+        fireRate: 0
+        damage: 0
+        damageDealToSpecificEnemy: 0
+        reloadSpeed: 0
+        amplitudeGainImpulse: 0
+        multiplierRecoilOnAim: 0
+        multiplierForAmmo: 0
+        recoilPattern: []
+        bulletCount: 0
+        bulletDirectionPattern: []

@@ -1,31 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using VitsehLand.Scripts.Pattern.Pooling;
 
-public class BulletHoleBehaviour : ObjectInPool
+namespace VitsehLand.Scripts.Weapon.Ammo
 {
-    private void Start()
+    public class BulletHoleBehaviour : ObjectInPool
     {
-        gameObject.SetActive(false);
-    }
+        private void Start()
+        {
+            gameObject.SetActive(false);
+        }
 
-    public override void OnUsed(RaycastHit hit)
-    {
-        gameObject.SetActive(true);
+        public override void OnUsed(RaycastHit hit)
+        {
+            gameObject.SetActive(true);
 
-        transform.position = hit.point;
-        transform.forward = hit.normal;
-        transform.rotation = Quaternion.LookRotation(hit.normal);
-        Invoke(nameof(Release), lifeTime);
-    }
+            transform.position = hit.point;
+            transform.forward = hit.normal;
+            transform.rotation = Quaternion.LookRotation(hit.normal);
+            Invoke(nameof(Release), lifeTime);
+        }
 
-    public override void OnUsed(Vector3 point, Vector3 normal)
-    {
-        gameObject.SetActive(true);
+        public override void OnUsed(Vector3 point, Vector3 normal)
+        {
+            gameObject.SetActive(true);
 
-        transform.position = point;
-        transform.forward = normal;
-        transform.rotation = Quaternion.LookRotation(normal);
-        Invoke(nameof(Release), lifeTime);
+            transform.position = point;
+            transform.forward = normal;
+            transform.rotation = Quaternion.LookRotation(normal);
+            Invoke(nameof(Release), lifeTime);
+        }
     }
 }

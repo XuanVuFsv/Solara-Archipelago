@@ -1,19 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
-public class GrowingSlotResourceManager : SlotManager
+namespace VitsehLand.Scripts.UI.MonitorGarden
 {
-    public List<GrowingSlotResourceState> growingSlotResourcesManager = new List<GrowingSlotResourceState>();
-
-    public void FillResourceSlot(int i)
+    public class GrowingSlotResourceManager : SlotManager
     {
-        growingSlotResourcesManager[i].ChangeFillState(true);
-    }
+        public List<GrowingSlotResourceState> growingSlotResourcesManager = new List<GrowingSlotResourceState>();
 
-    public void MakeResourceSlotEmpty(int i)
-    {
-        growingSlotResourcesManager[i].ChangeFillState(false);
+        public void FillResourceSlot(int i)
+        {
+            growingSlotResourcesManager[i].ChangeFillState(true);
+        }
+
+        public void MakeResourceSlotEmpty(int i)
+        {
+            growingSlotResourcesManager[i].ChangeFillState(false);
+        }
     }
 }

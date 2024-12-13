@@ -12,22 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f66092723e12c74baa5f126b033b5cf, type: 3}
   m_Name: Carambola
   m_EditorClassIdentifier: 
+  selectedComponents: 6
+  components:
+  - rid: 4767322046297800706
+  - rid: 4767322046297800714
   weaponSlot: 0
-  name: Carambola
-  maxCount: 50
-  ammoAllowedInMagazine: 10
+  filteredType: 0
+  featuredType: 2
+  icon: {fileID: 21300000, guid: 1638069c9239f4822acbd15f922c172a, type: 3}
+  baseId: carambola
+  collectableObjectName: Carambola
+  maxCount: 9999
+  maxQuantityStored: 9999
   amplitudeGainImpulse: 70
   force: 0
   fireRate: 1
-  artwork: {fileID: 21300000, guid: 64f8eb4a25fe643169785ba4aef65d43, type: 3}
-  fruitPrefab: {fileID: 0}
   shootingHandleType: 0
-  featuredType: 2
+  bulletObject: {fileID: 2966576973696581955, guid: 7cced171216e01a48a0042b27bfc9ec9, type: 3}
   bulletEffectComponent: 0
   trailTracer: {fileID: 0}
-  bulletObject: {fileID: 2966576973696581955, guid: 7cced171216e01a48a0042b27bfc9ec9, type: 3}
   hitEffectPrefab: {fileID: 0}
-  damage: 0
+  damage: 100
   damageDealToSpecificEnemy: 0
   zoomType: 2
   range: 100
@@ -45,12 +50,56 @@ MonoBehaviour:
   bulletCount: 1
   bulletDirectionPattern:
   - {x: 0, y: 0, z: 0}
-  totalGrowingTime: 30
-  numberOfFruitPerSeed: 0
+  totalGrowingTime: 45
   bodyType: 0
   wateringTime: 0
   requiredLevel: 0
   growingBody: {fileID: 0}
   description: Sniper ammo. Deal 80 damage
-  gemEarnWhenKillEnemy: 4
-  gemEarnWhenHaverst: 2
+  gemEarnWhenHaverst: 20
+  totalProducingTime: 0
+  recipe: {fileID: 0}
+  cost: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4767322046297800706
+      type: {class: FarmingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        bodyType: 0
+        growingBody: {fileID: 0}
+        totalGrowingTime: 45
+        totalHarvestingQuantity: 0
+        wateringTime: 0
+        requiredLevel: 0
+        description: Sniper ammo. Deal 80 damage
+        gemEarnWhenHaverst: 20
+    - rid: 4767322046297800714
+      type: {class: AttackingCropStat, ns: VitsehLand.Scripts.Stats, asm: Game}
+      data:
+        shootingHandleType: 0
+        bulletEffectComponent: 0
+        zoomType: 2
+        bulletObject: {fileID: 2966576973696581955, guid: 7cced171216e01a48a0042b27bfc9ec9, type: 3}
+        trailTracer: {fileID: 0}
+        hitEffectPrefab: {fileID: 0}
+        force: 0
+        range: 100
+        fireRate: 1
+        damage: 100
+        damageDealToSpecificEnemy: 0
+        reloadSpeed: 2.5
+        amplitudeGainImpulse: 70
+        multiplierRecoilOnAim: 0
+        multiplierForAmmo: 0.5
+        recoilPattern:
+        - {x: 0, y: 0}
+        - {x: 6, y: 6}
+        - {x: -6, y: 1}
+        - {x: 3, y: 2}
+        - {x: 6, y: 3}
+        - {x: 5, y: 8}
+        - {x: 0, y: 1}
+        bulletCount: 1
+        bulletDirectionPattern:
+        - {x: 0, y: 0, z: 0}

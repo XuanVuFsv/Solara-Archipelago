@@ -21,7 +21,7 @@ MonoBehaviour:
   fireRate: 10
   artwork: {fileID: 21300000, guid: a6b3586d6014b4e19b31c4b0456cdb74, type: 3}
   fruitPrefab: {fileID: 0}
-  shootingHandleType: 0
+  shootingHandleType: -1
   featuredType: 1
   bulletEffectComponent: -1
   trailTracer: {fileID: 0}
@@ -35,7 +35,7 @@ MonoBehaviour:
   multiplierRecoilOnAim: 0
   multiplierForAmmo: 0
   recoildPattern: []
-  bulletCount: 1
+  bulletCount: 0
   bulletDirectionPattern: []
   totalGrowingTime: 0
   numberOfFruitPerSeed: 0
@@ -43,3 +43,8 @@ MonoBehaviour:
   wateringTime: 0
   requiredLevel: 1
   growingBody: {fileID: 0}
+  description: 
+  gemEarnWhenKillEnemy: 0
+  gemEarnWhenHaverst: 0
+  totalProducingTime: 0
+  resourceContain: 0

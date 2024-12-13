@@ -1,21 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using VitsehLand.Scripts.Player;
 
-public class UIGameTest : MonoBehaviour
+namespace VitsehLand.Scripts.Ultilities
 {
-    public Text[] parameterTexts;
-    public InputField targetFrameRateText;
-    public MainPlayerAnimator mainCharacterAnimator;
-    public InputController inputController;
-
-    public int countSpecifyParemeters;
-    public int targetFrameRate;
-
-    public void ApplyTargetFrameRate()
+    public class UIGameTest : MonoBehaviour
     {
-        targetFrameRate = System.Convert.ToInt32(targetFrameRateText.text);
-        Application.targetFrameRate = targetFrameRate;
+        public Text[] parameterTexts;
+        public InputField targetFrameRateText;
+        public MainPlayerAnimator mainCharacterAnimator;
+        public InputController inputController;
+
+        public int countSpecifyParemeters;
+        public int targetFrameRate;
+
+        public void ApplyTargetFrameRate()
+        {
+            targetFrameRate = System.Convert.ToInt32(targetFrameRateText.text);
+            Application.targetFrameRate = targetFrameRate;
+        }
     }
 }

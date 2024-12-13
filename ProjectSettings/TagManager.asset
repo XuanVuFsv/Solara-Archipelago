@@ -15,7 +15,10 @@ TagManager:
   - Suckable
   - Ammo
   - CheckingHarvest
-  - Axie
+  - Enemy
+  - Cluster
+  - Water Receiver
+  - BreakShield
   layers:
   - Default
   - TransparentFX

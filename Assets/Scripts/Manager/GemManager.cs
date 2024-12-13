@@ -1,44 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using VitsehLand.Scripts.Pattern.Singleton;
 
-public class GemManager : Singleton<GemManager>
+namespace VitsehLand.Scripts.Manager
 {
-    public TextMeshProUGUI text;
-
-    [SerializeField]
-    private int gemCount = 0;
-
-    public int GemCount
+    public class GemManager : Singleton<GemManager>
     {
-        get { return gemCount;  }
-    }
+        public TextMeshProUGUI text;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        text.text = gemCount.ToString();
-    }
+        [SerializeField]
+        private int gemCount = 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        public int GemCount
+        {
+            get { return gemCount; }
+        }
 
-    public void AddGem(int addedGemCount)
-    {
-        gemCount += addedGemCount;
-        text.text = gemCount.ToString();
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            text.text = gemCount.ToString();
+        }
 
-    public bool UseGem(int usedGemCount)
-    {
-        if (gemCount - usedGemCount < 0) return false;
-        gemCount -= usedGemCount;
-        text.text = gemCount.ToString();
-        return true;
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        public void AddGem(int addedGemCount)
+        {
+            gemCount += addedGemCount;
+            text.text = gemCount.ToString();
+        }
+
+        public bool UseGem(int usedGemCount)
+        {
+            if (gemCount - usedGemCount < 0) return false;
+            gemCount -= usedGemCount;
+            text.text = gemCount.ToString();
+            return true;
+        }
+
+        public bool CanUseGem(int usedGemCount)
+        {
+            if (gemCount - usedGemCount < 0) return false;
+            return true;
+        }
     }
 }

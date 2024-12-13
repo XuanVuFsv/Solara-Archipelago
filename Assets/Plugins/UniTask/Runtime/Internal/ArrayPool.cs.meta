@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Samples/Solana SDK/1.2.5/Sample Wallet/Solana Wallet/Scripts/example/simple_screen_manager/utility/WalletManager.cs.meta
+guid: 1ce26a21bef75844b9dd2f596c1b55b3
+=======
+guid: f83ebad81fb89fb4882331616ca6d248
+timeCreated: 1532361008
+licenseType: Free
+>>>>>>> parent of bc2a0d0a (integrated solana wallet):Assets/Plugins/UniTask/Runtime/Internal/ArrayPool.cs.meta
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

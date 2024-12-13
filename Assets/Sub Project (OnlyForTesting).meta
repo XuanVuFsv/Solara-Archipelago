@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Sub Project (OnlyForTesting).meta
 guid: 1fc7f348a35a32f4695d17f04860ac68
+========
+guid: f91bf1f5bb3489e4b83fd4a072effb60
+>>>>>>>> master:Assets/Main Character Animation.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

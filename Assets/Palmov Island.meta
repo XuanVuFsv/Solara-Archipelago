@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Palmov Island.meta
 guid: c4a4ff1179433b14fbe57d485e9a42c0
+========
+guid: 59c04238960b2d64683adb9e7fb6571a
+>>>>>>>> master:Assets/Game Settings.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

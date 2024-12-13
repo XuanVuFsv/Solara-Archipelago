@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Game Settings.meta
+guid: 59c04238960b2d64683adb9e7fb6571a
+========
 guid: 34c7f8076e3b50d4895f35b86dcc7979
+>>>>>>>> solana:Assets/Palmov Island/Low Poly Atmospheric Locations Pack/Materials.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

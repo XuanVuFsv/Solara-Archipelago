@@ -15,8 +15,8 @@ namespace VitsehLand.GameCamera
         void Start()
         {
             //Set up cursor
-            //Cursor.visible = false;
-            //Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             if (lockFps) Application.targetFrameRate = fps;
         }
 

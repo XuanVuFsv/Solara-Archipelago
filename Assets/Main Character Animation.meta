@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Main Character Animation.meta
 guid: f91bf1f5bb3489e4b83fd4a072effb60
+========
+guid: 59c04238960b2d64683adb9e7fb6571a
+>>>>>>>> solana:Assets/Game Settings.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

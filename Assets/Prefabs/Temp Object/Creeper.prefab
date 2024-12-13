@@ -748,8 +748,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 8798995106139451441}
   shield: {fileID: 0}
+  breakShieldFX: {fileID: 0}
   animator: {fileID: 2861952995524489457}
-  enemyStats: {fileID: 11400000, guid: eaa3c9a0df8b2c2458b5cc66a284e7e6, type: 2}
+  enemyStat: {fileID: 11400000, guid: eaa3c9a0df8b2c2458b5cc66a284e7e6, type: 2}
   healthController: {fileID: 7329621386446906464}
   bullet: {fileID: 0}
   spawnBulletTransform: {fileID: 0}
@@ -1234,7 +1235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movePosTransform: {fileID: 0}
-  stats: {fileID: 11400000, guid: eaa3c9a0df8b2c2458b5cc66a284e7e6, type: 2}
+  enemyStat: {fileID: 11400000, guid: eaa3c9a0df8b2c2458b5cc66a284e7e6, type: 2}
 --- !u!195 &1760943319211429575
 NavMeshAgent:
   m_ObjectHideFlags: 0

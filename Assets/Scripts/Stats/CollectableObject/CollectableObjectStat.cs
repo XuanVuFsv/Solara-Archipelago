@@ -12,7 +12,6 @@ namespace VitsehLand.Scripts.Stats
     [CreateAssetMenu(fileName = "New Collectable Object", menuName = "Collectable Object")]
     public class CollectableObjectStat : ScriptableObject
     {
-#if UNITY_EDITOR
         [Flags]
         public enum CollectableObjectComponentBitmaskEnum
         {
@@ -162,7 +161,6 @@ namespace VitsehLand.Scripts.Stats
                 }
             }
         }
-#endif
 
         [Title("Base Collectable Object Attributes")]
         [InfoBox("A collectable object is set to Weapon Slot 3 by default. It will be assigned to Weapon Slot 1 or Weapon Slot 2 if it can be used in one of those respective slots.")]

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VitsehLand.Scripts.Player;
 
 //Currently not being used
 public class JumpChecker : MonoBehaviour

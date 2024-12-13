@@ -4930,21 +4930,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 3582941738491335302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 935236a31fe54ec4aa0b5699241db75b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a54b70af07a41f4a92162d2888dcea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoStats: {fileID: 11400000, guid: f9f1885313c5e9a48ac0464175943a8a, type: 2}
-  ammoContain: 1
+  collectableObjectStat: {fileID: 11400000, guid: f9f1885313c5e9a48ac0464175943a8a, type: 2}
+  cropContain: 1
   rigid: {fileID: 3582941738491335301}
   suckableCollider: {fileID: 3582941738491335300}
-  ownerGarden: {fileID: 0}
-  ownerSlot: {fileID: 0}
+  s: 0
+  varSpeed: 0
   plantData:
     trailTracer: {fileID: 0}
     bulletObject: {fileID: 0}
     hitEffectPrefab: {fileID: 0}
     wholePlantPrefab: {fileID: 3582941738491335302}
     wateringStack: 0
+  ownerGarden: {fileID: 0}
+  ownerSlot: {fileID: 0}
   growingBody: {fileID: 8568954834008294090}
   orginalPlant: {fileID: 0}
   elapsedTime: 0
@@ -4963,6 +4965,8 @@ MonoBehaviour:
   startTimeDestroy: 0
   destroyedTime: 0
   startDestroyedTimer: 0
+  minDestroyTime: 50
+  maxDestroyTime: 100
 --- !u!1 &5011514439905238989
 GameObject:
   m_ObjectHideFlags: 0

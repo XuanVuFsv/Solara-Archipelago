@@ -1,140 +1,142 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
+using VitsehLand.Scripts.Pattern.Observer;
 
-//public class ObjectInPoolInitCount
-//{
-//    public GameObject prefab;
-//    public int count;
-//}
-
-public class PoolSetup : GameObserver, IPoolSetup
+namespace VitsehLand.Scripts.Pattern.Pooling
 {
-    [Tooltip("Check this to mark pool has multiple object. Otherwise pool has muliple object")]
-    public bool isSameObject;
-    [Tooltip("This prefab will be used if isSameObject true")]
-    public GameObject prefab;
-    //[Tooltip("This list will be used if isSameObject false")]
-    //public List<ObjectInPoolInitCount> multipleDifferentObjectList = new List<ObjectInPoolInitCount>();
 
-    public string poolManagerName;
-    [SerializeField] GameEvent gameEvent;
-
-    public Pool<ObjectInPool> pool;
-    public ObjectInPool currentObject;
-    [Tooltip("When using multipleDifferentObjectList, init pool size is predetermined which is number of all object instantiated base on ObjectInPoolInitCount at init. Max pool size is flexible")]
-    [SerializeField] int initPoolSize, maxPoolSize;
-
-   public IPool InitPool(string poolManagerName, int initPoolSize, int maxPoolSize, GameObject prefab, GameEvent gameEvent)
-    {
-        this.prefab = prefab;
-        this.poolManagerName = poolManagerName;
-        this.gameEvent = gameEvent;
-        this.initPoolSize = initPoolSize;
-        this.maxPoolSize = maxPoolSize;
-        pool = new Pool<ObjectInPool>(new PrefabFactory<ObjectInPool>(prefab, transform), initPoolSize);
-        return pool;
-    }
-
-    //public IPool InitPool(string poolManagerName, int maxPoolSize, List<ObjectInPoolInitCount> list, GameEvent gameEvent)
+    //public class ObjectInPoolInitCount
     //{
-    //    this.multipleDifferentObjectList = list;
-    //    this.poolManagerName = poolManagerName;
-    //    this.gameEvent = gameEvent;
-
-    //    int count = 0;
-    //    foreach (ObjectInPoolInitCount infor in list)
-    //    {
-    //        count += infor.count;
-    //    }
-    //    this.initPoolSize = count;
-    //    this.maxPoolSize = maxPoolSize;
-    //    pool = new Pool<ObjectInPool>(new PrefabFactory<ObjectInPool>(prefab, transform), initPoolSize);
-    //    return pool;
+    //    public GameObject prefab;
+    //    public int count;
     //}
 
-    public IPool InitPool()
+    public class PoolSetup : GameObserver, IPoolSetup
     {
-        pool = new Pool<ObjectInPool>(new PrefabFactory<ObjectInPool>(prefab, transform), initPoolSize);
-        return pool;
-    }
+        [Tooltip("Check this to mark pool has multiple object. Otherwise pool has muliple object")]
+        public bool isSameObject;
+        [Tooltip("This prefab will be used if isSameObject true")]
+        public GameObject prefab;
+        //[Tooltip("This list will be used if isSameObject false")]
+        //public List<ObjectInPoolInitCount> multipleDifferentObjectList = new List<ObjectInPoolInitCount>();
 
-    public int GetMaxPoolSize() { return maxPoolSize; }
+        public string poolManagerName;
+        [SerializeField] GameEvent gameEvent;
 
-    public int GetPoolSize() { return pool.poolSize; }
+        public Pool<ObjectInPool> pool;
+        public ObjectInPool currentObject;
+        [Tooltip("When using multipleDifferentObjectList, init pool size is predetermined which is number of all object instantiated base on ObjectInPoolInitCount at init. Max pool size is flexible")]
+        [SerializeField] int initPoolSize, maxPoolSize;
 
-    public string GetName() { return poolManagerName; }
-
-    public void Get()
-    {
-        //Debug.Log("Get in PoolSetup");
-        //Debug.Log(currentObject);
-        currentObject = pool.Get();
-    }
-
-    public void Release()
-    {
-        pool.Release();
-    }
-
-    public void Reset()
-    {
-
-    }
-
-    public void Dispose()
-    {
-        foreach (Transform poolObject in transform)
+        public IPool InitPool(string poolManagerName, int initPoolSize, int maxPoolSize, GameObject prefab, GameEvent gameEvent)
         {
-            poolObject.GetComponent<ObjectInPool>().Dispose();
-            //poolObject.GetComponent<BulletHoleBehaviour>().Dispose();
+            this.prefab = prefab;
+            this.poolManagerName = poolManagerName;
+            this.gameEvent = gameEvent;
+            this.initPoolSize = initPoolSize;
+            this.maxPoolSize = maxPoolSize;
+            pool = new Pool<ObjectInPool>(new PrefabFactory<ObjectInPool>(prefab, transform), initPoolSize);
+            return pool;
         }
-        pool.Dispose();
-    }
 
-    public override void Execute(IGameEvent gEvent, RaycastHit hit)
-    {
-        //if (!currentObject)
+        //public IPool InitPool(string poolManagerName, int maxPoolSize, List<ObjectInPoolInitCount> list, GameEvent gameEvent)
         //{
-        //    RemoveGameEvent();
-        //    return;
+        //    this.multipleDifferentObjectList = list;
+        //    this.poolManagerName = poolManagerName;
+        //    this.gameEvent = gameEvent;
+
+        //    int count = 0;
+        //    foreach (ObjectInPoolInitCount infor in list)
+        //    {
+        //        count += infor.count;
+        //    }
+        //    this.initPoolSize = count;
+        //    this.maxPoolSize = maxPoolSize;
+        //    pool = new Pool<ObjectInPool>(new PrefabFactory<ObjectInPool>(prefab, transform), initPoolSize);
+        //    return pool;
         //}
-        //Debug.Log("Call OnUsed");
-        currentObject?.OnUsed(hit); // fix null in memory
-    }
+
+        public IPool InitPool()
+        {
+            pool = new Pool<ObjectInPool>(new PrefabFactory<ObjectInPool>(prefab, transform), initPoolSize);
+            return pool;
+        }
+
+        public int GetMaxPoolSize() { return maxPoolSize; }
+
+        public int GetPoolSize() { return pool.poolSize; }
+
+        public string GetName() { return poolManagerName; }
+
+        public void Get()
+        {
+            //Debug.Log("Get in PoolSetup");
+            //Debug.Log(currentObject);
+            currentObject = pool.Get();
+        }
+
+        public void Release()
+        {
+            pool.Release();
+        }
+
+        public void Reset()
+        {
+
+        }
+
+        public void Dispose()
+        {
+            foreach (Transform poolObject in transform)
+            {
+                poolObject.GetComponent<ObjectInPool>().Dispose();
+                //poolObject.GetComponent<BulletHoleBehaviour>().Dispose();
+            }
+            pool.Dispose();
+        }
+
+        public override void Execute(IGameEvent gEvent, RaycastHit hit)
+        {
+            //if (!currentObject)
+            //{
+            //    RemoveGameEvent();
+            //    return;
+            //}
+            //Debug.Log("Call OnUsed");
+            currentObject?.OnUsed(hit); // fix null in memory
+        }
 
 
-    public override void Execute(IGameEvent gEvent, Vector3 point, Vector3 normal)
-    {
-        //if (!currentObject)
-        //{
-        //    RemoveGameEvent();
-        //    return;
-        //}
-        //Debug.Log(this);
-        //Debug.Log(gameObject.transform.parent);
-        //Debug.Log("Call OnUsed");
-        currentObject?.OnUsed(point, normal); // fix null in memory
-    }
+        public override void Execute(IGameEvent gEvent, Vector3 point, Vector3 normal)
+        {
+            //if (!currentObject)
+            //{
+            //    RemoveGameEvent();
+            //    return;
+            //}
+            //Debug.Log(this);
+            //Debug.Log(gameObject.transform.parent);
+            //Debug.Log("Call OnUsed");
+            currentObject?.OnUsed(point, normal); // fix null in memory
+        }
 
-    public void AddGameEvent()
-    {
-        AddGameEventToObserver(gameEvent);
-    }
+        public void AddGameEvent()
+        {
+            AddGameEventToObserver(gameEvent);
+        }
 
-    public void RemoveGameEvent()
-    {
-        RemoveGameEventFromObserver(gameEvent);
-    }
+        public void RemoveGameEvent()
+        {
+            RemoveGameEventFromObserver(gameEvent);
+        }
 
-    void OnDestroy()
-    {
-        RemoveGameEvent();
-    }
+        void OnDestroy()
+        {
+            RemoveGameEvent();
+        }
 
-    void OnDisable()
-    {
-        RemoveGameEvent();
+        void OnDisable()
+        {
+            RemoveGameEvent();
+        }
     }
 }

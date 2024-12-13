@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IShootable
+namespace VitsehLand.Scripts.Weapon.General
 {
-    void StartFiring();
+    public interface IShootable
+    {
+        void StartFiring();
+    }
 }

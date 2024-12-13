@@ -9989,9 +9989,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd2d9cb7e36467428d17df281c82b6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoStats: {fileID: 11400000, guid: f9f1885313c5e9a48ac0464175943a8a, type: 2}
-  ammoContain: 5
+  collectableObjectStat: {fileID: 11400000, guid: f9f1885313c5e9a48ac0464175943a8a, type: 2}
+  cropContain: 0
   rigid: {fileID: 2508924989266462593}
   suckableCollider: {fileID: 2508924989266462592}
+  s: 0
+  varSpeed: 0
   plantState: 0
   suckableSample: {fileID: 3582941738491335299, guid: a915e11110529fe48912bd9d25f55a6b, type: 3}

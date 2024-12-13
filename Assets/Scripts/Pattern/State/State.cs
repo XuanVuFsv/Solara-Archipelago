@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class State: MonoBehaviour
+namespace VitsehLand.Scripts.Pattern.State
 {
-    public virtual void Start()
+    public abstract class State : MonoBehaviour
     {
+        public virtual void Start()
+        {
 
-    }
+        }
 
-    public virtual void End()
-    {
+        public virtual void End()
+        {
 
+        }
     }
 }

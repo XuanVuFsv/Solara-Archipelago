@@ -1,23 +1,19 @@
-// The Command interface declares a method for executing a command.
-public interface IWeaponStragety
+using VitsehLand.Scripts.Weapon.Primary;
+
+namespace VitsehLand.Scripts.Pattern.Strategy
 {
-    public void HandleLeftMouseClick();
-    public void HandleRightMouseClick();
-    public void SetInputData(object _inputData);
-    ShootingInputData GetShootingInputData();
-}
+    // The Strategy interface declares a method for executing a stragety.
+    public interface IWeaponStrategy
+    {
+        public void HandleLeftMouseClick();
+        public void HandleRightMouseClick();
+        public void SetInputData(object _inputData);
+        ShootingInputData GetShootingInputData();
+    }
 
-public interface IPrimaryWeaponStragety : IWeaponStragety
-{
+    public interface IPrimaryWeaponStrategy : IWeaponStrategy { }
 
-}
+    public interface IHandGunWeaponStrategy : IWeaponStrategy { }
 
-public interface IHandGunWeaponStragety : IWeaponStragety
-{
-    
-}
-
-public interface IAxieCollectorWeaponStragety : IWeaponStragety
-{
-
+    public interface ICollectorWeaponStrategy : IWeaponStrategy { }
 }

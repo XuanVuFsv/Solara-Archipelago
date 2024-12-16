@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Assets/_Imp Asset/SCI-FI UI Pack Pro/Asset Document.pdf.meta
 guid: c169d88fa687cde42a388b30aaca74f8
+========
+guid: 846dd10910b2f67458459a05e2bebc20
+folderAsset: yes
+>>>>>>>> Stashed changes:Assets/Samples/Solana SDK/1.2.5/Sample Wallet/Solana Wallet/Scripts/example/simple_screen_manager/utility.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

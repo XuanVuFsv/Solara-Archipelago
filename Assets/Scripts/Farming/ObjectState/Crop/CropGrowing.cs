@@ -89,7 +89,7 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
                 (objectMachine as global::Crop).wholePlants.Add(newWholePlant);
                 newWholePlant.orginalPlant = objectMachine as global::Crop;
                 (objectMachine as global::Crop).wholePlantCount++;
-
+                Debug.Log(newWholePlant.transform.localScale);
                 newWholePlant.onTree = true;
                 //newWholePlant.plantData.orginalBody = (objectMachine as Plant).plantData.growingBody;
                 newWholePlant.SetState(new CropWhole(newWholePlant));

@@ -7,6 +7,16 @@
       "dependencies": {},
       "hash": "82f78879316817dc5c7f8703352f5660a22ec3d4"
     },
+    "com.honeycombprotocol.unity_sdk": {
+      "version": "https://github.com/Honeycomb-Protocol/Unity-SDK.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.solana.unity_sdk": "1.2.5",
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "4be3e24e819e826f937b2c5234853d7bd80d39b7"
+    },
     "com.solana.unity_sdk": {
       "version": "https://github.com/magicblock-labs/Solana.Unity-SDK.git",
       "depth": 0,

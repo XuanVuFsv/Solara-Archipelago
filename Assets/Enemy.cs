@@ -29,16 +29,6 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Axie")
-        {
-            AxieBehaviour axie = collision.transform.gameObject.GetComponent<AxieBehaviour>();
-            if (axie)
-            {
-                axie.food = 0;
-                axie.state.text = "Hungryyyyy";
-                gameObject.SetActive(false);
-                Destroy(gameObject, Random.Range(2, 20));
-            }
-        }
+
     }
 }

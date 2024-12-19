@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.github.siccity.xnode": "https://github.com/Siccity/xNode.git",
+    "com.honeycombprotocol.unity_sdk": "https://github.com/Honeycomb-Protocol/Unity-SDK.git",
     "com.solana.unity_sdk": "https://github.com/magicblock-labs/Solana.Unity-SDK.git",
     "com.unity.ai.navigation": "1.0.0-exp.4",
     "com.unity.animation.rigging": "1.2.1",

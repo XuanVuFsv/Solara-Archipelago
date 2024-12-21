@@ -34,8 +34,8 @@ namespace VitsehLand.Scripts.Construction.Garden
 
         private void Start()
         {
-            if (seedPos == null) seedPos = transform.Find("SeedPos");
-            if (lockedSlotObjects == null) lockedSlotObjects = transform.Find("LockedSlotObjects").gameObject;
+            if (seedPos == null) seedPos = transform.Find("Seed_Pos");
+            if (lockedSlotObjects == null) lockedSlotObjects = transform.Find("Locked_Slot_Objects").gameObject;
         }
 
         public GardenSlotProperties(bool _isUnlock, Crop _crop, int _upgradingLevel = 0, bool _hasWatering = false, bool _hasFertilizering = false)

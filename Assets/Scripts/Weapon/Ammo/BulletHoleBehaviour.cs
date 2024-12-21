@@ -12,6 +12,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
 
         public override void OnUsed(RaycastHit hit)
         {
+            Debug.Log(gameObject.name);
             gameObject.SetActive(true);
 
             transform.position = hit.point;
@@ -22,6 +23,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
 
         public override void OnUsed(Vector3 point, Vector3 normal)
         {
+            Debug.Log(gameObject.name);
             gameObject.SetActive(true);
 
             transform.position = point;

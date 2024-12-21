@@ -8,6 +8,7 @@ using VitsehLand.Scripts.Farming.Resource;
 using VitsehLand.Scripts.Pattern.Singleton;
 using VitsehLand.Scripts.Pattern.Strategy;
 using VitsehLand.Scripts.Stats;
+using VitsehLand.Scripts.Ultilities;
 using VitsehLand.Scripts.Weapon.General;
 using VitsehLand.Scripts.Weapon.Primary;
 
@@ -110,7 +111,7 @@ namespace VitsehLand.Assets.Scripts.Weapon.Collector
         {
             if (Physics.Raycast(shootingInputData.raycastOrigin.position, shootingInputData.fpsCameraTransform.forward, out hit, maxDistance, shootingInputData.layerMask))
             {
-                Debug.Log("CollectingHandle");
+                MyDebug.Log("CollectingHandle");
                 if (hit.transform.CompareTag("Cluster"))
                 {
                     ClusterResource cluster = hit.transform.GetComponent<ClusterResource>();
@@ -139,10 +140,10 @@ namespace VitsehLand.Assets.Scripts.Weapon.Collector
                     {
                         if (suckedObject is Crop || suckedObject is PowerContainer || suckedObject is NaturalResource)
                         {
-                            Debug.Log("AAA");
+                            MyDebug.Log("AAA");
                             if (suckedObject.collectableObjectStat != null)
                             {
-                                Debug.Log("BBB");
+                                MyDebug.Log("BBB");
                                 CollectableObjectStat collectableObjectStat = suckedObject.collectableObjectStat;
                                 weaponStatsController.SuckUpAmmo(suckedObject);
                             }

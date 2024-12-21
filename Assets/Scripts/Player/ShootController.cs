@@ -200,7 +200,7 @@ namespace VitsehLand.Scripts.Player
                 //|| inputController.isSingleFire && activeWeapon.activeWeaponIndex != 0)
                 && !currentWeaponStatsController.IsOutOfAmmo() && !isReloading)
                 {
-                    Debug.Log("Shoot");
+                    MyDebug.Log("Shoot");
                     //Shoot automatic
                     if (Time.time - lastFired > 1 / currentWeaponStatsController.currentCollectableObjectStatController.fireRate)
                     {

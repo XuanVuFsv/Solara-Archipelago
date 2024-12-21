@@ -4,17 +4,17 @@ namespace VitsehLand.Scripts.Ultilities
 {
     public static class MyDebug
     {
-        static bool canLog = false;
+        public static bool enableDebugLog = false;
 
         public static void Log(object message, Object context)
         {
-            if (!canLog) return;
+            if (!enableDebugLog) return;
             Debug.Log(message, context);
         }
 
         public static void Log(object message)
         {
-            if (!canLog) return;
+            if (!enableDebugLog) return;
             Debug.Log(message);
         }
 
@@ -24,6 +24,7 @@ namespace VitsehLand.Scripts.Ultilities
      , [System.Runtime.CompilerServices.CallerFilePath] string filePath = ""
  )
         {
+            if (!enableDebugLog) return;
             Debug.Log($"{line} :: {memberName} :: {filePath}");
         }
     }

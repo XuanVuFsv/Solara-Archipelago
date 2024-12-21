@@ -22,13 +22,17 @@ namespace VitsehLand.Scripts
         public Dictionary<string, GameObject> lands= new Dictionary<string, GameObject>();
         public List<string> landNames = new List<string>();
         public List<GameObject> landObjects = new List<GameObject>();
+
+        public bool isEnable = false;
         public bool assignLandsOnStart;
 
         public List<string> activeLandNames = new List<string>();
         public string nftLandCollectionAddress = "";
 
-        private void Awake()
+        public override void Awake()
         {
+            base.Awake();
+
             if (assignLandsOnStart)
             {
                 for (int i = 0; i < landObjects.Count; i++)
@@ -41,8 +45,18 @@ namespace VitsehLand.Scripts
         // Start is called before the first frame update
         void Start()
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            if (isEnable)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+
+            gameObject.SetActive(isEnable);
         }
 
         // Update is called once per frame

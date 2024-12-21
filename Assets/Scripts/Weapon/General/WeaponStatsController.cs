@@ -1,4 +1,5 @@
 using UnityEngine;
+using VitsehLand.Scripts.Ultilities;
 using VitsehLand.GameCamera;
 using VitsehLand.GameCamera.Shaking;
 using VitsehLand.Scripts.Farming.General;
@@ -56,7 +57,7 @@ namespace VitsehLand.Scripts.Weapon.General
         {
             if (hasRun) return;
             if (weaponSlot != ActiveWeapon.WeaponSlot.AttackGun) return;
-            //Debug.Log(hasRun + " from " + defaultAmmoOnStart.name);
+            //MyDebug.Log(hasRun + " from " + defaultAmmoOnStart.name);
             //SetupCollectableObjectStat(defaultAmmoOnStart);
             hasRun = true;
         }
@@ -91,7 +92,7 @@ namespace VitsehLand.Scripts.Weapon.General
 
             if (!isSameAmmo)
             {
-                //Debug.Log("Diff");
+                //MyDebug.Log("Diff");
                 currentCollectableObjectStatController.collectableObjectStat = itemInInventory.collectableObjectStat;
                 currentCollectableObjectStatController.AssignCollectableObjecttData();
 
@@ -117,7 +118,7 @@ namespace VitsehLand.Scripts.Weapon.General
             }
             else
             {
-                //Debug.Log("Same");
+                //MyDebug.Log("Same");
             }
 
             if (weaponStat.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun && itemInInventory.collectableObjectStat.weaponSlot == ActiveWeapon.WeaponSlot.AttackGun)
@@ -148,21 +149,21 @@ namespace VitsehLand.Scripts.Weapon.General
 
         public void SuckUpAmmo(Suckable ammoPickup)
         {
-            //MyDebug.Log(ammoPickup);
-            //if (!currentCollectableObjectStatController) Debug.Log("currentCollectableObjectStatController null " + transform.parent.name);
-            //Debug.Log(ammoPickup.name);
+            //MyMyDebug.Log(ammoPickup);
+            //if (!currentCollectableObjectStatController) MyDebug.Log("currentCollectableObjectStatController null " + transform.parent.name);
+            //MyDebug.Log(ammoPickup.name);
 
             //if (!currentCollectableObjectStatController.collectableObjectStat)
             //{
 
-            //    Debug.Log("Add to null " + transform.parent.name);
+            //    MyDebug.Log("Add to null " + transform.parent.name);
             //    //currentCollectableObjectStatController.collectableObjectStat = ammoPickup.collectableObjectStat;
             //    //currentCollectableObjectStatController.AssignCroptData();
             //    //ofActiveAmmo = weaponSlot == InventoryController.Instance.GetCurrentItem().collectableObjectStat.weaponSlot;
 
             //    //if (ofActiveAmmo)
             //    //{
-            //    //    //Debug.Log("Set" + currentCollectableObjectStatController.multiplierForAmmo);
+            //    //    //MyDebug.Log("Set" + currentCollectableObjectStatController.multiplierForAmmo);
             //    //    gunCamera.SetMultiplier(currentCollectableObjectStatController.multiplierForAmmo);
             //    //}
             //    //pickAmmoEvent.Notify(currentCollectableObjectStatController.amplitudeGainImpulse);
@@ -174,7 +175,7 @@ namespace VitsehLand.Scripts.Weapon.General
             //else
             if (currentCollectableObjectStatController.collectableObjectStat.collectableObjectName == ammoPickup.collectableObjectStat.collectableObjectName)
             {
-                Debug.Log("Add same ammo");
+                MyDebug.Log("Add same ammo");
 
                 AddAmmo(ammoPickup.GetCropContain(), ammoPickup);
                 //ammoPickup.AddUsedGameEvent(transform);
@@ -194,7 +195,7 @@ namespace VitsehLand.Scripts.Weapon.General
             }
             else
             {
-                Debug.Log("Add new ammo");
+                MyDebug.Log("Add new ammo");
 
                 //if (ammunitionChestPicked)
                 //{
@@ -214,7 +215,7 @@ namespace VitsehLand.Scripts.Weapon.General
 
                 if (itemInInventory.collectableObjectStat.baseId == "null" && itemInInventory != InventoryController.Instance.GetCurrentItem())
                 {
-                    Debug.Log("Null item");
+                    MyDebug.Log("Null item");
                     itemInInventory = InventoryController.Instance.GetCurrentItem();
                     currentCollectableObjectStatController.collectableObjectStat = ammoPickup.collectableObjectStat;
                     currentCollectableObjectStatController.AssignCollectableObjecttData();
@@ -224,7 +225,7 @@ namespace VitsehLand.Scripts.Weapon.General
                 else UpdateNewAmmo(newItem, newItem.index);
 
 
-                //Debug.Log(newItem.index);
+                //MyDebug.Log(newItem.index);
                 //ammunitionChestPicked = ammoPickup;
             }
         }
@@ -235,7 +236,7 @@ namespace VitsehLand.Scripts.Weapon.General
         //    outOfAmmo = true;
 
         //    itemInInventory = InventoryController.Instance.AddNewAmmoToInventory(ammoPickup.GetCropStats(), ammoPickup.GetAmmoContain(), ammoPickup);
-        //    Debug.Log("XXX" + itemInInventory);
+        //    MyDebug.Log("XXX" + itemInInventory);
         //    remainingAmmo = ammoPickup.GetAmmoContain();
         //    ammoInMagazine = ammoPickup.GetCropStats().ammoAllowedInMagazine;
 
@@ -266,7 +267,7 @@ namespace VitsehLand.Scripts.Weapon.General
 
             if (currentAmmo <= 0)
             {
-                //Debug.Log("<0");
+                //MyDebug.Log("<0");
                 outOfAmmo = true;
 
                 if (itemInInventory.collectableObjectStat.zoomType != CollectableObjectStat.ZoomType.NoZoom &&
@@ -290,7 +291,7 @@ namespace VitsehLand.Scripts.Weapon.General
             {
                 UpdateAmmoAmmountUI(itemInInventory.count, itemInInventory.index);
             }
-            //Debug.Log("Use Ammo");
+            //MyDebug.Log("Use Ammo");
         }
 
         public void UpdateAmmoAfterReload()
@@ -312,7 +313,7 @@ namespace VitsehLand.Scripts.Weapon.General
                 outOfAmmo = false;
             }
 
-            //Debug.Log("Update After Reload");
+            //MyDebug.Log("Update After Reload");
             UpdateAmmoAmmountUI(itemInInventory.count, itemInInventory.index);
         }
 
@@ -329,7 +330,7 @@ namespace VitsehLand.Scripts.Weapon.General
 
         public void UpdateNewAmmo(Item item, int index)
         {
-            Debug.Log(item.collectableObjectStat.collectableObjectName + item.count + index);
+            MyDebug.Log(item.collectableObjectStat.collectableObjectName + item.count + index);
             WeaponSystemUI.Instance.SetDisplayItemIcon(item.collectableObjectStat.icon, index);
             WeaponSystemUI.Instance.SetDisplayItemName(itemInInventory.collectableObjectStat.collectableObjectName, index);
             UpdateAmmoAmmountUI(item.count, index);
@@ -342,7 +343,7 @@ namespace VitsehLand.Scripts.Weapon.General
 
         public void UpdateAmmoAmmountUI(int totalAmount, int index)
         {
-            //Debug.Log(totalAmount + " " + index);
+            //MyDebug.Log(totalAmount + " " + index);
             WeaponSystemUI.Instance.SetDisplayItemAmmoAmount(totalAmount, index);
         }
 

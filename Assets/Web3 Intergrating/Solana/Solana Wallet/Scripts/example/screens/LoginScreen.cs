@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Solana.Unity.Wallet;
 using VitsehLand.Scripts;
+using VitsehLand.Scripts.Ultilities;
 
 // ReSharper disable once CheckNamespace
 
@@ -38,7 +39,7 @@ namespace Solana.Unity.SDK.Example
             dropdownRpcCluster.interactable = true;
             passwordInputField.text = string.Empty;
 
-            Debug.Log(Web3.Wallet);
+            MyDebug.Log(Web3.Wallet);
             if (Web3.Wallet != null)
             {
                 dropdownRpcCluster.interactable = false;

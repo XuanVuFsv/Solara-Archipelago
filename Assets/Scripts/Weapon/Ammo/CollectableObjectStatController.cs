@@ -72,7 +72,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
 
         public void AssignCollectableObjecttData()
         {
-            Debug.Log(collectableObjectStat.collectableObjectName);
+            MyDebug.Log(collectableObjectStat.collectableObjectName);
 
             //if (hasAssignCropData) return;
             //GetComponent<RaycastWeapon>().currentShootingMechanic = collectableObjectStat.shootingMechanic;
@@ -93,7 +93,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
             amplitudeGainImpulse = collectableObjectStat.amplitudeGainImpulse;
             //Debug.Log("amplitudeGainImpulse: " + amplitudeGainImpulse);
             //amplitudeGainImpulse = (collectableObjectStat.GetCollectableObjectStatComponent<AttackingCropStat>() as AttackingCropStat).amplitudeGainImpulse;
-            Debug.Log("amplitudeGainImpulse: " + amplitudeGainImpulse);
+            MyDebug.Log("amplitudeGainImpulse: " + amplitudeGainImpulse);
             //MyDebug.LogCaller();
 
             multiplierRecoilOnAim = collectableObjectStat.multiplierRecoilOnAim;

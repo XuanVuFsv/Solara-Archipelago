@@ -40,7 +40,7 @@ namespace VitsehLand.Scripts.Weapon.Ammo
 
         private void OnCollisionEnter(Collision collision)
         {
-            PoolingManager.Instance.Get("Pool" + bulletName + "Setup");
+            PoolingManager.Instance.Get("Pool_" + bulletName + "_Setup");
             //Debug.Log("Notify " + transform.position + " " + other.transform.position);
             hitEvent.Notify(transform.position, collision.transform.position - transform.position);
             Explode();

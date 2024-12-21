@@ -77,8 +77,9 @@ namespace VitsehLand.Scripts.Weapon.Primary
                     //hitEffectPrefab.transform.forward = hit.normal;
                     //hitEffectPrefab.Emit(5);
 
-                    PoolingManager.Instance.Get("Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.collectableObjectName + "Setup");
-                    PoolingManager.Instance.Get("PoolTomatoSetup");
+                    Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool_" + shootingInputData.collectableObjectStatController.collectableObjectStat.collectableObjectName + "_Setup");
+                    PoolingManager.Instance.Get("Pool_" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "_Setup");
+                    //PoolingManager.Instance.Get("Pool_Tomato_Setup");
 
                     shootingInputData.hitEvent.Notify(hit);
                     //currentHitObject = hit.collider.name;
@@ -131,9 +132,9 @@ namespace VitsehLand.Scripts.Weapon.Primary
                     if (Physics.Raycast(shootingInputData.raycastOrigin.position, direction, out hit, shootingInputData.collectableObjectStatController.range, shootingInputData.layerMask))
                     {
                         raycastHits.Add(hit);
-                        //Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "Setup");
-                        PoolingManager.Instance.Get("Pool" + shootingInputData.collectableObjectStatController.collectableObjectStat.collectableObjectName + "Setup");
-                        PoolingManager.Instance.Get("PoolTomatoSetup");
+                        Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool_" + shootingInputData.collectableObjectStatController.collectableObjectStat.collectableObjectName + "_Setup");
+                        PoolingManager.Instance.Get("Pool_" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "_Setup");
+                        //PoolingManager.Instance.Get("Pool_Tomato_Setup");
 
                         shootingInputData.hitEvent.Notify(hit);
                         //enemy = hit.transform.GetComponent<Enemy>();

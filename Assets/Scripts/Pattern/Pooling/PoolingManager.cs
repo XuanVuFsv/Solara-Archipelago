@@ -58,7 +58,7 @@ namespace VitsehLand.Scripts.Pattern.Pooling
         public void Get(string objectPooledManagerName)
         {
             //Debug.Log("Access " + objectPooledManagerName);
-            pooledList[objectPooledManagerName].Get(); ;
+            pooledList[objectPooledManagerName].Get();
         }
 
         public void Release(string objectPooledManagerName)

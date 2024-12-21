@@ -30,7 +30,7 @@ namespace VitsehLand.Scripts.Pattern.Pooling
         public IPool InitPool(string poolManagerName, int initPoolSize, int maxPoolSize, GameObject prefab, GameEvent gameEvent)
         {
             this.prefab = prefab;
-            this.poolManagerName = poolManagerName;
+            this.poolManagerName = poolManagerName != "" ? poolManagerName : gameObject.name;
             this.gameEvent = gameEvent;
             this.initPoolSize = initPoolSize;
             this.maxPoolSize = maxPoolSize;
@@ -101,7 +101,7 @@ namespace VitsehLand.Scripts.Pattern.Pooling
             //    RemoveGameEvent();
             //    return;
             //}
-            //Debug.Log("Call OnUsed");
+            Debug.Log("Call OnUsed");
             currentObject?.OnUsed(hit); // fix null in memory
         }
 
@@ -115,7 +115,7 @@ namespace VitsehLand.Scripts.Pattern.Pooling
             //}
             //Debug.Log(this);
             //Debug.Log(gameObject.transform.parent);
-            //Debug.Log("Call OnUsed");
+            Debug.Log("Call OnUsed");
             currentObject?.OnUsed(point, normal); // fix null in memory
         }
 

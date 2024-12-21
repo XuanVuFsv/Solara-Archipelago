@@ -56,13 +56,13 @@ namespace VitsehLand.Scripts.Inventory
             int emptySlot = GetSlotByName("Null");
             Item item = GetCurrentItem();
 
-            Debug.Log(firstSlot + " " + emptySlot);
+            MyDebug.Log(firstSlot + " " + emptySlot);
 
             if (firstSlot >= 0)
             {
                 //Check stack item here with existed item
                 int leftOverAmmo = currentAmmoList[firstSlot].AddAmmo(count, ammoObject);
-                //Debug.Log("Add MORE" + count + cropStat.name + " and left over" + leftOverAmmo);
+                //MyDebug.Log("Add MORE" + count + cropStat.name + " and left over" + leftOverAmmo);
                 item = currentAmmoList[firstSlot];
             }
             else if (emptySlot != -1)
@@ -76,13 +76,13 @@ namespace VitsehLand.Scripts.Inventory
                 }
                 else currentAmmoList[emptySlot] = new Item(collectableObjectStat, count, false, ammoObject, emptySlot);
                 item = currentAmmoList[emptySlot];
-                //Debug.Log(item);
+                //MyDebug.Log(item);
                 //if (ofActiveAmmo) activeSlotIndex = emptySlot;
-                //Debug.Log("Add NEW" + count + cropStat.name);
+                //MyDebug.Log("Add NEW" + count + cropStat.name);
             }
             else
             {
-                //Debug.Log("No more slot");
+                //MyDebug.Log("No more slot");
                 hasEmptySlot = true;
                 //New item but don't enough slot
             }

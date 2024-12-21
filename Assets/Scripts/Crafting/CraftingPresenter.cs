@@ -4,6 +4,7 @@ using VitsehLand.Assets.Scripts.UI.Crafting;
 using VitsehLand.Scripts.Farming.Resource;
 using VitsehLand.Scripts.Stats;
 using VitsehLand.Scripts.UI.DisplayItem;
+using VitsehLand.Scripts.Ultilities;
 
 namespace VitsehLand.Scripts.Crafting
 {
@@ -87,7 +88,7 @@ namespace VitsehLand.Scripts.Crafting
             view.UpdateMaterialStorage(model.unlockedStorageSlot, model.itemStorageDict);
             view.body.gameObject.SetActive(false);
 
-            Debug.Log("Setup Done");
+            MyDebug.Log("Setup Done");
         }
 
         public void OnClickProduct(CollectableObjectStat collectableObjectStat)

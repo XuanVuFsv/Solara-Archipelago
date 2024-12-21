@@ -46,6 +46,7 @@ namespace VitsehLand.Scripts.Inventory
             //}
 
             int currentCount = count + newCount;
+            ammoObject.cropContain = 1;
             //Debug.Log(currentCount);
 
             if ((isCrop || isPower || isNaturalResource) && currentCount <= collectableObjectStat.maxCount)

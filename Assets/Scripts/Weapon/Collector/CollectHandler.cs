@@ -166,7 +166,7 @@ namespace VitsehLand.Assets.Scripts.Weapon.Collector
                 {
                     if (hit.collider.CompareTag("Water Receiver"))
                     {
-                        Debug.Log(hit.collider.name);
+                        MyDebug.Log(hit.collider.name);
                         hit.collider.GetComponent<WaterResourceManager>().RefillResource();
                     }
                 }

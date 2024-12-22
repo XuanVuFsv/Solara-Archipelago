@@ -2,6 +2,7 @@ using UnityEngine;
 using VitsehLand.Assets.Scripts.Weapon.Collector;
 using VitsehLand.Scripts.Construction.Garden;
 using VitsehLand.Scripts.Farming.General;
+using VitsehLand.Scripts.Ultilities;
 
 namespace VitsehLand.Scripts.Construction.Water
 {
@@ -44,7 +45,7 @@ namespace VitsehLand.Scripts.Construction.Water
 
         public override void RefillResource()
         {
-            Debug.Log("Check Resource");
+            MyDebug.Log("Check Resource");
             if (waterState == WaterObject.WaterState.Salt && CollectHandler.Instance.waterMode == CollectHandler.WaterMode.Salt
                 || waterState == WaterObject.WaterState.Fresh && CollectHandler.Instance.waterMode == CollectHandler.WaterMode.Fresh)
             {

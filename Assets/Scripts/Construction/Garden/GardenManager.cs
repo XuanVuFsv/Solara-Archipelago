@@ -32,7 +32,7 @@ namespace VitsehLand.Scripts.Construction.Garden
         // Start is called before the first frame update
         void Start()
         {
-            Debug.Log(gameObject.name);
+            //Debug.Log(gameObject.name);
         }
 
         public int NextSlot()
@@ -53,11 +53,11 @@ namespace VitsehLand.Scripts.Construction.Garden
 
         public int UnLockNewSlot()
         {
-            Debug.Log(activeSlotCount + " " + MAX_SLOT);
-            Debug.Log(activeSlotCount == MAX_SLOT);
+            //Debug.Log(activeSlotCount + " " + MAX_SLOT);
+            //Debug.Log(activeSlotCount == MAX_SLOT);
             if (activeSlotCount == MAX_SLOT) return -1;
 
-            Debug.Log("Run");
+            //Debug.Log("Run");
 
             bool unlockSuccess = gardenSlotProperties[activeSlotCount].UnLockSlot();
             if (!unlockSuccess)

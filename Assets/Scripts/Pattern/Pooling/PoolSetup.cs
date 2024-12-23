@@ -12,7 +12,9 @@ namespace VitsehLand.Scripts.Pattern.Pooling
 
     public class PoolSetup : GameObserver, IPoolSetup
     {
-        [Tooltip("Check this to mark pool has multiple object. Otherwise pool has muliple object")]
+        static readonly float DEFAULT_MAX_POOL_SIZE_MULTIPLIER = 1.2f;
+
+        [Tooltip("Check this to mark pool has multiple object")]
         public bool isSameObject;
         [Tooltip("This prefab will be used if isSameObject true")]
         public GameObject prefab;
@@ -24,8 +26,26 @@ namespace VitsehLand.Scripts.Pattern.Pooling
 
         public Pool<ObjectInPool> pool;
         public ObjectInPool currentObject;
+
+        public float spawnInterval;
         [Tooltip("When using multipleDifferentObjectList, init pool size is predetermined which is number of all object instantiated base on ObjectInPoolInitCount at init. Max pool size is flexible")]
         [SerializeField] int initPoolSize, maxPoolSize;
+
+        private void Start()
+        {
+            poolManagerName = poolManagerName != "" ? poolManagerName : gameObject.name;
+
+            if (spawnInterval != 0 && prefab != null)
+            {
+                initPoolSize = (int)(prefab.GetComponent<ObjectInPool>().lifeTime / spawnInterval) + 1;
+
+                if (maxPoolSize <= initPoolSize) maxPoolSize = (int)(initPoolSize * DEFAULT_MAX_POOL_SIZE_MULTIPLIER);
+            }
+
+            if (spawnInterval == 0) Debug.LogWarning("You should check spawnInterval. If you target it equal to 0. Just ignore this warning");
+
+            if (prefab == null && initPoolSize > 0) Debug.LogError("You should set initPoolSize greater than 0 to initialize the pool");
+        }
 
         public IPool InitPool(string poolManagerName, int initPoolSize, int maxPoolSize, GameObject prefab, GameEvent gameEvent)
         {
@@ -34,6 +54,25 @@ namespace VitsehLand.Scripts.Pattern.Pooling
             this.gameEvent = gameEvent;
             this.initPoolSize = initPoolSize;
             this.maxPoolSize = maxPoolSize;
+
+            //The time between spawns will be equal to the lifetime of an object divided by the minimum number of objects that need to be spawned - initPoolSize
+            //This ensures that when a call is made, there is always an object that has completed its lifetime and is ready for use
+            spawnInterval = prefab.GetComponent<ObjectInPool>().lifeTime / initPoolSize;
+            
+            pool = new Pool<ObjectInPool>(new PrefabFactory<ObjectInPool>(prefab, transform), initPoolSize);
+            return pool;
+        }
+
+        public IPool InitPool(string poolManagerName, float spawnInterval, GameObject prefab, GameEvent gameEvent, float maxPoolSizeMultiplier = 0)
+        {
+            this.prefab = prefab;
+            this.poolManagerName = poolManagerName != "" ? poolManagerName : gameObject.name;
+            this.gameEvent = gameEvent;
+
+            this.spawnInterval = spawnInterval;
+            this.initPoolSize = (int)(prefab.GetComponent<ObjectInPool>().lifeTime / spawnInterval) + 1;
+            this.maxPoolSize = (int)(maxPoolSizeMultiplier == 0 ? (initPoolSize * DEFAULT_MAX_POOL_SIZE_MULTIPLIER) : initPoolSize * maxPoolSizeMultiplier);
+
             pool = new Pool<ObjectInPool>(new PrefabFactory<ObjectInPool>(prefab, transform), initPoolSize);
             return pool;
         }
@@ -101,7 +140,7 @@ namespace VitsehLand.Scripts.Pattern.Pooling
             //    RemoveGameEvent();
             //    return;
             //}
-            Debug.Log("Call OnUsed");
+            //MyDebug.Log("Call OnUsed");
             currentObject?.OnUsed(hit); // fix null in memory
         }
 
@@ -115,7 +154,7 @@ namespace VitsehLand.Scripts.Pattern.Pooling
             //}
             //Debug.Log(this);
             //Debug.Log(gameObject.transform.parent);
-            Debug.Log("Call OnUsed");
+            //MyDebug.Log("Call OnUsed");
             currentObject?.OnUsed(point, normal); // fix null in memory
         }
 

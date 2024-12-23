@@ -132,7 +132,7 @@ namespace VitsehLand.Scripts.Weapon.Primary
                     if (Physics.Raycast(shootingInputData.raycastOrigin.position, direction, out hit, shootingInputData.collectableObjectStatController.range, shootingInputData.layerMask))
                     {
                         raycastHits.Add(hit);
-                        Debug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool_" + shootingInputData.collectableObjectStatController.collectableObjectStat.collectableObjectName + "_Setup");
+                        MyDebug.Log("Shooting " + hit.transform.name + " Pool: " + "Pool_" + shootingInputData.collectableObjectStatController.collectableObjectStat.collectableObjectName + "_Setup");
                         PoolingManager.Instance.Get("Pool_" + shootingInputData.collectableObjectStatController.collectableObjectStat.name + "_Setup");
                         //PoolingManager.Instance.Get("Pool_Tomato_Setup");
 

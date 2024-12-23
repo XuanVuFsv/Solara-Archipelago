@@ -64,8 +64,8 @@ namespace VitsehLand.Scripts.Farming.General
 
         public virtual void AddUsedGameEvent()
         {
-            Debug.Log("Pool_" + collectableObjectStat.collectableObjectName + "_Setup");
-            Debug.Log("Add Game Event Pool_" + collectableObjectStat.collectableObjectName + "_Setup");
+            MyDebug.Log("Pool_" + collectableObjectStat.collectableObjectName + "_Setup");
+            MyDebug.Log("Add Game Event Pool_" + collectableObjectStat.collectableObjectName + "_Setup");
 
             PoolingManager.Instance.AddGameEvent("Pool_" + collectableObjectStat.collectableObjectName + "_Setup");
         }
@@ -73,7 +73,7 @@ namespace VitsehLand.Scripts.Farming.General
         public virtual void RemoveUseGameEvent()
         {
             PoolingManager.Instance.RemoveGameEvent("Pool_" + collectableObjectStat.collectableObjectName + "_Setup");
-            Debug.Log("Remove Game Event Pool_" + collectableObjectStat.collectableObjectName + "_Setup");
+            MyDebug.Log("Remove Game Event Pool_" + collectableObjectStat.collectableObjectName + "_Setup");
         }
     }
 }

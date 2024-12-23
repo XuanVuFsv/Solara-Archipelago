@@ -107,7 +107,7 @@ namespace VitsehLand.Scripts.Pattern.Pooling
             {
                 T usedObject = pooledObjects.Pop();
                 alreadyUsedObjects.Enqueue(usedObject);
-                Debug.Log(usedObject);
+                //MyDebug.Log(usedObject);
                 return usedObject;
             }
         }

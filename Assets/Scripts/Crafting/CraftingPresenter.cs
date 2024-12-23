@@ -158,7 +158,7 @@ namespace VitsehLand.Scripts.Crafting
         {
             if (model.queueActiveQuantity < model.queueQuantity)
             {
-                Debug.Log("Start craft a " + model.currentQuantity.ToString() + " " + model.GetCurrentRecipe().name);
+                MyDebug.Log("Start craft a " + model.currentQuantity.ToString() + " " + model.GetCurrentRecipe().name);
                 
                 int index = model.FindFirstCraftSlotReady();
                 if (index >= 0)

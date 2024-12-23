@@ -7,6 +7,7 @@ using DG.Tweening;
 using VitsehLand.Scripts.Stats;
 using VitsehLand.Scripts.Manager;
 using VitsehLand.Scripts.UI.MonitorGarden;
+using VitsehLand.Scripts.Ultilities;
 
 namespace VitsehLand.Scripts.Construction.Garden
 {
@@ -161,10 +162,10 @@ namespace VitsehLand.Scripts.Construction.Garden
         {
             ////DisableUnlockNewSlotButton();
             bool canUseGem = GemManager.Instance.CanUseGem(unlockFee);
-            Debug.Log(unlockFee);
+            //MyDebug.Log(unlockFee);
             if (!canUseGem)
             {
-                Debug.Log("Not enough gem");
+                MyDebug.Log("Not enough gem");
                 return;
             }
 
@@ -221,15 +222,15 @@ namespace VitsehLand.Scripts.Construction.Garden
 
         public void ChangeCropUIToWhole()
         {
-            //Debug.Log("ChangeCropUIToWhole");
+            //MyDebug.Log("ChangeCropUIToWhole");
             StartInOutScaleTextMeshProUGUILoop(currentCropIcon, new Vector3(endScale, endScale, 1), LoopType.Yoyo, -1, 3);
             wholeCircleUI.SetActive(true);
         }
 
         public void ChangeCropUIToOtherState()
         {
-            //Debug.Log("ChangeCropUIToOtherState");
-            Debug.Log("Kill");
+            //MyDebug.Log("ChangeCropUIToOtherState");
+            MyDebug.Log("Kill");
             currentCropIconTween.Kill();
             wholeCircleUI.SetActive(false);
         }

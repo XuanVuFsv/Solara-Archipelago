@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VitsehLand.Scripts.Ultilities;
 
 namespace VitsehLand.Scripts.Farming.ObjectState.Crop
 {
@@ -36,7 +37,7 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
         public override void End()
         {
             if ((objectMachine as global::Crop).state == null) return;
-            Debug.Log("End Growing");
+            MyDebug.Log("End Growing");
         }
 
         public async void GrowPlant()
@@ -45,9 +46,9 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
             (objectMachine as global::Crop).gameObject.SetActive(true);
             (objectMachine as global::Crop).growingBody.SetActive(true);
 
-            //Debug.Log(objectMachine);
-            //Debug.Log((objectMachine as Plant).ownerGarden);
-            //Debug.Log((objectMachine as Plant).ownerGarden.waterManager);
+            //MyDebug.Log(objectMachine);
+            //MyDebug.Log((objectMachine as Plant).ownerGarden);
+            //MyDebug.Log((objectMachine as Plant).ownerGarden.waterManager);
 
             if ((objectMachine as global::Crop).ownerGarden.waterManager.outOfResource) await UniTask.WaitUntil(() => (objectMachine as global::Crop).ownerGarden.waterManager.outOfResource == false);
             inGrowing = true;
@@ -63,18 +64,18 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
             //TimeSpan span = TimeSpan.FromSeconds((objectMachine as Plant).collectableObjectStat.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
             (objectMachine as global::Crop).endGrowingTime = (objectMachine as global::Crop).startGrowingTime.Add(span);
             (objectMachine as global::Crop).StartCoroutine(StartGrowingProcess());
-            Debug.Log("StartGrowingProcess");
+            MyDebug.Log("StartGrowingProcess");
         }
 
         IEnumerator StartGrowingProcess()
         {
-            //Debug.Log("StartGrowingProcess");
+            //MyDebug.Log("StartGrowingProcess");
             yield return new WaitForSeconds((objectMachine as global::Crop).collectableObjectStat.totalGrowingTime);
             //yield return new WaitForSeconds((objectMachine as Plant).collectableObjectStat.totalGrowingTime * (objectMachine as Plant).ownerGarden.fertilizerManager.reducingTimeValue);
             (objectMachine as global::Crop).seedOuterEffect.SetActive(false);
             //wholeOuterEffect.SetActive(true);
             CompleteGrowingSession();
-            Debug.Log("Growing Process Done");
+            MyDebug.Log("Growing Process Done");
             //(objectMachine as Plant).growingTime--;
         }
 
@@ -89,7 +90,7 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
                 (objectMachine as global::Crop).wholePlants.Add(newWholePlant);
                 newWholePlant.orginalPlant = objectMachine as global::Crop;
                 (objectMachine as global::Crop).wholePlantCount++;
-                Debug.Log(newWholePlant.transform.localScale);
+                MyDebug.Log(newWholePlant.transform.localScale);
                 newWholePlant.onTree = true;
                 //newWholePlant.plantData.orginalBody = (objectMachine as Plant).plantData.growingBody;
                 newWholePlant.SetState(new CropWhole(newWholePlant));
@@ -115,7 +116,7 @@ namespace VitsehLand.Scripts.Farming.ObjectState.Crop
         //private void OnDisable()
         //{
         //    (objectMachine as Plant).elapsedTime = (int)DateTime.UtcNow.Subtract((objectMachine as Plant).startGrowingTime.ToLocalTime()).TotalSeconds;
-        //    //Debug.Log(elapsedTime);
+        //    //MyDebug.Log(elapsedTime);
         //}
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using VitsehLand.Scripts.Farming.General;
 using VitsehLand.Scripts.Farming.ObjectState.Crop;
+using VitsehLand.Scripts.Ultilities;
 using VitsehLand.Scripts.Weapon.General;
 
 namespace VitsehLand.Scripts.Construction.Garden
@@ -30,19 +31,19 @@ namespace VitsehLand.Scripts.Construction.Garden
                     //|| plant.plantData.orginalBody == null
                     || plant.nonPlanting == true) return;
 
-                Debug.Log("Check");
+                MyDebug.Log("Check");
 
                 //Find first slot index empty
                 int emptySlotIndex = ownerGarden.FindEmptySlotIndex();
                 if (emptySlotIndex == -1) return;
-                Debug.Log(emptySlotIndex);
+                MyDebug.Log("emptySlotIndex " + emptySlotIndex);
 
                 //Auto assign or bind data to slot that was current slot on monitor
                 if (ownerGarden.gardenSlotProperties[monitorGardenController.currentSlotIndex].crop == null)
                 {
                     monitorGardenController.AssignCurrentCollectableObjectStat(plant.collectableObjectStat);
                     monitorGardenController.SetupDisplayCollectableObjectStat();
-                    Debug.Log("Update UI");
+                    MyDebug.Log("Update UI");
                 }
 
                 //ownerGarden.inGrowing = true;

@@ -1,7 +1,7 @@
 using VitsehLand.Scripts.Pattern.Singleton;
 using VitsehLand.Scripts.Ultilities;
 
-public class UllitiesManager : Singleton<UllitiesManager>
+public class UtilitiesManager: Singleton<UtilitiesManager>
 {
     public bool ENABLE_DEBUG_LOG;
 

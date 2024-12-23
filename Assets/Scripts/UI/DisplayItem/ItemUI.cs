@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VitsehLand.Scripts.Stats;
+using VitsehLand.Scripts.Ultilities;
 
 namespace VitsehLand.Scripts.UI.DisplayItem
 {
@@ -46,7 +47,7 @@ namespace VitsehLand.Scripts.UI.DisplayItem
 
         public void OnClick()
         {
-            Debug.Log("Click" + " " + collectableObjectStat.collectableObjectName);
+            MyDebug.Log("Click" + " " + collectableObjectStat.collectableObjectName);
             if (collectableObjectStat == null || collectableObjectStat.collectableObjectName == "Null") return;
 
             OnItemClicked(collectableObjectStat);
